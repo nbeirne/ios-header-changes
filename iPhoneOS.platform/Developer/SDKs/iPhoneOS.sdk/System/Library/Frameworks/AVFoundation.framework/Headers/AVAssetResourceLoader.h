@@ -332,6 +332,13 @@ AV_INIT_UNAVAILABLE
  */
 @property (nonatomic, copy, nullable) NSDate *renewalDate API_AVAILABLE(macos(10.10), ios(8.0), tvos(9.0)) API_UNAVAILABLE(watchos);
 
+/*!
+ @property		entireLengthAvailableOnDemand
+ @abstract		Indicates whether asset data loading can expect data to be produced immediately.
+ @discussion	Before you finish loading an AVAssetResourceLoadingRequest, if its contentInformationRequest is not nil, you may set this property to YES to indicate that all asset data can be produced immediately, e.g., because the data is fully cached, or because the custom URL scheme ultimately refers to files on local storage. This allows significant data flow optimizations. For backward compatibility, this property defaults to NO.
+*/
+@property (nonatomic, getter=isEntireLengthAvailableOnDemand) BOOL entireLengthAvailableOnDemand API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0), watchos(9.0));
+
 @end
 
 /*!
@@ -407,6 +414,7 @@ AV_INIT_UNAVAILABLE
 
 @end
 
+API_AVAILABLE(macos(10.9), ios(6.0), tvos(9.0)) API_UNAVAILABLE(watchos)
 @interface AVAssetResourceLoadingRequest (AVAssetResourceLoadingRequestContentKeyRequestSupport)
 
 /*! 
@@ -447,6 +455,7 @@ AV_INIT_UNAVAILABLE
 */
 AVF_EXPORT NSString *const AVAssetResourceLoadingRequestStreamingContentKeyRequestRequiresPersistentKey API_DEPRECATED_WITH_REPLACEMENT("-[AVPersistableContentKeyRequest persistableContentKeyFromKeyVendorResponse:options:error:]", macos(10.14, API_TO_BE_DEPRECATED), ios(9.0, API_TO_BE_DEPRECATED)) API_UNAVAILABLE(watchos);
 
+API_AVAILABLE(macos(10.9), ios(6.0), tvos(9.0)) API_UNAVAILABLE(watchos)
 @interface AVAssetResourceLoadingRequest (AVAssetResourceLoadingRequestDeprecated)
 
 /*! 

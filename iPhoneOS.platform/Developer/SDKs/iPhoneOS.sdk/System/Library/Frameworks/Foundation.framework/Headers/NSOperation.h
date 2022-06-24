@@ -10,7 +10,7 @@
 
 @class NSArray<ObjectType>, NSSet;
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 #define NSOperationQualityOfService NSQualityOfService
 #define NSOperationQualityOfServiceUserInteractive NSQualityOfServiceUserInteractive
@@ -75,13 +75,6 @@ typedef NS_ENUM(NSInteger, NSOperationQueuePriority) {
 
 API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0))
 @interface NSBlockOperation : NSOperation
-#if !__OBJC2__
-{
-@private
-    id _private2;
-    void *_reserved2;
-}
-#endif
 
 + (instancetype)blockOperationWithBlock:(void (^)(void))block;
 
@@ -94,14 +87,6 @@ API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0))
 API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0))
 NS_SWIFT_UNAVAILABLE("NSInvocation and related APIs not available")
 @interface NSInvocationOperation : NSOperation
-#if !__OBJC2__
-{
-@private
-    id _inv;
-    id _exception;
-    void *_reserved2;
-}
-#endif
 
 - (nullable instancetype)initWithTarget:(id)target selector:(SEL)sel object:(nullable id)arg;
 - (instancetype)initWithInvocation:(NSInvocation *)inv NS_DESIGNATED_INITIALIZER;
@@ -119,13 +104,6 @@ static const NSInteger NSOperationQueueDefaultMaxConcurrentOperationCount = -1;
 
 API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0))
 @interface NSOperationQueue : NSObject <NSProgressReporting>
-#if !__OBJC2__
-{
-@private
-    id _private;
-    void *_reserved;
-}
-#endif
 
 /// @property progress
 /// @discussion     The `progress` property represents a total progress of the operations executed in the queue. By default NSOperationQueue
@@ -185,5 +163,5 @@ API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0))
 
 @end
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)
 

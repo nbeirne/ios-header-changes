@@ -35,9 +35,10 @@ extern "C" {
 #pragma mark CVMetalTexture
 
 /*!
-    @typedef	CVMetalTextureRef
+    @typedef    CVMetalTextureRef
     @abstract   Metal texture based image buffer
-
+    @discussion IMPORTANT NOTE: Clients should retain CVMetalTexture objects until they are done using the images in them.
+                Retaining a CVMetalTexture is your way to indicate that you're still using the image in the buffer, and that it should not be recycled yet.
 */
 typedef CVImageBufferRef CVMetalTextureRef;
 	

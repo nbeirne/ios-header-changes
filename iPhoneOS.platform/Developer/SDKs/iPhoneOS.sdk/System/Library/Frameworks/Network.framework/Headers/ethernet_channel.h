@@ -90,6 +90,38 @@ API_AVAILABLE(macos(10.15)) API_UNAVAILABLE(ios, watchos, tvos)
 NW_RETURNS_RETAINED nw_ethernet_channel_t
 nw_ethernet_channel_create(uint16_t ether_type, nw_interface_t interface);
 
+/*!
+ * @function nw_ethernet_channel_create_with_parameters
+ *
+ * @abstract
+ *		Creates an Ethernet channel with a custom EtherType and networking parameters
+ *
+ * @param ether_type
+ *		The custom EtherType to be used for all Ethernet frames in this channel. The
+ *		EtherType is the two-octet field in an Ethernet frame, indicating the protocol
+ *		encapsulated in the payload of the frame.  This parameter is in little-endian
+ *		byte order.  Only custom EtherType values are supported. This parameter cannot
+ *		be an EtherType already handled by the system, such as IPv4, IPv6, ARP, VLAN Tag,
+ *		or 802.1x.
+ *
+ *		Calling processes must hold the "com.apple.developer.networking.custom-protocol"
+ *		entitlement.
+ *
+ * @param interface
+ *		The interface on which this custom Ethernet channel will be allowed.
+ *
+ * @param parameters
+ *		nw_parameters_t that allows caller to specify networking parameters such as custom context and queue.
+ *
+ * @result
+ *		Returns an allocated nw_ethernet_channel_t object on success.
+ *		Callers are responsible for deallocating using nw_release(obj) or [obj release].
+ *		These objects support ARC.
+ *		Returns NULL on failure. Fails due to invalid parameters.
+ */
+API_AVAILABLE(macos(13.0)) API_UNAVAILABLE(ios, watchos, tvos)
+NW_RETURNS_RETAINED nw_ethernet_channel_t
+nw_ethernet_channel_create_with_parameters(uint16_t ether_type, nw_interface_t interface, nw_parameters_t parameters);
 #ifdef __BLOCKS__
 
 /*!

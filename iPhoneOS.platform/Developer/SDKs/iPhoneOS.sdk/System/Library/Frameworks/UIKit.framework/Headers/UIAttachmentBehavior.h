@@ -10,7 +10,7 @@
 #import <UIKit/UIDynamicBehavior.h>
 #import <UIKit/UIKitDefines.h>
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 typedef NS_ENUM(NSInteger, UIAttachmentBehaviorType) {
     UIAttachmentBehaviorTypeItems,
@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, UIAttachmentBehaviorType) {
 typedef struct {
     CGFloat minimum;
     CGFloat maximum;
-} UIFloatRange;
+} UIFloatRange NS_SWIFT_SENDABLE;
 
 UIKIT_EXTERN const UIFloatRange UIFloatRangeZero API_AVAILABLE(ios(9.0));
 UIKIT_EXTERN const UIFloatRange UIFloatRangeInfinite API_AVAILABLE(ios(9.0));
@@ -107,7 +107,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(7.0)) NS_SWIFT_UI_ACTOR
 
 @end
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)
 
 #else
 #import <UIKitCore/UIAttachmentBehavior.h>

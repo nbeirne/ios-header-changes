@@ -5,17 +5,21 @@
 #ifndef CGAFFINETRANSFORM_H_
 #define CGAFFINETRANSFORM_H_
 
-typedef struct CGAffineTransform CGAffineTransform;
-
 #include <CoreGraphics/CGBase.h>
 #include <CoreGraphics/CGGeometry.h>
+#include <CoreFoundation/CFBase.h>
 
 CF_IMPLICIT_BRIDGING_ENABLED
+
+#ifndef CF_DEFINES_CG_TYPES
+typedef struct CGAffineTransform CGAffineTransform;
 
 struct CGAffineTransform {
   CGFloat a, b, c, d;
   CGFloat tx, ty;
 };
+
+#endif /* CF_DEFINES_CG_TYPES */
 
 /* The identity transform: [ 1 0 0 1 0 0 ]. */
 

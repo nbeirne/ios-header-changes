@@ -27,6 +27,7 @@
 #endif
 
 DISPATCH_ASSUME_NONNULL_BEGIN
+DISPATCH_ASSUME_ABI_SINGLE_BEGIN
 
 /*!
  * @typedef dispatch_semaphore_t
@@ -112,6 +113,7 @@ dispatch_semaphore_signal(dispatch_semaphore_t dsema);
 
 __END_DECLS
 
+DISPATCH_ASSUME_ABI_SINGLE_END
 DISPATCH_ASSUME_NONNULL_END
 
 #endif /* __DISPATCH_SEMAPHORE__ */

@@ -2176,10 +2176,10 @@ static inline SIMD_CFUNC simd_float3 __tg_fabs(simd_float3 x) { return simd_bits
 static inline SIMD_CFUNC simd_float4 __tg_fabs(simd_float4 x) { return simd_bitselect(0.0, x, 0x7fffffff); }
 static inline SIMD_CFUNC simd_float8 __tg_fabs(simd_float8 x) { return simd_bitselect(0.0, x, 0x7fffffff); }
 static inline SIMD_CFUNC simd_float16 __tg_fabs(simd_float16 x) { return simd_bitselect(0.0, x, 0x7fffffff); }
-static inline SIMD_CFUNC simd_double2 __tg_fabs(simd_double2 x) { return simd_bitselect(0.0, x, 0x7fffffffffffffffL); }
-static inline SIMD_CFUNC simd_double3 __tg_fabs(simd_double3 x) { return simd_bitselect(0.0, x, 0x7fffffffffffffffL); }
-static inline SIMD_CFUNC simd_double4 __tg_fabs(simd_double4 x) { return simd_bitselect(0.0, x, 0x7fffffffffffffffL); }
-static inline SIMD_CFUNC simd_double8 __tg_fabs(simd_double8 x) { return simd_bitselect(0.0, x, 0x7fffffffffffffffL); }
+static inline SIMD_CFUNC simd_double2 __tg_fabs(simd_double2 x) { return simd_bitselect(0.0, x, 0x7fffffffffffffff); }
+static inline SIMD_CFUNC simd_double3 __tg_fabs(simd_double3 x) { return simd_bitselect(0.0, x, 0x7fffffffffffffff); }
+static inline SIMD_CFUNC simd_double4 __tg_fabs(simd_double4 x) { return simd_bitselect(0.0, x, 0x7fffffffffffffff); }
+static inline SIMD_CFUNC simd_double8 __tg_fabs(simd_double8 x) { return simd_bitselect(0.0, x, 0x7fffffffffffffff); }
   
 #pragma mark - isfinite implementation
 static inline SIMD_CFUNC simd_int2 __tg_isfinite(simd_float2 x) { return x == x && __tg_fabs(x) != (simd_float2)INFINITY; }
@@ -2428,10 +2428,10 @@ static inline SIMD_CFUNC simd_float3 __tg_copysign(simd_float3 x, simd_float3 y)
 static inline SIMD_CFUNC simd_float4 __tg_copysign(simd_float4 x, simd_float4 y) { return simd_bitselect(y, x, 0x7fffffff); }
 static inline SIMD_CFUNC simd_float8 __tg_copysign(simd_float8 x, simd_float8 y) { return simd_bitselect(y, x, 0x7fffffff); }
 static inline SIMD_CFUNC simd_float16 __tg_copysign(simd_float16 x, simd_float16 y) { return simd_bitselect(y, x, 0x7fffffff); }
-static inline SIMD_CFUNC simd_double2 __tg_copysign(simd_double2 x, simd_double2 y) { return simd_bitselect(y, x, 0x7fffffffffffffffL); }
-static inline SIMD_CFUNC simd_double3 __tg_copysign(simd_double3 x, simd_double3 y) { return simd_bitselect(y, x, 0x7fffffffffffffffL); }
-static inline SIMD_CFUNC simd_double4 __tg_copysign(simd_double4 x, simd_double4 y) { return simd_bitselect(y, x, 0x7fffffffffffffffL); }
-static inline SIMD_CFUNC simd_double8 __tg_copysign(simd_double8 x, simd_double8 y) { return simd_bitselect(y, x, 0x7fffffffffffffffL); }
+static inline SIMD_CFUNC simd_double2 __tg_copysign(simd_double2 x, simd_double2 y) { return simd_bitselect(y, x, 0x7fffffffffffffff); }
+static inline SIMD_CFUNC simd_double3 __tg_copysign(simd_double3 x, simd_double3 y) { return simd_bitselect(y, x, 0x7fffffffffffffff); }
+static inline SIMD_CFUNC simd_double4 __tg_copysign(simd_double4 x, simd_double4 y) { return simd_bitselect(y, x, 0x7fffffffffffffff); }
+static inline SIMD_CFUNC simd_double8 __tg_copysign(simd_double8 x, simd_double8 y) { return simd_bitselect(y, x, 0x7fffffffffffffff); }
   
 #pragma mark - sqrt implementation
 static SIMD_CFUNC simd_float2 __tg_sqrt(simd_float2 x) {

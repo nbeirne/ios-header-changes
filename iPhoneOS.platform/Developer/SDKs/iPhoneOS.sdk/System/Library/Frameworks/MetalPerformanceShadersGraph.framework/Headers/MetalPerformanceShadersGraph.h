@@ -29,6 +29,7 @@
 #import <MetalPerformanceShadersGraph/MPSGraphRandomOps.h>
 #import <MetalPerformanceShadersGraph/MPSGraphReductionOps.h>
 #import <MetalPerformanceShadersGraph/MPSGraphResizeOps.h>
+#import <MetalPerformanceShadersGraph/MPSGraphRNNOps.h>
 #import <MetalPerformanceShadersGraph/MPSGraphScatterNDOps.h>
 #import <MetalPerformanceShadersGraph/MPSGraphStencilOps.h>
 #import <MetalPerformanceShadersGraph/MPSGraphTensorShapeOps.h>

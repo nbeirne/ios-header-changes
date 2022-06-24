@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTestCase.h>
+#import <XCTest/XCTestDefines.h>
 #import <XCTest/XCTWaiter.h>
 #import <XCTest/XCTKVOExpectation.h>
 #import <XCTest/XCTNSNotificationExpectation.h>
@@ -110,7 +111,8 @@ typedef void (^XCWaitCompletionHandler)(NSError * _Nullable error);
  * @return
  * Creates and returns an expectation associated with the test case.
  */
-- (XCTestExpectation *)keyValueObservingExpectationForObject:(id)objectToObserve keyPath:(NSString *)keyPath expectedValue:(nullable id)expectedValue;
+- (XCTestExpectation *)keyValueObservingExpectationForObject:(id)objectToObserve keyPath:(NSString *)keyPath expectedValue:(nullable id)expectedValue
+XCT_TO_BE_DEPRECATED_WITH_SWIFT_REPLACEMENT("expectation(that:on:options:willEqual:)");
 
 /*!
  * @method -keyValueObservingExpectationForObject:keyPath:handler:
@@ -134,7 +136,8 @@ typedef void (^XCWaitCompletionHandler)(NSError * _Nullable error);
  * @return
  * Creates and returns an expectation associated with the test case.
  */
-- (XCTestExpectation *)keyValueObservingExpectationForObject:(id)objectToObserve keyPath:(NSString *)keyPath handler:(nullable XCKeyValueObservingExpectationHandler)handler;
+- (XCTestExpectation *)keyValueObservingExpectationForObject:(id)objectToObserve keyPath:(NSString *)keyPath handler:(nullable XCKeyValueObservingExpectationHandler)handler
+XCT_TO_BE_DEPRECATED_WITH_SWIFT_REPLACEMENT("expectation(that:on:options:willSatisfy:)");
 
 /*!
  * @method -expectationForNotification:object:handler:

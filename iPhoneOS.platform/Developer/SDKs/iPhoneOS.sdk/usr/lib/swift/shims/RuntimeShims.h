@@ -116,6 +116,15 @@ SWIFT_RUNTIME_STDLIB_SPI SWIFT_WEAK_IMPORT
 __swift_bool _swift_stdlib_getCurrentStackBounds(__swift_uintptr_t *outBegin,
                                                  __swift_uintptr_t *outEnd);
 
+typedef struct {
+  __swift_uint32_t _value;
+} _SwiftStdlibVersion;
+
+SWIFT_RUNTIME_STDLIB_API
+__swift_bool _swift_stdlib_isExecutableLinkedOnOrAfter(
+  _SwiftStdlibVersion version
+) __attribute__((const));
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

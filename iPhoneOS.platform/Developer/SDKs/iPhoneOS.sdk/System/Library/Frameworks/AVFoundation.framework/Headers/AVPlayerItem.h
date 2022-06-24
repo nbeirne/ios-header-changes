@@ -160,8 +160,16 @@ AV_INIT_UNAVAILABLE
  */
 - (instancetype)initWithAsset:(AVAsset *)asset automaticallyLoadedAssetKeys:(nullable NSArray<NSString *> *)automaticallyLoadedAssetKeys NS_DESIGNATED_INITIALIZER API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0), watchos(1.0));
 
-- (id)copyWithZone:(nullable NSZone *)zone NS_SWIFT_UI_ACTOR;
-- (id)copy NS_SWIFT_UI_ACTOR;
+- (id)copyWithZone:(nullable NSZone *)zone
+#if ! AVF_DEPLOYING_TO_2022_RELEASES_AND_LATER
+NS_SWIFT_UI_ACTOR
+#endif
+;
+- (id)copy
+#if ! AVF_DEPLOYING_TO_2022_RELEASES_AND_LATER
+NS_SWIFT_UI_ACTOR
+#endif
+;
 
 /*!
  @property status
@@ -384,6 +392,8 @@ AV_INIT_UNAVAILABLE
  					set to NO. If the new request completes without being interrupted by another seek request or by any other operation the specified 
  					completion handler will be invoked with the finished parameter set to YES. 
 					If the seek time is outside of seekable time ranges as indicated by seekableTimeRanges property, the seek request will be cancelled and the completion handler will be invoked with the finished parameter set to NO.
+
+					This method throws an exception if time is invalid or indefinite.
  */
 - (void)seekToTime:(CMTime)time completionHandler:(void (^_Nullable)(BOOL finished))completionHandler API_AVAILABLE(macos(10.7), ios(5.0), tvos(9.0), watchos(1.0));
 
@@ -402,6 +412,8 @@ AV_INIT_UNAVAILABLE
 					request completes without being interrupted by another seek request or by any other operation the specified completion handler will be invoked with the 
 					finished parameter set to YES.
 					If the seek time is outside of seekable time ranges as indicated by seekableTimeRanges property, the seek request will be cancelled and the completion handler will be invoked with the finished parameter set to NO.
+
+					This method throws an exception if time is invalid or indefinite or if tolerance before or tolerance after is invalid or negative.
  */
 - (void)seekToTime:(CMTime)time toleranceBefore:(CMTime)toleranceBefore toleranceAfter:(CMTime)toleranceAfter completionHandler:(void (^_Nullable)(BOOL finished))completionHandler API_AVAILABLE(macos(10.7), ios(5.0), tvos(9.0), watchos(1.0));
 
@@ -467,10 +479,18 @@ AV_INIT_UNAVAILABLE
 /*!
  @property 		videoComposition
  @abstract 		Indicates the video composition settings to be applied during playback.
- @discussion	This property must be accessed on the main thread/queue.
-
+ @discussion	Before macOS 13, iOS 16, tvOS 16, and watchOS 9, this property must be accessed on the main thread/queue.
+ 
+				This property throws an exception if a video composition is set with any of the following values:
+					- renderSize, renderScale, or frameDuration is less than or equal to zero
+					- sourceTrackIDForFrameTiming is less than or equal to zero
+					- uses AVVideoCompositionCoreAnimationTool (works for offline rendering only)
  */
-@property (nonatomic, copy, nullable) AVVideoComposition *videoComposition NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.7), ios(4.0), tvos(9.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic, copy, nullable) AVVideoComposition *videoComposition
+#if ! AVF_DEPLOYING_TO_2022_RELEASES_AND_LATER
+NS_SWIFT_UI_ACTOR
+#endif
+API_AVAILABLE(macos(10.7), ios(4.0), tvos(9.0)) API_UNAVAILABLE(watchos);
 
 /*!
  @property customVideoCompositor
@@ -479,9 +499,13 @@ AV_INIT_UNAVAILABLE
  	This property is nil if there is no video compositor, or if the internal video compositor is in use. This reference can be used to provide
 	extra context to the custom video compositor instance if required.
  
-	This property must be accessed on the main thread/queue.
+	Before macOS 13, iOS 16, tvOS 16, and watchOS 9, this property must be accessed on the main thread/queue.
  */
-@property (nonatomic, readonly, nullable) id<AVVideoCompositing> customVideoCompositor NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic, readonly, nullable) id<AVVideoCompositing> customVideoCompositor
+#if ! AVF_DEPLOYING_TO_2022_RELEASES_AND_LATER
+NS_SWIFT_UI_ACTOR
+#endif
+API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0)) API_UNAVAILABLE(watchos);
 
 /*!
  @property seekingWaitsForVideoCompositionRendering
@@ -729,9 +753,13 @@ typedef NS_OPTIONS(NSUInteger, AVVariantPreferences) {
    all media selection options in the group.
    Note that if multiple options within a group meet your criteria for selection according to locale or other considerations, and if these options are otherwise indistinguishable to you according to media characteristics that are meaningful for your application, content is typically authored so that the first available option that meets your criteria is appropriate for selection.
  
-   This method must be invoked on the main thread/queue.
+   Before macOS 13, iOS 16, tvOS 16, and watchOS 9, this method must be invoked on the main thread/queue.
  */
-- (void)selectMediaOption:(nullable AVMediaSelectionOption *)mediaSelectionOption inMediaSelectionGroup:(AVMediaSelectionGroup *)mediaSelectionGroup NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.8), ios(5.0), tvos(9.0), watchos(1.0));
+- (void)selectMediaOption:(nullable AVMediaSelectionOption *)mediaSelectionOption inMediaSelectionGroup:(AVMediaSelectionGroup *)mediaSelectionGroup
+#if ! AVF_DEPLOYING_TO_2022_RELEASES_AND_LATER
+NS_SWIFT_UI_ACTOR
+#endif
+API_AVAILABLE(macos(10.8), ios(5.0), tvos(9.0), watchos(1.0));
 
 /*!
  @method		selectMediaOptionAutomaticallyInMediaSelectionGroup:
@@ -741,9 +769,13 @@ typedef NS_OPTIONS(NSUInteger, AVVariantPreferences) {
  @discussion
    Has no effect unless the appliesMediaSelectionCriteriaAutomatically property of the associated AVPlayer is YES and unless automatic media selection has previously been overridden via -[AVPlayerItem selectMediaOption:inMediaSelectionGroup:].
  
-   This method must be invoked on the main thread/queue.
+   Before macOS 13, iOS 16, tvOS 16, and watchOS 9, this method must be invoked on the main thread/queue.
  */
-- (void)selectMediaOptionAutomaticallyInMediaSelectionGroup:(AVMediaSelectionGroup *)mediaSelectionGroup NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0), watchos(1.0));
+- (void)selectMediaOptionAutomaticallyInMediaSelectionGroup:(AVMediaSelectionGroup *)mediaSelectionGroup
+#if ! AVF_DEPLOYING_TO_2022_RELEASES_AND_LATER
+NS_SWIFT_UI_ACTOR
+#endif
+API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0), watchos(1.0));
 
 /*!
   @property		currentMediaSelection

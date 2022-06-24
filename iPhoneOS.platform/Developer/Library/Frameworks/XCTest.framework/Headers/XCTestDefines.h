@@ -69,6 +69,12 @@ NS_ASSUME_NONNULL_BEGIN
 #define XCT_NOESCAPE
 #endif
 
+#if __has_attribute(weak_import)
+#define XCT_WEAK_EXPORT __attribute__((weak_import)) XCT_EXPORT
+#else
+#define XCT_WEAK_EXPORT XCT_EXPORT
+#endif
+
 #define XCT_UNAVAILABLE(msg) __attribute__((unavailable(msg)))
 
 #define XCT_METRIC_API_AVAILABLE API_AVAILABLE(ios(13.0), tvos(13.0), watchos(7.0))
@@ -82,8 +88,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 #if defined(__swift__)
     #define XCT_DEPRECATED_WITH_SWIFT_REPLACEMENT(REPLACEMENT) XCT_DEPRECATED_WITH_REPLACEMENT(REPLACEMENT)
+    #define XCT_TO_BE_DEPRECATED_WITH_SWIFT_REPLACEMENT(REPLACEMENT) \
+        __attribute__((availability(macos, deprecated=API_TO_BE_DEPRECATED, message="Replaced by '" REPLACEMENT "'"))) \
+        __attribute__((availability(ios, deprecated=API_TO_BE_DEPRECATED, message="Replaced by '" REPLACEMENT "'"))) \
+        __attribute__((availability(watchos, deprecated=API_TO_BE_DEPRECATED, message="Replaced by '" REPLACEMENT "'"))) \
+        __attribute__((availability(tvos, deprecated=API_TO_BE_DEPRECATED, message="Replaced by '" REPLACEMENT "'")))
 #else
     #define XCT_DEPRECATED_WITH_SWIFT_REPLACEMENT(REPLACEMENT)
+    #define XCT_TO_BE_DEPRECATED_WITH_SWIFT_REPLACEMENT(REPLACEMENT)
 #endif
 
 #if __has_attribute(swift_attr)

@@ -13,9 +13,10 @@
 
 @class UITraitCollection;
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-UIKIT_EXTERN API_AVAILABLE(ios(2.0)) @interface UIFont : NSObject <NSCopying, NSSecureCoding>
+UIKIT_EXTERN API_AVAILABLE(ios(2.0)) NS_SWIFT_SENDABLE
+@interface UIFont : NSObject <NSCopying, NSSecureCoding>
 
 // Returns an instance of the font associated with the text style and scaled appropriately for the user's selected content size category. See UIFontDescriptor.h for the complete list.
 + (UIFont *)preferredFontForTextStyle:(UIFontTextStyle)style API_AVAILABLE(ios(7.0));
@@ -71,7 +72,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) @interface UIFont : NSObject <NSCopying, NS
 
 @end
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)
 
  
 

@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @class CLKComplicationTimelineEntry;
 @class CLKComplicationDescriptor;
 
+@protocol CLKComplicationWidgetMigrator;
+
 API_AVAILABLE(watchos(2.0)) API_UNAVAILABLE(ios)
 NS_SWIFT_UI_ACTOR
 @protocol CLKComplicationDataSource <NSObject>
@@ -90,6 +92,11 @@ NS_SWIFT_UI_ACTOR
 @optional
 - (void)handleSharedComplicationDescriptors:(NSArray<CLKComplicationDescriptor *> *)complicationDescriptors API_AVAILABLE(watchos(7.0)) API_UNAVAILABLE(ios);
 
+#pragma mark - Widget Migration
+
+/// Provide a migrator to provide the appropriate widget migration
+@optional
+@property (nonatomic, readonly) id<CLKComplicationWidgetMigrator> widgetMigrator API_AVAILABLE(watchos(9.0)) API_UNAVAILABLE(ios);
 
 #pragma mark - Deprecated
 

@@ -80,7 +80,7 @@ API_AVAILABLE(macos(10.7), ios(4.0), tvos(9.0)) API_UNAVAILABLE(watchos)
 	 @property		readyForDisplay
 	 @abstract		Boolean indicating that the first video frame has been made ready for display for the current item of the associated AVPlayer.
 	 @discusssion	Use this property as an indicator of when best to show or animate-in an AVPlayerLayer into view. 
-					An AVPlayerLayer may be displayed, or made visible, while this propoerty is NO, however the layer will not have any user-visible content until the value becomes YES. Note that if an animation is added to an AVPlayerLayer before it becomes readyForDisplay the video image displayed inside might not animate with the receiver.
+					An AVPlayerLayer may be displayed, or made visible, while this property is NO, however the layer will not have any user-visible content until the value becomes YES. Note that if an animation is added to an AVPlayerLayer before it becomes readyForDisplay the video image displayed inside might not animate with the receiver.
 					This property remains NO for an AVPlayer currentItem whose AVAsset contains no enabled video tracks.
  */
 @property(nonatomic, readonly, getter=isReadyForDisplay) BOOL readyForDisplay;

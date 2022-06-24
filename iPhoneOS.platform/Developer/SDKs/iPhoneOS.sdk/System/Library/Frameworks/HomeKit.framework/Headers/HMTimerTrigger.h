@@ -26,6 +26,7 @@ HM_EXTERN API_AVAILABLE(ios(8.0), watchos(2.0), tvos(10.0), macCatalyst(14.0)) A
  * @param name Name for the trigger.
  *
  * @param fireDate The initial fire date for the timer trigger. The seconds value must be zero.
+ *                 Date should be at least 1 minute ahead for reliable firing.
  *                 HMErrorCodeDateMustBeOnSpecifiedBoundaries will be returned when adding the trigger
  *                 to a home if the fireDate includes a seconds value other than 0.
  *
@@ -58,6 +59,8 @@ HM_EXTERN API_AVAILABLE(ios(8.0), watchos(2.0), tvos(10.0), macCatalyst(14.0)) A
  * @discussion Timer triggers are only set at the top of the minute. When the timer trigger fires,
  *             it will typically fire within 1 minute of the scheduled fire date or calculated
  *             recurrence fire date, depending on how the system is managing its resources.
+ *
+ * @note Should be at least 1 minute ahead for reliable firing.
  */
 @property(readonly, copy, nonatomic) NSDate *fireDate;
 

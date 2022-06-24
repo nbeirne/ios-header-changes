@@ -1,3 +1,4 @@
+#if !__has_include(<PassKitCore/PKConstants.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKConstants.h
 //  PassKit
@@ -96,3 +97,7 @@ typedef NS_OPTIONS(NSUInteger, PKRadioTechnology) {
 } API_AVAILABLE(ios(14.5), watchos(7.3));
 
 #endif // PKCONSTANTS_H
+
+#else
+#import <PassKitCore/PKConstants.h>
+#endif

@@ -15,11 +15,6 @@
 #import <Metal/MTLResourceStatePass.h>
 
 NS_ASSUME_NONNULL_BEGIN
-/*!
- @header MTLResourceStateCommandEncoder
- @discussion Header file for MTLResourceStateCommandEncoder
- */
-
 
 /*!
  @enum MTLSparseTextureMappingMode
@@ -102,7 +97,7 @@ API_AVAILABLE(macos(10.15), ios(13.0))
 /*!
  @method waitForFence:
  @abstract Prevent further GPU work until the fence is reached.
- @discussion The fence is evaluated at kernel submision to maintain global order and prevent deadlock.
+ @discussion The fence is evaluated at kernel submission to maintain global order and prevent deadlock.
  Drivers may delay fence updates until the end of the encoder. Drivers may also wait on fences at the beginning of an encoder. It is therefore illegal to wait on a fence after it has been updated in the same encoder.
  */
 - (void)waitForFence:(id <MTLFence>)fence API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(13.0));

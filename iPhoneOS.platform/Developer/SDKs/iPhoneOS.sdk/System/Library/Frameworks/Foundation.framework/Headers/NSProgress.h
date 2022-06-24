@@ -13,7 +13,7 @@ typedef NSString * NSProgressKind NS_TYPED_EXTENSIBLE_ENUM;
 typedef NSString * NSProgressUserInfoKey NS_TYPED_EXTENSIBLE_ENUM;
 typedef NSString * NSProgressFileOperationKind NS_TYPED_EXTENSIBLE_ENUM;
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 /*
  NSProgress is used to report the amount of work done, and provides a way to allow the user to cancel that work.
@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  The localizedDescription and localizedAdditionalDescription properties are meant to be observed as well as set. So are the cancellable and pausable properties. totalUnitCount and completedUnitCount on the other hand are often not the best properties to observe when presenting progress to the user. For example, you should observe fractionCompleted instead of observing totalUnitCount and completedUnitCount and doing your own calculation. NSProgress' default implementation of fractionCompleted does fairly sophisticated things like taking child NSProgresses into account.
  */
-
+NS_SWIFT_SENDABLE // Thread safe via locking and storing the only reference to properties
 API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0))
 @interface NSProgress : NSObject
 
@@ -118,15 +118,15 @@ You can invoke this method on one thread and then message the returned NSProgres
 
 /* A block to be invoked when cancel is invoked. The block will be invoked even when the method is invoked on an ancestor of the receiver, or an instance of NSProgress in another process that resulted from publishing the receiver or an ancestor of the receiver. Your block won't be invoked on any particular queue. If it must do work on a specific queue then it should schedule that work on that queue.
 */
-@property (nullable, copy) void (^cancellationHandler)(void);
+@property (nullable, copy) void (/*NS_SWIFT_SENDABLE*/ ^cancellationHandler)(void);
 
 /* A block to be invoked when pause is invoked. The block will be invoked even when the method is invoked on an ancestor of the receiver, or an instance of NSProgress in another process that resulted from publishing the receiver or an ancestor of the receiver. Your block won't be invoked on any particular queue. If it must do work on a specific queue then it should schedule that work on that queue.
  */
-@property (nullable, copy) void (^pausingHandler)(void);
+@property (nullable, copy) void (/*NS_SWIFT_SENDABLE*/ ^pausingHandler)(void);
 
 /* A block to be invoked when resume is invoked. The block will be invoked even when the method is invoked on an ancestor of the receiver, or an instance of NSProgress in another process that resulted from publishing the receiver or an ancestor of the receiver. Your block won't be invoked on any particular queue. If it must do work on a specific queue then it should schedule that work on that queue.
  */
-@property (nullable, copy) void (^resumingHandler)(void) API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0));
+@property (nullable, copy) void (/*NS_SWIFT_SENDABLE*/ ^resumingHandler)(void) API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0));
 
 /* Set a value in the dictionary returned by invocations of -userInfo, with appropriate KVO notification for properties whose values can depend on values in the user info dictionary, like localizedDescription. If a nil value is passed then the dictionary entry is removed.
 */
@@ -223,8 +223,8 @@ You can publish an instance of NSProgress at most once.
 
 #pragma mark *** Observing and Controlling File Progress by Other Processes (OS X Only) ***
 
-typedef void (^NSProgressUnpublishingHandler)(void);
-typedef _Nullable NSProgressUnpublishingHandler (^NSProgressPublishingHandler)(NSProgress *progress);
+typedef void (/*NS_SWIFT_SENDABLE*/ ^NSProgressUnpublishingHandler)(void);
+typedef _Nullable NSProgressUnpublishingHandler (/*NS_SWIFT_SENDABLE*/ ^NSProgressPublishingHandler)(NSProgress *progress);
 
 /* Register to hear about file progress. The passed-in block will be invoked when -publish has been sent to an NSProgress whose NSProgressFileURLKey user info dictionary entry is an NSURL locating the same item located by the passed-in NSURL, or an item directly contained by it. The NSProgress passed to your block will be a proxy of the one that was published. The passed-in block may return another block. If it does, then that returned block will be invoked when the corresponding invocation of -unpublish is made, or the publishing process terminates, or +removeSubscriber: is invoked. Your blocks will be invoked on the main thread.
 */
@@ -296,4 +296,4 @@ FOUNDATION_EXPORT NSProgressUserInfoKey const NSProgressFileAnimationImageOrigin
 */
 FOUNDATION_EXPORT NSProgressUserInfoKey const NSProgressFileIconKey API_AVAILABLE(macos(10.9)) API_UNAVAILABLE(ios, watchos, tvos);
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)

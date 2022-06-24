@@ -8,7 +8,7 @@
 
 @class NSTimer, NSPort, NSArray<ObjectType>, NSString;
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 FOUNDATION_EXPORT NSRunLoopMode const NSDefaultRunLoopMode;
 FOUNDATION_EXPORT NSRunLoopMode const NSRunLoopCommonModes API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0));
@@ -45,11 +45,11 @@ FOUNDATION_EXPORT NSRunLoopMode const NSRunLoopCommonModes API_AVAILABLE(macos(1
 /// Schedules the execution of a block on the target run loop in given modes.
 /// - parameter: modes   An array of input modes for which the block may be executed.
 /// - parameter: block   The block to execute
-- (void)performInModes:(NSArray<NSRunLoopMode> *)modes block:(void (^)(void))block API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0));
+- (void)performInModes:(NSArray<NSRunLoopMode> *)modes block:(void (/*NS_SWIFT_SENDABLE*/ ^)(void))block API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0));
 
 /// Schedules the execution of a block on the target run loop.
 /// - parameter: block   The block to execute
-- (void)performBlock:(void (^)(void))block API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0));
+- (void)performBlock:(void (/*NS_SWIFT_SENDABLE*/ ^)(void))block API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0));
 
 @end
 
@@ -72,4 +72,4 @@ FOUNDATION_EXPORT NSRunLoopMode const NSRunLoopCommonModes API_AVAILABLE(macos(1
 
 @end
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)

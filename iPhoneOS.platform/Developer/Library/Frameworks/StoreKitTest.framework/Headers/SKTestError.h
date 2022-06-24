@@ -44,7 +44,10 @@ typedef NS_ERROR_ENUM(SKAdTestErrorDomain, SKAdTestErrorCode) {
     SKAdTestErrorCodeMissingPostbacks                    = 15,
     SKAdTestErrorCodeMalformedPostbacks                  = 16,
     SKAdTestErrorCodeExcessivePostbacks                  = 17,
-    SKAdTestErrorCodeUnknownError                        = 18
+    SKAdTestErrorCodeNoPendingPostbacks                  = 18,
+    SKAdTestErrorCodeInvalidPostbackURL                  = 19,
+    SKAdTestErrorCodeMissingSignature                    = 20,
+    SKAdTestErrorCodeUnknownError                        = 21
 } API_AVAILABLE(ios(15.4)) API_UNAVAILABLE(macos,watchos) __TVOS_PROHIBITED;
 
 NS_ASSUME_NONNULL_END

@@ -1,8 +1,8 @@
 //
 //  ws_options.h
-//  libnetcore
+//  Network
 //
-//  Copyright (c) 2018-2019 Apple Inc. All rights reserved.
+//  Copyright (c) 2018-2019, 2022 Apple Inc. All rights reserved.
 //
 
 #ifndef __NW_WS_OPTIONS_H__
@@ -37,6 +37,9 @@ typedef enum {
 
 	/*!
 	 *	@const nw_ws_opcode_cont Denotes a continuation frame.
+	 *
+	 *	Protocol WebSocket handles continuation frames internally,
+	 *	so clients will not see or use continuation frames.
 	 */
 	nw_ws_opcode_cont = 0x0,
 

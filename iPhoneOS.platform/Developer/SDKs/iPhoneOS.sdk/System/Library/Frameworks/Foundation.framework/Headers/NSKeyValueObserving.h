@@ -11,7 +11,7 @@
 
 @class NSIndexSet, NSString;
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 /* Options for use with -addObserver:forKeyPath:options:context: and -addObserver:toObjectsAtIndexes:forKeyPath:options:context:.
 */
@@ -199,4 +199,4 @@ You can't really override this method when you add a computed property to an exi
 
 #endif
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)

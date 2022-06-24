@@ -308,6 +308,7 @@
 # endif
 #endif
 
+#ifndef CF_DEFINES_CG_TYPES
 /* Definition of `CGFLOAT_TYPE', `CGFLOAT_IS_DOUBLE', `CGFLOAT_MIN', and
    `CGFLOAT_MAX'. */
 
@@ -329,6 +330,8 @@
 
 typedef CGFLOAT_TYPE CGFloat;
 #define CGFLOAT_DEFINED 1
+
+#endif /* CF_DEFINES_CG_TYPES */
 
 /* Definition of `CG_OBSOLETE'. Deprecated; to be removed. */
 

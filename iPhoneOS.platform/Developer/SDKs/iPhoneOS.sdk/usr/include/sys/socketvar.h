@@ -74,6 +74,7 @@
 
 #include <sys/appleapiopts.h>
 #include <sys/cdefs.h>
+#include <sys/constrained_ctypes.h>
 #include <sys/types.h> /* u_quad_t */
 #include <TargetConditionals.h>
 #include <uuid/uuid.h>

@@ -24,7 +24,7 @@
   stuff.
 */
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @class UIView;
 @class UINavigationItem, UIBarButtonItem, UITabBarItem;
@@ -201,6 +201,9 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) NS_SWIFT_UI_ACTOR
 
 /// The identifier of the focus group that this view controller belongs to. If this is nil, the view controller inherits the focus group of its parent focus environment.
 @property (nonatomic, readwrite, nullable, copy) NSString *focusGroupIdentifier API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(tvos, watchos);
+
+/// The base name for tracking user interactions as activities hosted by this view controller.
+@property (nonatomic, copy, nullable) NSString *interactionActivityTrackingBaseName API_AVAILABLE(ios(16.0));
 
 /*
   These four methods can be used in a view controller's appearance callbacks to determine if it is being
@@ -555,6 +558,9 @@ UIKIT_EXTERN NSExceptionName const UIViewControllerHierarchyInconsistencyExcepti
 @property (nullable, nonatomic, readonly) UISheetPresentationController *sheetPresentationController API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(tvos, watchos);
 @property (nullable, nonatomic, readonly) UIPopoverPresentationController *popoverPresentationController API_AVAILABLE(ios(8.0));
 
+// Gets the presentation controller managing this view controller. If the original presentation controller has adapted, this returns the adaptive presentation controller. If this view controller has not yet been presented, this property returns nil.
+ @property (nullable, nonatomic, readonly) UIPresentationController *activePresentationController API_AVAILABLE(ios(16.0), tvos(16.0)) API_UNAVAILABLE(watchos);
+
 // modalInPresentation is set on the view controller when you wish to force the presentation hosting the view controller into modal behavior. When this is active, the presentation will prevent interactive dismiss and ignore events outside of the presented view controller's bounds until this is set to NO.
 @property (nonatomic, getter=isModalInPresentation) BOOL modalInPresentation API_AVAILABLE(ios(13.0));
 
@@ -674,7 +680,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(9.0)) API_DEPRECATED("Please use UIContextMenuInt
 + (instancetype)actionGroupWithTitle:(NSString *)title style:(UIPreviewActionStyle)style actions:(NSArray<UIPreviewAction *> *)actions;
 @end
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)
 
 #else
 #import <UIKitCore/UIViewController.h>

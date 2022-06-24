@@ -11,7 +11,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKitDefines.h>
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 UIKIT_SWIFT_FORWARD_DECLARE(@class NSCoder)
 UIKIT_SWIFT_FORWARD_DECLARE(struct CGRect)
@@ -21,7 +21,7 @@ typedef NSEdgeInsets UIEdgeInsets;
 #else
 typedef struct __attribute__((objc_boxable)) UIEdgeInsets {
     CGFloat top, left, bottom, right;  // specify amount to inset (positive) for each of the edges. values can be negative to 'outset'
-} UIEdgeInsets;
+} UIEdgeInsets NS_SWIFT_SENDABLE;
 #endif // FOUNDATION_HAS_DIRECTIONAL_GEOMETRY
 
 /* Geometry type declarations marked with `#ifndef FOUNDATION_HAS_DIRECTIONAL_GEOMETRY` are being relocated to Foundation/NSGeometry.h */
@@ -33,14 +33,14 @@ typedef struct __attribute__((objc_boxable)) UIEdgeInsets {
  */
 typedef struct __attribute__((objc_boxable)) NSDirectionalEdgeInsets {
     CGFloat top, leading, bottom, trailing;  // specify amount to inset (positive) for each of the edges. values can be negative to 'outset'
-} NSDirectionalEdgeInsets API_AVAILABLE(ios(11.0),tvos(11.0),watchos(4.0));
+} NSDirectionalEdgeInsets API_AVAILABLE(ios(11.0),tvos(11.0),watchos(4.0)) NS_SWIFT_SENDABLE;
 
 #endif // UIKIT_HAS_UIFOUNDATION_SYMBOLS
 #endif // FOUNDATION_HAS_DIRECTIONAL_GEOMETRY
 
 typedef struct __attribute__((objc_boxable)) UIOffset {
     CGFloat horizontal, vertical; // specify amount to offset a position, positive for right or down, negative for left or up
-} UIOffset;
+} UIOffset NS_SWIFT_SENDABLE;
 
 typedef NS_OPTIONS(NSUInteger, UIRectEdge) {
     UIRectEdgeNone   = 0,
@@ -256,7 +256,7 @@ UIKIT_EXTERN UIOffset UIOffsetFromString(NSString *string);
 
 @end
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)
 
 #else
 #import <UIKitCore/UIGeometry.h>

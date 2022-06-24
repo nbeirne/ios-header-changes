@@ -5,6 +5,11 @@
    All rights reserved. 
 */
 
+#ifndef CIIMAGEPROCESSOR_H
+#define CIIMAGEPROCESSOR_H
+
+#ifdef __OBJC__
+
 #import <CoreImage/CIImage.h>
 
 #if TARGET_OS_OSX
@@ -203,3 +208,7 @@ NS_CLASS_AVAILABLE(10_12, 10_0)
 
 
 NS_ASSUME_NONNULL_END
+
+#endif /* __OBJC__ */
+
+#endif /* CIIMAGEPROCESSOR_H */

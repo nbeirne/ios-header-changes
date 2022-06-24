@@ -1390,7 +1390,7 @@ typedef void (^AURenderContextObserver)(const AudioUnitRenderContext *context)
 	@struct         MIDIEventList
 	@abstract       Forward declaration of MIDIEventList found in <CoreMIDI/MIDIServices.h>
 */
-typedef struct MIDIEventList MIDIEventList;
+struct MIDIEventList;
 
 /*!    @typedef    AUEventSampleTime
 	@brief        Expresses time as a sample count.
@@ -1815,6 +1815,21 @@ typedef void (^AudioUnitRemoteControlEventListener)(AudioUnitRemoteControlEvent 
  */
 
 #define kAudioUnitConfigurationInfo_SupportedChannelLayoutTags	"SupportedChannelLayoutTags"
+
+/*!
+ @define		kAudioUnitConfigurationInfo_MIDIProtocol
+ @discussion	A signed 32-bit integer representing the audio unit's MIDI protocol. This should be one of the
+				values in the MIDIProtocolID enum (see <CoreMIDI/MIDIServices.h>).
+ */
+
+#define kAudioUnitConfigurationInfo_MIDIProtocol	"MIDIProtocol"
+
+/*!
+ @define		kAudioUnitConfigurationInfo_MigrateFromPlugin
+ @discussion	An array of NSData representing byte encoded AudioUnitOtherPluginDescs to migrate from.
+ */
+
+#define kAudioUnitConfigurationInfo_MigrateFromPlugin	"MigrateFromPlugin"
 
 #pragma mark -
 #pragma mark OS X Availability
@@ -2621,7 +2636,7 @@ typedef void (^AUVoiceIOMutedSpeechActivityEventListener)(AUVoiceIOSpeechActivit
  */
 CF_ENUM(AudioUnitPropertyID) {
 	kAUVoiceIOProperty_MutedSpeechActivityEventListener = 2106
-} API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(macos, watchos, tvos);
+} API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(macos, watchos, tvos, macCatalyst);
 
 #pragma mark - AUVoiceProcessing unit deprecated properties
 

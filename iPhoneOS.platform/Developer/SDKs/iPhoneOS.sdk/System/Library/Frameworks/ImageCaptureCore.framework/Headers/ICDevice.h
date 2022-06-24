@@ -56,7 +56,7 @@ typedef NS_ENUM(NSUInteger, ICDeviceTypeMask)
 {
     ICDeviceTypeMaskCamera  = 0x00000001,
     ICDeviceTypeMaskScanner = 0x00000002
-} IC_AVAILABLE(macos(10.4)) IC_UNAVAILABLE(ios);
+} IC_AVAILABLE(macos(10.4),ios(15.2));
 
 /*!
  @const ICDeviceLocationTypeMask
@@ -74,7 +74,7 @@ typedef NS_ENUM( NSUInteger, ICDeviceLocationTypeMask )
     ICDeviceLocationTypeMaskBonjour   = 0x00000400,
     ICDeviceLocationTypeMaskBluetooth = 0x00000800,
     ICDeviceLocationTypeMaskRemote    = 0x0000FE00
-} IC_AVAILABLE(macos(10.4)) IC_UNAVAILABLE(ios);
+} IC_AVAILABLE(macos(10.4),ios(15.2));
 
 @class ICDevice,ICCameraDevice,NSError, NSDictionary, NSData, NSMutableDictionary;
 
@@ -234,7 +234,7 @@ IC_AVAILABLE(macos(10.4), ios(13.0))
 @property systemSymbolName
 @abstract ￼Standard system symbol used to represent the device class.  Using the symbol to render an appropriate device icon will ensure proper scaling for high resolution devices.
 */
-@property (nonatomic, readonly, copy, nullable) NSString* systemSymbolName IC_AVAILABLE(macos(11.0)) IC_UNAVAILABLE(ios);
+@property (nonatomic, readonly, copy, nullable) NSString* systemSymbolName IC_AVAILABLE(macos(12.0),ios(15.2));
 
 /*!
  @property transportType

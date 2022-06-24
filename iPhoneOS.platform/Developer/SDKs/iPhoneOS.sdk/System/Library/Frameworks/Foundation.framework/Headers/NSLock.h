@@ -6,7 +6,7 @@
 
 @class NSDate;
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @protocol NSLocking
 
@@ -15,10 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface NSLock : NSObject <NSLocking> {
-@private
-    void *_priv;
-}
+NS_SWIFT_SENDABLE // Locks are inherently Sendable by definition
+@interface NSLock : NSObject <NSLocking>
 
 - (BOOL)tryLock;
 - (BOOL)lockBeforeDate:(NSDate *)limit;
@@ -27,10 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface NSConditionLock : NSObject <NSLocking> {
-@private
-    void *_priv;
-}
+NS_SWIFT_SENDABLE // Locks are inherently Sendable by definition
+@interface NSConditionLock : NSObject <NSLocking>
 
 - (instancetype)initWithCondition:(NSInteger)condition NS_DESIGNATED_INITIALIZER;
 
@@ -46,10 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface NSRecursiveLock : NSObject <NSLocking> {
-@private
-    void *_priv;
-}
+NS_SWIFT_SENDABLE // Locks are inherently Sendable by definition
+@interface NSRecursiveLock : NSObject <NSLocking>
 
 - (BOOL)tryLock;
 - (BOOL)lockBeforeDate:(NSDate *)limit;
@@ -59,12 +53,9 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-
+NS_SWIFT_SENDABLE // Locks are inherently Sendable by definition
 API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0))
-@interface NSCondition : NSObject <NSLocking> {
-@private
-    void *_priv;
-}
+@interface NSCondition : NSObject <NSLocking>
 
 - (void)wait;
 - (BOOL)waitUntilDate:(NSDate *)limit;
@@ -75,4 +66,4 @@ API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0))
 
 @end
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)

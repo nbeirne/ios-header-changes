@@ -720,5 +720,6 @@ CFTypeRef CFMakeCollectable(CFTypeRef cf) CF_AUTOMATED_REFCOUNT_UNAVAILABLE;
 
 CF_EXTERN_C_END
 
+#include <CoreFoundation/CFCGTypes.h>
 #endif /* ! __COREFOUNDATION_CFBASE__ */
 

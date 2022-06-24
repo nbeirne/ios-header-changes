@@ -4,7 +4,7 @@
 
 	Framework:  AVFoundation
  
-	Copyright 2010-2021 Apple Inc. All rights reserved.
+	Copyright 2010-2022 Apple Inc. All rights reserved.
 
 */
 
@@ -104,6 +104,8 @@ API_AVAILABLE(macos(10.7), ios(4.0), tvos(9.0), watchos(1.0))
 	@param			item
 	@result			An instance of AVPlayer
 	@discussion		Useful in order to play items for which an AVAsset has previously been created. See -[AVPlayerItem initWithAsset:].
+					This method throws an exception if the item is not an AVPlayerItem, or if the item is
+					associated with another AVPlayer.
 */
 - (instancetype)initWithPlayerItem:(nullable AVPlayerItem *)item;
 
@@ -173,27 +175,50 @@ AVF_EXPORT AVPlayerRateDidChangeReason const AVPlayerRateDidChangeReasonAppBackg
 
  The effective rate of playback may differ from the desired rate even while timeControlStatus is AVPlayerTimeControlStatusPlaying, if the processing algorithm in use for managing audio pitch requires quantization of playback rate. For information about quantization of rates for audio processing, see AVAudioProcessingSettings.h. You can always obtain the effective rate of playback from the currentItem's timebase; see the timebase property of AVPlayerItem.
  
- This property must be accessed on the main thread/queue.
+ Before macOS 13, iOS 16, tvOS 16, and watchOS 9, this property must be accessed on the main thread/queue.
  */
-@property (nonatomic) float rate NS_SWIFT_UI_ACTOR;
+@property (nonatomic) float rate
+#if ! AVF_DEPLOYING_TO_2022_RELEASES_AND_LATER
+NS_SWIFT_UI_ACTOR
+#endif
+;
 
 /*!
- @method		play
- @abstract		Signals the desire to begin playback at the current item's natural rate.
- @discussion	Equivalent to setting the value of rate to 1.0.
+ @property      defaultRate
+ @abstract      Indicates the rate at which to start playback when play is called; defaults to 1.0.
+ @discussion
+ Setting this property does not imply playback starts automatically at this rate. Clients still have to kick off playback using `play`. Note that using setRate to start playback will skip using the value in this property nor would it update this property. Therefore, `setRate:1.0` is no longer recommended as a means to start playback. Use `play` instead. Use `setRate` for operations like scanning where the rate is to be updated instantaneously. Invoking `play` again would restore playback at the rate set in this property.
  
- This method must be invoked on the main thread/queue.
+ The effective rate of playback may still differ from the default rate subject to restrictions imposed by the system. See documentation for the rate property for a discussion on when the desired rate does not translate to effective rate.
+
  */
-- (void)play NS_SWIFT_UI_ACTOR;
+@property (nonatomic) float defaultRate API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0), watchos(9.0));
+
+/*!
+ @method        play
+ @abstract      Signals the desire to begin playback at the rate set in the defaultRate.
+ @discussion    For releases up to iOS version 16.0, macOS versions 13.0, tvOS 16.0 and watchOS 9.0, this is equivalent to setting the value of rate to `1.0`. Starting from iOS version 16.0, macOS versions 13.0, tvOS 16.0 and watchOS 9.0, this will attempt to use the rate set in the `defaultRate` property. The effective rate of playback may differ from the `defaultRate` due to the reasons mentioned in the documentation of the `rate` property. Clients interested in knowing the effective rate can listen for `AVPlayerRateDidChangeNotification` notification.
+
+ Before macOS 13, iOS 16, tvOS 16, and watchOS 9, this method must be invoked on the main thread/queue.
+ */
+- (void)play
+#if ! AVF_DEPLOYING_TO_2022_RELEASES_AND_LATER
+NS_SWIFT_UI_ACTOR
+#endif
+;
 
 /*!
  @method		pause
  @abstract		Pauses playback.
  @discussion	Equivalent to setting the value of rate to 0.0.
  
- This method must be invoked on the main thread/queue.
+ Before macOS 13, iOS 16, tvOS 16, and watchOS 9, this method must be invoked on the main thread/queue.
  */
-- (void)pause NS_SWIFT_UI_ACTOR;
+- (void)pause
+#if ! AVF_DEPLOYING_TO_2022_RELEASES_AND_LATER
+NS_SWIFT_UI_ACTOR
+#endif
+;
 
 /*!
  @enum AVPlayerTimeControlStatus
@@ -286,9 +311,13 @@ AVF_EXPORT AVPlayerWaitingReason const AVPlayerWaitingForCoordinatedPlaybackReas
  When the player's currentItem has a value of NO for playbackBufferEmpty, this method causes the value of rate to change to the specified rate, the value of timeControlStatus to change to AVPlayerTimeControlStatusPlaying, and the receiver to play the available media immediately, whether or not prior buffering of media data is sufficient to ensure smooth playback.
  If insufficient media data is buffered for playback to start (e.g. if the current item has a value of YES for playbackBufferEmpty), the receiver will act as if the buffer became empty during playback, except that no AVPlayerItemPlaybackStalledNotification will be posted.
  
- This method must be invoked on the main thread/queue.
+ Before macOS 13, iOS 16, tvOS 16, and watchOS 9, this method must be invoked on the main thread/queue.
  */
-- (void)playImmediatelyAtRate:(float)rate NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
+- (void)playImmediatelyAtRate:(float)rate
+#if ! AVF_DEPLOYING_TO_2022_RELEASES_AND_LATER
+NS_SWIFT_UI_ACTOR
+#endif
+API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
 
 @end
 
@@ -305,6 +334,7 @@ AVF_EXPORT AVPlayerWaitingReason const AVPlayerWaitingForCoordinatedPlaybackReas
 	  The AVPlayerItem that will become the player's current item.
 	@discussion
 	  In all releases of iOS 4, invoking replaceCurrentItemWithPlayerItem: with an AVPlayerItem that's already the receiver's currentItem results in an exception being raised. Starting with iOS 5, it's a no-op.
+	  This method throws an exception if the item already exists in the play queue.
 */
 - (void)replaceCurrentItemWithPlayerItem:(nullable AVPlayerItem *)item;
 
@@ -332,7 +362,12 @@ typedef NS_ENUM(NSInteger, AVPlayerActionAtItemEnd)
 	AVPlayerActionAtItemEndNone		= 2,
 };
 
-/* indicates the action that the player should perform when playback of an item reaches its end time */
+/*  */
+/*!
+ @property		actionAtItemEnd
+ @abstract		Indicates the action that the player should perform when playback of an item reaches its end time.
+ @discussion	This property throws an exception if set to AVPlayerActionAtItemEndAdvance on an AVPlayer which is not an AVQueuePlayer.
+*/
 @property AVPlayerActionAtItemEnd actionAtItemEnd;
 
 @end
@@ -445,10 +480,14 @@ typedef NS_ENUM(NSInteger, AVPlayerActionAtItemEnd)
 
  You can allow the value of automaticallyWaitsToMinimizeStalling to remain YES if you use an AVAssetResourceLoader delegate to manage content keys for FairPlay Streaming, to provide dynamically-generated master playlists for HTTP Live Streaming, or to respond to authentication challenges, but not to load media data for playback.
  
- This property must be accessed on the main thread/queue.
+ Before macOS 13, iOS 16, tvOS 16, and watchOS 9, this property must be accessed on the main thread/queue.
 */
 
-@property (nonatomic) BOOL automaticallyWaitsToMinimizeStalling NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
+@property (nonatomic) BOOL automaticallyWaitsToMinimizeStalling
+#if ! AVF_DEPLOYING_TO_2022_RELEASES_AND_LATER
+NS_SWIFT_UI_ACTOR
+#endif
+API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
 
 
 
@@ -461,6 +500,9 @@ typedef NS_ENUM(NSInteger, AVPlayerActionAtItemEnd)
 					In other words: if hostClockTime is in the past, the timebase's time will be interpolated as though the timebase has been running at the requested rate since that time.  If hostClockTime is in the future, the timebase will immediately start running at the requested rate from an earlier time so that it will reach the requested itemTime at the requested hostClockTime.  (Note that the item's time will not jump backwards, but instead will sit at itemTime until the timebase reaches that time.)
 
 					Note that setRate:time:atHostTime: is not supported when automaticallyWaitsToMinimizeStalling is YES. For clients linked against iOS 10.0 and later or OS X 12.0 and later, invoking setRate:time:atHostTime: when automaticallyWaitsToMinimizeStalling is YES will raise an NSInvalidArgument exception. Support for HTTP Live Streaming content requires iOS 11, tvOS 11, macOS 10.13 or later.
+
+					Before macOS 13, iOS 16, tvOS 16, and watchOS 9, this method must be invoked on the main thread/queue.
+
 	@param itemTime	The time to start playback from, specified precisely (i.e., with zero tolerance).
 					Pass kCMTimeInvalid to use the current item's current time.
 	@param hostClockTime
@@ -468,17 +510,20 @@ typedef NS_ENUM(NSInteger, AVPlayerActionAtItemEnd)
 					If hostClockTime is specified, the player will not ensure that media data is loaded before the timebase starts moving.
 					If hostClockTime is kCMTimeInvalid, the rate and time will be set together, but without external synchronization;
 					a host time in the near future will be used, allowing some time for media data loading.
- 
-					This method must be invoked on the main thread/queue.
 */
-- (void)setRate:(float)rate time:(CMTime)itemTime atHostTime:(CMTime)hostClockTime NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.8), ios(6.0), tvos(9.0), watchos(1.0));
+- (void)setRate:(float)rate time:(CMTime)itemTime atHostTime:(CMTime)hostClockTime
+#if ! AVF_DEPLOYING_TO_2022_RELEASES_AND_LATER
+NS_SWIFT_UI_ACTOR
+#endif
+API_AVAILABLE(macos(10.8), ios(6.0), tvos(9.0), watchos(1.0));
 
 /*!
 	@method			prerollAtRate:completionHandler:
 	@abstract		Begins loading media data to prime the render pipelines for playback from the current time with the given rate.
 	@discussion		Once the completion handler is called with YES, the player's rate can be set with minimal latency.
-					The completion handler will be called with NO if the preroll is interrupted by a time change or incompatible rate change, or if preroll is not possible for some other reason.
-					Call this method only when the rate is currently zero and only after the AVPlayer's status has become AVPlayerStatusReadyToPlay.
+				The completion handler will be called with NO if the preroll is interrupted by a time change or incompatible rate change, or if preroll is not possible for some other reason.
+				Call this method only when the rate is currently zero and only after the AVPlayer's status has become AVPlayerStatusReadyToPlay.
+				This method throws an exception if the status is not AVPlayerStatusReadyToPlay.
 	@param rate		The intended rate for subsequent playback.
 	@param completionHandler
 					The block that will be called when the preroll is either completed or is interrupted.
@@ -556,7 +601,12 @@ typedef NS_ENUM(NSInteger, AVPlayerActionAtItemEnd)
 					-removeTimeObserver: to wait for any in-flight blocks to finish executing.
 					-removeTimeObserver: should be used to explicitly cancel each time observer added using -addPeriodicTimeObserverForInterval:queue:usingBlock:
 					and -addBoundaryTimeObserverForTimes:queue:usingBlock:.
-*/
+ 
+					This method throws an exception for any of the following reasons:
+						- observer was added by a different instance of AVPlayer
+						- observer was not returned by -addPeriodicTimeObserverForInterval:queue:usingBlock:
+						- observer was not returned by -addBoundaryTimeObserverForTimes:queue:usingBlock:
+ */
 - (void)removeTimeObserver:(id)observer;
 
 @end
@@ -602,9 +652,13 @@ typedef NS_ENUM(NSInteger, AVPlayerActionAtItemEnd)
 
    Specific selections made by -[AVPlayerItem selectMediaOption:inMediaSelectionGroup:] within any group will override automatic selection in that group until -[AVPlayerItem selectMediaOptionAutomaticallyInMediaSelectionGroup:] is received.
  
-   This method must be invoked on the main thread/queue.
+   Before macOS 13, iOS 16, tvOS 16, and watchOS 9, this method must be invoked on the main thread/queue.
 */
-- (void)setMediaSelectionCriteria:(nullable AVPlayerMediaSelectionCriteria *)criteria forMediaCharacteristic:(AVMediaCharacteristic)mediaCharacteristic NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0), watchos(1.0));
+- (void)setMediaSelectionCriteria:(nullable AVPlayerMediaSelectionCriteria *)criteria forMediaCharacteristic:(AVMediaCharacteristic)mediaCharacteristic
+#if ! AVF_DEPLOYING_TO_2022_RELEASES_AND_LATER
+NS_SWIFT_UI_ACTOR
+#endif
+API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0), watchos(1.0));
 
 /*!
  @method     mediaSelectionCriteriaForMediaCharacteristic:
@@ -612,9 +666,13 @@ typedef NS_ENUM(NSInteger, AVPlayerActionAtItemEnd)
  @param      mediaCharacteristic
   The media characteristic for which the selection criteria is to be returned. Supported values include AVMediaCharacteristicAudible, AVMediaCharacteristicLegible, and AVMediaCharacteristicVisual.
  
-  This method must be invoked on the main thread/queue.
+  Before macOS 13, iOS 16, tvOS 16, and watchOS 9, this method must be invoked on the main thread/queue.
 */
-- (nullable AVPlayerMediaSelectionCriteria *)mediaSelectionCriteriaForMediaCharacteristic:(AVMediaCharacteristic)mediaCharacteristic NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0), watchos(1.0));
+- (nullable AVPlayerMediaSelectionCriteria *)mediaSelectionCriteriaForMediaCharacteristic:(AVMediaCharacteristic)mediaCharacteristic
+#if ! AVF_DEPLOYING_TO_2022_RELEASES_AND_LATER
+NS_SWIFT_UI_ACTOR
+#endif
+API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0), watchos(1.0));
 
 @end
 
@@ -805,10 +863,14 @@ AVF_EXPORT NSNotificationName const AVPlayerEligibleForHDRPlaybackDidChangeNotif
  @discussion
 	 Default is YES on iOS, tvOS and in Mac Catalyst apps.  Default is NO on macOS.
 	 Setting this property to NO does not force the display to sleep, it simply stops preventing display sleep.  Other apps or frameworks within your app may still be preventing display sleep for various reasons.
-
-	 This property must be accessed on the main thread/queue.
+ 
+	 Before macOS 13, iOS 16, tvOS 16, and watchOS 9, this property must be accessed on the main thread/queue.
  */
-@property (nonatomic) BOOL preventsDisplaySleepDuringVideoPlayback NS_SWIFT_UI_ACTOR API_AVAILABLE(macos(10.14), ios(12.0), tvos(12.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic) BOOL preventsDisplaySleepDuringVideoPlayback
+#if ! AVF_DEPLOYING_TO_2022_RELEASES_AND_LATER
+NS_SWIFT_UI_ACTOR
+#endif
+API_AVAILABLE(macos(10.14), ios(12.0), tvos(12.0)) API_UNAVAILABLE(watchos);
 
 @end
 
@@ -928,6 +990,8 @@ API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0), watchos(1.0))
       An NSArray of AVPlayerItems with which to populate the player's queue initially.
     @result
       An instance of AVQueuePlayer.
+    @discussion
+      This method throws an exception if items contains duplicated values or values associated with another AVPlayer.
 */
 - (AVQueuePlayer *)initWithItems:(NSArray<AVPlayerItem *> *)items;
 
@@ -966,6 +1030,8 @@ API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0), watchos(1.0))
       The item to be inserted.
     @param      afterItem
       The item that the newly inserted item should follow in the queue. Pass nil to append the item to the queue.
+    @discussion
+      This method throws an exception if item already exists in the queue.
 */
 - (void)insertItem:(AVPlayerItem *)item afterItem:(nullable AVPlayerItem *)afterItem;
 

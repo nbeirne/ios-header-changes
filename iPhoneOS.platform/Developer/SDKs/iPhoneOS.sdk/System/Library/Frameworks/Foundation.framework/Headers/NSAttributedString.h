@@ -6,7 +6,7 @@
 #import <Foundation/NSString.h>
 #import <Foundation/NSDictionary.h>
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 typedef NSString * NSAttributedStringKey NS_TYPED_EXTENSIBLE_ENUM;
 
@@ -105,6 +105,10 @@ FOUNDATION_EXTERN const NSAttributedStringKey NSImageURLAttributeName
 FOUNDATION_EXTERN const NSAttributedStringKey NSLanguageIdentifierAttributeName
 API_AVAILABLE(macos(12.0), ios(15.0), watchos(8.0), tvos(15.0)) NS_SWIFT_NAME(languageIdentifier);
 
+// a NSAttributedStringMarkdownSourcePosition
+FOUNDATION_EXPORT const NSAttributedStringKey NSMarkdownSourcePositionAttributeName
+API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0)) NS_SWIFT_NAME(markdownSourcePosition);
+
 
 typedef NS_ENUM(NSInteger, NSAttributedStringMarkdownParsingFailurePolicy) {
     // If parsing fails, return an error from the appropriate constructor.
@@ -126,6 +130,20 @@ typedef NS_ENUM(NSInteger, NSAttributedStringMarkdownInterpretedSyntax) {
     NSAttributedStringMarkdownInterpretedSyntaxInlineOnlyPreservingWhitespace = 2
 } API_AVAILABLE(macos(12.0), ios(15.0), watchos(8.0), tvos(15.0)) NS_REFINED_FOR_SWIFT;
 
+NS_REFINED_FOR_SWIFT
+API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0))
+@interface NSAttributedStringMarkdownSourcePosition : NSObject <NSCopying, NSSecureCoding>
+
+@property (readonly) NSInteger startLine;
+@property (readonly) NSInteger startColumn;
+@property (readonly) NSInteger endLine;
+@property (readonly) NSInteger endColumn;
+
+- (instancetype)initWithStartLine:(NSInteger)startLine startColumn:(NSInteger)startColumn endLine:(NSInteger)endLine endColumn:(NSInteger)endColumn;
+
+- (NSRange)rangeInString:(NSString *)string;
+
+@end
 
 NS_REFINED_FOR_SWIFT
 API_AVAILABLE(macos(12.0), ios(15.0), watchos(8.0), tvos(15.0))
@@ -147,6 +165,8 @@ API_AVAILABLE(macos(12.0), ios(15.0), watchos(8.0), tvos(15.0))
 // The BCP-47 language code for this document. If not nil, the NSLanguageAttributeName attribute will be applied to any range in the returned string that doesn't otherwise specify a language attribute.
 // The default is nil, which applies no attributes.
 @property (nullable, copy) NSString *languageCode;
+
+@property BOOL appliesSourcePositionAttributes API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 @end
 
@@ -338,4 +358,4 @@ API_AVAILABLE(macos(12.0), ios(15.0), watchos(8.0), tvos(15.0))
 
 @end
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)

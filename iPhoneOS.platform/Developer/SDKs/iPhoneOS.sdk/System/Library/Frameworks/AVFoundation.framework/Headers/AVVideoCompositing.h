@@ -317,7 +317,12 @@ API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0)) API_UNAVAILABLE(watchos)
 */
 - (nullable AVTimedMetadataGroup *)sourceTimedMetadataByTrackID:(CMPersistentTrackID)trackID API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos);
 
-/* callback the custom compositor should call when composition succeeded */
+/*!
+	@method			finishWithComposedVideoFrame:
+	@abstract		The method that the custom compositor calls when composition succeeds.
+	@param			composedVideoFrame
+					The video frame to finish with.
+*/
 - (void)finishWithComposedVideoFrame:(CVPixelBufferRef)composedVideoFrame;
 
 /* callback the custom compositor should call when composition failed. The error parameter should describe the actual error. */

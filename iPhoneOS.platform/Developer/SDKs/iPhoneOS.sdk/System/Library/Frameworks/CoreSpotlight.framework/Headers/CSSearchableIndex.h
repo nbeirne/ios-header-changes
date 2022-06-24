@@ -85,9 +85,20 @@ CS_TVOS_UNAVAILABLE
 
 @end
 
+CS_AVAILABLE(13_0, 16_0)
+CS_TVOS_UNAVAILABLE
+@interface CSSearchableIndex (CSExternalProvider)
+
+- (void)provideDataForBundle:(NSString *)bundle
+                  identifier:(NSString *)identifier
+                        type:(NSString *)type
+           completionHandler:(void (^)(NSData * _Nullable, NSError * _Nullable))completionHandler;
+
+
+@end
+
 //An application that is long running should provide a CSSearchableIndexDelegate conforming object to handle communication from the index.
 //Alternatively, an app can provide an extension whose request handler conforms to this protocol and the extension will be called if the app isn't running.
-
 CS_AVAILABLE(10_13, 9_0)
 CS_TVOS_UNAVAILABLE
 @protocol CSSearchableIndexDelegate <NSObject>

@@ -32,20 +32,28 @@
  * <mach/machine.h> is needed here for the cpu_type_t and cpu_subtype_t types
  * and contains the constants for the possible values of these types.
  */
+#if __has_include(<mach/machine.h>)
 #include <mach/machine.h>
+#endif
 
 /*
  * <mach/vm_prot.h> is needed here for the vm_prot_t type and contains the 
  * constants that are or'ed together for the possible values of this type.
  */
+#if __has_include(<mach/vm_prot.h>)
 #include <mach/vm_prot.h>
+#endif
 
 /*
  * <machine/thread_status.h> is expected to define the flavors of the thread
  * states and the structures of those flavors for each machine.
  */
+#if __has_include(<mach/machine/thread_status.h>)
 #include <mach/machine/thread_status.h>
+#endif
+#if __has_include(<architecture/byte_order.h>)
 #include <architecture/byte_order.h>
+#endif
 
 /*
  * The 32-bit mach header appears at the very beginning of the object file for
@@ -53,8 +61,8 @@
  */
 struct mach_header {
 	uint32_t	magic;		/* mach magic number identifier */
-	cpu_type_t	cputype;	/* cpu specifier */
-	cpu_subtype_t	cpusubtype;	/* machine specifier */
+	int32_t		cputype;	/* cpu specifier */
+	int32_t		cpusubtype;	/* machine specifier */
 	uint32_t	filetype;	/* type of file */
 	uint32_t	ncmds;		/* number of load commands */
 	uint32_t	sizeofcmds;	/* the size of all the load commands */
@@ -71,8 +79,8 @@ struct mach_header {
  */
 struct mach_header_64 {
 	uint32_t	magic;		/* mach magic number identifier */
-	cpu_type_t	cputype;	/* cpu specifier */
-	cpu_subtype_t	cpusubtype;	/* machine specifier */
+	int32_t		cputype;	/* cpu specifier */
+	int32_t		cpusubtype;	/* machine specifier */
 	uint32_t	filetype;	/* type of file */
 	uint32_t	ncmds;		/* number of load commands */
 	uint32_t	sizeofcmds;	/* the size of all the load commands */
@@ -362,8 +370,8 @@ struct segment_command { /* for 32-bit architectures */
 	uint32_t	vmsize;		/* memory size of this segment */
 	uint32_t	fileoff;	/* file offset of this segment */
 	uint32_t	filesize;	/* amount to map from the file */
-	vm_prot_t	maxprot;	/* maximum VM protection */
-	vm_prot_t	initprot;	/* initial VM protection */
+	int32_t		maxprot;	/* maximum VM protection */
+	int32_t		initprot;	/* initial VM protection */
 	uint32_t	nsects;		/* number of sections in segment */
 	uint32_t	flags;		/* flags */
 };
@@ -382,8 +390,8 @@ struct segment_command_64 { /* for 64-bit architectures */
 	uint64_t	vmsize;		/* memory size of this segment */
 	uint64_t	fileoff;	/* file offset of this segment */
 	uint64_t	filesize;	/* amount to map from the file */
-	vm_prot_t	maxprot;	/* maximum VM protection */
-	vm_prot_t	initprot;	/* initial VM protection */
+	int32_t		maxprot;	/* maximum VM protection */
+	int32_t		initprot;	/* initial VM protection */
 	uint32_t	nsects;		/* number of sections in segment */
 	uint32_t	flags;		/* flags */
 };
@@ -1263,6 +1271,8 @@ struct build_tool_version {
 };
 
 /* Known values for the platform field above. */
+#define PLATFORM_UNKNOWN 0
+#define PLATFORM_ANY 0xFFFFFFFF
 #define PLATFORM_MACOS 1
 #define PLATFORM_IOS 2
 #define PLATFORM_TVOS 3

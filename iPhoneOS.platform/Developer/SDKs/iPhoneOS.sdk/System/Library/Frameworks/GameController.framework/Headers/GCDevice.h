@@ -5,11 +5,9 @@
 //  Copyright © 2020 Apple Inc. All rights reserved.
 //
 
-#import <TargetConditionals.h>
+#import <Foundation/Foundation.h>
 
 @class GCPhysicalInputProfile;
-
-#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -50,8 +48,7 @@ API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0))
  @see GCController.microGamepad
  @see GCController.extendedGamepad
 */
-@property (nonatomic, strong, readonly) GCPhysicalInputProfile *physicalInputProfile API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0));
-
+@property (nonatomic, strong, readonly) GCPhysicalInputProfile *physicalInputProfile API_DEPRECATED("Use the physicalInputProfile property on GCController instead.  For GCKeyboard, use the keyboardInput property.  For GCMouse, use the mouseInput property.", macos(11.0, 13.0), ios(14.0, 16.0), tvos(14.0, 16.0));
 
 @end
 

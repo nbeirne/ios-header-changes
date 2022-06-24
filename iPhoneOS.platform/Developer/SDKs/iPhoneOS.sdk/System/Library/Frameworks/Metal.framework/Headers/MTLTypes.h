@@ -102,3 +102,23 @@ MTL_INLINE MTLCoordinate2D MTLCoordinate2DMake(float x, float y)
     MTLCoordinate2D result = {x, y};
     return result;
 } 
+
+/*!
+ @typedef MTLGPUHandle
+ @abstract Accessbile by the CPU, it is used to get the handle of a GPU resource that could be normally passed to the GPU
+ 
+ @discussion
+ A MTLGPUHandle represents a specific GPU resource, mutating this handle is undefined unless the mutation results in the value equalling an already existing handle of the same resource type.
+ */
+typedef uint64_t MTLGPUHandle;
+
+/*!
+ @typedef MTLResourceID
+ @abstract Accessible by the CPU, it is used to get the handle of a GPU resource that could be normally passed to the GPU
+ @discussion
+ A MTLResourceID represents a specific GPU resource, mutating this handle is undefined unless the mutation results in the value equalling an already existing handle of the same resource type.
+ */
+typedef struct MTLResourceID
+{
+    uint64_t _impl;
+} MTLResourceID;

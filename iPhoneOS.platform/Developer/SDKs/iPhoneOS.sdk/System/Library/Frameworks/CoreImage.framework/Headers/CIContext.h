@@ -3,6 +3,11 @@
    Copyright (c) 2014 Apple, Inc.
    All rights reserved. */
 
+#ifndef CICONTEXT_H
+#define CICONTEXT_H
+
+#ifdef __OBJC__
+
 #import <CoreImage/CIImage.h>
 #import <CoreImage/CoreImageDefines.h>
 #import <CoreVideo/CoreVideo.h>
@@ -561,3 +566,7 @@ CORE_IMAGE_EXPORT CIImageRepresentationOption const kCIImageRepresentationSemant
 
 
 NS_ASSUME_NONNULL_END
+
+#endif /* __OBJC__ */
+
+#endif /* CICONTEXT_H */

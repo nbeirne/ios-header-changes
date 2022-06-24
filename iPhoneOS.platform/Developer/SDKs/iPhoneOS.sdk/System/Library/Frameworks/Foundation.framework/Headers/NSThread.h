@@ -8,7 +8,7 @@
 
 @class NSArray<ObjectType>, NSMutableDictionary, NSDate, NSNumber, NSString;
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @interface NSThread : NSObject  {
 @private
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (class, readonly, strong) NSThread *currentThread;
 
-+ (void)detachNewThreadWithBlock:(void (^)(void))block API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0)) NS_SWIFT_DISABLE_ASYNC;
++ (void)detachNewThreadWithBlock:(void (/*NS_SWIFT_SENDABLE*/ ^)(void))block API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0)) NS_SWIFT_DISABLE_ASYNC;
 + (void)detachNewThreadSelector:(SEL)selector toTarget:(id)target withObject:(nullable id)argument;
 
 + (BOOL)isMultiThreaded;
@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0)) NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithTarget:(id)target selector:(SEL)selector object:(nullable id)argument API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0));
-- (instancetype)initWithBlock:(void (^)(void))block API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0));
+- (instancetype)initWithBlock:(void (/*NS_SWIFT_SENDABLE*/ ^)(void))block API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0));
 
 @property (readonly, getter=isExecuting) BOOL executing API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0));
 @property (readonly, getter=isFinished) BOOL finished API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0));
@@ -81,4 +81,4 @@ FOUNDATION_EXPORT NSNotificationName const NSThreadWillExitNotification;
 
 @end
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)

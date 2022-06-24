@@ -2,7 +2,5 @@
 
 #import <FileProvider/FileProvider.h>
 
-@interface ___FILEBASENAME___ : NSFileProviderExtension
-
+@interface FileProviderExtension : NSObject<NSFileProviderReplicatedExtension>
 @end
-

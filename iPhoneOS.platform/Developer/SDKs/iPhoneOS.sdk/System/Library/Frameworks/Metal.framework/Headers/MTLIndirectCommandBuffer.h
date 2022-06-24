@@ -77,17 +77,23 @@ MTL_EXPORT API_AVAILABLE(macos(10.14), ios(12.0))
 @property (readwrite, nonatomic) NSUInteger maxVertexBufferBindCount;
 
 /*!
- @absract
+ @abstract
  The maximum bind index of fragment argument buffers that can be set per command.
  */
 @property (readwrite, nonatomic) NSUInteger maxFragmentBufferBindCount;
 
 /*!
- @absract
+ @abstract
  The maximum bind index of kernel (or tile) argument buffers that can be set per command.
  */
 @property (readwrite, nonatomic) NSUInteger maxKernelBufferBindCount API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(13.0));
 
+
+/*!
+ @abstract
+ Whether the render or compute commands can use ray tracing. Default value is NO.
+ */
+@property (readwrite, nonatomic) BOOL supportRayTracing API_AVAILABLE(macos(13.0), ios(16.0));
 @end
 
 
@@ -95,6 +101,18 @@ API_AVAILABLE(macos(10.14), ios(12.0))
 @protocol MTLIndirectCommandBuffer <MTLResource>
 
 @property (readonly) NSUInteger size;
+
+/*!
+ @property gpuHandle
+ @abstract accessible by the CPU, and used to get the device handle of a resource/object that could be normally passed to the GPU within an argument buffer
+ this will be deleted as the gpuResourceID will replace it
+ */
+@property (readonly) MTLGPUHandle gpuHandle;
+/*!
+ @property gpuResourceID
+ @abstract Accessible by the CPU, it is used to get the handle of a GPU resource that could be normally passed to the GPU
+ */
+@property (readonly) MTLResourceID gpuResourceID API_AVAILABLE(macos(13.0), ios(16.0));
 
 -(void)resetWithRange:(NSRange)range;
 

@@ -4,6 +4,8 @@
 //
 //  Copyright (c) 2018 Apple Inc. All rights reserved.
 
+#ifdef __OBJC__
+
 #import <Foundation/Foundation.h>
 #import <CoreTelephony/CoreTelephonyDefines.h>
 #import <CoreTelephony/CTCellularPlanProvisioningRequest.h>
@@ -20,3 +22,5 @@ CORETELEPHONY_CLASS_AVAILABLE(12_0)
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif // __OBJC__

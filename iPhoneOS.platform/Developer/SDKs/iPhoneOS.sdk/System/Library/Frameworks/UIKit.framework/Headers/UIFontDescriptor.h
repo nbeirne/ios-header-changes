@@ -11,7 +11,7 @@
 #import <UIKit/UIKitDefines.h>
 
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 typedef NS_OPTIONS(uint32_t, UIFontDescriptorSymbolicTraits) {
     /* Symbolic Font Traits (Typeface info - lower 16 bits of UIFontDescriptorSymbolicTraits) */
@@ -61,7 +61,7 @@ UIKIT_EXTERN UIFontDescriptorSystemDesign const UIFontDescriptorSystemDesignMono
 
 @class NSMutableDictionary, NSDictionary, NSArray, NSSet, UITraitCollection;
 
-UIKIT_EXTERN API_AVAILABLE(ios(7.0))
+UIKIT_EXTERN API_AVAILABLE(ios(7.0)) NS_SWIFT_SENDABLE
 @interface UIFontDescriptor : NSObject <NSCopying, NSSecureCoding>
 
 - (instancetype)init;
@@ -176,7 +176,7 @@ UIKIT_EXTERN UIFontTextStyle const UIFontTextStyleFootnote API_AVAILABLE(ios(7.0
 UIKIT_EXTERN UIFontTextStyle const UIFontTextStyleCaption1 API_AVAILABLE(ios(7.0));
 UIKIT_EXTERN UIFontTextStyle const UIFontTextStyleCaption2 API_AVAILABLE(ios(7.0));
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)
 
 
 #else

@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, LAPolicy)
 {
-    /// Device owner is going to be authenticated using a biometric method (Touch ID or Face ID).
+    /// Device owner will be authenticated using a biometric method (Touch ID or Face ID).
     ///
     /// @discussion Biometric authentication is required. If the biometry is not available, not enrolled,
     ///             or locked out, then the evaluation of this policy will fail with LAErrorBiometryNotAvailable,
@@ -40,7 +40,7 @@ typedef NS_ENUM(NSInteger, LAPolicy)
     ///             enter their passcode at app's request.
     LAPolicyDeviceOwnerAuthenticationWithBiometrics API_AVAILABLE(ios(8.0), macos(10.12.2), watchos(3.0), tvos(10.0)) = kLAPolicyDeviceOwnerAuthenticationWithBiometrics,
 
-    /// Device owner is going to be authenticated by biometry or device passcode.
+    /// Device owner will be authenticated by biometry or device passcode.
     ///
     /// @discussion Biometric or passcode authentication is required. If the biometry is available, enrolled and
     ///             not locked out, users are asked for it first. Otherwise they are asked to enter device
@@ -55,7 +55,7 @@ typedef NS_ENUM(NSInteger, LAPolicy)
     ///             increased backoff delay.
     LAPolicyDeviceOwnerAuthentication API_AVAILABLE(ios(9.0), macos(10.11), watchos(3.0), tvos(10.0)) = kLAPolicyDeviceOwnerAuthentication,
     
-    /// Device owner is going to be authenticated by Watch.
+    /// Device owner will be authenticated by Watch.
     ///
     /// @discussion Watch authentication is required. If no nearby paired watch device can be found,
     ///             LAErrorWatchNotAvailable is returned.
@@ -64,7 +64,7 @@ typedef NS_ENUM(NSInteger, LAPolicy)
     ///             confirm authentication by double-clicking the side button on their watch.
     LAPolicyDeviceOwnerAuthenticationWithWatch API_AVAILABLE(macos(10.15), macCatalyst(13.0)) API_UNAVAILABLE(ios, watchos, tvos) = kLAPolicyDeviceOwnerAuthenticationWithWatch,
     
-    /// Device owner is going to be authenticated by biometry or Watch.
+    /// Device owner will be authenticated by biometry or Watch.
     ///
     /// @discussion Watch or biometric authentication is required. If no nearby paired watch device can be found,
     ///             it behaves as LAPolicyDeviceOwnerAuthenticationWithBiometrics. Similarly, if biometry is
@@ -73,7 +73,11 @@ typedef NS_ENUM(NSInteger, LAPolicy)
     ///             Watch authentication dialog looks and behaves similarly to biometric variant. When both
     ///             machanisms are available, user is asked to use biometry and watch authentication will run in
     ///             parallel.
-    LAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch API_AVAILABLE(macos(10.15), macCatalyst(13.0)) API_UNAVAILABLE(ios, watchos, tvos) = kLAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch
+    LAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch API_AVAILABLE(macos(10.15), macCatalyst(13.0)) API_UNAVAILABLE(ios, watchos, tvos) = kLAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch,
+    
+    /// Device owner will be authenticated by device passcode. The authentication will also succeed if the wrist detection is enabled,
+    /// correct passcode was entered in the past and the watch has been on the wrist ever since.
+    LAPolicyDeviceOwnerAuthenticationWithWristDetection API_AVAILABLE(watchos(9.0)) API_UNAVAILABLE(macos, ios, tvos) = kLAPolicyDeviceOwnerAuthenticationWithWristDetection,
 } API_AVAILABLE(ios(8.0), macos(10.10), watchos(3.0), tvos(10.0));
 
 /// The maximum value for LAContext touchIDAuthenticationAllowableReuseDuration property.

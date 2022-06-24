@@ -34,6 +34,8 @@ SK_EXTERN_CLASS API_AVAILABLE(ios(15.4)) API_UNAVAILABLE(macos,tvos,watchos)
 
 @property (nonatomic, strong, readonly) NSArray <SKAdTestPostback *> * postbacks;
 
+@property (nonatomic, strong, readonly, nullable) NSURL *developerPostbackURL;
+
 /// Use this method to send the test postbacks.
 - (void)flushPostbacksWithResponses:(SKANTestPostbackResponseHandler)responses NS_SWIFT_ASYNC(1) API_AVAILABLE(ios(15.4)) API_UNAVAILABLE(macos,watchos) __TVOS_PROHIBITED;
 

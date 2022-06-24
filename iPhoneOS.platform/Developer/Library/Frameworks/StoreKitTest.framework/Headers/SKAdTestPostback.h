@@ -30,7 +30,7 @@ SK_EXTERN_CLASS API_AVAILABLE(ios(15.4)) API_UNAVAILABLE(macos,watchos, tvos) @i
 + (instancetype)new NS_UNAVAILABLE;
 
 /// The version of SKAdNetwork being used.
-@property (nonatomic, assign, readonly) SKAdTestPostbackVersion version;
+@property (nonatomic, strong, readonly) SKAdTestPostbackVersion version;
 
 /// The identifier for the ad network.
 @property (nonatomic, strong, readonly) NSString *adNetworkIdentifier;

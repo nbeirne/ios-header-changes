@@ -6,6 +6,7 @@
 //  Copyright (c) 2016 Apple Inc. All rights reserved.
 //
 
+#import <XCTest/XCTestDefines.h>
 #import <XCTest/XCTestExpectation.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -29,6 +30,7 @@ typedef BOOL (^XCKeyValueObservingExpectationHandler)(id observedObject, NSDicti
  * @class XCTKVOExpectation
  * Expectation subclass for waiting on a condition defined Key Value Observation of a key path for an object.
  */
+XCT_TO_BE_DEPRECATED_WITH_SWIFT_REPLACEMENT("XCTKeyPathExpectation")
 @interface XCTKVOExpectation : XCTestExpectation
 
 + (instancetype)new NS_UNAVAILABLE;
@@ -99,7 +101,7 @@ typedef BOOL (^XCKeyValueObservingExpectationHandler)(id observedObject, NSDicti
  * Allows the caller to install a special handler to do custom evaluation of the change to the value
  * of the object/key path. If a handler is set, expectedValue will be ignored.
  */
-@property (nullable, copy) XCKeyValueObservingExpectationHandler handler;
+@property (nullable, copy, atomic) XCKeyValueObservingExpectationHandler handler;
 
 @end
 

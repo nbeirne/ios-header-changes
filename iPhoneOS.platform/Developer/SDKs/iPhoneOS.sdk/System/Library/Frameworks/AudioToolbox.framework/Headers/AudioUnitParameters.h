@@ -355,7 +355,14 @@ CF_ENUM(AudioUnitParameterID) {
 		// or reverberant sound, sometimes also called loss of presence.
 		// However the flip side is that it can sound more stuttery for some content.
 		// Global, Boolean, 0->1, 1
-	kNewTimePitchParam_EnablePeakLocking			= 6
+	kNewTimePitchParam_EnablePeakLocking			= 6,
+    
+    // Transient preservation uses group delay to identify transients
+    // It resets the phase at points of transients to avoid smearing
+    // It also reduces the stretch factor at those points to avoid smearing
+    // This needs to be compensated at other frames, which can be problematic
+    // Global, Boolean, 0->1, 1
+    kNewTimePitchParam_EnableTransientPreservation  = 7
 };
 
 // Parameters for the AUSampler unit
@@ -691,6 +698,25 @@ CF_ENUM(AudioUnitParameterID) {
 	kRoundTripAACParam_Quality 				= 2,
 	kRoundTripAACParam_CompressedFormatSampleRate = 3
 #endif
+};
+
+// Parameters for the AUSoundIsolation unit
+CF_ENUM(AudioUnitParameterID) {
+    // Global, Percent, 0->100, 100
+    kAUSoundIsolationParam_WetDryMixPercent API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) = 0,
+    // Global, Indexed, 1->1, 1
+    kAUSoundIsolationParam_SoundToIsolate API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) = 1,
+};
+
+/*!
+ @enum          AUSoundIsolation sound types
+ @brief         Constants available as values for parameter kAUSoundIsolation_SoundToIsolate.
+ 
+ @constant      kAUSoundIsolationSoundType_Voice
+ Isolate voice signal from the input signal.
+ */
+CF_ENUM(long) {
+    kAUSoundIsolationSoundType_Voice API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) = 1
 };
 
 #pragma mark Apple Specific - Desktop

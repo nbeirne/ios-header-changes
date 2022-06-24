@@ -2,7 +2,7 @@
 //  HKVerifiableClinicalRecord.h
 //  HealthKit
 //
-//  Copyright © 2021 Apple. All rights reserved.
+//  Copyright © 2021-2022 Apple. All rights reserved.
 //
 
 #import <HealthKit/HKSample.h>
@@ -55,7 +55,7 @@ HK_EXTERN HKVerifiableClinicalRecordCredentialType const HKVerifiableClinicalRec
  @class         HKVerifiableClinicalRecord
  @abstract      An NSObject that represents a verifiable clinical record.
  */
-HK_EXTERN API_AVAILABLE(ios(15.0)) __WATCHOS_PROHIBITED
+HK_EXTERN API_AVAILABLE(ios(15.0), macCatalyst(15.0), macos(13.0)) __WATCHOS_PROHIBITED
 @interface HKVerifiableClinicalRecord : HKSample
 
 /*!

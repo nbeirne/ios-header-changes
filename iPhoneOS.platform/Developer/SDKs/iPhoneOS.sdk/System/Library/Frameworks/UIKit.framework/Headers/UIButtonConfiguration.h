@@ -13,9 +13,9 @@
 @class UIButton;
 @class UIImage;
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-typedef NSDictionary<NSAttributedStringKey, id> *_Nonnull (^UIConfigurationTextAttributesTransformer)(NSDictionary<NSAttributedStringKey, id> *textAttributes) API_AVAILABLE(ios(15.0), tvos(15.0), watchos(8.0));
+typedef NSDictionary<NSAttributedStringKey, id> *_Nonnull (^/*NS_SWIFT_SENDABLE*/ UIConfigurationTextAttributesTransformer)(NSDictionary<NSAttributedStringKey, id> *textAttributes) API_AVAILABLE(ios(15.0), tvos(15.0), watchos(8.0));
 
 typedef NS_ENUM(NSInteger, UIButtonConfigurationSize) {
     UIButtonConfigurationSizeMedium,
@@ -131,7 +131,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(15.0), tvos(15.0), watchos(8.0)) NS_SWIFT_UI_ACTO
 
 @end
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)
 
 #else
 #import <UIKitCore/UIButtonConfiguration.h>

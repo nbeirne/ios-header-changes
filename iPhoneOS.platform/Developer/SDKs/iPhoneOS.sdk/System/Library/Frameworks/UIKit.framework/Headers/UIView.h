@@ -17,7 +17,7 @@
 #import <UIKit/UITraitCollection.h>
 #import <UIKit/UIFocus.h>
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 typedef NS_ENUM(NSInteger, UIViewAnimationCurve) {
     UIViewAnimationCurveEaseInOut,         // slow at beginning and end
@@ -283,6 +283,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) NS_SWIFT_UI_ACTOR
 
 /// Follows the keyboard when on screen and docked. When the keyboard is offscreen or undocked, keyboardLayoutGuide.topAnchor matches the view's safeAreaLayoutGuide.bottomAnchor.
 @property(nonatomic,readonly,strong) UIKeyboardLayoutGuide *keyboardLayoutGuide API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos, tvos);
+
 @end
 
 @interface UIView(UIViewRendering)
@@ -703,17 +704,17 @@ UIKIT_EXTERN const CGSize UILayoutFittingExpandedSize API_AVAILABLE(ios(6.0));
 ///     view.minimumContentSizeCategory = UIContentSizeCategoryMedium;
 ///     view.maximumContentSizeCategory = UIContentSizeCategoryAccessibilityExtraLarge;
 
-@property (nonatomic, copy, nullable) UIContentSizeCategory minimumContentSizeCategory;
-@property (nonatomic, copy, nullable) UIContentSizeCategory maximumContentSizeCategory;
+@property (nonatomic, copy, nullable) UIContentSizeCategory minimumContentSizeCategory API_AVAILABLE(ios(15.0));
+@property (nonatomic, copy, nullable) UIContentSizeCategory maximumContentSizeCategory API_AVAILABLE(ios(15.0));
 
 /// Will return a string with a log of all the superviews of this view, alongside with what
 /// content size category each view has and if that view has limits applied.
 /// This is for debugging purposes only.
-@property (nonatomic, copy, readonly) NSString *appliedContentSizeCategoryLimitsDescription;
+@property (nonatomic, copy, readonly) NSString *appliedContentSizeCategoryLimitsDescription API_AVAILABLE(ios(15.0));
 
 @end
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)
 
 #else
 #import <UIKitCore/UIView.h>

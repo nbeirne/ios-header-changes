@@ -419,6 +419,19 @@ API_AVAILABLE(macos(10.11), ios(8.0))
  */
 @property (readonly) MTLTextureCompressionType compressionType API_AVAILABLE(macos(12.0), ios(15.0));
 
+
+/*!
+ @property gpuHandle
+ @abstract accessible by the CPU, and used to get the device handle of a resource/object that could be normally passed to the GPU within an argument buffer
+ this will be deleted as the gpuResourceID will replace it
+ */
+@property (readonly) MTLGPUHandle gpuHandle;
+/*!
+ @property gpuResourceID
+ @abstract Accessible by the CPU, it is used to get the handle of a GPU resource that could be normally passed to the GPU
+ */
+@property (readonly) MTLResourceID gpuResourceID API_AVAILABLE(macos(13.0), ios(16.0));
+
 /*!
  @method getBytes:bytesPerRow:bytesPerImage:fromRegion:mipmapLevel:slice:
  @abstract Copies a block of pixels from a texture slice into the application's memory.

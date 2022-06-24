@@ -10,8 +10,9 @@
 #import <UIKit/UIKitDefines.h>
 #import <UIKit/UIViewControllerTransitioning.h>
 #import <UIKit/UISearchBar.h>
+#import <UIKit/UINavigationItem.h>
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @class UISearchController;
 
@@ -26,6 +27,9 @@ NS_SWIFT_UI_ACTOR
 
 // Called after the search controller's search bar has agreed to begin editing or when 'active' is set to YES. If you choose not to present the controller yourself or do not implement this method, a default presentation is performed on your behalf.
 - (void)presentSearchController:(UISearchController *)searchController;
+
+- (void)searchController:(UISearchController *)searchController willChangeToSearchBarPlacement:(UINavigationItemSearchBarPlacement)newPlacement API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
+- (void)searchController:(UISearchController *)searchController didChangeFromSearchBarPlacement:(UINavigationItemSearchBarPlacement)previousPlacement API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
 @end
 
 @protocol UISearchSuggestion;
@@ -37,7 +41,7 @@ NS_SWIFT_UI_ACTOR
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController;
 @optional
 // Called when user selects one of the search suggestion buttons displayed under the keyboard on tvOS.
-- (void)updateSearchResultsForSearchController:(nonnull UISearchController *)searchController selectingSearchSuggestion:(nonnull id<UISearchSuggestion>)searchSuggestion API_AVAILABLE(tvos(14.0)) API_UNAVAILABLE(ios, watchos);
+- (void)updateSearchResultsForSearchController:(nonnull UISearchController *)searchController selectingSearchSuggestion:(nonnull id<UISearchSuggestion>)searchSuggestion API_AVAILABLE(tvos(14.0), ios(16.0)) API_UNAVAILABLE(watchos);
 @end
 
 UIKIT_EXTERN API_AVAILABLE(ios(8.0)) NS_SWIFT_UI_ACTOR
@@ -71,6 +75,9 @@ UIKIT_EXTERN API_AVAILABLE(ios(8.0)) NS_SWIFT_UI_ACTOR
 // You are free to become the search bar's delegate to monitor for text changes and button presses.
 @property (nonatomic, strong, readonly) UISearchBar *searchBar;
 
+// For inspecting the current placement of the search bar when the search controller has been assigned to a UINavigationItem
+@property (nonatomic, readonly) UINavigationItemSearchBarPlacement searchBarPlacement API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
+
 @property (nonatomic) BOOL automaticallyShowsSearchResultsController API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(tvos); // When true, UISearchController will automatically show its results controller based on the contents of its text property. Defaults to true. Setting the showsSearchResultsController property will change this property to false.
 @property (nonatomic) BOOL showsSearchResultsController API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(tvos); // Set this property to directly control the visibility of the search results controller. Setting this property changes the automaticallyShowsSearchResultsController property to false.
 
@@ -97,8 +104,14 @@ UIKIT_EXTERN API_AVAILABLE(ios(8.0)) NS_SWIFT_UI_ACTOR
  */
 @property (nonatomic) BOOL automaticallyShowsScopeBar API_AVAILABLE(ios(13.0)); // Defaults to YES
 
-// List of search hint objects to be displayed under keyboard on tvOS. Assigning with new array immediately updates the list on screen. This becomes nil once user selects one of the hints.
-@property (nonatomic, copy, nullable) NSArray<id<UISearchSuggestion>> *searchSuggestions API_AVAILABLE(tvos(14.0)) API_UNAVAILABLE(ios, watchos);
+/// List of search hint objects to be displayed under keyboard on tvOS,
+/// as a menu under the search field when the search bar is placed inline on iOS 16,
+/// or as a list in front of the searchResultsController when the search bar is stacked.
+/// Assigning with new array immediately updates the list on screen.
+/// searchSuggestions is set to nil when user interaction selects a suggestion,
+/// or when the user otherwise interacts with search (e.g., typing in the search field, choosing a different search scope, canceling search)
+/// after dismissing the menu by tapping outside
+@property (nonatomic, copy, nullable) NSArray<id<UISearchSuggestion>> *searchSuggestions API_AVAILABLE(tvos(14.0), ios(16.0)) API_UNAVAILABLE(watchos);
 
 /* Deprecated on tvOS 15.0 in favor of  using -[UIViewController setContentScrollView:forEdge:]
  on the searchResultsController, passing the full-screen scroll view contained in the results view
@@ -111,7 +124,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(8.0)) NS_SWIFT_UI_ACTOR
 
 @end
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)
 
 #else
 #import <UIKitCore/UISearchController.h>

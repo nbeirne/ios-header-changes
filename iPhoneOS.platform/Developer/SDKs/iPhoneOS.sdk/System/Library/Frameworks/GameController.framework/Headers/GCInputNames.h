@@ -63,3 +63,14 @@ A set of strings commonly used to access DualShock buttons
 GAMECONTROLLER_EXTERN NSString *const GCInputDualShockTouchpadOne API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0));
 GAMECONTROLLER_EXTERN NSString *const GCInputDualShockTouchpadTwo API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0));
 GAMECONTROLLER_EXTERN NSString *const GCInputDualShockTouchpadButton API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0));
+
+/**
+A set of strings commonly used by racing wheels.
+*/
+GAMECONTROLLER_EXTERN NSString *const GCInputSteeringWheel API_AVAILABLE(macos(13.0));
+GAMECONTROLLER_EXTERN NSString *const GCInputShifter API_AVAILABLE(macos(13.0));
+GAMECONTROLLER_EXTERN NSString *const GCInputPedalAccelerator API_AVAILABLE(macos(13.0));
+GAMECONTROLLER_EXTERN NSString *const GCInputPedalBrake API_AVAILABLE(macos(13.0));
+GAMECONTROLLER_EXTERN NSString *const GCInputPedalClutch API_AVAILABLE(macos(13.0));
+GAMECONTROLLER_EXTERN NSString *const GCInputLeftPaddle API_AVAILABLE(macos(13.0));
+GAMECONTROLLER_EXTERN NSString *const GCInputRightPaddle API_AVAILABLE(macos(13.0));

@@ -62,6 +62,18 @@ typedef NS_ENUM(uint64_t, MPSGraphOptimizationProfile)
     MPSGraphOptimizationProfilePowerEfficiency                    MPS_ENUM_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4))                             =   1L,
 };
 
+/*!
+ *  @typedef    MPSGraphExecutionStage
+ *  @abstract   Execution events that can be used with shared events
+ *
+ *  @constant   MPSGraphExecutionStageCompleted                          execution complete
+ */
+typedef NS_ENUM(uint64_t, MPSGraphExecutionStage)
+{
+    MPSGraphExecutionStageCompleted                        MPS_ENUM_AVAILABLE_STARTING(macos(13.0), ios(16.0), tvos(16.0)) MPS_SWIFT_NAME(completed) =   0L,
+};
+
+
 /*! @abstract   A dictionary of tensors and correspondiing tensorData for them
  */
 MPS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
@@ -73,18 +85,25 @@ MPS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
 typedef NSDictionary<MPSGraphTensor*, MPSGraphShapedType *> MPSGraphTensorShapedTypeDictionary;
 
 /*! @abstract   A notification when graph execution: has finished
- *  @param      resultsDictionary  If no error, the image produced by the graph operation.
+ *  @param      resultsDictionary  If no error, the results dictionary produced by the graph operation.
  *  @param      error   If an error occurs, more information might be found here.
  */
 typedef void (^MPSGraphCompletionHandler)(MPSGraphTensorDataDictionary * resultsDictionary,
                                           NSError * _Nullable error);
 
 /*! @abstract   A notification when graph execution: has finished
- *  @param      resultsDictionary  If no error, the image produced by the graph operation.
+ *  @param      resultsDictionary  If no error, the results dictionary produced by the graph operation.
  *  @param      error   If an error occurs, more information might be found here.
  */
 typedef void (^MPSGraphScheduledHandler)(MPSGraphTensorDataDictionary * resultsDictionary,
                                          NSError * _Nullable error);
+
+/*! @abstract   A notification when compilation: has finished
+ *  @param      executable  If no error, the executable produced by the compilation
+ *  @param      error   If an error occurs, more information might be found here.
+ */
+typedef void (^MPSGraphCompilationCompletionHandler)(MPSGraphExecutable* executable,
+                                                     NSError * _Nullable error);
 
 /*! @class      MPSGraphCompilationDescriptor
  *  @abstract   A structure which consists of all the levers users can use to compile their graphs
@@ -107,6 +126,21 @@ MPS_CLASS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0))
  *  @discussion optimization profile for the graph optimization, default is MPSGraphOptimizationProfilePerformance
  */
 @property (readwrite, nonatomic) MPSGraphOptimizationProfile optimizationProfile MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
+
+/*! @property   waitForCompilationCompletion
+ *  @discussion makes the compile or specialize call blocking till the entire compilation is completed, defaults to NO
+ */
+@property (readwrite, nonatomic) BOOL waitForCompilationCompletion MPS_AVAILABLE_STARTING(macos(13.0), ios(16.0), tvos(16.0));
+
+/*! @property   compilationCompletionHandler
+ *  @discussion compilationCompletionHandler for the compilation, default value is nil, it is called after compilation is completed
+ */
+@property (readwrite, atomic) MPSGraphCompilationCompletionHandler compilationCompletionHandler MPS_AVAILABLE_STARTING(macos(13.0), ios(16.0), tvos(16.0));
+
+/*! @property   dispatchQueue
+ *  @discussion dispatchQueue for the compilation, default value is nil
+ */
+@property (readwrite, atomic, retain) dispatch_queue_t dispatchQueue MPS_AVAILABLE_STARTING(macos(13.0), ios(16.0), tvos(16.0));
 
 @end
 
@@ -137,6 +171,28 @@ MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
  */
 @property (readwrite, atomic, copy, nullable) MPSGraphCompilationDescriptor *compilationDescriptor
 MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
+
+/*!
+ *  @abstract   Executable waits on these shared events before scheduling execution on the HW, this does not include encoding which can still continue.
+ *
+ *  @param      event                                   shared event to wait on
+ *  @param      value                                   value for shared event to wait on
+ */
+-(void) waitForEvent:(id<MTLSharedEvent>) event
+               value:(uint64_t) value
+MPS_AVAILABLE_STARTING(macos(13.0), ios(16.0), tvos(16.0));
+
+/*!
+ *  @abstract   Executable signals these shared events at execution stage and immediately proceeds
+ *
+ *  @param      event                                   shared event to signal
+ *  @param      executionStage               execution stage to signal event at
+ *  @param      value                                   value for shared event to wait on
+ */
+-(void) signalEvent:(id<MTLSharedEvent>) event
+   atExecutionEvent:(MPSGraphExecutionStage) executionStage
+              value:(uint64_t) value
+MPS_AVAILABLE_STARTING(macos(13.0), ios(16.0), tvos(16.0));
 
 @end
 

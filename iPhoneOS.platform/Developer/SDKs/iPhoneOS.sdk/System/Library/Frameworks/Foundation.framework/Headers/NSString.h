@@ -40,7 +40,7 @@ typedef unsigned short unichar;
 
 @class NSData, NSArray<ObjectType>, NSDictionary<KeyType, ObjectType>, NSCharacterSet, NSURL, NSError, NSLocale;
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 /* These options apply to the various search/find and comparison methods (except where noted).
 */
@@ -368,8 +368,8 @@ FOUNDATION_EXPORT NSStringTransform const NSStringTransformStripDiacritics      
 - (instancetype)initWithCharactersNoCopy:(unichar *)characters length:(NSUInteger)length freeWhenDone:(BOOL)freeBuffer;	/* "NoCopy" is a hint */
 - (instancetype)initWithCharactersNoCopy:(unichar *)chars length:(NSUInteger)len deallocator:(void(^_Nullable)(unichar *, NSUInteger))deallocator;
 - (instancetype)initWithCharacters:(const unichar *)characters length:(NSUInteger)length;
-- (nullable instancetype)initWithUTF8String:(const char *)nullTerminatedCString;
-- (instancetype)initWithString:(NSString *)aString;
+- (nullable instancetype)initWithUTF8String:(const char *)nullTerminatedCString NS_FORMAT_ARGUMENT(1);
+- (instancetype)initWithString:(NSString *)aString NS_FORMAT_ARGUMENT(1);
 - (instancetype)initWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
 - (instancetype)initWithFormat:(NSString *)format arguments:(va_list)argList NS_FORMAT_FUNCTION(1,0);
 - (instancetype)initWithFormat:(NSString *)format locale:(nullable id)locale, ... NS_FORMAT_FUNCTION(1,3);
@@ -380,14 +380,14 @@ FOUNDATION_EXPORT NSStringTransform const NSStringTransformStripDiacritics      
 - (nullable instancetype)initWithBytesNoCopy:(void *)bytes length:(NSUInteger)len encoding:(NSStringEncoding)encoding deallocator:(void(^_Nullable)(void *, NSUInteger))deallocator;
 
 + (instancetype)string;
-+ (instancetype)stringWithString:(NSString *)string;
++ (instancetype)stringWithString:(NSString *)string NS_FORMAT_ARGUMENT(1);
 + (instancetype)stringWithCharacters:(const unichar *)characters length:(NSUInteger)length;
-+ (nullable instancetype)stringWithUTF8String:(const char *)nullTerminatedCString;
++ (nullable instancetype)stringWithUTF8String:(const char *)nullTerminatedCString NS_FORMAT_ARGUMENT(1);
 + (instancetype)stringWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
 + (instancetype)localizedStringWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
 
-- (nullable instancetype)initWithCString:(const char *)nullTerminatedCString encoding:(NSStringEncoding)encoding;
-+ (nullable instancetype)stringWithCString:(const char *)cString encoding:(NSStringEncoding)enc;
+- (nullable instancetype)initWithCString:(const char *)nullTerminatedCString encoding:(NSStringEncoding)encoding NS_FORMAT_ARGUMENT(1);
++ (nullable instancetype)stringWithCString:(const char *)cString encoding:(NSStringEncoding)enc NS_FORMAT_ARGUMENT(1);
 
 /* These use the specified encoding.  If nil is returned, the optional error return indicates problem that was encountered (for instance, file system or encoding errors).
 */
@@ -561,4 +561,4 @@ NS_SWIFT_UNAVAILABLE("Use String or NSString instead.")
 extern void *_NSConstantStringClassReference;
 #endif
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)

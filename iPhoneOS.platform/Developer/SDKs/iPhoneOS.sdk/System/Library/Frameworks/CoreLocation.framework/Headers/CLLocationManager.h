@@ -816,6 +816,7 @@ API_AVAILABLE(macos(10.6), ios(2.0))
  */
 + (BOOL)deferredLocationUpdatesAvailable API_DEPRECATED("You can remove calls to this method", ios(6.0, 13.0), macos(10.9, 10.15)) API_UNAVAILABLE(watchos, tvos);
 
+
 @end
 
 NS_ASSUME_NONNULL_END

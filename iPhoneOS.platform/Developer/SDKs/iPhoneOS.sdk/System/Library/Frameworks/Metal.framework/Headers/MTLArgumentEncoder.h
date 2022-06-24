@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @protocol MTLArgumentEncoder
  * @discussion MTLArgumentEncoder encodes buffer, texture, sampler, and constant data into a buffer.
  */
-API_AVAILABLE(macos(10.13), ios(11.0))
+API_DEPRECATED("Use 'gpuAddress' or 'gpuHandle' instead", macos(10.13, API_TO_BE_DEPRECATED), ios(11.0, API_TO_BE_DEPRECATED))
 @protocol MTLArgumentEncoder <NSObject>
 
 /*!

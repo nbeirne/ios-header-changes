@@ -85,6 +85,9 @@ CV_EXPORT CVReturn CVMetalTextureCacheCreate(
                 associated params.  This creates a live binding between the CVImageBuffer and underlying
                 CVMetalTexture texture object.
  
+                IMPORTANT NOTE: Clients should retain CVMetalTexture objects until they are done using the images in them.
+                Retaining a CVMetalTexture is your way to indicate that you're still using the image in the buffer, and that it should not be recycled yet.
+
                 Note that CoreVideo does not explicitly declare any pixel format types to be Metal compatible.  The assumption
                 is that if the CVPixelBufferMetalCompatibilityKey has been specified, all buffers will be Metal compatible
                 (IOSurface backed), and thus it is the developer's responsibility to choose an appropriate Metal pixel format
