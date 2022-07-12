@@ -7,12 +7,14 @@
 #import <Foundation/Foundation.h>
 #import <SharedWithYouCore/SWDefines.h>
 #import <SharedWithYou/SWHighlight.h>
-//#import <SharedWithYou/SWCollaborationHighlight.h>
+#import <SharedWithYou/SWHighlightEvent.h>
+#import <SharedWithYouCore/SWCollaborationMetadata.h>
 
 NS_ASSUME_NONNULL_BEGIN
+@class SWCollaborationHighlight;
 @class SWHighlight;
 @class SWHighlightCenter;
-@class SWCollaborationHighlight;
+@class SWSignedPersonIdentityProof;
 
 /*!
      @protocol SWHighlightCenterDelegate
@@ -49,6 +51,40 @@ SW_EXTERN @interface SWHighlightCenter : NSObject
  */
 @property (class, nonatomic, readonly) NSString *highlightCollectionTitle;
 
+/// Post a given event to the highlight center for display in Messages.
+/// @param event The event to add for a specific highlight
+- (void)postNoticeForHighlightEvent:(id<SWHighlightEvent>)event;
+
+/*!
+    @abstract A convience method to get a SWCollaborationHighlight for a given URL
+    @param URL The URL used to find the SWCollaborationHighlight
+    @param error The error describing the failure.
+*/
+- (SWCollaborationHighlight * __nullable)collaborationHighlightForURL:(NSURL *)URL error:(NSError **)error;
+
+/*!
+    @abstract A convience method to get a SWCollaborationHighlight for a given collaboration Identifier
+    @param collaborationIdentifier The unique identifier used to find the SWCollaborationHighlight
+    @param error The error describing the failure.
+*/
+- (SWCollaborationHighlight * __nullable)collaborationHighlightForIdentifier:(SWCollaborationIdentifier)collaborationIdentifier error:(NSError **)error;
+
+/*!
+    @abstract Method to sign passed in data with local device's private key
+    @param data NSData that needs to be signed
+    @param collaborationHighlight The corresponding collaboration highlight.
+    @param completionHandler Signed data along with proof of inclusion for merkle if signing succeeded, otherwise an error. The completion handler will always be invoked on main queue
+ */
+- (void)getSignedIdentityProofForCollaborationHighlight:(SWCollaborationHighlight *)collaborationHighlight usingData:(NSData *)data completionHandler:(void (^)(SWSignedPersonIdentityProof * _Nullable, NSError * _Nullable))completionHandler NS_SWIFT_ASYNC_NAME(signedIdentityProof(for:using:));
+
+/*!
+    @abstract A convenience method to get a SWHighlight for a given URL
+    @param URL The URL used to find the SWHighlight
+    @param error The error describing the failure.
+ */
+- (SWHighlight * __nullable)highlightForURL:(NSURL *)URL error:(NSError **)error;
+
 @end
 
 NS_ASSUME_NONNULL_END
+

@@ -2,7 +2,7 @@
 //  SharedWithYouCore.h
 //  SharedWithYouCore
 //
-//  Copyright (c) 2022 Apple. All rights reserved.
+//  Created by Elana Stettin on 1/27/22.
 //
 
 #import <Foundation/Foundation.h>
@@ -15,3 +15,16 @@ FOUNDATION_EXPORT const unsigned char SharedWithYouCoreVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <SharedWithYouCore/PublicHeader.h>
 #import <SharedWithYouCore/SWDefines.h>
+
+#import <SharedWithYouCore/SWAction.h>
+#import <SharedWithYouCore/SWCollaborationActionHandler.h>
+#import <SharedWithYouCore/SWCollaborationCoordinator.h>
+#import <SharedWithYouCore/SWCollaborationOption.h>
+#import <SharedWithYouCore/SWCollaborationOptionsGroup.h>
+#import <SharedWithYouCore/SWCollaborationShareOptions.h>
+#import <SharedWithYouCore/SWCollaborationMetadata.h>
+#import <SharedWithYouCore/SWPerson.h>
+#import <SharedWithYouCore/SWPersonIdentity.h>
+#import <SharedWithYouCore/SWPersonIdentityProof.h>
+#import <SharedWithYouCore/SWStartCollaborationAction.h>
+#import <SharedWithYouCore/SWUpdateCollaborationParticipantsAction.h>

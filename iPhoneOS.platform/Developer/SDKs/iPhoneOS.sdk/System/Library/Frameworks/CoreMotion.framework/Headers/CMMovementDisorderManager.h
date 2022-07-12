@@ -127,7 +127,7 @@ API_AVAILABLE(watchos(5.0)) API_UNAVAILABLE(ios, macos, tvos)
  * @return Returns the version number of the movement disorder software available on this platform, nil if not.
  *         Format follows Major.Minor.Fix format (e.g. 1.0.0)
  */
-+ (NSString *)version;
++ (NSString * _Nullable)version;
 
 /*!
  * @method authorizationStatus

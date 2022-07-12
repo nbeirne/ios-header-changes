@@ -36,7 +36,9 @@
 #define MAX_GRAFT_ARGS_SIZE 512
 
 /* Flag values for secure_boot_cryptex_args.sbc_flags */
-#define SBC_PRESERVE_MOUNT     0x001  /* Preserve underlying mount until shutdown */
+#define SBC_PRESERVE_MOUNT              0x0001  /* Preserve underlying mount until shutdown */
+#define SBC_ALTERNATE_SHARED_REGION     0x0002  /* Binaries within should use alternate shared region */
+#define SBC_SYSTEM_CONTENT              0x0004  /* Cryptex contains system content */
 
 typedef struct secure_boot_cryptex_args {
 	u_int32_t sbc_version;

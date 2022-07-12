@@ -225,9 +225,9 @@ typedef NS_ENUM(NSUInteger, MTLSparseTextureRegionAlignmentMode)
  */
 typedef NS_ENUM(NSInteger, MTLSparsePageSize)
 {
-    MTLSparsePageSize16 = 16,
-    MTLSparsePageSize64 = 64,
-    MTLSparsePageSize256 = 256,
+    MTLSparsePageSize16 = 101,
+    MTLSparsePageSize64 = 102,
+    MTLSparsePageSize256 = 103,
 } API_AVAILABLE(macos(13.0), ios(16.0));
 
 /**
@@ -486,7 +486,7 @@ API_AVAILABLE(macos(10.11), ios(8.0))
  @abstract Query device for Barycentric coordinates support; deprecated, use supportsShaderBarycentricCoordinates
  @return BOOL value. If YES, the device barycentric coordinates
  */
-@property(readonly, getter=areBarycentricCoordsSupported) BOOL barycentricCoordsSupported API_DEPRECATED_WITH_REPLACEMENT("supportsShaderBarycentricCoordinates", macos(10.15, 13.0), ios(14.0, 16.0));
+@property(readonly, getter=areBarycentricCoordsSupported) BOOL barycentricCoordsSupported API_DEPRECATED_WITH_REPLACEMENT("supportsShaderBarycentricCoordinates", macos(10.15, 13.0), ios(14.0, 16.0)) API_UNAVAILABLE(tvos);
 
 /*!
  @property supportsShaderBarycentricCoordinates

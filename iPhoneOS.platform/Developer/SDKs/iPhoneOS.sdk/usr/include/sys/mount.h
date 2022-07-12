@@ -405,8 +405,9 @@ struct fhandle {
 typedef struct fhandle  fhandle_t;
 
 OS_ENUM(graftdmg_type, uint32_t,
-    GRAFTDMG_CRYPTEX_BOOT = 1
-    );
+    GRAFTDMG_CRYPTEX_BOOT = 1,
+    GRAFTDMG_CRYPTEX_PREBOOT = 2,
+    GRAFTDMG_CRYPTEX_DOWNLEVEL = 3);
 
 
 

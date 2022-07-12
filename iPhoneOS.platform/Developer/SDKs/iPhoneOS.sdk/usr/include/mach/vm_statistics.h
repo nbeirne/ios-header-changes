@@ -345,6 +345,8 @@ enum virtual_memory_guard_exception_codes {
 #define VM_LEDGER_TAG_GRAPHICS  0x00000004
 #define VM_LEDGER_TAG_NEURAL    0x00000005
 #define VM_LEDGER_TAG_MAX       0x00000005
+#define VM_LEDGER_TAG_UNCHANGED ((int)-1)
+
 /* individual bits: */
 #define VM_LEDGER_FLAG_NO_FOOTPRINT               (1 << 0)
 #define VM_LEDGER_FLAG_NO_FOOTPRINT_FOR_DEBUG    (1 << 1)

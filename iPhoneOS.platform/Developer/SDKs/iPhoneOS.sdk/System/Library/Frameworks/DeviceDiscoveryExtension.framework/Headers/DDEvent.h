@@ -52,20 +52,13 @@ DD_EXTERN
 /// Device-related event (e.g. found, lost).
 DD_EXTERN
 API_AVAILABLE( ios( 16.0 ) )
-@interface DDEventDevice : DDEvent
+@interface DDDeviceEvent : DDEvent
 
 /// Initializes a device event.
 - (instancetype) initWithEventType:(DDEventType) type device:(DDDevice *) device;
 
 /// Device found or lost.
 @property (readonly, strong, nonatomic) DDDevice *device;
-
-@end
-
-/// Device-related event (e.g. found, lost).
-DD_EXTERN
-API_AVAILABLE( ios( 16.0 ) )
-@interface DDDeviceEvent : DDEventDevice
 
 @end
 

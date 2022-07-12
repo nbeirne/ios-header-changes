@@ -7,6 +7,8 @@
 #import <Foundation/Foundation.h>
 #import <TargetConditionals.h>
 
+#if !TARGET_OS_WATCH
+
 #if TARGET_OS_OSX
 #import <AppKit/AppKit.h>
 #else
@@ -27,3 +29,5 @@ EXTENSIONKIT_EXPORT
 #endif // TARGET_OS_OSX
 
 NS_ASSUME_NONNULL_END
+
+#endif // !TARGET_OS_WATCH

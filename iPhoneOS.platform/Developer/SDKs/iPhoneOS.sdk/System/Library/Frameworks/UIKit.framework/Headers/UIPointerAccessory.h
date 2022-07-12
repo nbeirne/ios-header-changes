@@ -14,13 +14,13 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-typedef struct {
+typedef struct NS_SWIFT_SENDABLE {
     /// Offset from the primary pointer shape. Only allows positive values.
     CGFloat offset;
     
     /// Clock-wise angle from top in radians.
     CGFloat angle;
-} UIPointerAccessoryPosition API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_SENDABLE NS_REFINED_FOR_SWIFT;
+} UIPointerAccessoryPosition API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos, tvos) NS_REFINED_FOR_SWIFT;
 
 UIKIT_STATIC_INLINE UIPointerAccessoryPosition UIPointerAccessoryPositionMake(CGFloat offset, CGFloat angle) API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos, tvos) {
     UIPointerAccessoryPosition position = { offset, angle };

@@ -20,30 +20,36 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 typedef
 union {
     struct {
-        /// The x-coordinate value.
+        /// The x-axis value.
+        SPATIAL_REFINED_FOR_SWIFT
         double x;
         
-        /// The y-coordinate value.
+        /// The y-axis value.
+        SPATIAL_REFINED_FOR_SWIFT
         double y;
         
-        /// The z-coordinate value.
+        /// The z-axis value.
+        SPATIAL_REFINED_FOR_SWIFT
         double z;
     };
-    simd_double3 simd;
+    simd_double3 vector;
 } SPRotationAxis3D
+__attribute__((__aligned__(16)))
 SPATIAL_SWIFT_NAME(RotationAxis3D)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 // MARK: - Rotation Structure
 
 /// A structure that represents a rotation in three dimensions.
-typedef struct {
-    /// The axis of the rotation.
-    SPRotationAxis3D axis;
-    
-    /// The angle of the rotation.
-    SPAngle angle;
+typedef
+union {
+    struct {
+        /// The underlying vector of the quaternion..
+        simd_double4 vector;
+    };
+    simd_quatd quaternion;
 } SPRotation3D
+__attribute__((__aligned__(16)))
 SPATIAL_SWIFT_NAME(Rotation3D)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -62,9 +68,31 @@ union {
         /// The z-coordinate of the point.
         double z;
     };
-    simd_double3 simd;
+    simd_double3 vector;
 } SPPoint3D
+__attribute__((__aligned__(16)))
 SPATIAL_SWIFT_NAME(Point3D)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+
+// MARK: - 3D Vector Structure
+
+/// A structure that defines a three-element vector
+typedef
+union {
+    struct {
+        /// The first element of the vector.
+        double x;
+        
+        /// The second element of the vector.
+        double y;
+        
+        /// The third element of the vector.
+        double z;
+    };
+    simd_double3 vector;
+} SPVector3D
+__attribute__((__aligned__(16)))
+SPATIAL_SWIFT_NAME(Vector3D)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 // MARK: - 3D Size Structure
@@ -82,7 +110,7 @@ union {
         /// The depth of the size.
         double depth;
     };
-    simd_double3 simd;
+    simd_double3 vector;
 } SPSize3D
 __attribute__((__aligned__(16)))
 SPATIAL_SWIFT_NAME(Size3D)
@@ -99,6 +127,19 @@ typedef struct {
    SPSize3D size;
 } SPRect3D
 SPATIAL_SWIFT_NAME(Rect3D)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+
+// MARK: - 3D Ray Structure
+
+/// A structure that contains the origin and direction of a 3D ray.
+typedef struct {
+    /// The origin of the ray.
+    SPPoint3D origin;
+    
+    /// The direction of the ray.
+    SPVector3D direction;
+} SPRay3D
+SPATIAL_SWIFT_NAME(Ray3D)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 // MARK: - 3D Affine Transform Structure
@@ -162,7 +203,7 @@ static const SPRotation3D SPRotation3DZero = { 0 };
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0))
 SPATIAL_REFINED_FOR_SWIFT
 static const SPRotation3D SPRotation3DInvalid = {
-    { INFINITY, INFINITY, INFINITY }, INFINITY
+    { .vector = {INFINITY, INFINITY, INFINITY, INFINITY }}
 };
 
 /// The point with the value zero.
@@ -174,6 +215,16 @@ static const SPPoint3D SPPoint3DZero = { 0, 0, 0 };
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0))
 SPATIAL_SWIFT_NAME(Point3D.infinity)
 static const SPPoint3D SPPoint3DInfinity = { INFINITY, INFINITY, INFINITY };
+
+/// The vector with the value zero.
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0))
+SPATIAL_SWIFT_NAME(Vector3D.zero)
+static const SPVector3D SPVector3DZero = { 0, 0, 0 };
+
+/// The vector with values @p (infinity,infinity,infinity) .
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0))
+SPATIAL_SWIFT_NAME(Vector3D.infinity)
+static const SPVector3D SPVectorInfinity = { INFINITY, INFINITY, INFINITY };
 
 /// The size with the value zero.
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0))
@@ -276,21 +327,6 @@ bool SPRotationAxis3DIsZero(SPRotationAxis3D axis) {
 }
 
 /*!
- @abstract Returns a Boolean value that indicates whether the rotation's axis and angle are zero.
- 
- @param rotation The source rotation.
- @returns A Boolean value that indicates whether the rotation is zero.
-*/
-SPATIAL_INLINE
-bool SPRotation3DIsZero(SPRotation3D rotation)
-__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
-
-SPATIAL_SWIFT_NAME(getter:Rotation3D.isZero(self:))
-bool SPRotation3DIsZero(SPRotation3D rotation) {
-    return SPRotationAxis3DIsZero(rotation.axis) && rotation.angle.radians == 0;
-}
-
-/*!
  @abstract Returns a Boolean value that indicates whether the point is zero.
  
  @param point The source point.
@@ -338,6 +374,59 @@ bool SPPoint3DIsNaN(SPPoint3D point) {
     simd_double3 p = (simd_double3){point.x, point.y, point.z};
     return simd_any(_sp_simd_isnan(p));
 }
+
+
+
+/*!
+ @abstract Returns a Boolean value that indicates whether the vector is zero.
+ 
+ @param vector The source vector.
+ @returns A Boolean value that indicates whether the vector is zero.
+*/
+SPATIAL_INLINE
+bool SPVector3DIsZero(SPVector3D vector)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+
+SPATIAL_SWIFT_NAME(getter:Vector3D.isZero(self:))
+bool SPVector3DIsZero(SPVector3D vector) {
+    simd_double3 v = (simd_double3){vector.x, vector.y, vector.z};
+    return simd_equal(v, 0);
+}
+
+/*!
+ @abstract Returns a Boolean value that indicates whether all of the elements of the vector are finite.
+ 
+ @param vector The source vector.
+ @returns A Boolean value that indicates whether all of the coordinates of the point are finite.
+*/
+SPATIAL_INLINE
+bool SPVector3DIsFinite(SPVector3D vector)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+
+SPATIAL_SWIFT_NAME(getter:Vector3D.isFinite(self:))
+bool SPVector3DIsFinite(SPVector3D vector) {
+    simd_double3 v = (simd_double3){vector.x, vector.y, vector.z};
+    
+    return simd_all(_sp_simd_isfinite(v));
+}
+
+/*!
+ @abstract Returns a Boolean value that indicates whether the vector contains any NaN values.
+ 
+ @param vector The source point.
+ @returns A Boolean value that indicates whether the point contains any NaN values.
+*/
+SPATIAL_INLINE
+bool SPVector3DIsNaN(SPVector3D vector)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+
+SPATIAL_SWIFT_NAME(getter:Vector3D.isNaN(self:))
+bool SPVector3DIsNaN(SPVector3D vector) {
+    simd_double3 v = (simd_double3){vector.x, vector.y, vector.z};
+    return simd_any(_sp_simd_isnan(v));
+}
+
+
 
 /*!
  @abstract Returns a Boolean value that indicates whether the size is zero.
@@ -464,24 +553,5 @@ SPATIAL_SWIFT_NAME(getter:Rect3D.isNaN(self:))
 bool SPRect3DIsNaN(SPRect3D rect) {
     return SPPoint3DIsNaN(rect.origin) || SPSize3DIsNaN(rect.size);
 }
-
-/*!
- @abstract Returns a Boolean value that indicates whether a rotation structure represents a valid rotation.
- 
- @param rotation The source rotation.
- @returns A Boolean value that indicates whether a rotation structure represents a valid rotation.
-*/
-SPATIAL_INLINE
-bool SPRotation3DIsValid(SPRotation3D rotation)
-__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
-
-SPATIAL_REFINED_FOR_SWIFT
-bool SPRotation3DIsValid(SPRotation3D rotation) {
-    return !(rotation.angle.radians == INFINITY &&
-             rotation.axis.x == INFINITY &&
-             rotation.axis.y == INFINITY &&
-             rotation.axis.z == INFINITY);
-}
-
 
 #endif /* Spatial_Structures_h */

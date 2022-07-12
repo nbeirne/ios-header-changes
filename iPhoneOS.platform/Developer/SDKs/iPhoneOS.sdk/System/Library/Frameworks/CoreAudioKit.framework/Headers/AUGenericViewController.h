@@ -23,7 +23,6 @@ API_AVAILABLE(macos(13.0), ios(16.0))
 @interface AUGenericViewController : AUViewControllerBase
 
 @property (nonatomic, strong, nullable) AUAudioUnit *auAudioUnit;
-@property (nonatomic, strong, nullable) AUViewColor *tintColor;
 
 @end
 

@@ -36,7 +36,6 @@
 #import <AVKit/AVPictureInPictureController_AVSampleBufferDisplayLayerSupport.h>
 #import <AVKit/AVPictureInPictureController_VideoCallSupport.h>
 #import <AVKit/AVPlaybackSpeed.h>
-#import <AVKit/AVPlaybackSpeedCollection.h>
 #import <AVKit/AVPlayerItem+AVKitAdditions.h>
 #import <AVKit/AVPlayerViewController.h>
 #import <AVKit/AVPlaybackRouteSelecting.h>
@@ -47,7 +46,6 @@
 #import <AVKit/AVPictureInPictureController.h>
 #import <AVKit/AVPictureInPictureController_AVSampleBufferDisplayLayerSupport.h>
 #import <AVKit/AVPlaybackSpeed.h>
-#import <AVKit/AVPlaybackSpeedCollection.h>
 #import <AVKit/AVPlayerView.h>
 #import <AVKit/AVRoutePickerView.h>
 

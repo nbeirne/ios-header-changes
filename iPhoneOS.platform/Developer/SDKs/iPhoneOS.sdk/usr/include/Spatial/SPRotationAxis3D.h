@@ -24,7 +24,19 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A new rotation axis.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRotationAxis3D SPRotationAxis3DMakeWithVector(simd_double3 xyz)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+
+/*!
+ @abstract Creates an axis with components specified as a Spatial vector.
+ 
+ @param xyz The source vector.
+ @returns A new rotation axis.
+*/
+SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
+SPRotationAxis3D SPRotationAxis3DMakeWithVector(SPVector3D xyz)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
@@ -50,18 +62,25 @@ SPRotationAxis3D SPRotationAxis3DMake(double x, double y, double z) {
   }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPRotationAxis3D SPRotationAxis3DMakeWithVector(simd_double3 xyz) {
-  return (SPRotationAxis3D){ .simd = xyz };
+  return (SPRotationAxis3D){ .vector = xyz };
 }
 
-SPATIAL_SWIFT_NAME(getter:RotationAxis3D.vector(self:))
+SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
+SPRotationAxis3D SPRotationAxis3DMakeWithVector(SPVector3D xyz) {
+  return (SPRotationAxis3D){ .vector = xyz.vector };
+}
+
+SPATIAL_REFINED_FOR_SWIFT
 simd_double3 SPRotationAxis3DGetVector(SPRotationAxis3D axis) {
-    return axis.simd;
+    return axis.vector;
 }
 
 SPATIAL_REFINED_FOR_SWIFT
 bool SPRotationAxis3DEqualToRotationAxis(SPRotationAxis3D axis1, SPRotationAxis3D axis2) {
-    return simd_equal(axis1.simd, axis2.simd);
+    return simd_equal(axis1.vector, axis2.vector);
 }
 
 #endif /* Spatial_SPRotationAxis3D_h */

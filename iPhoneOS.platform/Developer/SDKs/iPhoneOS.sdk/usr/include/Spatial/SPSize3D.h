@@ -2,6 +2,9 @@
 #define Spatial_SPSize3D_h
 
 #include <Spatial/Structures.h>
+#include <Spatial/SPRect3D.h>
+#include <Spatial/SPAffineTransform3D.h>
+#include <Spatial/SPProjectiveTransform3D.h>
 #include <math.h>
 
 // MARK: - Public API
@@ -27,7 +30,19 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A new size stucture.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPSize3D SPSize3DMakeWithVector(simd_double3 xyz)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+
+/*!
+ @abstract Creates a size structure with dimensions specified as a Spatial vector.
+ 
+ @param xyz The source vector.
+ @returns A new size stucture.
+*/
+SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
+SPSize3D SPSize3DMakeWithVector(SPVector3D xyz)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
@@ -95,7 +110,7 @@ SPSize3D SPSize3DScaleUniform(SPSize3D size, double scale)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
- @abstract Returns a size that's rotated by the specified rotation.
+ @abstract Returns a size that's rotated by the specified rotation around the origin.
  
  @param size The source size.
  @param rotation The rotation.
@@ -106,7 +121,7 @@ SPSize3D SPSize3DRotate(SPSize3D size, SPRotation3D rotation)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
- @abstract Returns a size that's rotated by the specified quaternion.
+ @abstract Returns a size that's rotated by the specified quaternion around the origin.
  
  @param size The source size.
  @param quaternion The quaternion that defines the rotation.
@@ -141,7 +156,7 @@ SPSize3D SPSize3DApplyProjectiveTransform(SPSize3D size,
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
- @abstract Returns a size that's transformed by the inverted affine transform.
+ @abstract Returns a size that's transformed by the inverse of the specified affine transform.
  
  @param size The source size.
  @param transform The affine transform that the function unapplies to the size.
@@ -154,7 +169,7 @@ SPSize3D SPSize3DUnapplyAffineTransform(SPSize3D size,
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
- @abstract Returns a size that's transformed by the inverted projective transform.
+ @abstract Returns a size that's transformed by the inverse of the specified projective transform.
  
  @param size The source size.
  @param transform The projective transform that the function unapplies to the size.
@@ -206,7 +221,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  
  @param size The first size.
  @param other The second size.
- @returns A size structure that is he intersection of the two sizes.
+ @returns A size structure that is the intersection of the two sizes.
 */
 SPATIAL_INLINE
 SPSize3D SPSize3DIntersection(SPSize3D size, SPSize3D other)
@@ -259,84 +274,87 @@ SPSize3D SPSize3DMake(double width, double height, double depth) {
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPSize3D SPSize3DMakeWithVector(simd_double3 xyz) {
-    return (SPSize3D){ .simd = xyz };
+    return (SPSize3D){ .vector = xyz };
+}
+
+SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
+SPSize3D SPSize3DMakeWithVector(SPVector3D xyz) {
+    return (SPSize3D){ .vector = xyz.vector };
 }
 
 SPATIAL_REFINED_FOR_SWIFT
 SPSize3D SPSize3DMakeWithPoint(SPPoint3D point) {
-    return (SPSize3D){ .simd = point.simd };
+    return (SPSize3D){ .vector = point.vector };
 }
 
 // MARK: - Querying size properties
 
-SPATIAL_SWIFT_NAME(getter:Size3D.vector(self:))
+SPATIAL_REFINED_FOR_SWIFT
 simd_double3 SPSize3DGetVector(SPSize3D size) {
-    return size.simd;
+    return size.vector;
 }
 
 SPATIAL_REFINED_FOR_SWIFT
 bool SPSize3DEqualToSize(SPSize3D size1, SPSize3D size2) {
-    return simd_equal(size1.simd, size2.simd);
+    return simd_equal(size1.vector, size2.vector);
 }
 // MARK: - Transforming a size
 
 SPATIAL_REFINED_FOR_SWIFT
 SPSize3D SPSize3DScaleBy(SPSize3D size, double x, double y, double z) {
     
-    return (SPSize3D){ .simd = size.simd * simd_make_double3(x, y, z)};
+    return (SPSize3D){ .vector = size.vector * simd_make_double3(x, y, z)};
 }
 
 SPATIAL_SWIFT_NAME(Size3D.scaled(self:by:))
 SPSize3D SPSize3DScaleBySize(SPSize3D size, SPSize3D scale) {
     
-    return (SPSize3D){ .simd = size.simd * scale.simd };
+    return (SPSize3D){ .vector = size.vector * scale.vector };
 }
 
 SPATIAL_SWIFT_NAME(Size3D.uniformlyScaled(self:by:))
 SPSize3D SPSize3DScaleUniform(SPSize3D size, double scale) {
     
-    return (SPSize3D){ .simd = size.simd * scale };
+    return (SPSize3D){ .vector = size.vector * scale };
 }
 
 SPATIAL_SWIFT_NAME(Size3D.rotated(self:by:))
 SPSize3D SPSize3DRotate(SPSize3D size, SPRotation3D rotation) {
-    SPRect3D rect = (SPRect3D){
-        SPPoint3DZero,
-        size
-    };
+    
+    SPAffineTransform3D t = SPAffineTransform3DMakeRotation(rotation);
 
-    return SPRect3DRotate(rect, rotation).size;
+    return SPSize3DApplyAffineTransform(size, t);
 }
 
 SPATIAL_SWIFT_NAME(Size3D.rotated(self:by:))
 SPSize3D SPSize3DRotateByQuaternion(SPSize3D size, simd_quatd quaternion) {
 
-    SPRect3D rect = (SPRect3D){
-        SPPoint3DZero,
-        size
-    };
-    
-    return SPRect3DRotateByQuaternion(rect, quaternion).size;
+    SPRotation3D r = SPRotation3DMakeWithQuaternion(quaternion);
+  
+    return SPSize3DRotate(size, r);
 }
 
 SPATIAL_SWIFT_NAME(Size3D.applying(self:_:))
 SPSize3D SPSize3DApplyAffineTransform(SPSize3D size, SPAffineTransform3D transform) {
     
-    SPRect3D rect = (SPRect3D){SPPoint3DZero, size};
+    simd_double4 rhs = simd_make_double4(size.vector, 0);
     
-    SPSize3D transformed = SPRect3DApplyAffineTransform(rect, transform).size;
+    simd_double3 transformed = simd_mul(transform.matrix, rhs).xyz;
     
-    return transformed;
+    return (SPSize3D){ .vector = transformed };
 }
 
 SPATIAL_SWIFT_NAME(Size3D.applying(self:_:))
 SPSize3D SPSize3DApplyProjectiveTransform(SPSize3D size, SPProjectiveTransform3D transform) {
-    SPRect3D rect = (SPRect3D){SPPoint3DZero, size};
+
+    simd_double4 rhs = simd_make_double4(size.vector, 0);
     
-    SPSize3D transformed = SPRect3DApplyProjectiveTransform(rect, transform).size;
+    simd_double3 transformed = simd_mul(transform.matrix, rhs).xyz;
     
-    return transformed;
+    return (SPSize3D){ .vector = transformed };
 }
 
 SPATIAL_REFINED_FOR_SWIFT
@@ -381,8 +399,8 @@ SPSize3D SPSize3DShear(SPSize3D size,
 SPATIAL_SWIFT_NAME(Size3D.contains(self:_:))
 bool SPSize3DContainsSize(SPSize3D size, SPSize3D other)  {
     
-    simd_double3 v0 = size.simd;
-    simd_double3 v1 = other.simd;
+    simd_double3 v0 = size.vector;
+    simd_double3 v1 = other.vector;
     
     return simd_equal(v0 >= v1, (simd_long3){-1, -1, -1});
 }
@@ -430,3 +448,4 @@ bool SPSize3DContainsAnyPoint(SPSize3D size, const SPPoint3D *points, int pointC
 }
 
 #endif /* Spatial_SPSize3D_h */
+

@@ -9,9 +9,6 @@
 
 #import <Foundation/Foundation.h>
 
-#ifndef PKIdentityIntentToStore_h
-#define PKIdentityIntentToStore_h
-
 NS_ASSUME_NONNULL_BEGIN
 
 /// Indicates your intention to store an identity element. This covers not only
@@ -20,23 +17,22 @@ NS_ASSUME_NONNULL_BEGIN
 API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, watchos, tvos)
 @interface PKIdentityIntentToStore: NSObject <NSCopying>
 
-- (instancetype)init NS_UNAVAILABLE;
-
 /// Indicates the data element returned in the response will not be stored for
 /// a period longer than necessary to process the result in realtime.
-@property (class, readonly) PKIdentityIntentToStore *willNotStoreIntent NS_SWIFT_NAME(willNotStore);
+@property (class, nonatomic, readonly) PKIdentityIntentToStore *willNotStoreIntent NS_SWIFT_NAME(willNotStore);
 
 /// Indicates the data element may be stored for an indefinite length of time.
-@property (class, readonly) PKIdentityIntentToStore *mayStoreIntent NS_SWIFT_NAME(mayStore);
+@property (class, nonatomic, readonly) PKIdentityIntentToStore *mayStoreIntent NS_SWIFT_NAME(mayStore);
 
 /// Indicates the data element may be stored for no longer than than the provided number of days.
 + (instancetype)mayStoreIntentForDays:(NSInteger)days NS_SWIFT_NAME(mayStore(days:));
 
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
+
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif /* PKIdentityIntentToStore_h */
 
 
 #else

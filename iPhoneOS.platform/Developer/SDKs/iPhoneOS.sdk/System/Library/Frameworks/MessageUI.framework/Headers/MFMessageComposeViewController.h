@@ -137,6 +137,13 @@ API_AVAILABLE(ios(4.0))
 /// the attachment was not added to the composition.  The data and typeIdentifer must be non-nil.  typeIdentifier should be a valid Uniform Type Identifier.
 - (BOOL)addAttachmentData:(NSData *)attachmentData typeIdentifier:(NSString *)uti filename:(NSString *)filename API_AVAILABLE(ios(7.0));
 
+/// @method     insertCollaborationItemProvider:
+/// @param      itemProvider created from ShareSheet
+/// @abstract   Returns <tt>YES</tt> if the item provider was added to the composition successfully.
+/// @discussion If the return value is YES, the itemProvider was added to the composition. If the return value is NO,
+/// the itemProvider was not added to the composition.  The itemProvider must be non-nil.
+- (BOOL)insertCollaborationItemProvider:(NSItemProvider *)itemProvider API_AVAILABLE(macos(13.0), ios(16.0));
+
 @end
 
 

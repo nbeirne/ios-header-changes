@@ -47,4 +47,16 @@
 #define _sp_simd_ceil ceil
 #endif
 
+#ifdef __cplusplus
+#define _sp_simd_cos ::__tg_cos
+#else
+#define _sp_simd_cos cos
+#endif
+
+#ifdef __cplusplus
+#define _sp_simd_sin ::__tg_sin
+#else
+#define _sp_simd_sin sin
+#endif
+
 #endif /* Spatial_Base_h */

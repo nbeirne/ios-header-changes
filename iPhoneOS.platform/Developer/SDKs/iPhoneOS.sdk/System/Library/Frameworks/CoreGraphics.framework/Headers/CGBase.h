@@ -10,6 +10,7 @@
 #include <float.h>
 #include <TargetConditionals.h>
 #include <CoreFoundation/CFBase.h>
+#include <CoreFoundation/CFCGTypes.h>
 #include <os/availability.h>
 
 /* Definition of `__CG_HAS_COMPILER_ATTRIBUTE'. */
@@ -282,6 +283,15 @@
 #  define __CG_NO_INLINE static __attribute__((noinline))
 # else
 #  define __CG_NO_INLINE static
+# endif
+#endif
+
+/* Definition of CG_PURE. */
+#if !defined(CG_PURE)
+# if __CG_HAS_COMPILER_ATTRIBUTE(pure)
+#  define CG_PURE  __attribute__((pure))
+# else
+#  define CG_PURE 
 # endif
 #endif
 

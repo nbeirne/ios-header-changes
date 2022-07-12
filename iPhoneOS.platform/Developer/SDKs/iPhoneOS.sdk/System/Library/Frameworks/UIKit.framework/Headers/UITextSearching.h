@@ -89,9 +89,8 @@ UIKIT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI
 /// @param range    The range of text to decorate.
 /// @param document If multiple documents are used, the relevant document identifier is provided here.
 ///                 Otherwise nil.
-/// @param style    The style used to decorate the text. The visual appearance for a given style is up
-///                 to the developer, but default text attributes are provided via the NSTextAttribute
-///                 category method @c +systemTextSearchTextAttributesForStyle.
+/// @param style    A style hint for how to decorate the text. This is ultimately up to the developer, but developers are
+///               encouraged to match the system's appearance (i.e., UITextView) as close as possible. 
 - (void)decorateFoundTextRange:(UITextRange *)range
                     inDocument:(nullable UITextSearchDocumentIdentifier)document
                     usingStyle:(UITextSearchFoundTextStyle)style;

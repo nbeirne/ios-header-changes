@@ -138,9 +138,7 @@ MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
 @property (nonnull, readonly) NSArray <id<MTLBinding>> *meshBindings API_AVAILABLE(macos(13.0), ios(16.0));
 @property (nullable, readonly) NSArray <MTLArgument *> *vertexArguments API_DEPRECATED_WITH_REPLACEMENT("vertexBindings", macos(10.11, API_TO_BE_DEPRECATED), ios(8.0, API_TO_BE_DEPRECATED));
 @property (nullable, readonly) NSArray <MTLArgument *> *fragmentArguments API_DEPRECATED_WITH_REPLACEMENT("fragmentBindings", macos(10.11, API_TO_BE_DEPRECATED), ios(8.0, API_TO_BE_DEPRECATED));
-@property (nullable, readonly) NSArray <MTLArgument *> *tileArguments API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(11.0), tvos(14.5)) API_DEPRECATED_WITH_REPLACEMENT("tileBindings", macos(11.0, API_TO_BE_DEPRECATED), ios(11.0, API_TO_BE_DEPRECATED));
-@property (nullable, readonly) NSArray <MTLArgument *> *objectArguments API_AVAILABLE(macos(13.0), ios(16.0)) API_DEPRECATED_WITH_REPLACEMENT("objectBindings", macos(13.0, API_TO_BE_DEPRECATED), ios(16.0, API_TO_BE_DEPRECATED));
-@property (nullable, readonly) NSArray <MTLArgument *> *meshArguments API_AVAILABLE(macos(13.0), ios(16.0)) API_DEPRECATED_WITH_REPLACEMENT("meshBindings", macos(13.0, API_TO_BE_DEPRECATED), ios(16.0, API_TO_BE_DEPRECATED));
+@property (nullable, readonly) NSArray <MTLArgument *> *tileArguments API_DEPRECATED_WITH_REPLACEMENT("tileBindings", macos(11.0, API_TO_BE_DEPRECATED), macCatalyst(14.0, API_TO_BE_DEPRECATED), ios(11.0, API_TO_BE_DEPRECATED), tvos(14.5, API_TO_BE_DEPRECATED));
 @end
 
 MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
@@ -366,14 +364,8 @@ API_AVAILABLE(macos(10.11), ios(8.0))
 @property (readonly) NSUInteger maxTotalThreadgroupsPerMeshGrid API_AVAILABLE(macos(13.0), ios(16.0));
 
 /*!
- @property gpuHandle
- @abstract accessible by the CPU, and used to get the device handle of a resource/object that could be normally passed to the GPU within an argument buffer
- this will be deleted as the gpuResourceID will replace it
- */
-@property (readonly) MTLGPUHandle gpuHandle;
-/*!
  @property gpuResourceID
- @abstract Accessible by the CPU, it is used to get the handle of a GPU resource that could be normally passed to the GPU
+ @abstract Handle of the GPU resource suitable for storing in an Argument Buffer
  */
 @property (readonly) MTLResourceID gpuResourceID API_AVAILABLE(macos(13.0), ios(16.0));
 

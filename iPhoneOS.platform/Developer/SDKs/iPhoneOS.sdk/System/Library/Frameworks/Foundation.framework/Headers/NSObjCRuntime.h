@@ -466,6 +466,8 @@ Usually, this is because the enum represents a mathematically complete set. For 
 
 #define NS_WARN_UNUSED_RESULT CF_WARN_UNUSED_RESULT
 
+#define NS_FALLTHROUGH CF_FALLTHROUGH
+
 // There is no need to use this macro any longer, the last Foundation epoch 
 // was 8 and that is now assumed to be the final version. 
 #define FOUNDATION_SWIFT_SDK_EPOCH_AT_LEAST(__epoch__) (!defined(SWIFT_CLASS_EXTRA))

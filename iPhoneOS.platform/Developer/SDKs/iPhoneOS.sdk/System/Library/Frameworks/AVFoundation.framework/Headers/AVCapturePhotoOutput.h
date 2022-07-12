@@ -416,7 +416,7 @@ typedef NS_ENUM(NSInteger, AVCapturePhotoQualityPrioritization) {
  @discussion
     This property supersedes AVCaptureDevice's isFlashModeSupported: It returns an array of AVCaptureFlashMode constants. To test whether a particular flash mode is supported, use NSArray's containsObject API: [photoOutput.supportedFlashModes containsObject:@(AVCaptureFlashModeAuto)]. This property is key-value observable.
  */
-@property(nonatomic, readonly) NSArray<NSNumber *> *supportedFlashModes API_AVAILABLE(macos(13.0));
+@property(nonatomic, readonly) NSArray<NSNumber *> *supportedFlashModes API_AVAILABLE(macos(13.0), macCatalyst(14.0));
 
 /*!
  @property autoRedEyeReductionSupported
@@ -1011,7 +1011,7 @@ API_AVAILABLE(macos(10.15), ios(10.0), macCatalyst(14.0)) API_UNAVAILABLE(tvos) 
  @discussion
     flashMode takes the place of the deprecated AVCaptureDevice -flashMode API. Setting AVCaptureDevice.flashMode has no effect on AVCapturePhotoOutput, which only pays attention to the flashMode specified in your AVCapturePhotoSettings. The default value is AVCaptureFlashModeOff. Flash modes are defined in AVCaptureDevice.h. If you specify a flashMode of AVCaptureFlashModeOn, it wins over autoStillImageStabilizationEnabled=YES. When the device becomes very hot, the flash becomes temporarily unavailable until the device cools down (see AVCaptureDevice's -flashAvailable). While the flash is unavailable, AVCapturePhotoOutput's -supportedFlashModes property still reports AVCaptureFlashModeOn and AVCaptureFlashModeAuto as being available, thus allowing you to specify a flashMode of AVCaptureModeOn. You should always check the AVCaptureResolvedPhotoSettings provided to you in the AVCapturePhotoCaptureDelegate callbacks, as the resolved flashEnabled property will tell you definitively if the flash is being used.
  */
-@property(nonatomic) AVCaptureFlashMode flashMode API_AVAILABLE(macos(13.0));
+@property(nonatomic) AVCaptureFlashMode flashMode API_AVAILABLE(macos(13.0), macCatalyst(14.0));
 
 /*!
  @property autoRedEyeReductionEnabled
@@ -1095,7 +1095,7 @@ API_AVAILABLE(macos(10.15), ios(10.0), macCatalyst(14.0)) API_UNAVAILABLE(tvos) 
 
     Starting in iOS 14.5 if you disable geometric distortion correction, the high resolution photo emitted by AVCapturePhotoOutput may be is smaller depending on the format.
  */
-@property(nonatomic, getter=isHighResolutionPhotoEnabled) BOOL highResolutionPhotoEnabled API_AVAILABLE(macos(13.0));
+@property(nonatomic, getter=isHighResolutionPhotoEnabled) BOOL highResolutionPhotoEnabled API_AVAILABLE(macos(13.0), macCatalyst(14.0));
 
 /*!
  @property depthDataDeliveryEnabled

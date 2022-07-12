@@ -7,8 +7,6 @@
     
  */
 
-
-
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -34,20 +32,20 @@ typedef NS_ENUM(NSInteger, AVCustomRoutingEventReason) {
 	@abstract	This class represents an event that occurs on a route.
 	@discussion	Depending on the reason for the event, clients are expected to establish or tear down the connection to the given route.
  */
-API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos)
+API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(tvos, watchos)
 @interface AVCustomRoutingEvent : NSObject
 
 /*!
 	@property 	reason
 	@abstract	The reason for the event.
  */
-@property (nonatomic, readonly) AVCustomRoutingEventReason reason;
+@property (nonatomic, readonly) AVCustomRoutingEventReason reason API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(tvos, watchos);
 
 /*!
 	@property 	route
 	@abstract	The route associated with the event.
  */
-@property (nonatomic, readonly) AVCustomDeviceRoute *route;
+@property (nonatomic, readonly) AVCustomDeviceRoute *route API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(tvos, watchos);
 
 @end
 

@@ -14,7 +14,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class AVInterstitialTimeRange;
-@class AVPlaybackSpeedCollection;
+@class AVPlaybackSpeed;
 
 @protocol AVPlayerViewControllerDelegate;
 
@@ -131,14 +131,31 @@ API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(macos, watchos, tvos)
  */
 @property (nonatomic, weak, nullable) id <AVPlayerViewControllerDelegate> delegate API_AVAILABLE(ios(9.0));
 
-/*!
-	@property	playbackSpeedCollection
-	@abstract	A collection of user selectable playback speeds to be shown in the standard playback controls UI.
-	@discussion	By default this property will be set to an AVPlaybackSpeedCollection with the platform default playback speeds (defined in [AVPlaybackSpeed systemDefaultSpeeds]). Setting this property to nil will hide the playback speed selection UI.
-				
-				To set the currently selected playback speed programmatically, either set the defaultRate on the AVPlayer associated with this view controller or call selectSpeed: the playback collection to the desired speed.
+/**
+ 	@property	speeds
+ 	@abstract	A list of user selectable playback speeds to be shown in the playback speed control.
+ 	@discussion	By default this property will be set to the systemDefaultSpeeds class property. Setting this property to an empty list will hide the playback speed selection UI.
+	 
+				To set the currently selected playback speed programmatically, either set the defaultRate on the AVPlayer associated with this view controller or use the selectSpeed method on AVPlayerViewController.
  */
-@property (nonatomic, readwrite, nullable) AVPlaybackSpeedCollection *playbackSpeedCollection API_AVAILABLE(ios(16.0));
+@property (nonatomic, copy) NSArray<AVPlaybackSpeed *> *speeds API_AVAILABLE(ios(16.0));
+
+/*!
+ @property		selectedSpeed
+ @abstract		The currently selected playback speed.
+ @discussion	Changes to the associated AVPlayer's defaultRate will be reflected in this property and vice versa. If the associated AVPlayer's defaultRate is set to a value that does not match a speed in the speeds list property, the selected speed will be nil.
+ */
+@property (nonatomic, readonly, nullable) AVPlaybackSpeed *selectedSpeed API_AVAILABLE(ios(16.0));
+
+/*!
+ @property		selectSpeed
+ @param			speed
+				The playback speed to select.
+ @abstract		Sets the input AVPlaybackSpeed as the selected speed.
+ @discussion	Calls to selectSpeed with AVPlaybackSpeeds not contained within the speeds property array will be ignored.
+ */
+- (void)selectSpeed:(AVPlaybackSpeed *)speed API_AVAILABLE(ios(16.0));
+
 
 @end
 

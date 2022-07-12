@@ -33,8 +33,13 @@
 #if defined(__STDC_VERSION__) && (199901L <= __STDC_VERSION__)
 
 #include <inttypes.h>
-#include <stdbool.h>
 #include <stdint.h>
+
+#endif
+
+#if defined(__STDC_VERSION__) && (199901L <= __STDC_VERSION__) && (__STDC_VERSION__ <= 201710L)
+
+#include <stdbool.h>
 
 #endif
 

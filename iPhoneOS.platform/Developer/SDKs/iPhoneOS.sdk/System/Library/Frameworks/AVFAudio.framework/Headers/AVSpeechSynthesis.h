@@ -21,7 +21,8 @@ typedef NS_ENUM(NSInteger, AVSpeechBoundary) {
 
 typedef NS_ENUM(NSInteger, AVSpeechSynthesisVoiceQuality) {
     AVSpeechSynthesisVoiceQualityDefault = 1,
-    AVSpeechSynthesisVoiceQualityEnhanced
+    AVSpeechSynthesisVoiceQualityEnhanced,
+    AVSpeechSynthesisVoiceQualityPremium API_AVAILABLE(ios(16.0), macos(13.0), tvos(16.0), watchos(9.0))
 } NS_ENUM_AVAILABLE(10_14, 9_0);
 
 typedef NS_ENUM(NSInteger, AVSpeechSynthesisVoiceGender) {

@@ -622,6 +622,7 @@ SQLITE_API int sqlite3_exec(
 #define SQLITE_OPEN_FILEPROTECTION_NONE                                 0x00400000
 #define SQLITE_OPEN_FILEPROTECTION_MASK \
                                      0x00700000
+#define SQLITE_OPEN_NOFOLLOW         0x01000000  /* Ok for sqlite3_open_v2() */
 #define SQLITE_OPEN_EXRESCODE        0x02000000  /* Extended result codes */
 
 /* Legacy compatibility: */
@@ -3432,6 +3433,10 @@ SQLITE_API void sqlite3_progress_handler(sqlite3*, int, int(*)(void*), void*);
 ** attempt to use the same database connection at the same time.
 ** (Mutexes will block any actual concurrency, but in this mode
 ** there is no harm in trying.)
+**
+** [[OPEN_NOFOLLOW]] ^(<dt>[SQLITE_OPEN_NOFOLLOW]</dt>
+** <dd>The database filename is not allowed to contain any symbolic links</dd>
+** </dl>)^
 **
 ** ^(<dt>[SQLITE_OPEN_SHAREDCACHE]</dt>
 ** <dd>The database is opened [shared cache] enabled, overriding

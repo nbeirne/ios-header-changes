@@ -603,14 +603,8 @@ API_AVAILABLE(macos(11.0), ios(14.0))
 @property (nonatomic, readonly) NSUInteger size;
 
 /*!
- @property gpuHandle
- @abstract accessible by the CPU, and used to get the device handle of a resource/object that could be normally passed to the GPU within an argument buffer
- this will be deleted as the gpuResourceID will replace it
- */
-@property (readonly) MTLGPUHandle gpuHandle;
-/*!
  @property gpuResourceID
- @abstract Accessible by the CPU, it is used to get the handle of a GPU resource that could be normally passed to the GPU
+ @abstract Handle of the GPU resource suitable for storing in an Argument Buffer
  */
 @property (readonly) MTLResourceID gpuResourceID API_AVAILABLE(macos(13.0), ios(16.0));
 

@@ -59,6 +59,9 @@ WK_EXTERN NSString * const WKWebsiteDataTypeIndexedDBDatabases API_AVAILABLE(mac
 /*! @constant WKWebsiteDataTypeServiceWorkerRegistrations Service worker registrations. */
 WK_EXTERN NSString * const WKWebsiteDataTypeServiceWorkerRegistrations API_AVAILABLE(macos(10.13.4), ios(11.3));
 
+/*! @constant WKWebsiteDataTypeFileSystem File system storage. */
+WK_EXTERN NSString * const WKWebsiteDataTypeFileSystem API_AVAILABLE(macos(13.0), ios(16.0));
+
 /*! A WKWebsiteDataRecord represents website data, grouped by domain name using the public suffix list. */
 WK_EXTERN API_AVAILABLE(macos(10.11), ios(9.0))
 @interface WKWebsiteDataRecord : NSObject

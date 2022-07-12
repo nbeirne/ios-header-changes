@@ -9,8 +9,7 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-NS_SWIFT_SENDABLE
-typedef struct _NSRange {
+typedef struct NS_SWIFT_SENDABLE _NSRange {
     NSUInteger location;
     NSUInteger length;
 } NSRange;

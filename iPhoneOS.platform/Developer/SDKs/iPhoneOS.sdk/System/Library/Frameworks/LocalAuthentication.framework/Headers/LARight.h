@@ -73,18 +73,4 @@ API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(watchos, tvos)
 
 @end
 
-#pragma mark -
-
-/// @brief This notification is sent when a right has been authorized
-/// @discussion The related @c LARight instance is the @c object associated with the @c NSNotification instance delivered to observers
-API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(watchos, tvos)
-NS_SWIFT_NAME(LARight.didBecomeAuthorizedNotification)
-extern NSNotificationName const LARightDidBecomeAuthorizedNotification;
-
-/// @brief This notification is sent when a right has been deauthorized.
-/// @discussion The related @c LARight instance is the @c object associated with the @c NSNotification instance delivered to observers
-API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(watchos, tvos)
-NS_SWIFT_NAME(LARight.didBecomeUnathorizedNotification)
-extern NSNotificationName const LARightDidBecomeUnauthorizedNotification;
-
 NS_ASSUME_NONNULL_END

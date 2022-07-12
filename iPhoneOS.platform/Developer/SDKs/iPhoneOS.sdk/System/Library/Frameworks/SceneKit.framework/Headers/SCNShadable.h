@@ -548,7 +548,7 @@ SCN_EXPORT SCNShaderModifierEntryPoint const SCNShaderModifierEntryPointLighting
  
  | struct SCNFramebuffer {
  |    float4 color; // Contents of the destination framebuffer corresponding to the fragment being processed
- | } _framebuffer;  // Available since macOS 13.0, iOS 16, tvOS 16 and watchOS 9.
+ | } _framebuffer;  // Available since macOS 13, iOS 16, tvOS 16 and watchOS 9.
  |
  | Access: ReadOnly
  | Stages: Fragment shader only

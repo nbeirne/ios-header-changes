@@ -65,7 +65,6 @@ NS_CLASS_AVAILABLE(10_9, NA)
 // The loading delegate methods will be called as map content is loaded.
 @property (nonatomic) MKMapType mapType API_DEPRECATED_WITH_REPLACEMENT("Use respective MKMapConfiguration", macos(10.9, API_TO_BE_DEPRECATED), ios(3.0, API_TO_BE_DEPRECATED), tvos(9.2, API_TO_BE_DEPRECATED));
 
-@property (nonatomic, copy) MKMapConfiguration *configuration; // To be removed
 @property (nonatomic, copy) MKMapConfiguration *preferredConfiguration API_AVAILABLE(ios(16.0), macos(13.0), tvos(16.0)) API_UNAVAILABLE(watchos);
 
 #if TARGET_OS_IOS

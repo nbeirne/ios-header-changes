@@ -16,7 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 @class HMCharacteristic;
 @class HMAccessoryCategory;
 @class HMAccessoryProfile;
-@class HMFWiFiNetworkInfo;
 @protocol HMAccessoryDelegate;
 
 /*!
@@ -245,15 +244,6 @@ HM_EXTERN API_AVAILABLE(ios(8.0), watchos(2.0), tvos(10.0), macCatalyst(14.0)) A
  * @param firmwareVersion The newly updated firmwareVersion.
  */
 - (void)accessory:(HMAccessory *)accessory didUpdateFirmwareVersion:(NSString *)firmwareVersion API_AVAILABLE(ios(11.0), watchos(4.0), tvos(11.0));
-
-/*!
- * @brief Informs the delegate when the WiFi network has been changed for an accessory.
- *
- * @param accessory Sender of the message.
- *
- * @param wifiNetworkInfo The newly updated WiFi network information.
- */
-- (void)accessory:(HMAccessory *)accessory didUpdateWifiNetworkInfo:(HMFWiFiNetworkInfo *)wifiNetworkInfo;
 
 @end
 

@@ -17,10 +17,10 @@ typedef NS_ENUM(NSInteger, UIAttachmentBehaviorType) {
     UIAttachmentBehaviorTypeAnchor
 } API_AVAILABLE(ios(7.0));
 
-typedef struct {
+typedef struct NS_SWIFT_SENDABLE {
     CGFloat minimum;
     CGFloat maximum;
-} UIFloatRange NS_SWIFT_SENDABLE;
+} UIFloatRange;
 
 UIKIT_EXTERN const UIFloatRange UIFloatRangeZero API_AVAILABLE(ios(9.0));
 UIKIT_EXTERN const UIFloatRange UIFloatRangeInfinite API_AVAILABLE(ios(9.0));

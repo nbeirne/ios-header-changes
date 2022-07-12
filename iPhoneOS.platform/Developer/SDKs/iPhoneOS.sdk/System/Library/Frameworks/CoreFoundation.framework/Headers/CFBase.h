@@ -330,6 +330,12 @@ CF_EXTERN_C_BEGIN
 #define CF_WARN_UNUSED_RESULT
 #endif
 
+#if __has_attribute(fallthrough)
+#define CF_FALLTHROUGH __attribute__((fallthrough))
+#else
+#define CF_FALLTHROUGH
+#endif
+
 #if !__has_feature(objc_generics_variance)
 #ifndef __covariant
 #define __covariant

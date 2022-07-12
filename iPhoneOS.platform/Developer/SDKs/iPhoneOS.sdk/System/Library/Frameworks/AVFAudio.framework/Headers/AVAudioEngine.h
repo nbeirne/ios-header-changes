@@ -706,7 +706,7 @@ API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0))
 	Any client installed block on the source node's audio unit `AUMIDIOutputEventBlock`
 	will be overwritten when making the MIDI connection.
  */
-- (void)connectMIDI:(AVAudioNode *)sourceNode to:(AVAudioNode *)destinationNode format:(AVAudioFormat * __nullable)format block:(AUMIDIOutputEventBlock __nullable)tapBlock API_DEPRECATED_WITH_REPLACEMENT("connectMIDI:to:format:eventListBlock:", macos(10.14, 13.0), ios(13.0, 16.0), watchos(5.0, 9.0), tvos(12.0, 16.0));
+- (void)connectMIDI:(AVAudioNode *)sourceNode to:(AVAudioNode *)destinationNode format:(AVAudioFormat * __nullable)format block:(AUMIDIOutputEventBlock __nullable)tapBlock __attribute__((swift_attr("@_disfavoredOverload"))) API_DEPRECATED_WITH_REPLACEMENT("connectMIDI:to:format:eventListBlock:", macos(10.14, 13.0), ios(13.0, 16.0), watchos(5.0, 9.0), tvos(12.0, 16.0));
 
 /*! @method connectMIDI:to:format:eventListblock:
     @abstract

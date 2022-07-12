@@ -1,8 +1,6 @@
 //
 //  EXMacros.h
-//  ExtensionKit
-//
-//  Created by Alex Carter on 11/5/19.
+//  ExtensionFoundation
 //
 
 #ifndef EXMacros_h

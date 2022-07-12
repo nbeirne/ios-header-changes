@@ -167,8 +167,8 @@ API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0))
  */
 - (void)invalidateAndCancel;
 
-- (void)resetWithCompletionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(void))completionHandler;    /* empty all cookies, cache and credential stores, removes disk files, issues -flushWithCompletionHandler:. Invokes completionHandler() on the delegate queue if not nil. */
-- (void)flushWithCompletionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(void))completionHandler;    /* flush storage to disk and clear transient network caches.  Invokes completionHandler() on the delegate queue if not nil. */
+- (void)resetWithCompletionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(void))completionHandler;    /* empty all cookies, cache and credential stores, removes disk files, issues -flushWithCompletionHandler:. Invokes completionHandler() on the delegate queue. */
+- (void)flushWithCompletionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(void))completionHandler;    /* flush storage to disk and clear transient network caches.  Invokes completionHandler() on the delegate queue. */
 
 - (void)getTasksWithCompletionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSArray<NSURLSessionDataTask *> *dataTasks, NSArray<NSURLSessionUploadTask *> *uploadTasks, NSArray<NSURLSessionDownloadTask *> *downloadTasks))completionHandler NS_SWIFT_ASYNC_NAME(getter:tasks()); /* invokes completionHandler with outstanding data, upload and download tasks. */
 

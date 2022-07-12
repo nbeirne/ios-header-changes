@@ -311,10 +311,10 @@ typedef struct {
  - if groups > 1:
  - input, output, weights and bias will be used for a set of convolutions.
  - input and output channels must be divisible by groups.
- - weight layout must be BNNSDataLayoutConvolutionWeightsOIHW
+ - weight layout must be BNNSDataLayoutConvolutionWeightsOIHW or BNNSDataLayoutConvolutionWeightsOIHrWr
  - weights descriptor size[2] = in_channels/groups and weights descriptor size[3]=output channels, such that for each consecutive convolutions i and i+1 in the group, convolution i weights and convolution i+1 weights are separated by total_weights_size/groups elements
  - when calling apply forward and backward functions, in_stride, out_stride and gradient strides should be the strides for the entire convolution group.
- - not supported in transposed convolution.
+ - transposed convolution gradient computation is not supported when groups>1
  @field pad left, right, up, down zero padding. used for asymmetric padding.
  - ignored if pad is all 0, or if x_padding>0 or y_padding>0.
  - left,up are adjucent to image position 0,0.
@@ -1553,7 +1553,7 @@ typedef struct {
 
 /*!
  @abstract parameters to describe sparsity attributes
- @discussion use this data structure to specify the attributes of the sparsity requested from BNNSNDArrayPrune or hint for BNNSNDArrayFullyConnectedSparsify
+ @discussion use this data structure as hint for BNNSNDArrayFullyConnectedSparsify
  for BNNSSparsityTypeUnstructured, sparsity_ratio is numerator / denominator
  @field flags - bit flags to define different states (currently reserved and should be initialized to zero)
  @field sparsity_ratio - numerator(sparsity_ratio[0]) and denominator(sparsity_ratio[1])indicating sparsity ratio. numerator must be less than denominator.

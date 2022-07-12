@@ -121,8 +121,7 @@ Return the manager responsible for the default domain.
  Before accessing the content of the returned URL, the caller must call `-[NSURL startAccessingSecurityScopedResource]
  on the returned URL and call `-[NSURL stopAccessingSecurityScopedResource]` when done accessing the content.
 
- On macOS, the returned URL grants read-write access to the user visible location for the corresponding
- item. On iOS, the the returned URL grants read-only access to the user visible location.
+ The returned URL grants read-write access to the user visible location for the corresponding item.
 
  On iOS, for replicated domains, the extension process will never be granted access to the user
  visible location, this function will always fail with `NSFileReadNoPermissionError`.

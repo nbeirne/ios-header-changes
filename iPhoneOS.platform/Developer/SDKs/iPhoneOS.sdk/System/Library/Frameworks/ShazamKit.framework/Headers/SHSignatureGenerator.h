@@ -17,7 +17,7 @@ SH_EXPORT API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0))
 
 /// Create a `SHSignature` from an @c AVAsset.
 /// @param asset An AVAsset that contains audio you would like to convert to a Signature
-/// @discussion The asset can be any type of media that has a audio tracks. If the asset has multiple tracks, they
+/// @discussion The asset can be any type of media that has audio tracks. If the asset has multiple tracks, they
 /// will be mixed into one @c SHSignature
 /// @param completionHandler A block called with the created @c SHSignature or nil and a populated error parameter if a signature could not be created.
 + (void)generateSignatureFromAsset:(AVAsset *)asset completionHandler:(void (^)(SHSignature * __nullable signature, NSError * __nullable error))completionHandler API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0), watchos(9.0)) NS_SWIFT_ASYNC_NAME(signature(from:));

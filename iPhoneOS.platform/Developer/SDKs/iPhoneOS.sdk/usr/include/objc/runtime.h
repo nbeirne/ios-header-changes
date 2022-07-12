@@ -259,13 +259,8 @@ object_getInstanceVariable(id _Nullable obj, const char * _Nonnull name,
  * @return The Class object for the named class, or \c nil
  *  if the class is not registered with the Objective-C runtime.
  * 
- * @note \c objc_getClass is different from \c objc_lookUpClass in that if the class
- *  is not registered, \c objc_getClass calls the class handler callback and then checks
- *  a second time to see whether the class is registered. \c objc_lookUpClass does 
- *  not call the class handler callback.
- * 
- * @warning Earlier implementations of this function (prior to OS X v10.0)
- *  terminate the program if the class does not exist.
+ * @note The implementation of \c objc_getClass is identical to the implementation
+ *  of \c objc_lookUpClass.
  */
 OBJC_EXPORT Class _Nullable
 objc_getClass(const char * _Nonnull name)
@@ -296,9 +291,8 @@ objc_getMetaClass(const char * _Nonnull name)
  * @return The Class object for the named class, or \c nil if the class
  *  is not registered with the Objective-C runtime.
  * 
- * @note \c objc_getClass is different from this function in that if the class is not
- *  registered, \c objc_getClass calls the class handler callback and then checks a second
- *  time to see whether the class is registered. This function does not call the class handler callback.
+ * @note The implementation of \c objc_lookUpClass is identical to the implementation
+ *  of \c objc_getClass.
  */
 OBJC_EXPORT Class _Nullable
 objc_lookUpClass(const char * _Nonnull name)
@@ -312,7 +306,6 @@ objc_lookUpClass(const char * _Nonnull name)
  * @return The Class object for the named class.
  * 
  * @note This function is the same as \c objc_getClass, but kills the process if the class is not found.
- * @note This function is used by ZeroLink, where failing to find a class would be a compile-time link error without ZeroLink.
  */
 OBJC_EXPORT Class _Nonnull
 objc_getRequiredClass(const char * _Nonnull name)

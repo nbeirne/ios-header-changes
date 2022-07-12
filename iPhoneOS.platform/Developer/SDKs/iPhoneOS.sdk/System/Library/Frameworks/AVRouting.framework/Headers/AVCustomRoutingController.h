@@ -7,7 +7,6 @@
     
  */
 
-
 #import <Foundation/Foundation.h>
 
 #import <AVRouting/AVRoutingDefines.h>
@@ -23,34 +22,34 @@ NS_ASSUME_NONNULL_BEGIN
 	@constant	AVCustomRoutingControllerAuthorizedRoutesDidChangeNotification
 	@abstract	Posted when the value of authorizedRoutes changes.
  */
-AVROUTING_EXTERN NSNotificationName const AVCustomRoutingControllerAuthorizedRoutesDidChangeNotification NS_SWIFT_NAME(AVCustomRoutingController.authorizedRoutesDidChange) API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos);
+AVROUTING_EXTERN NSNotificationName const AVCustomRoutingControllerAuthorizedRoutesDidChangeNotification NS_SWIFT_NAME(AVCustomRoutingController.authorizedRoutesDidChange) API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(tvos, watchos);
 
 /*!
 	@class		AVCustomRoutingController
 	@abstract	When a user selects / deselects a 3rd party device in the route picker, this class delegates the activation / deactivation of that device to the client of this class via AVCustomRoutingEvents.
 	@discussion	This class also informs the client which routes have been previously authorized, allowing them to reconnect if appropriate.
  */
-API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos)
+API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(tvos, watchos)
 @interface AVCustomRoutingController : NSObject
 
 /*!
 	@property 	delegate
 	@abstract	The receiver's delegate.
  */
-@property (nonatomic, weak, nullable) id<AVCustomRoutingControllerDelegate> delegate;
+@property (nonatomic, weak, nullable) id<AVCustomRoutingControllerDelegate> delegate API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(tvos, watchos);
 
 /*!
 	@property 	authorizedRoutes
 	@abstract	The list of authorized routes. Once a route has been activated, it remains authorized for a certain amount of time even if the connection to the route temporarily goes down.
 				The app may reactivate any one of these routes if they deem it appropriate, but must inform the system by calling -setActive:forRoute:.
  */
-@property (nonatomic, readonly) NSArray<AVCustomDeviceRoute *> *authorizedRoutes;
+@property (nonatomic, readonly) NSArray<AVCustomDeviceRoute *> *authorizedRoutes API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(tvos, watchos);
 
 /*!
     @property   customActionItems
     @abstract   An array of custom action items to be added in the picker.
  */
-@property (nonatomic, strong) NSArray<AVCustomRoutingActionItem *> *customActionItems API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, tvos);
+@property (nonatomic, strong) NSArray<AVCustomRoutingActionItem *> *customActionItems API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(tvos, watchos);
 
 /*!
 	@method     invalidateAuthorization
@@ -85,7 +84,7 @@ API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos)
 	@protocol	AVCustomRoutingControllerDelegate
 	@abstract	A protocol for delegates of AVCustomRoutingController.
  */
-API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos)
+API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(tvos, watchos)
 @protocol AVCustomRoutingControllerDelegate <NSObject>
 
 /*!
@@ -122,4 +121,3 @@ API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos)
 @end
 
 NS_ASSUME_NONNULL_END
-

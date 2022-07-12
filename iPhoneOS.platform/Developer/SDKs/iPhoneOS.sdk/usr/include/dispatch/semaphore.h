@@ -72,7 +72,9 @@ dispatch_semaphore_create(intptr_t value);
  *
  * @discussion
  * Decrement the counting semaphore. If the resulting value is less than zero,
- * this function waits for a signal to occur before returning.
+ * this function waits for a signal to occur before returning. If the timeout is
+ * reached without a signal being received, the semaphore is re-incremented
+ * before the function returns.
  *
  * @param dsema
  * The semaphore. The result of passing NULL in this parameter is undefined.

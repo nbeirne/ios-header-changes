@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, MTLIOStatus) {
     MTLIOStatusCancelled = 1,
     MTLIOStatusError = 2,
     MTLIOStatusComplete = 3,
-};
+} API_AVAILABLE(macos(13.0), ios(16.0));
 
 typedef void (^MTLIOCommandBufferHandler)(id<MTLIOCommandBuffer>);
 
@@ -29,6 +29,7 @@ typedef void (^MTLIOCommandBufferHandler)(id<MTLIOCommandBuffer>);
  @protocol MTLIOCommandBuffer
  @abstract represents a list of IO commands for a queue to execute
 */
+API_AVAILABLE(macos(13.0), ios(16.0))
 @protocol MTLIOCommandBuffer <NSObject>
 
 /*!
@@ -48,7 +49,7 @@ typedef void (^MTLIOCommandBufferHandler)(id<MTLIOCommandBuffer>);
             sourceHandleOffset:(NSUInteger)sourceHandleOffset;
 
 /*!
- @method loadBuffer:buffer:offset:size:sourceHandle:sourceHandleOffset
+ @method loadBuffer:offset:size:sourceHandle:sourceHandleOffset
  @abstract Encodes a command that loads from a handle
  and offset into a buffer and an offset.
  */

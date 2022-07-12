@@ -102,7 +102,7 @@ API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos,tvos)
 #pragma mark Document Renaming
 
 /// Rename a document.
-/// If the proposed name is already taken, a different name may be used.
+/// If the proposed name is already taken, a different name may be used after confirming with the user.
 /// The finalURL and error are available in the completion handler.
 - (void)renameDocumentAtURL:(NSURL *)documentURL proposedName:(NSString *)proposedName completionHandler:(void(^)(NSURL *_Nullable finalURL, NSError *_Nullable error))completionHandler API_AVAILABLE(ios(16.0));
 

@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CGGeometry.h>
 #import <UIKit/UIKitDefines.h>
+#import <UIKit/UIApplication.h>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -19,6 +20,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(16.0))
 + (instancetype)new NS_UNAVAILABLE;
 
 @property (nonatomic, readonly) CGRect systemFrame API_AVAILABLE(macCatalyst(16.0)) API_UNAVAILABLE(ios, watchos, tvos);
+@property (nonatomic, readonly) UIInterfaceOrientation interfaceOrientation API_UNAVAILABLE(tvos);
 
 @end
 

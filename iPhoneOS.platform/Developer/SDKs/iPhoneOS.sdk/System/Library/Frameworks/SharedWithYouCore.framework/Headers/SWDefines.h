@@ -2,7 +2,7 @@
 //  SWDefines.h
 //  SWDefines
 //
-//  Copyright (c) 2022 Apple. All rights reserved.
+//  Copyright © 2021 Apple Inc. All rights reserved.
 //
 
 #import <TargetConditionals.h>

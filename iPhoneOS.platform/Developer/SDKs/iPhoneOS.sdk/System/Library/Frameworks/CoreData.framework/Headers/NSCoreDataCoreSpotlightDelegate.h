@@ -10,6 +10,7 @@
 
 #import <CoreData/CoreDataDefines.h>
 
+#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST)
 
 @class NSManagedObjectContext;
 @class NSPersistentStoreCoordinator;
@@ -101,3 +102,4 @@ API_AVAILABLE(macosx(10.13),ios(11.0)) API_UNAVAILABLE(tvos,watchos)
 
 NS_ASSUME_NONNULL_END
 
+#endif

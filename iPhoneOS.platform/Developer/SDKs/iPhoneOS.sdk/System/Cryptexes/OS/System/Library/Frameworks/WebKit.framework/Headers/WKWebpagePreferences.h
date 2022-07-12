@@ -71,6 +71,11 @@ WK_EXTERN API_AVAILABLE(macos(10.15), ios(13.0))
 */
 @property (nonatomic) BOOL allowsContentJavaScript API_AVAILABLE(macos(11.0), ios(14.0));
 
+/*! @abstract A boolean indicating whether lockdown mode is enabled. \
+ @discussion This mode trades off performance and compatibility in favor of security. \
+ The default value depends on the system setting. \
+ */ \
+@property (nonatomic, getter=isLockdownModeEnabled) BOOL lockdownModeEnabled API_AVAILABLE(macos(13.0), ios(16.0));
 
 
 @end

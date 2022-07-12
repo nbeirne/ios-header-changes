@@ -208,7 +208,6 @@ typedef NS_ENUM(NSUInteger, MTLArgumentType) {
     MTLArgumentTypePrimitiveAccelerationStructure API_AVAILABLE(macos(11.0), ios(14.0)) = 25,
     MTLArgumentTypeInstanceAccelerationStructure API_AVAILABLE(macos(11.0), ios(14.0)) = 26,
     MTLArgumentTypeIntersectionFunctionTable API_AVAILABLE(macos(11.0), ios(14.0)) = 27,
-    MTLArgumentTypeObjectPayload API_AVAILABLE(macos(13.0), ios(16.0)) = 34,
 } API_DEPRECATED_WITH_REPLACEMENT("MTLBindingType", macos(10.11, API_TO_BE_DEPRECATED), ios(8.0, API_TO_BE_DEPRECATED));
 
 /*!
@@ -330,9 +329,6 @@ API_DEPRECATED_WITH_REPLACEMENT("MTLBinding", macos(10.11, API_TO_BE_DEPRECATED)
 @property (readonly) BOOL           isDepthTexture API_AVAILABLE(macos(10.12), ios(10.0)); // true for depth textures
 @property (readonly) NSUInteger     arrayLength API_AVAILABLE(macos(10.13), ios(10.0));
 
-// for object payload arguments
-@property (readonly) NSUInteger     objectPayloadAlignment;
-@property (readonly) NSUInteger     objectPayloadDataSize;
 @end
 
 MTL_EXPORT API_AVAILABLE(macos(13.0), ios(16.0))

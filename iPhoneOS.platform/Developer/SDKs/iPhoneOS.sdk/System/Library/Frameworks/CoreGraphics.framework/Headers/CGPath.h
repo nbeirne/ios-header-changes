@@ -432,8 +432,7 @@ CG_EXTERN CFArrayRef __nullable CGPathCreateSeparateComponents(CGPathRef cg_null
 CG_EXTERN CGPathRef __nullable CGPathCreateCopyByFlattening(CGPathRef cg_nullable path, CGFloat flatteningThreshold) CG_AVAILABLE_STARTING(13.0, 16.0);
 
 /* Returns true if path1 and path2 overlap. */
-/* The trailing `UsingEvenOdd' will be removed soon. It's here temporarily for backward compatibility with an existing caller of `CGPathIntersectsPath' rdar://89310639. */
-CG_EXTERN bool CGPathIntersectsPathUsingEvenOdd(CGPathRef cg_nullable path1, CGPathRef cg_nullable path2, bool evenOddFillRule) CG_AVAILABLE_STARTING(13.0, 16.0);
+CG_EXTERN bool CGPathIntersectsPath(CGPathRef cg_nullable path1, CGPathRef cg_nullable path2, bool evenOddFillRule) CG_AVAILABLE_STARTING(13.0, 16.0);
 
 CF_ASSUME_NONNULL_END
 

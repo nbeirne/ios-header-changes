@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
                 Usually, either the network endpoint or the Bluetooth identifier will be nil, depending on what type of device it is.
                 In certain scenarios both can be non-nil, in which case the client can decide which one to use.
  */
-API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos)
+API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(tvos, watchos)
 @interface AVCustomDeviceRoute : NSObject
 
 /*!
@@ -27,15 +27,14 @@ API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos)
 	@abstract	An nw_endpoint_t to which clients can establish a connection.
 	@discussion Use Network.opaque() to convert an nw_endpoint_t to an NWEndpoint in Swift.
  */
-@property (nonatomic, nullable, readonly) nw_endpoint_t networkEndpoint;
+@property (nonatomic, nullable, readonly) nw_endpoint_t networkEndpoint API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(tvos, watchos);
 
 /*!
 	@property 	bluetoothIdentifier
 	@abstract	A bluetooth identifier which clients can use to establish a connection to a bluetooth device.
  */
-@property (nonatomic, nullable, readonly) NSUUID *bluetoothIdentifier;
+@property (nonatomic, nullable, readonly) NSUUID *bluetoothIdentifier API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(tvos, watchos);
 
 @end
 
 NS_ASSUME_NONNULL_END
-

@@ -644,7 +644,7 @@ FILEPROVIDER_API_AVAILABILITY_V3_IOS;
     - `Alert` *dictionary*
         - `LocalizedTitle` *string*, title of the alert
         - `LocalizedSubTitle` *string*, sub title of the alert
-            - @parameters for LocalizedTitle/LocalizedSubTitle
+            - @parameters (maximum 10) for LocalizedTitle/LocalizedSubTitle
                 - `matchingItemsCount`: count of source items that matched the predicate (only present if matchingItemsCount > 0)
                 - `matchingItemsCountMinusOne`: matchingItemsCount minus one (only present if matchingItemsCount > 1)
                 - `matchingItemsCountMinusTwo`: matchingItemsCount minus two (only present if matchingItemsCount > 2)

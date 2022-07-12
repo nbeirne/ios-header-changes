@@ -132,6 +132,7 @@ HK_EXTERN HKQuantityTypeIdentifier const HKQuantityTypeIdentifierDietaryWater AP
 
 HK_EXTERN HKQuantityTypeIdentifier const HKQuantityTypeIdentifierUVExposure API_AVAILABLE(ios(9.0), watchos(2.0), macCatalyst(13.0), macos(13.0));                          // Scalar(Count), Discrete
 
+HK_EXTERN HKQuantityTypeIdentifier const HKQuantityTypeIdentifierAtrialFibrillationBurden API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0));           // Scalar(Percent, 0.0 - 1.0),  Discrete
 
 
 /*--------------------------------*/

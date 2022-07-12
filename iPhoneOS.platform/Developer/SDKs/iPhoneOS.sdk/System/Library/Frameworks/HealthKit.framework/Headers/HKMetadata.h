@@ -335,7 +335,7 @@ HK_EXTERN NSString * const HKMetadataKeyWeatherCondition API_AVAILABLE(ios(10.0)
 HK_EXTERN NSString * const HKMetadataKeyWeatherTemperature API_AVAILABLE(ios(10.0), watchos(3.0), macCatalyst(13.0), macos(13.0));
 
 /*!
- @constant      HKMetadataKeyHumidity
+ @constant      HKMetadataKeyWeatherHumidity
  @abstract      Represents the weather humidity during the sample.
  @discussion    The expected value type is an HKQuantity expressed in percent. This key may be set on an HKWorkout
                 object to represent the overall humidity during the workout.
@@ -687,5 +687,13 @@ HK_EXTERN NSString * const HKMetadataKeyQuantityClampedToLowerBound API_AVAILABL
  @discussion    Value is a BOOL indicating whether or not the quantity value in the sample has been clamped to some upper bound
  */
 HK_EXTERN NSString * const HKMetadataKeyQuantityClampedToUpperBound API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0));
+
+/*!
+ @constant      HKMetadataKeyGlassesPrescriptionDescription
+ @abstract      Represents the description that may be associated with a HKGlassesPrescription.
+ @discussion    Glasses are often customized for different purposes like reading or distance. Prescriptions received by an eye care professional can provide different ocular functions.
+                Users may also customize their glasses for different scenarios. The value of the metadata is a NSString that describes the purpose of a HKGlassesPrescription.
+  */
+ HK_EXTERN NSString * const HKMetadataKeyGlassesPrescriptionDescription API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0));
 
 NS_ASSUME_NONNULL_END

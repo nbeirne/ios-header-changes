@@ -178,6 +178,25 @@ void
 nw_ethernet_channel_set_queue(nw_ethernet_channel_t ethernet_channel, dispatch_queue_t queue);
 
 /*!
+ * @function nw_ethernet_channel_get_maximum_payload_size
+ *
+ * @abstract
+ *		Returns the maximum payload size that can be written
+ *		on the channel. Any payloads written must be less than
+ *		or equal to this size.  Payloads exceeding this size will be
+ *		dropped by 'nw_ethernet_channel_send()'.
+ *
+ * @param ethernet_channel
+ *		The ethernet_channel object.
+ *
+ * @result
+ *		Returns a payload size based on the current MTU of the channel.
+ */
+API_AVAILABLE(macos(13.0)) API_UNAVAILABLE(ios, watchos, tvos)
+uint32_t
+nw_ethernet_channel_get_maximum_payload_size(nw_ethernet_channel_t ethernet_channel);
+
+/*!
  * @function nw_ethernet_channel_start
  *
  * @abstract
@@ -297,7 +316,10 @@ typedef void (^nw_ethernet_channel_send_completion_t)(_Nullable nw_error_t error
  *		An Ethernet payload to send.
  *
  * @param vlan_tag
- *      The vlan tag of the frame, 0 if there is no vlan tag.
+ *      The vlan tag of the frame.  If vlan_tag is specified, the 802.1Q tag will be included.
+ *      TPID will be set to 0x8100 followed by the specified 16-bit vlan_tag (only the highest
+ *      3-bit class of service field is supported.  The remaining 13 bits must be set to zero).
+ *      Pass 0 to omit the vlan tag for this frame.
  *
  * @param remote_address
  *		Remote Ethernet address for this Ethernet frame.  This is a required parameter.

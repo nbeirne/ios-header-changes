@@ -70,7 +70,7 @@ typedef void (^XCWaitCompletionHandler)(NSError * _Nullable error);
  * are fulfilled or the timeout is reached. Clients should not manipulate the run
  * loop while using this API.
  */
-- (void)waitForExpectationsWithTimeout:(NSTimeInterval)timeout handler:(nullable XCWaitCompletionHandler)handler XCT_SWIFT_MAIN_ACTOR;
+- (void)waitForExpectationsWithTimeout:(NSTimeInterval)timeout handler:(nullable NS_SWIFT_SENDABLE XCWaitCompletionHandler)handler XCT_SWIFT_MAIN_ACTOR;
 
 /*!
  * @method -waitForExpectations:timeout:

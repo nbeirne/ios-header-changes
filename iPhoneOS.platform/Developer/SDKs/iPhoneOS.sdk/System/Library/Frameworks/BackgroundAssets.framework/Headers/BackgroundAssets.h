@@ -14,7 +14,6 @@
 
 #import <BackgroundAssets/BABase.h>
 #import <BackgroundAssets/BATypes.h>
-#import <BackgroundAssets/BATypesDeprecated.h>
 #import <BackgroundAssets/BADownload.h>
 #import <BackgroundAssets/BAApplicationExtensionInfo.h>
 #import <BackgroundAssets/BADownloaderExtension.h>

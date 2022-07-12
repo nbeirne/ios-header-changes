@@ -40,7 +40,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(16.0)) NS_SWIFT_UI_ACTOR
 /// Source item for subsequent presentations. For example, an element displayed in a menu attached to a
 /// @c UIButton may return the button so that a popover may be presented from it when the element is tapped.
 /// If available, this property is only populated during the execution of the element's action (i.e. its handler or selector).
-@property (nonatomic, readonly, nullable) id<UIPopoverPresentationControllerSourceItem> presentationSourceItem;
+@property (nonatomic, readonly, nullable) id<UIPopoverPresentationControllerSourceItem> presentationSourceItem API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos);
 
 /// Performs the element’s primary action (i.e. it's handler or selector).
 - (void)performWithSender:(nullable id)sender target:(nullable id)target;

@@ -3,7 +3,6 @@
 */
 
 #import <Foundation/NSObject.h>
-#include <stdbool.h>
 
 @class NSMethodSignature;
 

@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import <GameController/GCInputNames.h>
 #import <GameController/GCPhysicalInputElement.h>
 #import <GameController/GCButtonElement.h>
 #import <GameController/GCAxisElement.h>
@@ -58,21 +59,21 @@ API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0))
  The following properties allow for runtime lookup of any input element on a
  profile, when provided with a valid alias.
 
- @example input.elements["Button A"] == extendedGamepad.buttonA // YES
- @example input.dpads["Left Thumbstick"] == extendedGamepad.leftThumbstick // YES
- @example input.dpads["Button B"] // returns nil, "Button B" is not a DirectionPad
+ @example input.elements[GCInputButtonA]
+ @example input.dpads[GCInputLeftThumbstick]
+ @example input.dpads[GCInputButtonB] // fails, "Button B" is not a DirectionPad
  */
-@property (readonly) NSDictionary<NSString *, id<GCPhysicalInputElement> > *elements;
-@property (readonly) NSDictionary<NSString *, id<GCButtonElement> > *buttons;
-@property (readonly) NSDictionary<NSString *, id<GCAxisElement> > *axes;
-@property (readonly) NSDictionary<NSString *, id<GCSwitchElement> > *switches;
-@property (readonly) NSDictionary<NSString *, id<GCDirectionPadElement> > *dpads;
+@property (readonly) GCPhysicalInputElementCollection<GCInputElementName, id<GCPhysicalInputElement>> *elements NS_REFINED_FOR_SWIFT;
+@property (readonly) GCPhysicalInputElementCollection<GCInputButtonName, id<GCButtonElement>> *buttons NS_REFINED_FOR_SWIFT;
+@property (readonly) GCPhysicalInputElementCollection<GCInputAxisName, id<GCAxisElement>> *axes NS_REFINED_FOR_SWIFT;
+@property (readonly) GCPhysicalInputElementCollection<GCInputSwitchName, id<GCSwitchElement>> *switches NS_REFINED_FOR_SWIFT;
+@property (readonly) GCPhysicalInputElementCollection<GCInputDirectionPadName, id<GCDirectionPadElement>> *dpads NS_REFINED_FOR_SWIFT;
 
 /**
  Profile elements can be accessed using keyed subscript notation, with a valid alias of its inputs.
  
- @example physicalInput["Button A"] == extendedGamepad.buttonA // YES
- @example physicalInput["Button X"] == microGamepad.buttonX // YES
+ @example physicalInput[GCInputButtonA]
+ @example physicalInput[GCInputButtonX]
  @note Equivalent to -elements
  */
 - (__kindof id<GCPhysicalInputElement> _Nullable)objectForKeyedSubscript:(NSString *)key;

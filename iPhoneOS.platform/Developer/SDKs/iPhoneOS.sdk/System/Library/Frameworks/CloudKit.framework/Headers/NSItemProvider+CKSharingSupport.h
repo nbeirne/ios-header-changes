@@ -30,34 +30,5 @@ typedef void (^CKSharePreparationHandler)(CKSharePreparationCompletionHandler) N
 
 @end
 
-#pragma mark - Deprecated API
-
-// Will be deprecated soon. Please use CKAllowedSharingOptions.
-typedef NS_OPTIONS(NSUInteger, CKSharingOptions) {
-    /*! Allow the user to configure the share with the standard set of options. */
-    CKSharingOptionsStandard = 0,
-
-    /*! If specified, the system UI will allow the user to share publicly i.e. anyone with the link has access. */
-    CKSharingOptionsAllowPublic = 1 << 0,
-
-    /*! If specified, the system UI will allow the user to share privately to specified recipients. */
-    CKSharingOptionsAllowPrivate = 1 << 1,
-
-    /*! If specified, the system UI will allow the user to grant participants read-only permissions. */
-    CKSharingOptionsAllowReadOnly = 1 << 4,
-
-    /*! If specified, the system UI will allow the user to grant participants read/write permissions. */
-    CKSharingOptionsAllowReadWrite = 1 << 5,
-} API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(watchos, tvos);
-
-@interface NSItemProvider (Deprecated_CKSharingSupport)
-
-// Will be deprecated soon. Please use -[NSItemProvider registerCKShareWithContainer:allowedSharingOptions:preparationHandler:]
-- (void)registerCKShareWithContainer:(CKContainer *)container sharingOptions:(CKSharingOptions)sharingOptions preparationHandler:(CKSharePreparationHandler)preparationHandler API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(watchos, tvos) NS_REFINED_FOR_SWIFT;
-
-// Will be deprecated soon. Please use -[NSItemProvider registerCKShare:container:allowedSharingOptions:]
-- (void)registerCKShare:(CKShare *)share container:(CKContainer *)container sharingOptions:(CKSharingOptions)sharingOptions API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(watchos, tvos) NS_REFINED_FOR_SWIFT;
-@end
-
 NS_ASSUME_NONNULL_END
 

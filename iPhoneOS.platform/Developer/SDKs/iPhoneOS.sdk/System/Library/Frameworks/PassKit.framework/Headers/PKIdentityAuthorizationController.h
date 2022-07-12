@@ -8,20 +8,16 @@
 
 
 #import <Foundation/Foundation.h>
-#import <PassKit/PKIdentityDocumentDescriptor.h>
-#import <PassKit/PKIdentityRequest.h>
-#import <PassKit/PKIdentityDocument.h>
 
-#ifndef PKIdentityAuthorizationController_h
-#define PKIdentityAuthorizationController_h
+@class PKIdentityDocument;
+@class PKIdentityRequest;
+@protocol PKIdentityDocumentDescriptor;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// Used to request information from an identity document stored as a Wallet pass.
 API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, watchos, tvos)
 @interface PKIdentityAuthorizationController: NSObject
-
-- (instancetype)init;
 
 /// Determines if a document can be requested, taking into account the entitlement of the
 /// calling process as well as the state of this device.
@@ -38,7 +34,7 @@ API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, watchos, tvos)
 /// Only one request can be in progress at a time, otherwise PKIdentityErrorRequestAlreadyInProgress
 /// will be returned.
 - (void)requestDocument:(PKIdentityRequest *)request
-             completion:(void(^)(PKIdentityDocument * _Nullable document, NSError  * _Nullable error))completion;
+             completion:(void(^)(PKIdentityDocument * _Nullable document, NSError * _Nullable error))completion;
 
 /// If there is a request in progress through requestDocument, this will cancel that request
 /// if possible. If the request is cancelled, PKIdentityErrorAppCancelled will be returned in the
@@ -50,7 +46,6 @@ API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, watchos, tvos)
 @end
 
 NS_ASSUME_NONNULL_END
-#endif /* PKIdentityAuthorizationController_h */
 
 
 #else

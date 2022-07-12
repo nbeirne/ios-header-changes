@@ -11,26 +11,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class PDFPage, PDFView;
 
-/* PDFPageOverlayViewProvider allows a client to provide views that will be overlaid onto each PDFPage.
-*/
-
+API_AVAILABLE(macos(13.0), ios(16.0))
 @protocol PDFPageOverlayViewProvider <NSObject>
 
 @required
 
-// Return a "prepared" overlay view
-- (nullable PDFKitPlatformView*)overlayViewForPage:(PDFPage*)page;
-
-// Perform teardown of the overlay view
-- (void)relinquishOverlayViewForPage:(PDFPage*)page;
+// Asks the provider for a view to be displayed on top of the specified page.
+- (nullable PDFKitPlatformView*)pdfView:(PDFView*)view overlayViewForPage:(PDFPage*)page;
 
 @optional
 
-// Called when the overlay view has been added to its superview, and constraints have been applied
-- (void)overlayViewWasInstalledForPage:(PDFPage*)page;
+// Tells the provider that a view returned from `overlayViewForPage` has been added
+// to the view hierarchy and constraints have been set up. At this point, gesture failure
+// handlers may be set up with those of `pdfView`.
+- (void)pdfView:(PDFView*)pdfView willDisplayOverlayView:(PDFKitPlatformView*)overlayView forPage:(PDFPage*)page;
 
-// Called before the overlay view is removed from its superview
-- (void)overlayViewWillBeUninstalledForPage:(PDFPage*)page;
+// Tells the provider that a view returned from `overlayViewForPage` will be removed.
+// This can be used to restore whatever was done in `overlayView:wasAddedForPage`.
+- (void)pdfView:(PDFView*)pdfView willEndDisplayingOverlayView:(PDFKitPlatformView*)overlayView forPage:(PDFPage*)page;
 
 @end
 

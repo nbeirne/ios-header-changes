@@ -88,9 +88,6 @@ CS_AVAILABLE(10_13, 9_0) CS_TVOS_UNAVAILABLE
 //This attribute indicates if the document is likely to be considered junk.  Should be 1 if true, 0 otherwise
 @property (nonatomic, strong, getter=isLikelyJunk) NSNumber *likelyJunk;
 
-//This attribute will be set by Messages for use by Suggestions(suggestd)
-@property (nonatomic, strong, getter=isPotentialEventMessage) NSNumber *potentialEventMessage;
-
 @end
 
 NS_ASSUME_NONNULL_END

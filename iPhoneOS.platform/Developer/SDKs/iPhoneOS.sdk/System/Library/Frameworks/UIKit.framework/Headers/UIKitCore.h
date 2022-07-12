@@ -283,7 +283,8 @@
 #import <UIKit/UISceneActivationConditions.h>
 #import <UIKit/UIWindowSceneGeometry.h>
 #import <UIKit/UIWindowSceneGeometryPreferences.h>
-#import <UIKit/UIWindowSceneMacGeometryPreferences.h>
+#import <UIKit/UIWindowSceneGeometryPreferencesMac.h>
+#import <UIKit/UIWindowSceneGeometryPreferencesIOS.h>
 #import <UIKit/UIOpenURLContext.h>
 #import <UIKit/UIStatusBarManager.h>
 #import <UIKit/UIScreenshotService.h>

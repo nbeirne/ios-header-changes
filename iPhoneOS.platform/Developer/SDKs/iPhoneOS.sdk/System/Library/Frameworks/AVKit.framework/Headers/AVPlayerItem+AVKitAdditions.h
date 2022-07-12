@@ -12,6 +12,9 @@
 @class AVMetadataItem;
 @class AVInterstitialTimeRange;
 
+
+// MARK: -
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AVPlayerItem (AVKitAdditions)
@@ -19,7 +22,11 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  	@property 	externalMetadata
  	@abstract 	Supplements metadata contained in the asset.
- 	@discussion AVPlayerViewController will publish this metadata as now playing info when AVPlayerViewController.updatesNowPlayingInfoCenter is YES.
+ 	@discussion AVPlayerViewController will publish this metadata as now playing info when AVPlayerViewController.updatesNowPlayingInfoCenter is YES. In addition, some metadata items will be displayed in the AVPlayerViewController UI.
+ 
+ 				- AVMetadataCommonIdentifierTitle
+				- AVMetadataIdentifieriTunesMetadataTrackSubTitle
+ 				- AVMetadataCommonIdentifierDescription
  */
 @property (nonatomic, copy) NSArray<AVMetadataItem *> *externalMetadata API_AVAILABLE(ios(12.2));
 

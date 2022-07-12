@@ -689,7 +689,10 @@ API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0))
 		kMIDIProtocol_2_0, incoming events will be translated to MIDI 2.0. If hostMIDIProtocol
 		is not set, events will be delivered as legacy MIDI.
 
-		Note: This block should be preferred over MIDIOutputEventBlock going forward.
+		Note: This block is cross-compatible with Audio Units using MIDIOutputEventBlock and should be
+		preferred over MIDIOutputEventBlock by hosts going forward. The framework will provide the Audio Unit
+		with both a MIDIOutputEventBlock and MIDIOutputEventListBlock, the Audio Unit is free to call either
+		block as all messages will be translated as described above.
  
 		Host should setup in the following order:
 		 - Set hostMIDIProtocol

@@ -68,12 +68,12 @@ WK_EXTERN API_AVAILABLE(macos(10.10), ios(8.0))
  to improve compatibility with certain known websites. You can disable site-specific quirks
  to help test your website without these workarounds. Enabled by default.
  */
-@property (nonatomic, getter=isSiteSpecificQuirksModeEnabled) BOOL siteSpecificQuirksModeEnabled API_AVAILABLE(macos(13.0), ios(16.0));
+@property (nonatomic, getter=isSiteSpecificQuirksModeEnabled) BOOL siteSpecificQuirksModeEnabled API_AVAILABLE(macos(12.3), ios(15.4));
 
 /*! @abstract A Boolean value indicating whether Fullscreen API is enabled.
  @discussion The default value is NO. We can set it to YES to enable support for the fullscreen API.
  */
-@property (nonatomic, getter=isElementFullscreenEnabled) BOOL elementFullscreenEnabled API_AVAILABLE(macos(13.0), ios(16.0));
+@property (nonatomic, getter=isElementFullscreenEnabled) BOOL elementFullscreenEnabled API_AVAILABLE(macos(12.3), ios(15.4));
 
 @end
 

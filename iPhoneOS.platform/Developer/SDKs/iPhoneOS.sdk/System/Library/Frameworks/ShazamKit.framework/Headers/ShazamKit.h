@@ -23,3 +23,4 @@
 #import <ShazamKit/SHSession.h>
 #import <ShazamKit/SHSignature.h>
 #import <ShazamKit/SHSignatureGenerator.h>
+#import <ShazamKit/UTType+SHShazamAdditions.h>

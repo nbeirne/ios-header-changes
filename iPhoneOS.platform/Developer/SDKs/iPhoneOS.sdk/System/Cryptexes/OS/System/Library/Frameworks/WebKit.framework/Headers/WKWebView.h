@@ -449,8 +449,6 @@ The uniform type identifier kUTTypeWebArchive can be used get the related pasteb
 */
 - (void)createWebArchiveDataWithCompletionHandler:(void (^)(NSData *, NSError *))completionHandler NS_REFINED_FOR_SWIFT API_AVAILABLE(macos(11.0), ios(14.0));
 
-- (void)retrieveAccessibilityTreeData:(void (^)(NSData *, NSError *))completionHandler;
-
 /*! @abstract A Boolean value indicating whether horizontal swipe gestures
  will trigger back-forward list navigations.
  @discussion The default value is NO.
@@ -641,9 +639,9 @@ The uniform type identifier kUTTypeWebArchive can be used get the related pasteb
  larger than minimumViewportInset.
  */
 #if TARGET_OS_IPHONE
-@property (nonatomic, readonly) UIEdgeInsets minimumViewportInset API_AVAILABLE(ios(16.0));
-@property (nonatomic, readonly) UIEdgeInsets maximumViewportInset API_AVAILABLE(ios(16.0));
-- (void)setMinimumViewportInset:(UIEdgeInsets)minimumViewportInset maximumViewportInset:(UIEdgeInsets)maximumViewportInset API_AVAILABLE(ios(16.0));
+@property (nonatomic, readonly) UIEdgeInsets minimumViewportInset API_AVAILABLE(ios(15.5));
+@property (nonatomic, readonly) UIEdgeInsets maximumViewportInset API_AVAILABLE(ios(15.5));
+- (void)setMinimumViewportInset:(UIEdgeInsets)minimumViewportInset maximumViewportInset:(UIEdgeInsets)maximumViewportInset API_AVAILABLE(ios(15.5));
 #else
 @property (nonatomic, readonly) NSEdgeInsets minimumViewportInset API_AVAILABLE(macos(13.0));
 @property (nonatomic, readonly) NSEdgeInsets maximumViewportInset API_AVAILABLE(macos(13.0));

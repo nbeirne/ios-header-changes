@@ -64,4 +64,6 @@
 #import <CoreData/NSPersistentCloudKitContainerEvent.h>
 #import <CoreData/NSPersistentCloudKitContainerEventRequest.h>
 
+#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST)
 #import <CoreData/NSCoreDataCoreSpotlightDelegate.h>
+#endif

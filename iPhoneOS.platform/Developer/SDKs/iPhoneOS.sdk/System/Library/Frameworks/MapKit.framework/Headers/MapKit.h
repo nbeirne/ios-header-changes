@@ -79,17 +79,15 @@
 #import <MapKit/MKUserTrackingBarButtonItem.h>
 #endif // TARGET_OS_IPHONE
 
-#if TARGET_OS_IOS
+#if TARGET_OS_IOS || TARGET_OS_MACCATALYST || TARGET_OS_TV
+#import <MapKit/MKUserTrackingButton.h>
 #import <MapKit/MKIconStyle.h>
 #import <MapKit/MKMapFeatureAnnotation.h>
 #import <MapKit/MKMapItemRequest.h>
-#endif
 
-#if TARGET_OS_IOS || TARGET_OS_MACCATALYST || TARGET_OS_TV
-#import <MapKit/MKUserTrackingButton.h>
 #endif // TARGET_OS_IOS || TARGET_OS_MACCATALYST || TARGET_OS_TV
 
-#if (TARGET_OS_IOS || TARGET_OS_MACCATALYST || TARGET_OS_OSX)
+#if (TARGET_OS_IOS || TARGET_OS_MACCATALYST || TARGET_OS_OSX || TARGET_OS_TV)
 
 #import <MapKit/MKLookAroundScene.h>
 #import <MapKit/MKLookAroundSceneRequest.h>
@@ -98,6 +96,6 @@
 #import <MapKit/MKLookAroundSnapshotter.h>
 #import <MapKit/MKLookAroundViewController.h>
 
-#endif // (TARGET_OS_IOS || TARGET_OS_MACCATALYST || TARGET_OS_OSX)
+#endif // (TARGET_OS_IOS || TARGET_OS_MACCATALYST || TARGET_OS_OSX || TARGET_OS_TV)
 
 #endif // __has_include(<MapKit/MKMapView.h>)

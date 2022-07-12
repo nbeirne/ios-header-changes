@@ -45,8 +45,8 @@ CORE_IMAGE_EXPORT CIContextOption const kCIContextWorkingColorSpace;
 
 /* An NSNumber with a CIFormat value defining the pixel format to use for intermediate buffers.
  * On iOS the supported values for this key are RGBA8 and RGBAh. If not specified:
- *   RGBA8 is used if app is linked against OSX 10.12 SDK or earlier.
- *   RGBAh is used if app is linked against OSX 10.13 SDK or later.
+ *   RGBA8 is used if app is linked against iOS 12 SDK or earlier.
+ *   RGBAh is used if app is linked against iOS 13 SDK or later.
  * On OSX the supported values for this key are RGBA8, RGBAh and RGBAf. If not specified, RGBAh is used. */
 CORE_IMAGE_EXPORT CIContextOption const kCIContextWorkingFormat NS_AVAILABLE(10_4,8_0);
 

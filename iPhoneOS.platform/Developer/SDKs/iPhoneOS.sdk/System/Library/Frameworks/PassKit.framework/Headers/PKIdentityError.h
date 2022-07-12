@@ -9,30 +9,27 @@
 
 #import <Foundation/Foundation.h>
 
-#ifndef PKIdentityError_h
-#define PKIdentityError_h
-
 NS_ASSUME_NONNULL_BEGIN
 
-/// Error domain for identity errors
+/// Error domain for identity errors.
 extern NSErrorDomain const PKIdentityErrorDomain API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, watchos, tvos);
 
-/// Identity error codes
+/// Identity error codes.
 typedef NS_ERROR_ENUM(PKIdentityErrorDomain, PKIdentityError) {
-    /// Catch-all for all errors without a specific error code
+    /// Catch-all for all errors without a specific error code.
     PKIdentityErrorUnknown = 1,
 
-    /// Returned if the app is not entitled to call an API
+    /// Returned if the app is not entitled to call an API.
     PKIdentityErrorNotEntitled = 2,
 
-    /// Returned if the sheet was cancelled
+    /// Returned if the sheet was cancelled.
     PKIdentityErrorCancelled = 3,
 
     /// Returned if a request cannot be processed because
-    /// the network is not available
+    /// the network is not available.
     PKIdentityErrorNetworkUnavailable = 4,
 
-    /// Returned if no supported elements were requested
+    /// Returned if no supported elements were requested.
     PKIdentityErrorNoElementsRequested = 5,
 
     /// Returned if a request is made but another request is already
@@ -42,16 +39,17 @@ typedef NS_ERROR_ENUM(PKIdentityErrorDomain, PKIdentityError) {
     /// Returned if the caller-supplied nonce is too large or otherwise unsuitable.
     PKIdentityErrorInvalidNonce = 7,
 
-    /// Returned if an element requested by the caller is invalid
+    /// Returned if an element requested by the caller is invalid.
     PKIdentityErrorInvalidElement = 8,
 
     /// Returned if the merchant ID used in a request is invalid
-    PKIdentityErrorInvalidMerchantID = 9
+    PKIdentityErrorInvalidMerchantID = 9,
+    
+    /// Returned if the request originates from an unsupported device
+    PKIdentityErrorNotSupported = 10
 } API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, watchos, tvos);
 
 NS_ASSUME_NONNULL_END
-
-#endif /* PKIdentityError_h */
 
 
 #else

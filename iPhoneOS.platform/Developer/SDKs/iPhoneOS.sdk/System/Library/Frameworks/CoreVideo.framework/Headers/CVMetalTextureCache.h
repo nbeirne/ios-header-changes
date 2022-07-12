@@ -31,7 +31,7 @@ extern "C" {
 // By default, textures will age out after one second.  Setting a maximum
 // texture age of zero will disable the age-out mechanism completely.
 // CVMetalTextureCacheFlush() can be used to force eviction in either case.
-CV_EXPORT const CFStringRef CV_NONNULL kCVMetalTextureCacheMaximumTextureAgeKey API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) __WATCHOS_PROHIBITED;
+CV_EXPORT const CFStringRef CV_NONNULL kCVMetalTextureCacheMaximumTextureAgeKey API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) API_UNAVAILABLE(watchos);
 
 //
 // textureAttributes - reserved for future use
@@ -49,7 +49,7 @@ CV_EXPORT const CFStringRef CV_NONNULL kCVMetalTextureCacheMaximumTextureAgeKey 
 */
 typedef struct CV_BRIDGED_TYPE(id) __CVMetalTextureCache *CVMetalTextureCacheRef;
 	
-CV_EXPORT CFTypeID CVMetalTextureCacheGetTypeID(void) API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) __WATCHOS_PROHIBITED;
+CV_EXPORT CFTypeID CVMetalTextureCacheGetTypeID(void) API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) API_UNAVAILABLE(watchos);
 
 /*!
     @function   CVMetalTextureCacheCreate
@@ -66,7 +66,7 @@ CV_EXPORT CVReturn CVMetalTextureCacheCreate(
 					CFDictionaryRef CV_NULLABLE cacheAttributes,
 					id <MTLDevice> CV_NONNULL metalDevice,
 					CFDictionaryRef CV_NULLABLE textureAttributes,
-					CV_RETURNS_RETAINED_PARAMETER CVMetalTextureCacheRef CV_NULLABLE * CV_NONNULL cacheOut ) API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) __WATCHOS_PROHIBITED;
+					CV_RETURNS_RETAINED_PARAMETER CVMetalTextureCacheRef CV_NULLABLE * CV_NONNULL cacheOut ) API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) API_UNAVAILABLE(watchos);
 
 /*!
     @function   CVMetalTextureCacheCreateTextureFromImage
@@ -116,7 +116,7 @@ CV_EXPORT CVReturn CVMetalTextureCacheCreateTextureFromImage(
 								       size_t width,
 								       size_t height,
 								       size_t planeIndex,
-									   CV_RETURNS_RETAINED_PARAMETER CVMetalTextureRef CV_NULLABLE * CV_NONNULL textureOut ) API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) __WATCHOS_PROHIBITED;
+									   CV_RETURNS_RETAINED_PARAMETER CVMetalTextureRef CV_NULLABLE * CV_NONNULL textureOut ) API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) API_UNAVAILABLE(watchos);
 
 /*!
     @function   CVMetalTextureCacheFlush
@@ -125,7 +125,7 @@ CV_EXPORT CVReturn CVMetalTextureCacheCreateTextureFromImage(
     @param      textureCache The texture cache object to flush
     @param      options Currently unused, set to 0.
 */
-CV_EXPORT void CVMetalTextureCacheFlush(CVMetalTextureCacheRef CV_NONNULL textureCache, CVOptionFlags options) API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) __WATCHOS_PROHIBITED;
+CV_EXPORT void CVMetalTextureCacheFlush(CVMetalTextureCacheRef CV_NONNULL textureCache, CVOptionFlags options) API_AVAILABLE(macosx(10.11), ios(8.0), tvos(9.0)) API_UNAVAILABLE(watchos);
     
 #endif
     

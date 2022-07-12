@@ -852,9 +852,6 @@ IMAGEIO_EXTERN const CFStringRef kCGImagePropertyGroupImageIsAlternateImage IMAG
 IMAGEIO_EXTERN const CFStringRef kCGImagePropertyGroupImageBaseline IMAGEIO_AVAILABLE_STARTING(13.0, 16.0);
 IMAGEIO_EXTERN const CFStringRef kCGImagePropertyGroupImageDisparityAdjustment IMAGEIO_AVAILABLE_STARTING(13.0, 16.0);
 
-// kCGImagePropertyHorizontalFOV will be removed soon
-IMAGEIO_EXTERN const CFStringRef kCGImagePropertyHorizontalFOV IMAGEIO_AVAILABLE_BUT_DEPRECATED(13.0, 16.0, 13.0, 16.0);
-
 IMAGEIO_EXTERN const CFStringRef kIIOMetadata_CameraExtrinsicsKey  IMAGEIO_AVAILABLE_STARTING(13.0, 16.0);
 IMAGEIO_EXTERN const CFStringRef kIIOCameraExtrinsics_CoordinateSystemID IMAGEIO_AVAILABLE_STARTING(13.0, 16.0);
 IMAGEIO_EXTERN const CFStringRef kIIOCameraExtrinsics_Position IMAGEIO_AVAILABLE_STARTING(13.0, 16.0);

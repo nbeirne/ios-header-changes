@@ -65,6 +65,9 @@ SH_EXPORT SHMediaItemProperty const SHMediaItemISRC;
 /// The time ranges in the represented media that are described by this @c SHMediaItem
 SH_EXPORT SHMediaItemProperty const SHMediaItemTimeRanges API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0), watchos(9.0)) NS_REFINED_FOR_SWIFT;
 
+/// The frequency skew ranges that are described by this @c SHMediaItem
+SH_EXPORT SHMediaItemProperty const SHMediaItemFrequencySkewRanges API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0), watchos(9.0)) NS_REFINED_FOR_SWIFT;
+
 /// @brief @c SHMediaItem represents metadata associated with a @c SHSignature
 /// @discussion A @c SHMediaItem is used in two distinct ways
 ///     1. As the base class of a @c SHMatchedMediaItem, and therefore as the result of a match

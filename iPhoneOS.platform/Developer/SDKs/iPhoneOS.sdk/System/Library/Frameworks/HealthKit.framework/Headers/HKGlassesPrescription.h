@@ -23,12 +23,6 @@ HK_EXTERN API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0))
 @interface HKGlassesPrescription : HKVisionPrescription
 
 /*!
- @property      glassesDescription
- @abstract      The description of the type of glasses
- */
-@property (nonatomic, copy, readonly) NSString *glassesDescription;
-
-/*!
  @property      rightEye
  @abstract      The right eye lens specification
  */
@@ -45,7 +39,6 @@ HK_EXTERN API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0))
 
  @param         rightEyeSpecification    The right eye specification
  @param         leftEyeSpecification     The left eye specification
- @param         description              The description of the type of glasses
  @param         dateIssued               The date the prescription was issued
  @param         expirationDate           The date the prescription expires
  @param         device                   The device that generated the sample
@@ -53,7 +46,6 @@ HK_EXTERN API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0))
  */
 + (instancetype)prescriptionWithRightEyeSpecification:(nullable HKGlassesLensSpecification *)rightEyeSpecification
                                  leftEyeSpecification:(nullable HKGlassesLensSpecification *)leftEyeSpecification
-                                          description:(NSString *)description
                                            dateIssued:(NSDate *)dateIssued
                                        expirationDate:(nullable NSDate *)expirationDate
                                                device:(nullable HKDevice *)device

@@ -524,20 +524,20 @@
 
 #define __CCT_COUNT_ARGS1(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, N, ...) N
 #define __CCT_COUNT_ARGS(...) \
-	__CCT_COUNT_ARGS1(, ##__VA_ARGS__, _9, _8, _7, _6, _5, _4, _3, _2, _1, _0)
+	__CCT_COUNT_ARGS1(, __VA_ARGS__, _9, _8, _7, _6, _5, _4, _3, _2, _1, _0)
 #define __CCT_DISPATCH1(base, N, ...) __CONCAT(base, N)(__VA_ARGS__)
 #define __CCT_DISPATCH(base, ...) \
-	__CCT_DISPATCH1(base, __CCT_COUNT_ARGS(__VA_ARGS__), ##__VA_ARGS__)
+	__CCT_DISPATCH1(base, __CCT_COUNT_ARGS(__VA_ARGS__), __VA_ARGS__)
 
 /* Covert a contract list to a type suffix */
-#define __CCT_CONTRACT_LIST_TO_TAGGED_SUFFIX_1(kind, ...)                                       \
+#define __CCT_CONTRACT_LIST_TO_TAGGED_SUFFIX_1(kind)                                            \
 	__CCT_DEFER(__CONCAT, __CCT_CONTRACT_TO_TAG(kind), _t)
-#define __CCT_CONTRACT_LIST_TO_TAGGED_SUFFIX_2(kind, ...)                                       \
-	__CCT_DEFER(__CONCAT, __CCT_CONTRACT_TO_TAG(kind),                                      \
-	         __CCT_CONTRACT_LIST_TO_TAGGED_SUFFIX_1(__VA_ARGS__))
-#define __CCT_CONTRACT_LIST_TO_TAGGED_SUFFIX_3(kind, ...)                                       \
-	__CCT_DEFER(__CONCAT, __CCT_CONTRACT_TO_TAG(kind),                                      \
-	         __CCT_CONTRACT_LIST_TO_TAGGED_SUFFIX_2(__VA_ARGS__))
+#define __CCT_CONTRACT_LIST_TO_TAGGED_SUFFIX_2(kind1, kind2)                                    \
+	__CCT_DEFER(__CONCAT, __CCT_CONTRACT_TO_TAG(kind1),                                     \
+	         __CCT_CONTRACT_LIST_TO_TAGGED_SUFFIX_1(kind2))
+#define __CCT_CONTRACT_LIST_TO_TAGGED_SUFFIX_3(kind1, kind2, kind3)                             \
+	__CCT_DEFER(__CONCAT, __CCT_CONTRACT_TO_TAG(kind1),                                     \
+	         __CCT_CONTRACT_LIST_TO_TAGGED_SUFFIX_2(kind2, kind3))
 
 /* Create typedefs for the constrained pointer type */
 #define __CCT_DECLARE_CONSTRAINED_PTR_TYPE_3(basetype, basetag, kind)                           \
@@ -559,7 +559,7 @@ typedef basetype * __CCT_CONTRACT_TO_ATTR(kind1)                                
  * Lower level type constructor
  */
 #define __CCT_DECLARE_CONSTRAINED_PTR_TYPE(basetype, basetag, ...)                              \
-	__CCT_DISPATCH(__CCT_DECLARE_CONSTRAINED_PTR_TYPE, basetype, basetag, ##__VA_ARGS__)
+	__CCT_DISPATCH(__CCT_DECLARE_CONSTRAINED_PTR_TYPE, basetype, basetag, __VA_ARGS__)
 
 /*
  * Higher level type constructor.

@@ -37,15 +37,12 @@ API_UNAVAILABLE(watchos, tvos)
  */
 @property (atomic, copy, nullable) void (^systemSharingUIDidStopSharingBlock)(CKRecordID *recordID, NSError * _Nullable error) NS_REFINED_FOR_SWIFT;
 
-/*!
- * Will be removed soon. Please adopt systemSharingUIDidSaveShareBlock.
- */
-@property (atomic, copy, nullable) void (^systemUIDidSaveShareBlock)(CKRecordID *recordID, CKShare * _Nullable share, NSError * _Nullable error) NS_REFINED_FOR_SWIFT;
 
 /*!
- * Will be removed soon. Please adopt systemSharingUIDidStopSharingBlock.
+ * Will be removed soon. Please adopt systemSharingUIDidSaveShareBlock and systemSharingUIDidStopSharingBlock.
  */
-@property (atomic, copy, nullable) void (^systemUIDidStopSharingBlock)(CKRecordID *recordID, NSError * _Nullable error) NS_REFINED_FOR_SWIFT;
+@property (atomic, copy, nullable) void (^systemUIDidSaveShareBlock)(CKRecordID *recordID, CKShare * _Nullable share, NSError * _Nullable error) NS_REFINED_FOR_SWIFT API_DEPRECATED_WITH_REPLACEMENT("systemSharingUIDidSaveShareBlock", macos(13.0, 13.0), ios(16.0, 16.0));
+@property (atomic, copy, nullable) void (^systemUIDidStopSharingBlock)(CKRecordID *recordID, NSError * _Nullable error) NS_REFINED_FOR_SWIFT API_DEPRECATED_WITH_REPLACEMENT("systemSharingUIDidStopSharingBlock", macos(13.0, 13.0), ios(16.0, 16.0));
 @end
 
 NS_ASSUME_NONNULL_END

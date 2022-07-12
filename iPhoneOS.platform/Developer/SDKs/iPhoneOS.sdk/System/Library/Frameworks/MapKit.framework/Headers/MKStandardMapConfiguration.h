@@ -8,12 +8,6 @@
 #import <MapKit/MKMapConfiguration.h>
 #import <MapKit/MKPointOfInterestFilter.h>
 
-// To be removed
-typedef NS_ENUM(NSInteger, MKStandardMapConfigurationMapMode) {
-    MKStandardMapConfigurationMapModeDefault = 0,
-    MKStandardMapConfigurationMapModeMuted,
-};
-
 API_AVAILABLE(ios(16.0), tvos(16.0), macos(13.0)) API_UNAVAILABLE(watchos)
 typedef NS_ENUM(NSInteger, MKStandardMapEmphasisStyle) {
     MKStandardMapEmphasisStyleDefault = 0,
@@ -34,12 +28,6 @@ API_AVAILABLE(ios(16.0), macos(13.0), tvos(16.0)) API_UNAVAILABLE(watchos)
 @property (nonatomic) MKStandardMapEmphasisStyle emphasisStyle;
 @property (nonatomic, copy, nullable) MKPointOfInterestFilter *pointOfInterestFilter;
 @property (nonatomic) BOOL showsTraffic;
-
-- (instancetype)initWithMapMode:(MKStandardMapConfigurationMapMode)mode;
-- (instancetype)initWithMapMode:(MKStandardMapConfigurationMapMode)mode landscape:(MKMapLandscape)landscape; // To be removed; please use MKMapElevationStyle.
-- (instancetype)initWithMapMode:(MKStandardMapConfigurationMapMode)mode elevationStyle:(MKMapElevationStyle)elevationStyle;
-@property (nonatomic) MKStandardMapConfigurationMapMode mode;
-@property (nonatomic) BOOL showsBuildings; // To be removed
 
 @end
 

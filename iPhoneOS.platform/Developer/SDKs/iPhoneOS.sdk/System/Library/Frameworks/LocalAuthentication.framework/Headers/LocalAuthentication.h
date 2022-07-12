@@ -9,7 +9,6 @@
 #import <LocalAuthentication/LAContext.h>
 #import <LocalAuthentication/LAError.h>
 #import <LocalAuthentication/LAPublicDefines.h>
-#import <LocalAuthentication/LAContext+Authorization.h>
 #import <LocalAuthentication/LAPersistedRight.h>
 #import <LocalAuthentication/LAPrivateKey.h>
 #import <LocalAuthentication/LAPublicKey.h>

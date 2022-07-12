@@ -316,18 +316,20 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) NS_SWIFT_UI_ACTOR
 // To make it more convenient for applications to adopt rotation, a view controller may implement the below methods. Your UIWindow's frame should use [UIScreen mainScreen].bounds as its frame.
 @interface UIViewController (UIViewControllerRotation)
 
-// call this method when your return value from shouldAutorotateToInterfaceOrientation: changes
-// if the current interface orientation does not match the current device orientation, a rotation may occur provided all relevant view controllers now return YES from shouldAutorotateToInterfaceOrientation:
-+ (void)attemptRotationToDeviceOrientation API_AVAILABLE(ios(5.0)) API_UNAVAILABLE(tvos);
++ (void)attemptRotationToDeviceOrientation API_DEPRECATED("Please use instance method `setNeedsUpdateOfSupportedInterfaceOrientations`.", ios(5.0, 16.0)) API_UNAVAILABLE(tvos);
 
 // Applications should use supportedInterfaceOrientations and/or shouldAutorotate.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation API_DEPRECATED("", ios(2.0, 6.0)) API_UNAVAILABLE(tvos);
 
 // New Autorotation support.
-@property(nonatomic, readonly) BOOL shouldAutorotate API_AVAILABLE(ios(6.0)) API_UNAVAILABLE(tvos);
+@property(nonatomic, readonly) BOOL shouldAutorotate API_DEPRECATED("Update supported interface orientations and call setNeedsUpdateOfSupportedInterfaceOrientations to indicate a change.", ios(6.0, 16.0)) API_UNAVAILABLE(tvos);
 @property(nonatomic, readonly) UIInterfaceOrientationMask supportedInterfaceOrientations API_AVAILABLE(ios(6.0)) API_UNAVAILABLE(tvos);
 // Returns interface orientation masks.
 @property(nonatomic, readonly) UIInterfaceOrientation preferredInterfaceOrientationForPresentation API_AVAILABLE(ios(6.0)) API_UNAVAILABLE(tvos);
+
+/// Notifies the view controller that a change occurred that affects supported interface orientations or the preferred interface orientation for presentation.
+/// By default, this will animate any changes to orientation. To perform a non-animated update, call within `[UIView performWithoutAnimation:]`.
+- (void)setNeedsUpdateOfSupportedInterfaceOrientations API_AVAILABLE(ios(16.0));
 
 // The rotating header and footer views will slide out during the rotation and back in once it has completed.
 - (nullable UIView *)rotatingHeaderView API_DEPRECATED("Header views are animated along with the rest of the view hierarchy", ios(2.0, 8.0)) API_UNAVAILABLE(tvos);     // Must be in the view hierarchy. Default returns nil.

@@ -7,11 +7,10 @@
 //
 
 
-#import <PassKit/PKIdentityElement.h>
-#import <PassKit/PKIdentityIntentToStore.h>
+#import <Foundation/Foundation.h>
 
-#ifndef PKIdentityDocumentDescriptor_h
-#define PKIdentityDocumentDescriptor_h
+@class PKIdentityElement;
+@class PKIdentityIntentToStore;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -22,10 +21,10 @@ API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, watchos, tvos)
 @protocol PKIdentityDocumentDescriptor <NSObject>
 
 /// Set of elements that will be requested from the document.
-@property (readonly) NSArray<PKIdentityElement *> *elements;
+@property (nonatomic, readonly) NSArray<PKIdentityElement *> *elements;
 
 /// Intent to store for the given element, or nil if the element has not been added to this descriptor.
-- (PKIdentityIntentToStore * _Nullable)intentToStoreForElement:(PKIdentityElement *)element NS_SWIFT_NAME(intentToStore(element:));
+- (nullable PKIdentityIntentToStore *)intentToStoreForElement:(PKIdentityElement *)element NS_SWIFT_NAME(intentToStore(element:));
 
 /// Adds the set of elements and associates them with the intent to store. This method can be
 /// called multple times with the same intent to store to append additional elements. If the same
@@ -41,8 +40,6 @@ API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, watchos, tvos)
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif /* PKIdentityDocumentDescriptor_h */
 
 
 #else

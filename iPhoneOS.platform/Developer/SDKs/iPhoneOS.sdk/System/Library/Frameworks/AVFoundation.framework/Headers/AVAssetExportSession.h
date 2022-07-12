@@ -321,7 +321,7 @@ API_AVAILABLE(macos(10.7), ios(4.0), tvos(9.0)) API_UNAVAILABLE(watchos)
 	@abstract 					Starts the asynchronous execution of estimating the output file length of the export based on the asset, preset, and timeRange associated with the export session.
 	@discussion 				If timeRange is not set on the export session, timeRange will be assumed to be the full time range of the asset.
 	@param						handler
-								A block called with the estimated output file length in bytes, if it can be accurately determined; 0 otherwise.  The error parameter will be non-nil if an error occurs.
+								A block called with the estimated output file length in bytes, if it can be determined; 0 otherwise.  The error parameter will be non-nil if an error occurs.
  */
 - (void)estimateOutputFileLengthWithCompletionHandler:(void (^)(int64_t estimatedOutputFileLength, NSError * _Nullable error ))handler API_AVAILABLE(macos(10.15), ios(13.0), tvos(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_ASYNC_NAME(getter:estimatedOutputFileLengthInBytes());
 

@@ -34,9 +34,11 @@ typedef NS_OPTIONS(NSUInteger, NSFileProviderCreateItemOptions) {
      lost, for example following the restoration of a backup, or the migration
      to a new device.
 
-     2. Two directories are merged together. Each child resulting of the merge
-     may be recreated with the mayAlreadyExist option. This allows the
-     extension to recursively merge directories.
+     2. Two directories are merged together, due to the extension returning
+     the same itemIdentifier for both directories on the createItem completion handler.
+     Each child resulting of the merge may be recreated with the
+     mayAlreadyExist option. This allows the extension to recursively merge
+     directories.
 
      The Extension should assess whether the item could actually be a disk
      representation of an already existing item.
@@ -351,8 +353,9 @@ FILEPROVIDER_API_AVAILABILITY_V3_IOS
  downloads for specific applications.
 
  The extension can set an array of strings into the UserDefault key
- "NSFileProviderExtensionNonMaterializingProcessNames". A process whose name is an exact match for an
- entry in this array will not be allowed to fetch items in the extension's domains.
+ "NSFileProviderExtensionNonMaterializingProcessNames". A process whose executable's filename on disk is an
+ exact match for an entry in this array will not be allowed to fetch items in the extension's domains. The comparison
+ is case sensitive.
 
  In macOS 11.0 and later, this list will be checked when a download is initiated through a POSIX filesystem call.
  In macOS 11.4 and later, this list will also be checked for downloads initiated through file coordination.
@@ -438,6 +441,10 @@ FILEPROVIDER_API_AVAILABILITY_V3_IOS
  If the provider is not able to apply all the fields at once, it should return a
  set of stillPendingFields in its completion handler. In that case, the system will
  attempt to modify the item later by calling modifyItem with those fields.
+
+ The filename and contents fields should be synced together.
+ If synced independently, files may appear corrupted on other devices, due to
+ a mismatch between the file extension and the actual file data.
 
  If a field in the returned createdItem does not match the itemTemplate, and is
  not in the list of stillPendingFields, the value from the createdItem will be
@@ -574,6 +581,10 @@ NS_SWIFT_NAME(createItem(basedOn:fields:contents:options:request:completionHandl
  If the provider is not able to apply all the fields at once, it should return a
  set of stillPendingFields in its completion handler. In that case, the system will
  attempt to modify the item later by calling modifyItem with those fields.
+
+ The filename and contents fields should be synced together.
+ If synced independently, files may appear corrupted on other devices, due to
+ a mismatch between the file extension and the actual file data.
 
  Starting in macOS 12.0, if the set of stillPendingFields returned by the provider is
  identical to the set of fields passed to modifyItem, then the system will consider that these fields
@@ -1233,8 +1244,9 @@ FILEPROVIDER_API_AVAILABILITY_V4_1
  downloads for specific applications.
 
  The extension can set an array of strings into the UserDefault key
- "NSFileProviderExtensionNonMaterializingProcessNames". A process whose name is an exact match for an
- entry in this array will not be allowed to fetch items in the extension's domains.
+ "NSFileProviderExtensionNonMaterializingProcessNames". A process whose executable's filename on disk is an
+ exact match for an entry in this array will not be allowed to fetch items in the extension's domains. The comparison
+ is case sensitive.
 
  In macOS 11.0 and later, this list will be checked when a download is initiated through a POSIX filesystem call.
  In macOS 11.4 and later, this list will also be checked for downloads initiated through file coordination.

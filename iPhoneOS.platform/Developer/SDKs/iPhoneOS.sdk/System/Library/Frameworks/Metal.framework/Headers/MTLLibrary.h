@@ -77,8 +77,8 @@ typedef NS_ENUM(NSUInteger, MTLFunctionType) {
     MTLFunctionTypeKernel = 3,
     MTLFunctionTypeVisible API_AVAILABLE(macos(11.0), ios(14.0)) = 5,
     MTLFunctionTypeIntersection API_AVAILABLE(macos(11.0), ios(14.0)) = 6,
-    MTLFunctionTypeMesh = 7,
-    MTLFunctionTypeObject = 8,
+    MTLFunctionTypeMesh API_AVAILABLE(macos(13.0), ios(16.0)) = 7,
+    MTLFunctionTypeObject API_AVAILABLE(macos(13.0), ios(16.0)) = 8,
 } API_AVAILABLE(macos(10.11), ios(8.0));
 
 
@@ -181,7 +181,7 @@ API_AVAILABLE(macos(10.11), ios(8.0))
 @end
 
 typedef NS_ENUM(NSUInteger, MTLLanguageVersion) {
-    MTLLanguageVersion1_0 API_DEPRECATED("Use a newer language standard", ios(16.0, API_TO_BE_DEPRECATED)) = (1 << 16),
+    MTLLanguageVersion1_0 API_DEPRECATED("Use a newer language standard", ios(9.0, API_TO_BE_DEPRECATED)) API_UNAVAILABLE(macos, macCatalyst) = (1 << 16),
     MTLLanguageVersion1_1 API_AVAILABLE(macos(10.11), ios(9.0)) = (1 << 16) + 1,
     MTLLanguageVersion1_2 API_AVAILABLE(macos(10.12), ios(10.0)) = (1 << 16) + 2,
     MTLLanguageVersion2_0 API_AVAILABLE(macos(10.13), ios(11.0)) = (2 << 16),
@@ -280,7 +280,7 @@ MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
  @property preserveInvariance
  @abstract If YES,  set the compiler to compile shaders to preserve invariance.  The default is false.
  */
-@property (readwrite, nonatomic) BOOL preserveInvariance API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(13.0));
+@property (readwrite, nonatomic) BOOL preserveInvariance API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(14.0));
 
 /*!
  @property optimizationLevel

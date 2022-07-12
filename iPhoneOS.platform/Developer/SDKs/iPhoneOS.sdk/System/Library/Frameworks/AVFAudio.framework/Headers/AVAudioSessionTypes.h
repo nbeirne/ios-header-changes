@@ -346,7 +346,7 @@ typedef NS_ENUM(NSUInteger, AVAudioSessionRouteChangeReason) {
         Introduced in iOS 10.0 / watchOS 3.0 / tvOS 10.0.
 
     @var AVAudioSessionCategoryOptionAllowAirPlay
-        Allows an application to change the default behavior of some audio session categories with
+        Allows an application to change the default behavior of some audio session categories
         with regard to showing AirPlay devices as available routes. This option applies to
         various categories in the same way as AVAudioSessionCategoryOptionAllowBluetoothA2DP;
         see above for details.

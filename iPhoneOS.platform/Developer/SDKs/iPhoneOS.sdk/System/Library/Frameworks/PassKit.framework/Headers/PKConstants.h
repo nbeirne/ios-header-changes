@@ -17,6 +17,8 @@ extern PKEncryptionScheme const PKEncryptionSchemeRSA_V2 API_AVAILABLE(ios(10.0)
 
 typedef NSString * PKPaymentNetwork NS_EXTENSIBLE_STRING_ENUM;
 extern PKPaymentNetwork const PKPaymentNetworkAmex API_AVAILABLE(macos(11.0), ios(8.0), watchos(3.0));
+extern PKPaymentNetwork const PKPaymentNetworkBancomat API_AVAILABLE(macos(12.0), ios(16.0), watchos(9.0));
+extern PKPaymentNetwork const PKPaymentNetworkBancontact API_AVAILABLE(macos(12.0), ios(16.0), watchos(9.0));
 extern PKPaymentNetwork const PKPaymentNetworkCarteBancaire API_DEPRECATED("Use PKPaymentNetworkCartesBancaires instead.", macos(10.13, 11.0), ios(10.3, 11.0), watchos(3.2, 4.0));
 extern PKPaymentNetwork const PKPaymentNetworkCarteBancaires API_DEPRECATED("Use PKPaymentNetworkCartesBancaires instead.", macos(10.13, 11.0), ios(11.0, 11.2), watchos(4.0, 4.2));
 extern PKPaymentNetwork const PKPaymentNetworkCartesBancaires API_AVAILABLE(macos(11.0), ios(11.2), watchos(4.2));

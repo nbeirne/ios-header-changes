@@ -59,16 +59,6 @@ VTPixelTransferSessionCreate(
   CM_NULLABLE CFAllocatorRef							allocator,
   CM_RETURNS_RETAINED_PARAMETER CM_NULLABLE VTPixelTransferSessionRef * CM_NONNULL pixelTransferSessionOut) VT_AVAILABLE_STARTING(10_8);
 
-#if defined(__swift__) && __swift__
-static inline OSStatus CF_SWIFT_NAME(VTPixelTransferSessionCreate(_:_:))
-_VTPixelTransferSessionCreate_shim(
-  CM_NULLABLE CFAllocatorRef	                                                   allocator,
-  CM_RETURNS_RETAINED_PARAMETER CM_NULLABLE VTPixelTransferSessionRef * CM_NONNULL pixelTransferSessionOut)
-{
-   return VTPixelTransferSessionCreate(allocator, pixelTransferSessionOut);
-}
-#endif
-
 CF_IMPLICIT_BRIDGING_ENABLED
 	
 /*!
@@ -115,17 +105,6 @@ VTPixelTransferSessionTransferImage(
   CM_NONNULL VTPixelTransferSessionRef       session,
   CM_NONNULL CVPixelBufferRef                sourceBuffer,
   CM_NONNULL CVPixelBufferRef                destinationBuffer) VT_AVAILABLE_STARTING(10_8);
-
-#if defined(__swift__) && __swift__
-static inline OSStatus CF_SWIFT_NAME(VTPixelTransferSessionTransferImage(_:_:_:))
-_VTPixelTransferSessionTransferImage_shim(
-  CM_NONNULL VTPixelTransferSessionRef       session,
-  CM_NONNULL CVPixelBufferRef                sourceBuffer,
-  CM_NONNULL CVPixelBufferRef                destinationBuffer )
-{
-   return VTPixelTransferSessionTransferImage(session, sourceBuffer, destinationBuffer);
-}
-#endif
 	
 CF_IMPLICIT_BRIDGING_DISABLED
 

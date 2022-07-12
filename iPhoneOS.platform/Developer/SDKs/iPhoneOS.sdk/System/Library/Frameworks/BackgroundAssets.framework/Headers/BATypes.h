@@ -38,19 +38,4 @@ API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(tvos, watchos);
 FOUNDATION_EXPORT const BADownloaderPriority BADownloaderPriorityMax
 API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(tvos, watchos);
 
-/// @brief A type that defines keys for the meta info dictionary passed to the extnesion.
-typedef NSString *BADownloaderExtensionMetadataKey NS_TYPED_ENUM;
-
-/// @brief A key that will contain a NSString * in notification info dictionary.
-FOUNDATION_EXPORT BADownloaderExtensionMetadataKey const BADownloaderExtensionMetadataKeyApplicationIdentifier API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(tvos, watchos);
-
-/// @brief A key that contains the name of the app in the localization in which it was purchased.
-FOUNDATION_EXPORT BADownloaderExtensionMetadataKey const BADownloaderExtensionMetadataKeyLocalizedApplicationName API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(tvos, watchos);
-
-/// @brief A key that will contain a URL to the location where the downloaded data should be.
-FOUNDATION_EXPORT BADownloaderExtensionMetadataKey const BADownloaderExtensionMetadataKeyApplicationCacheLocationURL API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(tvos, watchos);
-
-/// @brief A key that will contain a URL to the location where the application bundle should be.
-FOUNDATION_EXPORT BADownloaderExtensionMetadataKey const BADownloaderExtensionMetadataKeyApplicationLocationURL API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(tvos, watchos);
-
 NS_ASSUME_NONNULL_END

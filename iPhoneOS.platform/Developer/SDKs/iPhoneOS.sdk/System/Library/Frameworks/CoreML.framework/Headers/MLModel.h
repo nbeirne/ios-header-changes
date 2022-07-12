@@ -86,7 +86,7 @@ ML_EXPORT
 */
 + (void)loadModelAsset:(MLModelAsset *)asset
          configuration:(MLModelConfiguration *)configuration
-     completionHandler:(void (^)(MLModel * _Nullable model, NSError * _Nullable error))handler API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0), watchos(9.0)) NS_REFINED_FOR_SWIFT NS_SWIFT_ASYNC_NAME(load(asset:configuration:));
+     completionHandler:(void (^)(MLModel * _Nullable model, NSError * _Nullable error))handler API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0), watchos(9.0)) NS_SWIFT_ASYNC_NAME(load(asset:configuration:));
 
 @end
 

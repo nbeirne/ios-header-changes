@@ -7,9 +7,6 @@
 //
 
 
-#ifndef PKIdentityElement_h
-#define PKIdentityElement_h
-
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -22,35 +19,39 @@ API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, watchos, tvos)
 @interface PKIdentityElement: NSObject <NSCopying>
 
 /// The user's given name or first name.
-@property (class, readonly) PKIdentityElement *givenNameElement;
+@property (class, nonatomic, readonly) PKIdentityElement *givenNameElement;
 
 /// The user's family name or last name.
-@property (class, readonly) PKIdentityElement *familyNameElement;
+@property (class, nonatomic, readonly) PKIdentityElement *familyNameElement;
 
 /// The portrait of the user on record with the issuer.
-@property (class, readonly) PKIdentityElement *portraitElement;
+@property (class, nonatomic, readonly) PKIdentityElement *portraitElement;
 
 /// The address on record with the issuer.
-@property (class, readonly) PKIdentityElement *addressElement;
+@property (class, nonatomic, readonly) PKIdentityElement *addressElement;
 
 /// The state or government that issued the identity document.
-@property (class, readonly) PKIdentityElement *issuingAuthorityElement;
+@property (class, nonatomic, readonly) PKIdentityElement *issuingAuthorityElement;
+
+/// The document's issue date. This is usually the issue date of the corresponding physical
+/// document, if applicable.
+@property (class, nonatomic, readonly) PKIdentityElement *documentIssueDateElement;
 
 /// The document's expiration date. This is usually the expiration date of the corresponding physical
 /// document, if applicable.
-@property (class, readonly) PKIdentityElement *documentExpirationDateElement;
+@property (class, nonatomic, readonly) PKIdentityElement *documentExpirationDateElement;
 
 /// The doument's number, as defined by the document's issuing authority.
-@property (class, readonly) PKIdentityElement *documentNumberElement;
+@property (class, nonatomic, readonly) PKIdentityElement *documentNumberElement;
 
 /// The user's driving privileges.
-@property (class, readonly) PKIdentityElement *drivingPrivilegesElement;
+@property (class, nonatomic, readonly) PKIdentityElement *drivingPrivilegesElement;
 
 /// The user's age in years.
-@property (class, readonly) PKIdentityElement *ageElement;
+@property (class, nonatomic, readonly) PKIdentityElement *ageElement;
 
 /// The user's date of birth.
-@property (class, readonly) PKIdentityElement *dateOfBirthElement;
+@property (class, nonatomic, readonly) PKIdentityElement *dateOfBirthElement;
 
 /// Boolean indicating whether the user's age is at least the given age.
 /// For example, ageThresholdElementWithAge:21 will return true if the user is at least 21 years old.
@@ -59,12 +60,11 @@ API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, watchos, tvos)
 + (instancetype)ageThresholdElementWithAge:(NSInteger)age NS_SWIFT_NAME(age(atLeast:));
 
 - (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
 
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif /* PKIdentityElement_h */
 
 
 #else

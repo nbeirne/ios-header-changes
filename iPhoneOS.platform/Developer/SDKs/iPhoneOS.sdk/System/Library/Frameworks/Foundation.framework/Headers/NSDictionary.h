@@ -153,7 +153,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @end
 
-@interface NSDictionary<K, V> (NSGenericFastEnumeraiton) <NSFastEnumeration>
+@interface NSDictionary<K, V> (NSGenericFastEnumeration) <NSFastEnumeration>
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(K __unsafe_unretained _Nullable [_Nonnull])buffer count:(NSUInteger)len;
 @end
 

@@ -58,7 +58,8 @@ UIKIT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI
 
 /// Presents an edit menu with the specified @c configuration object.
 /// If a menu is already presented, it will be dismissed automatically before the new menu is presented.
-/// @NOTE: @c presentEditMenuWithConfiguration: is not supported on Mac idiom apps.
+///
+/// @NOTE: @c presentEditMenuWithConfiguration: is not supported on Mac Catalyst.
 - (void)presentEditMenuWithConfiguration:(UIEditMenuConfiguration *)configuration;
 
 /// Dismiss the currently active menu if one is currently presented.

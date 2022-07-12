@@ -6,11 +6,13 @@
 //
 
 #import <PushToTalk/PTBase.h>
-#import <UIKit/UIKit.h>
+
+@class UIImage;
 
 NS_ASSUME_NONNULL_BEGIN
 
 NS_SWIFT_SENDABLE // Immutable with no mutable subclasses
+
 PT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, macCatalyst, tvos, watchos)
 @interface PTParticipant : NSObject
 

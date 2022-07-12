@@ -118,8 +118,8 @@ typedef NS_OPTIONS(NSUInteger, MTLRenderStages)
     MTLRenderStageVertex   = (1UL << 0),
     MTLRenderStageFragment = (1UL << 1),
     MTLRenderStageTile API_AVAILABLE(macos(12.0), ios(15.0)) = (1UL << 2),
-    MTLRenderStageObject   = (1UL << 3),
-    MTLRenderStageMesh     = (1UL << 4),
+    MTLRenderStageObject API_AVAILABLE(macos(13.0), ios(16.0))  = (1UL << 3),
+    MTLRenderStageMesh API_AVAILABLE(macos(13.0), ios(16.0))  = (1UL << 4),
 } API_AVAILABLE(macos(10.13), ios(10.0));
 
 /*!

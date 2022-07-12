@@ -29,20 +29,6 @@ DD_EXTERN DDDeviceProtocolString const DDDeviceProtocolStringDIAL NS_SWIFT_NAME(
 
 //---------------------------------------------------------------------------------------------------------------------------
 
-/// Flags for the device.
-typedef NS_OPTIONS( NSUInteger, DDDeviceFlags )
-{
-	DDDeviceFlagsNone				= 0,			/// No flags.
-	DDDeviceFlagsSupportsAudio		= ( 1U << 1 ),	/// Supports playback of audio content.
-	DDDeviceFlagsSupportsVideo		= ( 1U << 2 ),	/// Supports playback of video content.
-};
-
-/// Converts a device flags to a string for logging, etc.
-API_AVAILABLE( ios( 16.0 ) )
-NSString * DDDeviceFlagsToString( DDDeviceFlags inFlags );
-
-//---------------------------------------------------------------------------------------------------------------------------
-
 typedef NS_ENUM( NSInteger, DDDeviceProtocol )
  {
 	DDDeviceProtocolInvalid											= 0,	/// Invalid protocol.
@@ -62,6 +48,8 @@ typedef NS_ENUM( NSInteger, DDDeviceCategory )
 	DDDeviceCategoryHiFiSpeakerMultiple NS_SWIFT_NAME(hifiSpeakerMultiple)	= 1,	/// Multiple Hi-Fi speakers.
 	DDDeviceCategoryTVWithMediaBox NS_SWIFT_NAME(tvWithMediaBox)			= 2,	/// TV with MediaBox.
 	DDDeviceCategoryTV NS_SWIFT_NAME(tv)									= 3,	/// TV.
+	DDDeviceCategoryLaptopComputer NS_SWIFT_NAME(laptopComputer)			= 4,	/// Laptop computer.
+	DDDeviceCategoryDesktopComputer NS_SWIFT_NAME(desktopComputer)			= 5,	/// Desktop computer.
 } NS_SWIFT_NAME(DDDevice.Category);
 
 /// Converts a device category to a string for logging, etc.

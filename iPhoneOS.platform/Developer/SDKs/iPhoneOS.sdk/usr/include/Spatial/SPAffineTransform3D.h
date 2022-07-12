@@ -2,6 +2,7 @@
 #define Spatial_SPAffineTransform3D_h
 
 #include <Spatial/Structures.h>
+#include <Spatial/SPRotation3D.h>
 
 // MARK: - Public API
 
@@ -67,7 +68,23 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A new affine transform structure.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPAffineTransform3D SPAffineTransform3DMakeTranslation(SPSize3D translation)
+__API_DEPRECATED("Use `SPVector3D` variant.",
+                 macos(13.0, 13.0),
+                 ios(16.0, 16.0),
+                 watchos(9.0, 9.0),
+                 tvos(16.0, 16.0));
+
+/*!
+ @abstract Returns a new translation affine transform.
+ 
+ @param offset The translation.
+ @returns A new affine transform structure.
+ */
+SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
+SPAffineTransform3D SPAffineTransform3DMakeTranslation(SPVector3D offset)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
@@ -79,9 +96,29 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A new affine transform structure.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPAffineTransform3D SPAffineTransform3DMake(SPSize3D scale,
                                             SPRotation3D rotation,
                                             SPSize3D translation)
+__API_DEPRECATED("Use `SPVector3D` variant.",
+                 macos(13.0, 13.0),
+                 ios(16.0, 16.0),
+                 watchos(9.0, 9.0),
+                 tvos(16.0, 16.0));
+
+/*!
+ @abstract Returns a new scale, rotate, translate affine transform.
+ 
+ @param scale The scale.
+ @param rotation The rotation.
+ @param translation The translation.
+ @returns A new affine transform structure.
+ */
+SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
+SPAffineTransform3D SPAffineTransform3DMake(SPSize3D scale,
+                                            SPRotation3D rotation,
+                                            SPVector3D translation)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
@@ -247,7 +284,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @param transform The source transform.
  @returns A rotation structure that represents the transform's rotation.
  @note
- This function can't extract rotation from non-scale-rotate-translate affine transform. In that case, the function
+ This function can't extract rotation from a non-scale-rotate-translate affine transform. In that case, the function
  returns @p SPRotation3DInvalid.
 */
 SPATIAL_INLINE
@@ -262,6 +299,30 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 */
 SPATIAL_INLINE
 SPSize3D SPAffineTransform3DGetTranslation(SPAffineTransform3D transform)
+__API_DEPRECATED("Use `SPAffineTransform3DGetOffset`.",
+                 macos(13.0, 13.0),
+                 ios(16.0, 16.0),
+                 watchos(9.0, 9.0),
+                 tvos(16.0, 16.0));
+
+/*!
+ @abstract Returns an affine transform's translation.
+ 
+ @param transform The source transform.
+ @returns A vector that represents the transform's translation.
+*/
+SPATIAL_INLINE
+SPVector3D SPAffineTransform3DGetOffset(SPAffineTransform3D transform)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+
+/*!
+ @abstract Sets the translation component on the specified transform.
+ 
+ @param transform The transform.
+ @param offset The translation.
+*/
+SPATIAL_INLINE
+void SPAffineTransform3DSetOffset(SPAffineTransform3D *transform, SPVector3D offset)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 // MARK: - Transform equality
@@ -299,7 +360,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 // MARK: - Applying transform
 
 /*!
- @abstract Returns an affine transform that's constructed from concatenating an existing affine transform and a scale.
+ @abstract Returns an affine transform that's constructed by concatenating an existing affine transform and a scale.
  
  @param transform The source transform.
  @param x The scale value along the @p width dimension.
@@ -313,7 +374,7 @@ SPAffineTransform3D SPAffineTransform3DScaleBy(SPAffineTransform3D transform,
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
- @abstract Returns an affine transform that's constructed from concatenating an existing affine transform and a scale specified by an @p SPSize3D structure.
+ @abstract Returns an affine transform that's constructed by concatenating an existing affine transform and a scale specified by an @p SPSize3D structure.
  
  @param transform The source transform.
  @param scale The scale value.
@@ -325,7 +386,7 @@ SPAffineTransform3D SPAffineTransform3DScaleBySize(SPAffineTransform3D transform
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
- @abstract Returns an affine transform that's constructed from concatenating an existing affine transform and a uniform scale.
+ @abstract Returns an affine transform that's constructed by concatenating an existing affine transform and a uniform scale.
  
  @param transform The source transform.
  @param scale The scale value.
@@ -337,7 +398,7 @@ SPAffineTransform3D SPAffineTransform3DScaleUniform(SPAffineTransform3D transfor
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
- @abstract Returns an affine transform that's constructed from concatenating an existing affine transform and a rotation.
+ @abstract Returns an affine transform that's constructed by concatenating an existing affine transform and a rotation.
  
  @param transform The source transform.
  @param rotation The rotation.
@@ -349,7 +410,7 @@ SPAffineTransform3D SPAffineTransform3DRotate(SPAffineTransform3D transform,
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
- @abstract Returns an affine transform that's constructed from concatenating an existing affine transform and a rotation specified by a quaternion.
+ @abstract Returns an affine transform that's constructed by concatenating an existing affine transform and a rotation specified by a quaternion.
  
  @param transform The source transform.
  @param quaternion The quaternion that defines the rotation.
@@ -361,15 +422,33 @@ SPAffineTransform3D SPAffineTransform3DRotateByQuaternion(SPAffineTransform3D tr
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
- @abstract Returns an affine transform that's constructed from concatenating an existing affine transform and a translation.
+ @abstract Returns an affine transform that's constructed by concatenating an existing affine transform and a translation.
  
  @param transform The source transform.
  @param size A size structure that defines the translation.
  @returns A transform that's offset by the @p width, @p height, and @p depth of the size.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPAffineTransform3D SPAffineTransform3DTranslate(SPAffineTransform3D transform,
                                                  SPSize3D size)
+__API_DEPRECATED("Use `SPVector3D` variant.",
+                 macos(13.0, 13.0),
+                 ios(16.0, 16.0),
+                 watchos(9.0, 9.0),
+                 tvos(16.0, 16.0));
+
+/*!
+ @abstract Returns an affine transform that's constructed by concatenating an existing affine transform and a translation.
+ 
+ @param transform The source transform.
+ @param offset A vector that defines the translation.
+ @returns A transform that's offset by the @p x, @p y, and @p z of the vector.
+*/
+SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
+SPAffineTransform3D SPAffineTransform3DTranslate(SPAffineTransform3D transform,
+                                                 SPVector3D offset)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
@@ -383,8 +462,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 */
 SPATIAL_INLINE
 SPAffineTransform3D SPAffineTransform3DFlip(SPAffineTransform3D transform,
-                                            enum SPAxis flipAxis,
-                                            double size)
+                                            enum SPAxis flipAxis)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
@@ -501,13 +579,23 @@ SPAffineTransform3D SPAffineTransform3DMakeRotation(SPRotation3D rotation) {
     return transform;
 }
 
-SPATIAL_SWIFT_NAME(AffineTransform3D.init(translation:))
+SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPAffineTransform3D SPAffineTransform3DMakeTranslation(SPSize3D translation) {
+    
+    SPVector3D v = (SPVector3D) { .vector = translation.vector };
+    
+    return SPAffineTransform3DMakeTranslation(v);
+}
+
+SPATIAL_SWIFT_NAME(AffineTransform3D.init(translation:))
+SPATIAL_OVERLOADABLE
+SPAffineTransform3D SPAffineTransform3DMakeTranslation(SPVector3D offset) {
     
     simd_double3 column0 = {1, 0, 0};
     simd_double3 column1 = {0, 1, 0};
     simd_double3 column2 = {0, 0, 1};
-    simd_double3 column3 = {translation.width, translation.height, translation.depth};
+    simd_double3 column3 = {offset.x, offset.y, offset.z};
     
     simd_double4x3 matrix = simd_matrix(column0, column1, column2, column3);
     
@@ -517,9 +605,21 @@ SPAffineTransform3D SPAffineTransform3DMakeTranslation(SPSize3D translation) {
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPAffineTransform3D SPAffineTransform3DMake(SPSize3D scale,
                                             SPRotation3D rotation,
                                             SPSize3D translation) {
+    
+    SPVector3D v = (SPVector3D){ .vector = translation.vector };
+    
+    return SPAffineTransform3DMake(scale, rotation, v);
+}
+
+SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
+SPAffineTransform3D SPAffineTransform3DMake(SPSize3D scale,
+                                            SPRotation3D rotation,
+                                            SPVector3D translation) {
     
     SPAffineTransform3D scaleTransform = SPAffineTransform3DMakeScale(scale);
     SPAffineTransform3D rotateTransfrom = SPAffineTransform3DMakeRotation(rotation);
@@ -761,12 +861,26 @@ SPRotation3D SPAffineTransform3DGetRotation(SPAffineTransform3D transform) {
     return SPRotation3DMakeWithQuaternion(simd_normalize(quaternion));
 }
 
-SPATIAL_SWIFT_NAME(getter:AffineTransform3D.translation(self:))
+SPATIAL_REFINED_FOR_SWIFT
 SPSize3D SPAffineTransform3DGetTranslation(SPAffineTransform3D transform) {
     
     simd_double3 translation = transform.matrix.columns[3];
     
     return (SPSize3D){ translation.x, translation.y, translation.z };
+}
+
+SPATIAL_REFINED_FOR_SWIFT
+SPVector3D SPAffineTransform3DGetOffset(SPAffineTransform3D transform) {
+    
+    simd_double3 translation = transform.matrix.columns[3];
+    
+    return (SPVector3D){ .vector = translation };
+}
+
+SPATIAL_REFINED_FOR_SWIFT
+void SPAffineTransform3DSetOffset(SPAffineTransform3D *transform, SPVector3D offset) {
+    
+    transform->matrix.columns[3] = offset.vector;
 }
 
 // MARK: - Transform equality
@@ -833,7 +947,8 @@ SPAffineTransform3D SPAffineTransform3DRotateByQuaternion(SPAffineTransform3D tr
     return SPAffineTransform3DConcatenation(transform, rotationTransform);
 }
 
-SPATIAL_SWIFT_NAME(AffineTransform3D.translated(self:by:))
+SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPAffineTransform3D SPAffineTransform3DTranslate(SPAffineTransform3D transform,
                                                  SPSize3D size) {
     
@@ -842,21 +957,41 @@ SPAffineTransform3D SPAffineTransform3DTranslate(SPAffineTransform3D transform,
     return SPAffineTransform3DConcatenation(transform, translate);
 }
 
+SPATIAL_SWIFT_NAME(AffineTransform3D.translated(self:by:))
+SPATIAL_OVERLOADABLE
+SPAffineTransform3D SPAffineTransform3DTranslate(SPAffineTransform3D transform,
+                                                 SPVector3D offset) {
+    
+    SPAffineTransform3D translate = SPAffineTransform3DMakeTranslation(offset);
+    
+    return SPAffineTransform3DConcatenation(transform, translate);
+}
+
 SPATIAL_REFINED_FOR_SWIFT
 SPAffineTransform3D SPAffineTransform3DFlip(SPAffineTransform3D transform,
-                                            enum SPAxis flipAxis,
-                                            double size) {
-    
-    if(flipAxis != SPAxisX && flipAxis != SPAxisY && flipAxis != SPAxisZ) {
-        return transform;
+                                            enum SPAxis flipAxis) {
+
+    int index;
+
+    switch(flipAxis) {
+        case SPAxisX:
+            index = 0;
+            break;
+        case SPAxisY:
+            index = 1;
+            break;
+        case SPAxisZ:
+            index = 2;
+            break;
+        default:
+            return transform;
+            break;
     }
-    
-    int index = flipAxis - 1;
     
     SPAffineTransform3D flip = SPAffineTransform3DIdentity;
     
     flip.matrix.columns[index][index] = -1;
-    flip.matrix.columns[3][index] = size;
+    flip.matrix.columns[3][0] = 0;
     
     SPAffineTransform3D x = SPAffineTransform3DConcatenation(flip, transform);
     x = SPAffineTransform3DConcatenation(x, flip);

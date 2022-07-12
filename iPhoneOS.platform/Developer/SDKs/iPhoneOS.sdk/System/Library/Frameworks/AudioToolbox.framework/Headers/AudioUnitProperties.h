@@ -2891,6 +2891,16 @@ typedef struct AudioUnitMeterClipping AudioUnitMeterClipping;
                           
                         Enables or disables head-tracking using AirPods motion sensors. This tracking will
                         apply a second rotation on top of head yaw, pitch, and roll parameters.
+ 
+    @constant       kAudioUnitProperty_SpatialMixerPersonalizedHRTFMode
+                        Scope:          Global
+                        Value Type:     UInt32
+                        Access:         Read / Write
+    @discussion     Sets personalized head-related transfer function (HRTF) mode for spatial audio rendering
+                    with kSpatializationAlgorithm_UseOutputType and kSpatialMixerOutputType_Headphones.
+                    This property becomes read-only if personalized HRTF is unavailable or unsupported.
+    @seealso        AUSpatialMixerPersonalizedHRTFMode
+
 */
 CF_ENUM(AudioUnitPropertyID) {
 	kAudioUnitProperty_ReverbRoomType						= 10,
@@ -2902,7 +2912,8 @@ CF_ENUM(AudioUnitPropertyID) {
 	kAudioUnitProperty_SpatialMixerAttenuationCurve			= 3013,
 	kAudioUnitProperty_SpatialMixerOutputType				= 3100,
 	kAudioUnitProperty_SpatialMixerPointSourceInHeadMode	= 3103,
-    kAudioUnitProperty_SpatialMixerEnableHeadTracking API_AVAILABLE(macos(12.3)) API_UNAVAILABLE(ios, tvos) API_UNAVAILABLE(watchos) = 3111
+    kAudioUnitProperty_SpatialMixerEnableHeadTracking API_AVAILABLE(macos(12.3)) API_UNAVAILABLE(ios, tvos) API_UNAVAILABLE(watchos) = 3111,
+    kAudioUnitProperty_SpatialMixerPersonalizedHRTFMode API_AVAILABLE(macos(13.0)) API_UNAVAILABLE(ios, tvos) API_UNAVAILABLE(watchos) = 3113
 };
 
 /*!
@@ -3002,6 +3013,25 @@ typedef struct MixerDistanceParams MixerDistanceParams;
 typedef CF_OPTIONS(UInt32, AUSpatialMixerRenderingFlags) {
 	kSpatialMixerRenderingFlags_InterAuralDelay			= (1L << 0),
 	kSpatialMixerRenderingFlags_DistanceAttenuation		= (1L << 2),
+};
+
+/*!
+    @enum            Property values for kAudioUnitProperty_SpatialMixerPersonalizedHRTFMode
+
+    @constant        kSpatialMixerPersonalizedHRTFMode_Off
+    @discussion      Use generic head-related transfer function (HRTF).
+
+    @constant        kSpatialMixerPersonalizedHRTFMode_On
+    @discussion      Use personalized head-related transfer function (HRTF), if available.
+
+    @constant        kSpatialMixerPersonalizedHRTFMode_Auto
+    @discussion      Follow system preferences to choose between personalized vs generic
+                     head-related transfer function (HRTF).
+*/
+typedef CF_ENUM(UInt32, AUSpatialMixerPersonalizedHRTFMode) {
+    kSpatialMixerPersonalizedHRTFMode_Off CF_SWIFT_NAME(off) API_AVAILABLE(macos(13.0)) API_UNAVAILABLE(ios, tvos) API_UNAVAILABLE(watchos) = 0,
+    kSpatialMixerPersonalizedHRTFMode_On CF_SWIFT_NAME(on) API_AVAILABLE(macos(13.0)) API_UNAVAILABLE(ios, tvos) API_UNAVAILABLE(watchos) = 1,
+    kSpatialMixerPersonalizedHRTFMode_Auto CF_SWIFT_NAME(auto) API_AVAILABLE(macos(13.0)) API_UNAVAILABLE(ios, tvos) API_UNAVAILABLE(watchos) = 2
 };
 
 /*!

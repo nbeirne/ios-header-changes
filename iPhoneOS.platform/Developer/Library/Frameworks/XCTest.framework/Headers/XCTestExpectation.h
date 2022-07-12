@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 /*!
  * @class XCTestExpectation
@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @discussion
  * Expectations represent specific conditions in asynchronous testing.
  */
+NS_SWIFT_SENDABLE
 @interface XCTestExpectation : NSObject
 
 /*!
@@ -67,6 +68,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)
 
 #endif

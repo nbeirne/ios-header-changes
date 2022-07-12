@@ -8,6 +8,7 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
+#import <UIKit/UIButtonConfiguration.h>
 #import <UIKit/UIControl.h>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
@@ -21,20 +22,13 @@ typedef NS_ENUM(NSUInteger, UIPasteControlDisplayMode) {
     UIPasteControlDisplayModeLabelOnly
 } API_AVAILABLE(ios(16.0)) NS_SWIFT_NAME(UIPasteControl.DisplayMode);
 
-typedef NS_ENUM(NSInteger, UIPasteControlCornerStyle) {
-    UIPasteControlCornerStyleNone,
-    UIPasteControlCornerStyleSmall,
-    UIPasteControlCornerStyleMedium,
-    UIPasteControlCornerStyleLarge,
-    UIPasteControlCornerStyleCapsule
-} API_AVAILABLE(ios(16.0)) NS_SWIFT_NAME(UIPasteControl.CornerStyle);
-
 UIKIT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_NAME(UIPasteControl.Configuration) NS_SWIFT_UI_ACTOR
 @interface UIPasteControlConfiguration : NSObject <NSSecureCoding>
-@property (nonatomic) UIPasteControlDisplayMode displayMode;
-@property (nonatomic) UIPasteControlCornerStyle cornerStyle;
-@property (nonatomic, nullable) UIColor *baseForegroundColor;
-@property (nonatomic, nullable) UIColor *baseBackgroundColor;
+@property (nonatomic, assign) UIPasteControlDisplayMode displayMode;
+@property (nonatomic, assign) UIButtonConfigurationCornerStyle cornerStyle NS_REFINED_FOR_SWIFT;
+@property (nonatomic, assign) CGFloat cornerRadius;
+@property (nonatomic, nullable, strong) UIColor *baseForegroundColor;
+@property (nonatomic, nullable, strong) UIColor *baseBackgroundColor;
 @end
 
 UIKIT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_ACTOR

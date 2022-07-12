@@ -6,6 +6,8 @@
 #import <ExtensionFoundation/ExtensionFoundation.h>
 #import <Foundation/Foundation.h>
 
+#if !TARGET_OS_WATCH
+
 #if TARGET_OS_OSX
 #import <AppKit/AppKit.h>
 #else
@@ -60,3 +62,5 @@ API_UNAVAILABLE(ios, watchos, tvos)
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif // !TARGET_OS_WATCH

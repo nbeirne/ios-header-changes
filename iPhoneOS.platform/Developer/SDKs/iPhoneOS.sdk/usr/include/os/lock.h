@@ -79,7 +79,7 @@ __BEGIN_DECLS
  * providing much better behavior under contention.
  *
  * In Swift, note that use of the `&` operator on an unfair lock can copy or move
- * the lock memory, leading to misbehavior. Use an OSAllocatedLock to safely wrap
+ * the lock memory, leading to misbehavior. Use an OSAllocatedUnfairLock to safely wrap
  * access to the lock memory instead. If you use os_unfair_lock APIs directly,
  * always make sure to store and use the lock in memory with a stable address.
  */
@@ -111,7 +111,7 @@ typedef struct os_unfair_lock_s {
  */
 OS_UNFAIR_LOCK_AVAILABILITY
 OS_EXPORT OS_NOTHROW OS_NONNULL_ALL
-OS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use OSAllocatedLock.performWhileLocked() for async-safe scoped locking")
+OS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use OSAllocatedUnfairLock.performWhileLocked() for async-safe scoped locking")
 void os_unfair_lock_lock(os_unfair_lock_t lock);
 
 /*!
@@ -137,7 +137,7 @@ void os_unfair_lock_lock(os_unfair_lock_t lock);
  */
 OS_UNFAIR_LOCK_AVAILABILITY
 OS_EXPORT OS_NOTHROW OS_WARN_RESULT OS_NONNULL_ALL
-OS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use OSAllocatedLock.tryPerformWhileLocked() for async-safe scoped locking")
+OS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use OSAllocatedUnfairLock.tryPerformWhileLocked() for async-safe scoped locking")
 bool os_unfair_lock_trylock(os_unfair_lock_t lock);
 
 /*!
@@ -151,7 +151,7 @@ bool os_unfair_lock_trylock(os_unfair_lock_t lock);
  */
 OS_UNFAIR_LOCK_AVAILABILITY
 OS_EXPORT OS_NOTHROW OS_NONNULL_ALL
-OS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use OSAllocatedLock.performWhileLocked() for async-safe scoped locking")
+OS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use OSAllocatedUnfairLock.performWhileLocked() for async-safe scoped locking")
 void os_unfair_lock_unlock(os_unfair_lock_t lock);
 
 /*!

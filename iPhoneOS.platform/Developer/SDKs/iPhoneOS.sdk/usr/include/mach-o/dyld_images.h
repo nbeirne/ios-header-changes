@@ -27,6 +27,7 @@
 #include <unistd.h>
 #include <mach/mach.h>
 #include <uuid/uuid.h>
+#include <TargetConditionals.h>
 
 #if defined(__cplusplus) && (BUILDING_LIBDYLD || BUILDING_DYLD)
 #include <atomic>

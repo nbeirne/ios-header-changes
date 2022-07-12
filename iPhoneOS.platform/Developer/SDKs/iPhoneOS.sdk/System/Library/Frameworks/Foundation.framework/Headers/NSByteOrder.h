@@ -118,8 +118,8 @@ NS_INLINE unsigned long long NSSwapHostLongLongToLittle(unsigned long long x) {
 }
 
 
-NS_SWIFT_SENDABLE typedef struct {unsigned int v;} NSSwappedFloat;
-NS_SWIFT_SENDABLE typedef struct {unsigned long long v;} NSSwappedDouble;
+typedef struct NS_SWIFT_SENDABLE {unsigned int v;} NSSwappedFloat;
+typedef struct NS_SWIFT_SENDABLE {unsigned long long v;} NSSwappedDouble;
 
 NS_INLINE NSSwappedFloat NSConvertHostFloatToSwapped(float x) {
     union fconv {

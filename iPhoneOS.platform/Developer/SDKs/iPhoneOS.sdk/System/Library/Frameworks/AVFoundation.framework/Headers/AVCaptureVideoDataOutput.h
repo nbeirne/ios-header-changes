@@ -155,7 +155,7 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0)) API_UNAVAILABLE(tvos) AP
     Indicates the supported video pixel formats that can be specified in videoSettings.
  
  @discussion
-    The value of this property is an NSArray of NSNumbers that can be used as values for the kCVPixelBufferPixelFormatTypeKey in the receiver's videoSettings property. The first format in the returned list is the most efficient output format.
+    The value of this property is an NSArray of NSNumbers that can be used as values for the kCVPixelBufferPixelFormatTypeKey in the receiver's videoSettings property. The formats are listed in an unspecified order. This list can may change if the activeFormat of the AVCaptureDevice connected to the receiver changes.
  */
 @property(nonatomic, readonly) NSArray<NSNumber *> *availableVideoCVPixelFormatTypes API_AVAILABLE(ios(5.0), macCatalyst(14.0)) API_UNAVAILABLE(tvos);
 

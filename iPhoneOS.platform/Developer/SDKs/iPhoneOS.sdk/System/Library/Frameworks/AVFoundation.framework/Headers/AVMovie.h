@@ -565,7 +565,7 @@ API_AVAILABLE(macos(10.11), ios(13.0), watchos(6.0)) API_UNAVAILABLE(tvos)
 	@param			mediaType
 					The media type of the new track (e.g. AVMediaTypeVideo for a video track).
 	@param			track
-					If you wish to transfer settings from an existing track, including track userdata and metadata, width, height, preferred volume, etc., pass a reference to an AVAssetTrack representing that track. Otherwise pass nil.
+					If you wish to transfer settings from an existing track, including width, height, preferred volume, etc., pass a reference to an AVAssetTrack representing that track. Otherwise pass nil.
 	@param			options
 					An NSDictionary object that contains keys for specifying options for the initialization of the new AVMutableMovieTrack object. Pass nil for default initialization behavior.
 	@result			An AVMutableMovieTrack object

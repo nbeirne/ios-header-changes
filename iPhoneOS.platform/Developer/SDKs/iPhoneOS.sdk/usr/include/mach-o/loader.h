@@ -131,6 +131,9 @@ struct mach_header_64 {
 #define MH_FILESET	0xc		/* a file composed of other Mach-Os to
 					   be run in the same userspace sharing
 					   a single linkedit. */
+#define	MH_GPU_EXECUTE	0xd		/* gpu program */
+#define	MH_GPU_DYLIB	0xe		/* gpu support functions */
+
 
 /* Constants for the flags field of the mach_header */
 #define	MH_NOUNDEFS	0x1		/* the object file has no undefined
@@ -1300,6 +1303,16 @@ struct build_tool_version {
 #define TOOL_SWIFT 2
 #define TOOL_LD	3
 #define TOOL_LLD 4
+
+/* values for gpu tools (1024 to 1048) */
+#define TOOL_METAL                 1024
+#define TOOL_AIRLLD                1025
+#define TOOL_AIRNT                 1026
+#define TOOL_AIRNT_PLUGIN          1027
+#define TOOL_AIRPACK               1028
+#define TOOL_GPUARCHIVER           1031
+#define TOOL_METAL_FRAMEWORK       1032
+
 
 /*
  * The dyld_info_command contains the file offsets and sizes of 

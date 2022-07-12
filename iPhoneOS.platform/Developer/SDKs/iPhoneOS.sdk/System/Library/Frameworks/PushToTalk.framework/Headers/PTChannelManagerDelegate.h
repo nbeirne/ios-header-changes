@@ -1,5 +1,5 @@
 //
-//  PTChannelEventDelegate.h
+//  PTChannelManagerDelegate.h
 //  PushToTalk
 //
 //  Copyright © 2022 Apple. All rights reserved.
@@ -48,6 +48,7 @@ typedef NS_ENUM(NSInteger, PTChannelTransmitRequestSource) {
 
 NS_ASSUME_NONNULL_BEGIN
 
+API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, macCatalyst, tvos, watchos)
 @protocol PTChannelManagerDelegate <NSObject>
 
 /// This method is called when your channel becomes active in the system user interface

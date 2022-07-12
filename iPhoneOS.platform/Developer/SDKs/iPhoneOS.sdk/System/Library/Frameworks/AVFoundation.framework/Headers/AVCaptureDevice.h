@@ -522,7 +522,7 @@ AVF_EXPORT AVCaptureDeviceType const AVCaptureDeviceTypeBuiltInTrueDepthCamera A
 
 /*!
  @constant AVCaptureDeviceTypeBuiltInLiDARDepthCamera
-    A device that consists of two cameras, one YUV and one LiDAR. The LiDAR camera provides high quality, high accuracy depth information by measuring the round trip of an artifical light signal emitted by a laser. The depth is synchronized and perspective corrected to frames produced by the paired YUV camera. While the resolution of the depth data and YUV frames may differ, their field of view and aspect ratio always match. Note that devices of this type may only be discovered using an AVCaptureDeviceDiscoverySession or -[AVCaptureDevice defaultDeviceWithDeviceType:mediaType:position:].
+    A device that consists of two cameras, one YUV and one LiDAR. The LiDAR camera provides high quality, high accuracy depth information by measuring the round trip of an artificial light signal emitted by a laser. The depth is synchronized and perspective corrected to frames produced by the paired YUV camera. While the resolution of the depth data and YUV frames may differ, their field of view and aspect ratio always match. Note that devices of this type may only be discovered using an AVCaptureDeviceDiscoverySession or -[AVCaptureDevice defaultDeviceWithDeviceType:mediaType:position:].
  */
 AVF_EXPORT AVCaptureDeviceType const AVCaptureDeviceTypeBuiltInLiDARDepthCamera API_AVAILABLE(ios(15.4), macCatalyst(15.4)) API_UNAVAILABLE(macos, tvos) API_UNAVAILABLE(watchos);
 

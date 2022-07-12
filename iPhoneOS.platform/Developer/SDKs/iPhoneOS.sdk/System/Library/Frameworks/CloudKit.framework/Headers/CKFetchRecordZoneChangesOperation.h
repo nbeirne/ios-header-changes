@@ -28,7 +28,7 @@ API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0))
 @property (nonatomic, copy, nullable) NSArray<CKRecordZoneID *> *recordZoneIDs;
 @property (nonatomic, copy, nullable) NSDictionary<CKRecordZoneID *, CKFetchRecordZoneChangesConfiguration *> *configurationsByRecordZoneID API_AVAILABLE(macos(10.14), ios(12.0), tvos(12.0), watchos(5.0));
 
-/*! @abstract Determines if the opertaion should fetch all changes from the server before completing.
+/*! @abstract Determines if the operation should fetch all changes from the server before completing.
  *
  *  @discussion When set to YES, this operation will send repeated requests to the server until all record changes have been fetched. @c recordZoneChangeTokensUpdatedBlock will be invoked periodically, to give clients an updated change token so that already-fetched record changes don't need to be re-fetched on a subsequent operation. @c recordZoneFetchCompletionBlock will only be called once and @c moreComing will always be NO.
  *

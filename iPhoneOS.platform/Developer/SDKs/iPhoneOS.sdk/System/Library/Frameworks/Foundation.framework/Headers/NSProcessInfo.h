@@ -18,8 +18,7 @@ enum {	/* Constants returned by -operatingSystem */
     NSOSF1OperatingSystem
 } API_DEPRECATED("Not supported", macos(10.0,10.10), ios(2.0,8.0), watchos(2.0,2.0), tvos(9.0,9.0));
 
-NS_SWIFT_SENDABLE
-typedef struct {
+typedef struct NS_SWIFT_SENDABLE {
     NSInteger majorVersion;
     NSInteger minorVersion;
     NSInteger patchVersion;

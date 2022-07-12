@@ -8,10 +8,6 @@
 #import <Foundation/Foundation.h>
 #import <SharedWithYouCore/SWDefines.h>
 
-/*
- WARNING: NON-FINAL API, DO NOT ADOPT WITHOUT PERMISSION FROM THE MESSAGES TEAM
- */
-
 NS_ASSUME_NONNULL_BEGIN
 
 /*!
@@ -36,7 +32,3 @@ SW_EXTERN @interface SWHighlight : NSObject <NSSecureCoding, NSCopying>
 @end
 
 NS_ASSUME_NONNULL_END
-
-/*
- WARNING: NON-FINAL API, DO NOT ADOPT WITHOUT PERMISSION FROM THE MESSAGES TEAM
- */

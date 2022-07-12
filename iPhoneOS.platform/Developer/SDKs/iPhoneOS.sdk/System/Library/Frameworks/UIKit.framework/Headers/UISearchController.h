@@ -113,6 +113,12 @@ UIKIT_EXTERN API_AVAILABLE(ios(8.0)) NS_SWIFT_UI_ACTOR
 /// after dismissing the menu by tapping outside
 @property (nonatomic, copy, nullable) NSArray<id<UISearchSuggestion>> *searchSuggestions API_AVAILABLE(tvos(14.0), ios(16.0)) API_UNAVAILABLE(watchos);
 
+/// Default NO. When YES, the UISearchController will not create its internal child view controller
+/// for presenting the list of search suggestions when the searchBarPlacement is stacked.
+/// This property is intended to be set at the time that the search controller is initialized.
+/// If set after that point, the internal view controller will not be destroyed, but its view will be hidden and remain so.
+@property (nonatomic) BOOL ignoresSearchSuggestionsForSearchBarPlacementStacked API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
+
 /* Deprecated on tvOS 15.0 in favor of  using -[UIViewController setContentScrollView:forEdge:]
  on the searchResultsController, passing the full-screen scroll view contained in the results view
  and NSDirectionalRectEdgeTop.

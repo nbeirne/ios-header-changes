@@ -389,7 +389,7 @@ int pthread_mutex_init(pthread_mutex_t * __restrict,
 		const pthread_mutexattr_t * _Nullable __restrict);
 
 __API_AVAILABLE(macos(10.4), ios(2.0))
-__PTHREAD_SWIFT_UNAVAILABLE_FROM_ASYNC("Use OSAllocatedLock's performWhileLocked or NSLock for async-safe scoped locking")
+__PTHREAD_SWIFT_UNAVAILABLE_FROM_ASYNC("Use OSAllocatedUnfairLock's withLock or NSLock for async-safe scoped locking")
 int pthread_mutex_lock(pthread_mutex_t *);
 
 __API_AVAILABLE(macos(10.4), ios(2.0))
@@ -397,11 +397,11 @@ int pthread_mutex_setprioceiling(pthread_mutex_t * __restrict, int,
 		int * __restrict);
 
 __API_AVAILABLE(macos(10.4), ios(2.0))
-__PTHREAD_SWIFT_UNAVAILABLE_FROM_ASYNC("Use OSAllocatedLock's tryPerformWhileLocked or NSLock for async-safe scoped locking")
+__PTHREAD_SWIFT_UNAVAILABLE_FROM_ASYNC("Use OSAllocatedUnfairLock's withLockIfAvailable or NSLock for async-safe scoped locking")
 int pthread_mutex_trylock(pthread_mutex_t *);
 
 __API_AVAILABLE(macos(10.4), ios(2.0))
-__PTHREAD_SWIFT_UNAVAILABLE_FROM_ASYNC("Use OSAllocatedLock's performWhileLocked or NSLock for async-safe scoped locking")
+__PTHREAD_SWIFT_UNAVAILABLE_FROM_ASYNC("Use OSAllocatedUnfairLock's withLock or NSLock for async-safe scoped locking")
 int pthread_mutex_unlock(pthread_mutex_t *);
 
 __API_AVAILABLE(macos(10.4), ios(2.0))

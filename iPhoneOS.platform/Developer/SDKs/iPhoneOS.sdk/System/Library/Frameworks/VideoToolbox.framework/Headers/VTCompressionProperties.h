@@ -314,6 +314,17 @@ VT_EXPORT const CFStringRef kVTCompressionPropertyKey_PrioritizeEncodingSpeedOve
 */
 VT_EXPORT const CFStringRef kVTCompressionPropertyKey_ConstantBitRate API_AVAILABLE(macosx(13.0), ios(16.0), tvos(16.0)); // CFNumber bits per second, Optional
 
+/*!
+	@constant	kVTCompressionPropertyKey_EstimatedAverageBytesPerFrame
+	@abstract
+		Returns the encoder's estimate of the expected size of a single encoded frame in bytes, based on current configuration.
+	@discussion
+		When supported, this option is intended to allow clients to estimate the output file size for an encoded video stream.
+		This property is not implemented by all video encoders.
+		
+*/
+VT_EXPORT const CFStringRef kVTCompressionPropertyKey_EstimatedAverageBytesPerFrame API_AVAILABLE(macosx(13.0), ios(16.0), tvos(16.0), watchos(9.0)); // Read Only, CFNumber (bytes per frame)
+
 
 #pragma mark Bitstream configuration
 
@@ -435,6 +446,17 @@ VT_EXPORT const CFStringRef kVTH264EntropyMode_CABAC API_AVAILABLE(macosx(10.9),
 		tied to particular pixel formats (eg, 16-bit RGB, 24-bit RGB).
 */
 VT_EXPORT const CFStringRef kVTCompressionPropertyKey_Depth API_AVAILABLE(macosx(10.8), ios(8.0), tvos(10.2)); // Read/write, CFNumber (CMPixelFormatType), Optional
+
+/*!
+	@constant	kVTCompressionPropertyKey_PreserveAlphaChannel
+	@abstract
+		Instructs the encoder to encode or discard the alpha channel of input video frames
+	@discussion
+		This property allows a client to  specify whether or not the alpha channel in the source pixelBuffers should be encoded.
+		The client may set this to kCFBooleanFalse in cases where they are not interested in preserving alpha, or if the alpha channel is known to be fully opaque.
+		This property is not supported by all encoders.
+*/
+VT_EXPORT const CFStringRef kVTCompressionPropertyKey_PreserveAlphaChannel API_AVAILABLE(macosx(13.0), ios(16.0), tvos(16.0), watchos(9.0)); // Read/write, CFBoolean, Optional, (effectively) kCFBooleanTrue by default
 
 #pragma mark Runtime restrictions
 

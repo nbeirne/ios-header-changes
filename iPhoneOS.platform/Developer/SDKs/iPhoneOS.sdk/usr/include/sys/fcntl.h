@@ -155,6 +155,12 @@
 #define O_NOFOLLOW_ANY  0x20000000      /* no symlinks allowed in path */
 #endif
 
+#if __DARWIN_C_LEVEL >= 200809L
+#define O_EXEC          0x40000000               /* open file for execute only */
+#define O_SEARCH        (O_EXEC | O_DIRECTORY)   /* open directory for search only */
+#endif
+
+
 
 #if __DARWIN_C_LEVEL >= 200809L
 /*

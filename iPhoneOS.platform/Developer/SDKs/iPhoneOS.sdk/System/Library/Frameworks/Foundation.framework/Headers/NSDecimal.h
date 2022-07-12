@@ -39,8 +39,7 @@ typedef NS_ENUM(NSUInteger, NSCalculationError) {
 
 #define NSDecimalNoScale SHRT_MAX
 
-NS_SWIFT_SENDABLE
-typedef struct {
+typedef struct NS_SWIFT_SENDABLE {
     signed   int _exponent:8;
     unsigned int _length:4;     // length == 0 && isNegative -> NaN
     unsigned int _isNegative:1;

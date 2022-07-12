@@ -21,14 +21,13 @@ typedef NS_ENUM(NSInteger, MTLIOPriority) {
     MTLIOPriorityHigh = 0,
     MTLIOPriorityNormal = 1,
     MTLIOPriorityLow = 2,
-};
+} API_AVAILABLE(macos(13.0), ios(16.0));
 
 /* Used in MTLIOCommandQueueDescriptor to set the MTLIOQueue type at creation time. */
 typedef NS_ENUM(NSInteger, MTLIOCommandQueueType) {
     MTLIOCommandQueueTypeConcurrent = 0,
     MTLIOCommandQueueTypeSerial = 1,
-};
-
+} API_AVAILABLE(macos(13.0), ios(16.0));
 
 API_AVAILABLE(macos(13.0), ios(16.0))
 MTL_EXTERN NSErrorDomain const MTLIOErrorDomain;
@@ -37,13 +36,14 @@ MTL_EXTERN NSErrorDomain const MTLIOErrorDomain;
 typedef NS_ERROR_ENUM(MTLIOErrorDomain, MTLIOError) {
     MTLIOErrorURLInvalid       = 1,
     MTLIOErrorInternal         = 2,
-};
+} API_AVAILABLE(macos(13.0), ios(16.0));
 
 /*!
  @protocol MTLIOCommandQueue
  @abstract Represents a queue that schedules command buffers containing command that
  read from handle objects and write to MTLResource objects.
  */
+API_AVAILABLE(macos(13.0), ios(16.0))
 @protocol MTLIOCommandQueue <NSObject>
 
 
@@ -91,6 +91,7 @@ typedef NS_ERROR_ENUM(MTLIOErrorDomain, MTLIOError) {
  a custom allocator. The underlying buffer is used as scratch space for IO commands
  that need it.
  */
+API_AVAILABLE(macos(13.0), ios(16.0))
 @protocol MTLIOScratchBuffer<NSObject>
 
 @property (readonly) id<MTLBuffer> buffer;
@@ -106,11 +107,13 @@ typedef NS_ERROR_ENUM(MTLIOErrorDomain, MTLIOError) {
  complete they return the storage by dealloc'ing the MTLIOScratchBuffer objects (where
  the application can optionally pool the memory for use by future commands.
  */
+API_AVAILABLE(macos(13.0), ios(16.0))
 @protocol MTLIOScratchBufferAllocator <NSObject>
 
 /*!
  @method newScratchBufferWithMinimumSize:minimumSize
  @abstract This method is called when additional scratch memory is required by a load command.
+ The scratch buffer returned should NOT be an autoreleased object.
  @discussion  Scratch memory is needed for cases where a texture is being copied to. minimumSize
  is the smallest buffer that will allow the command to execute, however a larger buffer can be provided and
  susequent commands will be able to use it, thus avoiding the need for an additional callback. Returning nil
@@ -118,9 +121,6 @@ typedef NS_ERROR_ENUM(MTLIOErrorDomain, MTLIOError) {
  */
 
 - (__nullable id<MTLIOScratchBuffer>) newScratchBufferWithMinimumSize:(NSUInteger)minimumSize;
-
-
-- (__nullable id<MTLIOScratchBuffer>) allocateScratchBufferWithMinimumSize:(NSUInteger)minimumSize; // DEPRECATED, remove with rdar://88998213 ([Fast Storage] remove allocateScratchBufferWithMinimumSize from MTLIOCommandQueue.h)
 
 @end
 
@@ -172,6 +172,7 @@ MTL_EXPORT API_AVAILABLE(macos(13.0), ios(16.0))
  @abstract Represents a  file (raw or compressed) that can be used as a source
  for load commands encoded in a MTLIOCommandBuffer.
  */
+MTL_EXPORT API_AVAILABLE(macos(13.0), ios(16.0))
 @protocol MTLIOFileHandle <NSObject>
 
 /*!

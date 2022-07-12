@@ -212,12 +212,8 @@ XCT_METRIC_API_AVAILABLE
  * A metric which measures timestamp data gathered from os_signposts.
  * If the interval being measured is an animation os_signpost interval then the following
  * data will also be gathered:
- *
- * macOS, iOS, tvOS:
  * - frame rate (fps)
  * - frame count
- *
- * iOS only:
  * - number of hitches
  * - hitch total time duration (ms)
  * - hitch time ratio (ms per s)

@@ -79,7 +79,7 @@ API_AVAILABLE(ios(13.0), macos(12.0)) API_UNAVAILABLE(tvos, watchos)
  @method        extendLaunchMeasurementForTaskID:error:
  @abstract      Start measuring an extended launch task with the given task id.
  @discussion    This method tracks extra setup tasks required to make the application perceived as fully launched, such as loading up content from the disk or refreshing data from the network, rendering images, etc.
- @discussion    Each task needs to start before or during @c UISceneDelegate.scene(_:restoreInteractionStateWith:) or before @c UISceneDelegate.sceneDidBecomeActive(_:) is called on the first scene to connect. For example, at the time @c UIApplicationDelegate.application(_:didFinishLaunchingWithOptions:) is called.
+ @discussion    The first task needs to start before or during @c UISceneDelegate.scene(_:restoreInteractionStateWith:) or before @c UISceneDelegate.sceneDidBecomeActive(_:) is called on the first scene to connect. For example, at the time @c UIApplicationDelegate.application(_:didFinishLaunchingWithOptions:) is called. Other tasks need to start before the last current task is finished, otherwise the extended launch measurement will end.  
  @discussion    The maximum number of tasks is 16.
  @discussion    This method needs to be called on the main thread.
  @param         taskID              The task identifier. Must be an unique nonnull custom string.
