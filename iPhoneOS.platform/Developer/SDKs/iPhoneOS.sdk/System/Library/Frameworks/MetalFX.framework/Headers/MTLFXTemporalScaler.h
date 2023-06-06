@@ -6,13 +6,6 @@
 //
 
 #import <Metal/Metal.h>
-#import <simd/simd.h>
-#import <CoreGraphics/CoreGraphics.h>
-
-typedef NS_ENUM(NSUInteger, MTLFXTemporalScalerVersion) {
-    MTLFXTemporalScalerVersion_v1 = 0,
-    MTLFXTemporalScalerVersion_End,
-} API_AVAILABLE(macos(13.0), ios(16.0));
 
 // Forward declaration.
 @protocol MTLFXTemporalScaler;
@@ -21,30 +14,36 @@ API_AVAILABLE(macos(13.0), ios(16.0))
 @interface MTLFXTemporalScalerDescriptor : NSObject
 
 // These properties must be set to the respective Metal pixel formats for each texture that will be used with the scaler.
-@property MTLPixelFormat colorTextureFormat;
-@property MTLPixelFormat depthTextureFormat;
-@property MTLPixelFormat motionTextureFormat;
-@property MTLPixelFormat outputTextureFormat;
+@property (readwrite, nonatomic) MTLPixelFormat colorTextureFormat;
+@property (readwrite, nonatomic) MTLPixelFormat depthTextureFormat;
+@property (readwrite, nonatomic) MTLPixelFormat motionTextureFormat;
+@property (readwrite, nonatomic) MTLPixelFormat outputTextureFormat;
 
-@property NSUInteger inputWidth;
-@property NSUInteger inputHeight;
-@property NSUInteger outputWidth;
-@property NSUInteger outputHeight;
+@property (readwrite, nonatomic) NSUInteger inputWidth;
+@property (readwrite, nonatomic) NSUInteger inputHeight;
+@property (readwrite, nonatomic) NSUInteger outputWidth;
+@property (readwrite, nonatomic) NSUInteger outputHeight;
+
+// Auto exposure property, setting this to YES to indicate for MetalFX
+// to determine exposure per frame, which will ignore exposureTexture
+// property on the scaler object.
+@property (readwrite, nonatomic, getter=isAutoExposureEnabled) BOOL autoExposureEnabled;
 
 // Dynamic Resolution properties
-// Set enableInputContentProperties to NO to indicate not using dynamic resolution
+// Set inputContentPropertiesEnabled to YES to indicate using dynamic resolution
 // Scale value represents output resolution / input content resolution for either
 // width or height dimension. It's assumed that aspect ratio of input/output is
 // always the same. 
-@property BOOL enableInputContentProperties;
-@property float inputContentMinScale;
-@property float inputContentMaxScale;
-
-@property enum MTLFXTemporalScalerVersion version;
+@property (readwrite, nonatomic, getter=isInputContentPropertiesEnabled) BOOL inputContentPropertiesEnabled;
+@property (readwrite, nonatomic) float inputContentMinScale;
+@property (readwrite, nonatomic) float inputContentMaxScale;
 
 // The following method is used to instantiate the effect encoder for a given
 // Metal device.
-- (id <MTLFXTemporalScaler>)newTemporalScalerWithDevice:(id<MTLDevice>)device;
+- (nullable id <MTLFXTemporalScaler>)newTemporalScalerWithDevice:(nonnull id<MTLDevice>)device;
+
+// Class method for determining support
++ (BOOL)supportsDevice:(nonnull id<MTLDevice>)device;
 
 @end
 
@@ -62,17 +61,28 @@ API_AVAILABLE(macos(13.0), ios(16.0))
 @property (nonatomic) NSUInteger inputContentWidth;
 @property (nonatomic) NSUInteger inputContentHeight;
 
-// These would be all of the "state" needed that is allowed to change on a frame by
-// frame basis.   We don't care about the textures assigned except that they must
+// These can change on a frame by frame basis.
+// We don't care about the textures assigned except that they must
 // match the originally specified dimensions and pixel formats.
-@property (nonatomic, retain) id<MTLTexture> colorTexture;
-@property (nonatomic, retain) id<MTLTexture> depthTexture;
-@property (nonatomic, retain) id<MTLTexture> motionTexture;
-@property (nonatomic, retain) id<MTLTexture> outputTexture;
+@property (nonatomic, retain, nullable) id<MTLTexture> colorTexture;
+@property (nonatomic, retain, nullable) id<MTLTexture> depthTexture;
+@property (nonatomic, retain, nullable) id<MTLTexture> motionTexture;
+// outputTexture is required to have MTLStorageModePrivate for storageMode
+@property (nonatomic, retain, nullable) id<MTLTexture> outputTexture;
+
+// Exposure properties
+// Ideally this is a 1x1 R16F texture. Note that only R channel of
+// the texel located at (0, 0) is used for exposure value. The value is used
+// to multiply the input color, use GPU to generate the exposure value.
+@property (nonatomic, retain, nullable) id<MTLTexture> exposureTexture;
+// If the input color is pre-multiplied by fixed value, set this value
+// which MetalFX will use to divide input color, this is not common.
+@property (nonatomic) float preExposure;
 
 // The jitter offset property indicates the pixel offset to sample in order to
 // return to the frame's reference frame.
-@property (nonatomic) CGPoint jitterOffset;
+@property (nonatomic) float jitterOffsetX;
+@property (nonatomic) float jitterOffsetY;
 
 // Scale factor to be applied to motion vectors to convert to pixel/fragment
 // coordinates in the input data.  The expectation for a 1.0 scale factor is
@@ -80,13 +90,14 @@ API_AVAILABLE(macos(13.0), ios(16.0))
 // prior frame.  Assuming standard Metal device coordinates (0,0 is upper left
 // in the framebuffer), the motion vectors for an object that moved down and
 // to the right in the framebuffer texture by 10 pixels would be -10,-10.
-@property (nonatomic) CGPoint motionVectorScale;
+@property (nonatomic) float motionVectorScaleX;
+@property (nonatomic) float motionVectorScaleY;
 
 // Reset.  Set to true when history is invalid (scene cut, etc.)
 @property (nonatomic) BOOL reset;
 
 // Set whether the depth buffer uses reversed depth or not. Defaults to YES.
-@property (nonatomic) BOOL reversedDepth;
+@property (readwrite, nonatomic, getter=isDepthReversed) BOOL depthReversed;
 
 // Read-only immutable properties of effect
 @property (nonatomic, readonly) MTLPixelFormat colorTextureFormat;
@@ -101,9 +112,9 @@ API_AVAILABLE(macos(13.0), ios(16.0))
 @property (nonatomic, readonly) float inputContentMaxScale;
 
 // Property for synchronization when using untracked resources
-@property (nonatomic, retain) id<MTLFence> fence;
+@property (nonatomic, retain, nullable) id<MTLFence> fence;
 
 // Method to encode the effect to a command buffer
-- (void)encodeToCommandBuffer:(id<MTLCommandBuffer>)commandBuffer;
+- (void)encodeToCommandBuffer:(nonnull id<MTLCommandBuffer>)commandBuffer;
 
 @end

@@ -1,3 +1,5 @@
+#import <TargetConditionals.h>
+#if !TARGET_OS_TV
 //
 //  SWCollaborationHighlight.h
 //  SWCollaborationHighlight
@@ -20,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
      @class SWCollaborationHighlight
      @abstract A SWHighlight object that represents an active collaboration
  */
+API_AVAILABLE(ios(16.0), macos(13.0))
 SW_EXTERN @interface SWCollaborationHighlight : SWHighlight <NSSecureCoding, NSCopying>
 
 /*!
@@ -47,3 +50,5 @@ SW_EXTERN @interface SWCollaborationHighlight : SWHighlight <NSSecureCoding, NSC
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif // !TARGET_OS_TV

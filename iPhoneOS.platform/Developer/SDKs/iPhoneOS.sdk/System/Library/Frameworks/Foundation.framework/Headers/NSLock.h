@@ -10,16 +10,18 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @protocol NSLocking
 
-- (void)lock;
-- (void)unlock;
+- (void)lock NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use async-safe scoped locking instead");
+
+- (void)unlock NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use async-safe scoped locking instead");
 
 @end
 
 NS_SWIFT_SENDABLE // Locks are inherently Sendable by definition
 @interface NSLock : NSObject <NSLocking>
 
-- (BOOL)tryLock;
-- (BOOL)lockBeforeDate:(NSDate *)limit;
+- (BOOL)tryLock NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use async-safe scoped locking instead");
+
+- (BOOL)lockBeforeDate:(NSDate *)limit NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use async-safe scoped locking instead");
 
 @property (nullable, copy) NSString *name API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0));
 
@@ -31,12 +33,17 @@ NS_SWIFT_SENDABLE // Locks are inherently Sendable by definition
 - (instancetype)initWithCondition:(NSInteger)condition NS_DESIGNATED_INITIALIZER;
 
 @property (readonly) NSInteger condition;
-- (void)lockWhenCondition:(NSInteger)condition;
-- (BOOL)tryLock;
-- (BOOL)tryLockWhenCondition:(NSInteger)condition;
-- (void)unlockWithCondition:(NSInteger)condition;
-- (BOOL)lockBeforeDate:(NSDate *)limit;
-- (BOOL)lockWhenCondition:(NSInteger)condition beforeDate:(NSDate *)limit;
+- (void)lockWhenCondition:(NSInteger)condition NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use async-safe scoped locking instead");
+
+- (BOOL)tryLock NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use async-safe scoped locking instead");
+
+- (BOOL)tryLockWhenCondition:(NSInteger)condition NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use async-safe scoped locking instead");
+
+- (void)unlockWithCondition:(NSInteger)condition NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use async-safe scoped locking instead");
+
+- (BOOL)lockBeforeDate:(NSDate *)limit NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use async-safe scoped locking instead");
+
+- (BOOL)lockWhenCondition:(NSInteger)condition beforeDate:(NSDate *)limit NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use async-safe scoped locking instead");
 
 @property (nullable, copy) NSString *name API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0));
 
@@ -45,8 +52,9 @@ NS_SWIFT_SENDABLE // Locks are inherently Sendable by definition
 NS_SWIFT_SENDABLE // Locks are inherently Sendable by definition
 @interface NSRecursiveLock : NSObject <NSLocking>
 
-- (BOOL)tryLock;
-- (BOOL)lockBeforeDate:(NSDate *)limit;
+- (BOOL)tryLock NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use async-safe scoped locking instead");
+
+- (BOOL)lockBeforeDate:(NSDate *)limit NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use async-safe scoped locking instead");
 
 @property (nullable, copy) NSString *name API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0));
 
@@ -57,9 +65,12 @@ NS_SWIFT_SENDABLE // Locks are inherently Sendable by definition
 API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0))
 @interface NSCondition : NSObject <NSLocking>
 
-- (void)wait;
-- (BOOL)waitUntilDate:(NSDate *)limit;
-- (void)signal;
+- (void)wait NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use async-safe scoped locking instead");
+
+- (BOOL)waitUntilDate:(NSDate *)limit NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use async-safe scoped locking instead");
+
+- (void)signal NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use async-safe scoped locking instead");
+
 - (void)broadcast;
 
 @property (nullable, copy) NSString *name API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0));

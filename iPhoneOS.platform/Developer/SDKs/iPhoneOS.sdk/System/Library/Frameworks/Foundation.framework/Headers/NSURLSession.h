@@ -167,12 +167,12 @@ API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0))
  */
 - (void)invalidateAndCancel;
 
-- (void)resetWithCompletionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(void))completionHandler;    /* empty all cookies, cache and credential stores, removes disk files, issues -flushWithCompletionHandler:. Invokes completionHandler() on the delegate queue. */
-- (void)flushWithCompletionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(void))completionHandler;    /* flush storage to disk and clear transient network caches.  Invokes completionHandler() on the delegate queue. */
+- (void)resetWithCompletionHandler:(void (NS_SWIFT_SENDABLE ^)(void))completionHandler;    /* empty all cookies, cache and credential stores, removes disk files, issues -flushWithCompletionHandler:. Invokes completionHandler() on the delegate queue. */
+- (void)flushWithCompletionHandler:(void (NS_SWIFT_SENDABLE ^)(void))completionHandler;    /* flush storage to disk and clear transient network caches.  Invokes completionHandler() on the delegate queue. */
 
-- (void)getTasksWithCompletionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSArray<NSURLSessionDataTask *> *dataTasks, NSArray<NSURLSessionUploadTask *> *uploadTasks, NSArray<NSURLSessionDownloadTask *> *downloadTasks))completionHandler NS_SWIFT_ASYNC_NAME(getter:tasks()); /* invokes completionHandler with outstanding data, upload and download tasks. */
+- (void)getTasksWithCompletionHandler:(void (NS_SWIFT_SENDABLE ^)(NSArray<NSURLSessionDataTask *> *dataTasks, NSArray<NSURLSessionUploadTask *> *uploadTasks, NSArray<NSURLSessionDownloadTask *> *downloadTasks))completionHandler NS_SWIFT_ASYNC_NAME(getter:tasks()); /* invokes completionHandler with outstanding data, upload and download tasks. */
 
-- (void)getAllTasksWithCompletionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSArray<__kindof NSURLSessionTask *> *tasks))completionHandler NS_SWIFT_ASYNC_NAME(getter:allTasks()) API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0)); /* invokes completionHandler with all outstanding tasks. */
+- (void)getAllTasksWithCompletionHandler:(void (NS_SWIFT_SENDABLE ^)(NSArray<__kindof NSURLSessionTask *> *tasks))completionHandler NS_SWIFT_ASYNC_NAME(getter:allTasks()) API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0)); /* invokes completionHandler with all outstanding tasks. */
 
 /* 
  * NSURLSessionTask objects are always created in a suspended state and
@@ -252,14 +252,14 @@ API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0))
  * see <Foundation/NSURLError.h>.  The delegate, if any, will still be
  * called for authentication challenges.
  */
-- (NSURLSessionDataTask *)dataTaskWithRequest:(NSURLRequest *)request completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler;
-- (NSURLSessionDataTask *)dataTaskWithURL:(NSURL *)url completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+- (NSURLSessionDataTask *)dataTaskWithRequest:(NSURLRequest *)request completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+- (NSURLSessionDataTask *)dataTaskWithURL:(NSURL *)url completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /*
  * upload convenience method.
  */
-- (NSURLSessionUploadTask *)uploadTaskWithRequest:(NSURLRequest *)request fromFile:(NSURL *)fileURL completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler;
-- (NSURLSessionUploadTask *)uploadTaskWithRequest:(NSURLRequest *)request fromData:(nullable NSData *)bodyData completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+- (NSURLSessionUploadTask *)uploadTaskWithRequest:(NSURLRequest *)request fromFile:(NSURL *)fileURL completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+- (NSURLSessionUploadTask *)uploadTaskWithRequest:(NSURLRequest *)request fromData:(nullable NSData *)bodyData completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /*
  * download task convenience methods.  When a download successfully
@@ -267,9 +267,9 @@ API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0))
  * copied during the invocation of the completion routine.  The file
  * will be removed automatically.
  */
-- (NSURLSessionDownloadTask *)downloadTaskWithRequest:(NSURLRequest *)request completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler;
-- (NSURLSessionDownloadTask *)downloadTaskWithURL:(NSURL *)url completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler;
-- (NSURLSessionDownloadTask *)downloadTaskWithResumeData:(NSData *)resumeData completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+- (NSURLSessionDownloadTask *)downloadTaskWithRequest:(NSURLRequest *)request completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+- (NSURLSessionDownloadTask *)downloadTaskWithURL:(NSURL *)url completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+- (NSURLSessionDownloadTask *)downloadTaskWithResumeData:(NSData *)resumeData completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 @end
 
@@ -463,7 +463,7 @@ API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0))
  * If resume data cannot be created, the completion handler will be
  * called with nil resumeData.
  */
-- (void)cancelByProducingResumeData:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSData * _Nullable resumeData))completionHandler;
+- (void)cancelByProducingResumeData:(void (NS_SWIFT_SENDABLE ^)(NSData * _Nullable resumeData))completionHandler;
 
 
 - (instancetype)init API_DEPRECATED("Please use -[NSURLSession downloadTaskWithRequest:] or other NSURLSession methods to create instances", macos(10.9,10.15), ios(7.0,13.0), watchos(2.0,6.0), tvos(9.0,13.0));
@@ -502,14 +502,14 @@ API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0))
  * If an error occurs, any outstanding reads will also fail, and new
  * read requests will error out immediately.
  */
-- (void)readDataOfMinLength:(NSUInteger)minBytes maxLength:(NSUInteger)maxBytes timeout:(NSTimeInterval)timeout completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^) (NSData * _Nullable_result data, BOOL atEOF, NSError * _Nullable error))completionHandler;
+- (void)readDataOfMinLength:(NSUInteger)minBytes maxLength:(NSUInteger)maxBytes timeout:(NSTimeInterval)timeout completionHandler:(void (NS_SWIFT_SENDABLE ^) (NSData * _Nullable_result data, BOOL atEOF, NSError * _Nullable error))completionHandler;
 
 /* Write the data completely to the underlying socket.  If all the
  * bytes have not been written by the timeout, a timeout error will
  * occur.  Note that invocation of the completion handler does not
  * guarantee that the remote side has received all the bytes, only
  * that they have been written to the kernel. */
-- (void)writeData:(NSData *)data timeout:(NSTimeInterval)timeout completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^) (NSError * _Nullable error))completionHandler;
+- (void)writeData:(NSData *)data timeout:(NSTimeInterval)timeout completionHandler:(void (NS_SWIFT_SENDABLE ^) (NSError * _Nullable error))completionHandler;
 
 /* -captureStreams completes any already enqueued reads
  * and writes, and then invokes the
@@ -623,20 +623,20 @@ API_AVAILABLE(macos(10.15), ios(13.0), watchos(6.0), tvos(13.0))
  * guarantee that the remote side has received all the bytes, only
  * that they have been written to the kernel.
  */
-- (void)sendMessage:(NSURLSessionWebSocketMessage *)message completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSError * _Nullable error))completionHandler;
+- (void)sendMessage:(NSURLSessionWebSocketMessage *)message completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSError * _Nullable error))completionHandler;
 
 /* Reads a WebSocket message once all the frames of the message are available.
  * If the maximumMessage size is hit while buffering the frames, the receiveMessage call will error out
  * and all outstanding work will also fail resulting in the end of the task.
  */
-- (void)receiveMessageWithCompletionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSURLSessionWebSocketMessage * _Nullable message, NSError * _Nullable error))completionHandler;
+- (void)receiveMessageWithCompletionHandler:(void (NS_SWIFT_SENDABLE ^)(NSURLSessionWebSocketMessage * _Nullable message, NSError * _Nullable error))completionHandler;
 
 /* Sends a ping frame from the client side. The pongReceiveHandler is invoked when the client
  * receives a pong from the server endpoint. If a connection is lost or an error occurs before receiving
  * the pong from the endpoint, the pongReceiveHandler block will be invoked with an error.
  * Note - the pongReceiveHandler will always be called in the order in which the pings were sent.
  */
-- (void)sendPingWithPongReceiveHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSError * _Nullable error))pongReceiveHandler;
+- (void)sendPingWithPongReceiveHandler:(void (NS_SWIFT_SENDABLE ^)(NSError * _Nullable error))pongReceiveHandler;
 
 /* Sends a close frame with the given closeCode. An optional reason can be provided while sending the close frame.
  * Simply calling cancel on the task will result in a cancellation frame being sent without any reason.
@@ -888,7 +888,7 @@ API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0))
  * interaction. 
  */
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
-                                             completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler;
+                                             completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler;
 
 /* If an application has received an
  * -application:handleEventsForBackgroundURLSession:completionHandler:
@@ -942,7 +942,7 @@ API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0))
  */
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
                         willBeginDelayedRequest:(NSURLRequest *)request
-                              completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSURLSessionDelayedRequestDisposition disposition, NSURLRequest * _Nullable newRequest))completionHandler
+                              completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSURLSessionDelayedRequestDisposition disposition, NSURLRequest * _Nullable newRequest))completionHandler
     API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0), tvos(11.0));
 
 /*
@@ -971,7 +971,7 @@ API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0))
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
                      willPerformHTTPRedirection:(NSHTTPURLResponse *)response
                                      newRequest:(NSURLRequest *)request
-                              completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSURLRequest * _Nullable))completionHandler;
+                              completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSURLRequest * _Nullable))completionHandler;
 
 /* The task has received a request specific authentication challenge.
  * If this delegate is not implemented, the session specific authentication challenge
@@ -980,14 +980,14 @@ API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0))
  */
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
                             didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge 
-                              completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler;
+                              completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler;
 
 /* Sent if a task requires a new, unopened body stream.  This may be
  * necessary when authentication has failed for any request that
  * involves a body stream. 
  */
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
-                              needNewBodyStream:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSInputStream * _Nullable bodyStream))completionHandler NS_SWIFT_ASYNC_NAME(urlSession(_:needNewBodyStreamForTask:));
+                              needNewBodyStream:(void (NS_SWIFT_SENDABLE ^)(NSInputStream * _Nullable bodyStream))completionHandler NS_SWIFT_ASYNC_NAME(urlSession(_:needNewBodyStreamForTask:));
 
 /* Sent periodically to notify the delegate of upload progress.  This
  * information is also available as properties of the task.
@@ -1027,7 +1027,7 @@ API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0))
  */
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
                                  didReceiveResponse:(NSURLResponse *)response
-                                  completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSURLSessionResponseDisposition disposition))completionHandler;
+                                  completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSURLSessionResponseDisposition disposition))completionHandler;
 
 /* Notification that a data task has become a download task.  No
  * future messages will be sent to the data task.
@@ -1071,7 +1071,7 @@ API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0))
  */
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
                                   willCacheResponse:(NSCachedURLResponse *)proposedResponse 
-                                  completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSCachedURLResponse * _Nullable cachedResponse))completionHandler;
+                                  completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSCachedURLResponse * _Nullable cachedResponse))completionHandler;
 
 @end
 

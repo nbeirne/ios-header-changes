@@ -456,7 +456,17 @@ typedef NS_ENUM(NSInteger, AVCapturePhotoQualityPrioritization) {
  @discussion
     Some AVCaptureDeviceFormats support outputting higher resolution stills than their streaming resolution (See AVCaptureDeviceFormat.highResolutionStillImageDimensions). Under some conditions, AVCaptureSession needs to set up the photo render pipeline differently to support high resolution still image capture. If you intend to take high resolution still images at all, you should set this property to YES before calling -[AVCaptureSession startRunning]. Once you've opted in for high resolution capture, you are free to issue photo capture requests with or without highResolutionCaptureEnabled in the AVCapturePhotoSettings. If you have not set this property to YES and call capturePhotoWithSettings:delegate: with settings.highResolutionCaptureEnabled set to YES, an NSInvalidArgumentException will be thrown.
  */
-@property(nonatomic, getter=isHighResolutionCaptureEnabled) BOOL highResolutionCaptureEnabled API_UNAVAILABLE(macos);
+@property(nonatomic, getter=isHighResolutionCaptureEnabled) BOOL highResolutionCaptureEnabled API_DEPRECATED("Use maxPhotoDimensions instead.", macos(10.15, 13.0), ios(10.0, 16.0), macCatalyst(14.0, 16.0)) API_UNAVAILABLE(tvos);
+
+/*!
+ @property maxPhotoDimensions
+ @abstract
+	Indicates the maximum resolution of the requested photo.
+ 
+ @discussion
+	Set this property to enable requesting of images up to as large as the specified dimensions. Images returned by AVCapturePhotoOutput may be smaller than these dimensions but will never be larger. Once set, images can be requested with any valid maximum photo dimensions by setting AVCapturePhotoSettings.maxPhotoDimensions on a per photo basis. The dimensions set must match one of the dimensions returned by AVCaptureDeviceFormat.supportedMaxPhotoDimensions for the current active format. Changing this property may trigger a lengthy reconfiguration of the capture render pipeline so it is recommended that this is set before calling -[AVCaptureSession startRunning].
+ */
+@property(nonatomic) CMVideoDimensions maxPhotoDimensions API_AVAILABLE(ios(16.0), macos(13.0), macCatalyst(16.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
 
 /*!
  @property maxBracketedCapturePhotoCount
@@ -504,9 +514,19 @@ typedef NS_ENUM(NSInteger, AVCapturePhotoQualityPrioritization) {
     Indicates whether Live Photo capture is enabled, but currently suspended.
 
  @discussion
-    This property allows you to cut current Live Photo movie captures short (for instance, if you suddenly need to do something that you don't want to show up in the Live Photo movie, such as take a non Live Photo capture that makes a shutter sound). By default, livePhotoCaptureSuspended is NO. When you set livePhotoCaptureSuspended = YES, any Live Photo movie captures in progress are trimmed to the current time. Likewise, when you toggle livePhotoCaptureSuspended from YES to NO, subsequent Live Photo movie captures will not contain any samples earlier than the time you un-suspended Live Photo capture. Setting this property to YES throws an NSInvalidArgumentException if livePhotoCaptureEnabled is NO. This property may only be set while the session is running. Setting this property to YES when the session is not running will fail resulting in livePhotoCaptureSuspended being reverted to NO.
+    This property allows you to cut current Live Photo movie captures short (for instance, if you suddenly need to do something that you don't want to show up in the Live Photo movie, such as take a non Live Photo capture that makes a shutter sound). By default, livePhotoCaptureSuspended is NO. When you set livePhotoCaptureSuspended = YES, any Live Photo movie captures in progress are trimmed to the current time. Likewise, when you toggle livePhotoCaptureSuspended from YES to NO, subsequent Live Photo movie captures will not contain any samples earlier than the time you un-suspended Live Photo capture. Setting this property to YES throws an NSInvalidArgumentException if livePhotoCaptureEnabled is NO. By default, this property resets to NO when the AVCaptureSession stops. This behavior can be prevented by setting preservesLivePhotoCaptureSuspendedOnSessionStop to YES before stopping the session.
  */
 @property(nonatomic, getter=isLivePhotoCaptureSuspended) BOOL livePhotoCaptureSuspended API_UNAVAILABLE(macos);
+
+/*!
+ @property preservesLivePhotoCaptureSuspendedOnSessionStop
+ @abstract
+    By default, Live Photo capture is resumed when the session stops. This property allows clients to opt out of this and preserve the value of livePhotoCaptureSuspended.
+ 
+ @discussion
+    Defaults to NO.
+ */
+@property(nonatomic) BOOL preservesLivePhotoCaptureSuspendedOnSessionStop API_AVAILABLE(ios(16.0), macos(13.0), macCatalyst(16.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
 
 /*!
  @property livePhotoAutoTrimmingEnabled
@@ -1095,7 +1115,17 @@ API_AVAILABLE(macos(10.15), ios(10.0), macCatalyst(14.0)) API_UNAVAILABLE(tvos) 
 
     Starting in iOS 14.5 if you disable geometric distortion correction, the high resolution photo emitted by AVCapturePhotoOutput may be is smaller depending on the format.
  */
-@property(nonatomic, getter=isHighResolutionPhotoEnabled) BOOL highResolutionPhotoEnabled API_AVAILABLE(macos(13.0), macCatalyst(14.0));
+@property(nonatomic, getter=isHighResolutionPhotoEnabled) BOOL highResolutionPhotoEnabled API_DEPRECATED("Use maxPhotoDimensions instead.", macos(10.15, 13.0), ios(10.0, 16.0), macCatalyst(14.0, 16.0)) API_UNAVAILABLE(tvos);
+
+/*!
+ @property maxPhotoDimensions
+ @abstract
+	Indicates the maximum resolution photo that will be captured.
+ 
+ @discussion
+	By setting this property you are requesting an image that may be up to as large as the specified dimensions, but no larger. The dimensions set must match one of the dimensions returned by AVCaptureDeviceFormat.supportedMaxPhotoDimensions for the currently configured format and be equal to or smaller than the value of AVCapturePhotoOutput.maxPhotoDimensions. This property defaults to the smallest dimensions returned by AVCaptureDeviceFormat.supportedMaxPhotoDimensions.
+ */
+@property(nonatomic) CMVideoDimensions maxPhotoDimensions API_AVAILABLE(ios(16.0), macos(13.0), macCatalyst(16.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
 
 /*!
  @property depthDataDeliveryEnabled

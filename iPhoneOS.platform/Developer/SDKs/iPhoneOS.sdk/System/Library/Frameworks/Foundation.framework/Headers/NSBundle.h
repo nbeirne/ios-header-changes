@@ -203,14 +203,14 @@ API_AVAILABLE(ios(9.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos)
  
  If you want to access the resources again, create a new NSBundleResourceRequest object.
  */
-- (void)beginAccessingResourcesWithCompletionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSError * _Nullable error))completionHandler;
+- (void)beginAccessingResourcesWithCompletionHandler:(void (NS_SWIFT_SENDABLE ^)(NSError * _Nullable error))completionHandler;
 
 /*
  Inform the system that you wish to begin accessing the resources that are part of this request, but do not attempt to download any content over the network. The completion handler will be invoked with a YES argument if the resources are available.
  
  If the resources were available, then you must invoke the -endAccessingResources method once you are done accessing them. If the resources were not available, then you may invoke the -beginAccessingResourcesWithCompletionHandler: method to initiate a download of the resources.
 */
-- (void)conditionallyBeginAccessingResourcesWithCompletionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(BOOL resourcesAvailable))completionHandler;
+- (void)conditionallyBeginAccessingResourcesWithCompletionHandler:(void (NS_SWIFT_SENDABLE ^)(BOOL resourcesAvailable))completionHandler;
 
 /*
  Informs the system that you are finished with the resources that were part of the tag set in this request. Call this after you no longer need the resources to be available on disk. It is important to invoke this method to make room for newly requested resources. This method may only be invoked if you have received a callback from -beginAccessingResourcesWithCompletionHandler:. To cancel an in-progress request, invoke cancel on the -progress property.

@@ -1,3 +1,5 @@
+#import <TargetConditionals.h>
+#if !TARGET_OS_TV
 //  Copyright (c) 2022 Apple. All rights reserved.
 
 #import <Foundation/Foundation.h>
@@ -9,6 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
      @class SWPersonIdentityProof
      @abstract Represents an opaque Merkle tree proof of inclusion. Inclusion hashes are provided to verify that the individual device has access to the document.
  */
+API_AVAILABLE(ios(16.0), macos(13.0))
 NS_SWIFT_NAME(SWPerson.IdentityProof)
 SW_EXTERN @interface SWPersonIdentityProof : NSObject <NSSecureCoding, NSCopying>
 
@@ -34,6 +37,7 @@ SW_EXTERN @interface SWPersonIdentityProof : NSObject <NSSecureCoding, NSCopying
 
 @end
 
+API_AVAILABLE(ios(16.0), macos(13.0))
 NS_SWIFT_NAME(SWPerson.SignedIdentityProof)
 SW_EXTERN @interface SWSignedPersonIdentityProof : SWPersonIdentityProof
 
@@ -47,3 +51,5 @@ SW_EXTERN @interface SWSignedPersonIdentityProof : SWPersonIdentityProof
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif // !TARGET_OS_TV

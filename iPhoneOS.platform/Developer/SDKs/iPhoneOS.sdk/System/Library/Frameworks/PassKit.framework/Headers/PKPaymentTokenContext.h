@@ -1,7 +1,7 @@
 #if !__has_include(<PassKitCore/PKPaymentTokenContext.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKPaymentTokenContext.h
-//  PassKit
+//    PassKit
 //
 //  Copyright © 2021 Apple, Inc. All rights reserved.
 //
@@ -54,5 +54,6 @@ NS_ASSUME_NONNULL_END
 
 
 #else
+#import <TargetConditionals.h>
 #import <PassKitCore/PKPaymentTokenContext.h>
 #endif

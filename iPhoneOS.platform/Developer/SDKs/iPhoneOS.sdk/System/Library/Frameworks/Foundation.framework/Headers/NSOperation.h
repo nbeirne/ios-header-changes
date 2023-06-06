@@ -61,7 +61,7 @@ typedef NS_ENUM(NSInteger, NSOperationQueuePriority) {
 
 @property (nullable, copy) void (^completionBlock)(void) API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0));
 
-- (void)waitUntilFinished API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0));
+- (void)waitUntilFinished API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0)) NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use completionBlock or a dependent Operation instead");
 
 @property double threadPriority API_DEPRECATED("Not supported", macos(10.6,10.10), ios(4.0,8.0), watchos(2.0,2.0), tvos(9.0,9.0));
 
@@ -124,7 +124,8 @@ API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0))
 @property (readonly, strong) NSProgress *progress API_AVAILABLE(macos(10.15), ios(13.0), tvos(13.0), watchos(6.0));
 
 - (void)addOperation:(NSOperation *)op;
-- (void)addOperations:(NSArray<NSOperation *> *)ops waitUntilFinished:(BOOL)wait API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0));
+
+- (void)addOperations:(NSArray<NSOperation *> *)ops waitUntilFinished:(BOOL)wait API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0)) NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use addBarrierBlock or a dependent Operations instead");
 - (void)addOperationWithBlock:(void (^)(void))block API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0)) NS_SWIFT_DISABLE_ASYNC;
 
 /// @method addBarrierBlock:
@@ -146,7 +147,7 @@ API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0))
 
 - (void)cancelAllOperations;
 
-- (void)waitUntilAllOperationsAreFinished;
+- (void)waitUntilAllOperationsAreFinished NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use addBarrierBlock or a dependent Operations instead");
 
 @property (class, readonly, strong, nullable) NSOperationQueue *currentQueue API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0));
 @property (class, readonly, strong) NSOperationQueue *mainQueue API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0));

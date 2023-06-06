@@ -16,6 +16,7 @@
 #include <CoreFoundation/CFDictionary.h>
 #include <CoreFoundation/CFCharacterSet.h>
 #include <CoreFoundation/CFLocale.h>
+#include <CoreFoundation/CFError.h>
 #include <stdarg.h>
 
 CF_IMPLICIT_BRIDGING_ENABLED
@@ -275,6 +276,12 @@ CFStringRef CFStringCreateWithFormat(CFAllocatorRef alloc, CFDictionaryRef forma
 
 CF_EXPORT
 CFStringRef CFStringCreateWithFormatAndArguments(CFAllocatorRef alloc, CFDictionaryRef formatOptions, CFStringRef format, va_list arguments) CF_FORMAT_FUNCTION(3,0);
+
+CF_EXPORT
+CFStringRef CFStringCreateStringWithValidatedFormat(CFAllocatorRef alloc, CFDictionaryRef formatOptions, CFStringRef validFormatSpecifiers, CFStringRef format, CFErrorRef *errorPtr, ...) API_AVAILABLE(macos(13.0), ios(16.0), watchos(8.0), tvos(8.0)) CF_FORMAT_FUNCTION(3, 6) CF_SWIFT_UNAVAILABLE("Use string interpolations instead");
+
+CF_EXPORT
+CFStringRef CFStringCreateStringWithValidatedFormatAndArguments(CFAllocatorRef alloc, CFDictionaryRef formatOptions, CFStringRef validFormatSpecifiers, CFStringRef format, va_list arguments, CFErrorRef *errorPtr) API_AVAILABLE(macos(13.0), ios(16.0), watchos(8.0), tvos(8.0)) CF_FORMAT_FUNCTION(3, 0) CF_SWIFT_UNAVAILABLE("Use string interpolations instead");
 
 /* Functions to create mutable strings. "maxLength", if not 0, is a hard bound on the length of the string. If 0, there is no limit on the length.
 */

@@ -142,6 +142,19 @@ typedef struct {
 SPATIAL_SWIFT_NAME(Ray3D)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
+// MARK: - 3D Pose Structure
+
+/// A structure that contains a position and rotation.
+typedef struct {
+    /// The position
+    SPPoint3D position;
+    
+    /// The rotation
+    SPRotation3D rotation;
+} SPPose3D
+SPATIAL_SWIFT_NAME(Pose3D)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+
 // MARK: - 3D Affine Transform Structure
 
 /*!
@@ -167,7 +180,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 // MARK: - Shear enumeration
 
 /// Enumerations that describe an axis.
-enum SPAxis: uint32_t {
+typedef enum : uint32_t {
     
     /// The operation is along the x-axis.
     SPAxisX SPATIAL_REFINED_FOR_SWIFT __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0)) = 0x0001,
@@ -177,9 +190,10 @@ enum SPAxis: uint32_t {
     
     /// The operation is along the z-axis.
     SPAxisZ SPATIAL_REFINED_FOR_SWIFT __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0)) = 0x0004
-    
-    
-} SPATIAL_SWIFT_NAME(Axis3D);
+ 
+}
+SPAxis
+SPATIAL_SWIFT_NAME(Axis3D);
 
 
 // MARK: - Special Values
@@ -199,11 +213,19 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0))
 SPATIAL_SWIFT_NAME(Rotation3D.zero)
 static const SPRotation3D SPRotation3DZero = { 0 };
 
-/// A size that represents an invalid size.
+/// A rotation that represents an invalid rotation.
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0))
 SPATIAL_REFINED_FOR_SWIFT
 static const SPRotation3D SPRotation3DInvalid = {
     { .vector = {INFINITY, INFINITY, INFINITY, INFINITY }}
+};
+
+/// A pose that represents an invalid pose.
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0))
+SPATIAL_REFINED_FOR_SWIFT
+static const SPPose3D SPPose3DInvalid = {
+    .position = {INFINITY, INFINITY, INFINITY},
+    .rotation = (SPRotation3D){ .vector = {INFINITY, INFINITY, INFINITY, INFINITY }}
 };
 
 /// The point with the value zero.
@@ -317,10 +339,12 @@ static const SPProjectiveTransform3D SPProjectiveTransform3DInvalid = {
  @returns A Boolean value that indicates whether the rotation axis is zero.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPRotationAxis3DIsZero(SPRotationAxis3D axis)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 SPATIAL_SWIFT_NAME(getter:RotationAxis3D.isZero(self:))
+SPATIAL_OVERLOADABLE
 bool SPRotationAxis3DIsZero(SPRotationAxis3D axis) {
     simd_double3 p = (simd_double3){axis.x, axis.y, axis.z};
     return simd_equal(p, 0);
@@ -333,10 +357,12 @@ bool SPRotationAxis3DIsZero(SPRotationAxis3D axis) {
  @returns A Boolean value that indicates whether the point is zero.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPPoint3DIsZero(SPPoint3D point)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 SPATIAL_SWIFT_NAME(getter:Point3D.isZero(self:))
+SPATIAL_OVERLOADABLE
 bool SPPoint3DIsZero(SPPoint3D point) {
     simd_double3 p = (simd_double3){point.x, point.y, point.z};
     return simd_equal(p, 0);
@@ -350,9 +376,11 @@ bool SPPoint3DIsZero(SPPoint3D point) {
 */
 SPATIAL_INLINE
 bool SPPoint3DIsFinite(SPPoint3D point)
+SPATIAL_OVERLOADABLE
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 SPATIAL_SWIFT_NAME(getter:Point3D.isFinite(self:))
+SPATIAL_OVERLOADABLE
 bool SPPoint3DIsFinite(SPPoint3D point) {
     simd_double3 p = (simd_double3){point.x, point.y, point.z};
     
@@ -366,10 +394,12 @@ bool SPPoint3DIsFinite(SPPoint3D point) {
  @returns A Boolean value that indicates whether the point contains any NaN values.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPPoint3DIsNaN(SPPoint3D point)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 SPATIAL_SWIFT_NAME(getter:Point3D.isNaN(self:))
+SPATIAL_OVERLOADABLE
 bool SPPoint3DIsNaN(SPPoint3D point) {
     simd_double3 p = (simd_double3){point.x, point.y, point.z};
     return simd_any(_sp_simd_isnan(p));
@@ -384,10 +414,12 @@ bool SPPoint3DIsNaN(SPPoint3D point) {
  @returns A Boolean value that indicates whether the vector is zero.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPVector3DIsZero(SPVector3D vector)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 SPATIAL_SWIFT_NAME(getter:Vector3D.isZero(self:))
+SPATIAL_OVERLOADABLE
 bool SPVector3DIsZero(SPVector3D vector) {
     simd_double3 v = (simd_double3){vector.x, vector.y, vector.z};
     return simd_equal(v, 0);
@@ -400,10 +432,12 @@ bool SPVector3DIsZero(SPVector3D vector) {
  @returns A Boolean value that indicates whether all of the coordinates of the point are finite.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPVector3DIsFinite(SPVector3D vector)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 SPATIAL_SWIFT_NAME(getter:Vector3D.isFinite(self:))
+SPATIAL_OVERLOADABLE
 bool SPVector3DIsFinite(SPVector3D vector) {
     simd_double3 v = (simd_double3){vector.x, vector.y, vector.z};
     
@@ -417,10 +451,12 @@ bool SPVector3DIsFinite(SPVector3D vector) {
  @returns A Boolean value that indicates whether the point contains any NaN values.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPVector3DIsNaN(SPVector3D vector)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 SPATIAL_SWIFT_NAME(getter:Vector3D.isNaN(self:))
+SPATIAL_OVERLOADABLE
 bool SPVector3DIsNaN(SPVector3D vector) {
     simd_double3 v = (simd_double3){vector.x, vector.y, vector.z};
     return simd_any(_sp_simd_isnan(v));
@@ -435,6 +471,7 @@ bool SPVector3DIsNaN(SPVector3D vector) {
  @returns A Boolean value that indicates whether the size is zero.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPSize3DIsZero(SPSize3D size)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -445,6 +482,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A Boolean value that indicates whether all of the dimensions of the size are finite.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPSize3DIsFinite(SPSize3D size)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -455,22 +493,26 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A Boolean value that indicates whether the size contains any NaN values.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPSize3DIsNaN(SPSize3D size)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 SPATIAL_SWIFT_NAME(getter:Size3D.isZero(self:))
+SPATIAL_OVERLOADABLE
 bool SPSize3DIsZero(SPSize3D size) {
     simd_double3 v = (simd_double3){size.width, size.height, size.depth};
     return simd_equal(v, 0);
 }
 
 SPATIAL_SWIFT_NAME(getter:Size3D.isFinite(self:))
+SPATIAL_OVERLOADABLE
 bool SPSize3DIsFinite(SPSize3D size) {
     simd_double3 v = (simd_double3){size.width, size.height, size.depth};
     return simd_all(_sp_simd_isfinite(v));
 }
 
 SPATIAL_SWIFT_NAME(getter:Size3D.isNaN(self:))
+SPATIAL_OVERLOADABLE
 bool SPSize3DIsNaN(SPSize3D size) {
     simd_double3 v = (simd_double3){size.width, size.height, size.depth};
     return simd_any(_sp_simd_isnan(v));
@@ -483,16 +525,48 @@ bool SPSize3DIsNaN(SPSize3D size) {
  @returns A Boolean value that indicates whether a size structure represents a valid size.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPSize3DIsValid(SPSize3D size)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 bool SPSize3DIsValid(SPSize3D size) {
     return !(size.width == INFINITY &&
              size.height == INFINITY &&
              size.depth == INFINITY);
 }
 
+/*!
+ @abstract Returns a Boolean value that indicates whether a rotation structure represents a valid rotation.
+ 
+ @param rotation The source rotation.
+ @returns A Boolean value that indicates whether a rotation structure represents a valid rotation.
+*/
+SPATIAL_INLINE
+bool SPRotation3DIsValid(SPRotation3D rotation)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+
+SPATIAL_REFINED_FOR_SWIFT
+bool SPRotation3DIsValid(SPRotation3D rotation) {
+
+    return simd_all(_sp_simd_isfinite(rotation.quaternion.vector));
+}
+
+/*!
+ @abstract Returns a Boolean value that indicates whether a pose structure represents a valid pose.
+ 
+ @param pose The source pose.
+ @returns A Boolean value that indicates whether a size structure represents a valid size.
+*/
+SPATIAL_INLINE
+bool SPPose3DIsValid(SPPose3D pose)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+
+SPATIAL_REFINED_FOR_SWIFT
+bool SPPose3DIsValid(SPPose3D pose) {
+    return SPRotation3DIsValid(pose.rotation) && SPPoint3DIsFinite(pose.position);
+}
 
 /*!
  @abstract Returns a Boolean value that indicates whether the rectangle represents an invalid value.

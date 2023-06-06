@@ -90,7 +90,7 @@ API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0))
 
 /* When an app is launched for a continuation event it can request streams back to the originating side. Streams can only be successfully retrieved from the NSUserActivity in the NS/UIApplication delegate that is called for a continuation event. This functionality is optional and is not expected to be needed in most continuation cases. The streams returned in the completion handler will be in an unopened state. The streams should be opened immediately to start requesting information from the other side.
 */
-- (void)getContinuationStreamsWithCompletionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSInputStream * _Nullable inputStream, NSOutputStream * _Nullable outputStream, NSError * _Nullable error))completionHandler;
+- (void)getContinuationStreamsWithCompletionHandler:(void (NS_SWIFT_SENDABLE ^)(NSInputStream * _Nullable inputStream, NSOutputStream * _Nullable outputStream, NSError * _Nullable error))completionHandler;
 
 /* Set to YES if this user activity should be eligible to be handed off to another device */
 @property (getter=isEligibleForHandoff) BOOL eligibleForHandoff API_AVAILABLE(macos(10.11), ios(9.0), watchos(3.0), tvos(10.0));
@@ -105,8 +105,8 @@ API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0))
 
 @property (copy, nullable) NSUserActivityPersistentIdentifier persistentIdentifier  API_AVAILABLE( macos(10.15), ios(12.0), watchos(5.0) ) API_UNAVAILABLE( tvos );
 
-+(void) deleteSavedUserActivitiesWithPersistentIdentifiers:(NSArray<NSUserActivityPersistentIdentifier>*) persistentIdentifiers completionHandler:(void(/*NS_SWIFT_SENDABLE*/ ^)(void))handler API_AVAILABLE( macos(10.15), ios(12.0), watchos(5.0) ) API_UNAVAILABLE( tvos );
-+(void) deleteAllSavedUserActivitiesWithCompletionHandler:(void(/*NS_SWIFT_SENDABLE*/ ^)(void))handler API_AVAILABLE( macos(10.15), ios(12.0), watchos(5.0) ) API_UNAVAILABLE( tvos );
++(void) deleteSavedUserActivitiesWithPersistentIdentifiers:(NSArray<NSUserActivityPersistentIdentifier>*) persistentIdentifiers completionHandler:(void(NS_SWIFT_SENDABLE ^)(void))handler API_AVAILABLE( macos(10.15), ios(12.0), watchos(5.0) ) API_UNAVAILABLE( tvos );
++(void) deleteAllSavedUserActivitiesWithCompletionHandler:(void(NS_SWIFT_SENDABLE ^)(void))handler API_AVAILABLE( macos(10.15), ios(12.0), watchos(5.0) ) API_UNAVAILABLE( tvos );
 
 @end
 

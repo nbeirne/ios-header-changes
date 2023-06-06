@@ -9,23 +9,27 @@
 
 // MARK: - Creating a projective transform
 
-/// Returns a new transform from the specified 4x4 matrix.
+/// Returns a new transform from the specified 4 x 4 matrix.
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DMakeWith4x4Matrix(simd_double4x4 matrix)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /// Returns a new transform from the specified affine transform.
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DMakeWithAffine(SPAffineTransform3D transform)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /// Returns a new scale transform.
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DMakeScale(SPSize3D scale)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /// Returns a new rotation transform.
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DMakeRotation(SPRotation3D rotation)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -139,6 +143,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A projective transform from tangents for each side of its frustum.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DMakeFromTangents(double leftTangent,
                                                                 double rightTangent,
                                                                 double topTangent,
@@ -197,7 +202,8 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  When the shear axis is @p z , @p shearFactor0 is the @p x  shear factor and @p shearFactor0 is the @p y shear factor.
 */
 SPATIAL_INLINE
-SPProjectiveTransform3D SPProjectiveTransform3DMakeShear(enum SPAxis shearAxis,
+SPATIAL_OVERLOADABLE
+SPProjectiveTransform3D SPProjectiveTransform3DMakeShear(SPAxis shearAxis,
                                                          double shearFactor0,
                                                          double shearFactor1)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
@@ -211,6 +217,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A Boolean value that indicates whether the transform is affine.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIsAffine(SPProjectiveTransform3D transform)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -221,6 +228,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A Boolean value that indicates whether the projective transform is a valid transform.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIsValid(SPProjectiveTransform3D transform)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -231,6 +239,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A Boolean value that indicates whether the transform only contains a translation.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIsTranslation(SPProjectiveTransform3D transform)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -241,6 +250,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A Boolean value that indicates whether the transform is the identity transform.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIsIdentity(SPProjectiveTransform3D transform)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -251,6 +261,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A Boolean value that indicates whether the transform is a 3D projection.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIs3DProjection(SPProjectiveTransform3D transform)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -261,6 +272,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A Boolean value that indicates whether the transform is affine and uniform over all dimensions.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIsUniform(SPProjectiveTransform3D transform)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -277,8 +289,9 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns @p true if the transform is affine, rectilinear, and the specified axes have equal scales.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIsUniformOverDimensions(SPProjectiveTransform3D transform,
-                                                     enum SPAxis dimensionFlags)
+                                                     SPAxis dimensionFlags)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
@@ -288,6 +301,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A Boolean value that indicates whether the transform is affine and rectilinear.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIsRectilinear(SPProjectiveTransform3D transform)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -298,6 +312,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A Boolean value that indicates whether the transform's underlying matrix has an inverse.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIsInvertible(SPProjectiveTransform3D transform)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -310,11 +325,13 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A new transform that's constructed by inverting an existing projective transform.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DInverted(SPProjectiveTransform3D transform)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /// Returns a projective transformation matrix constructed by concatenating two existing Projective transforms.
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DConcatenation(SPProjectiveTransform3D t1,
                                                              SPProjectiveTransform3D t2)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
@@ -331,6 +348,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  returns @p SPRotation3DInvalid.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPSize3D SPProjectiveTransform3DGetScale(SPProjectiveTransform3D transform)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -344,6 +362,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  returns @p SPRotation3DInvalid.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRotation3D SPProjectiveTransform3DGetRotation(SPProjectiveTransform3D transform)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -354,12 +373,9 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A size structure that represents the transform's translation.
 */
 SPATIAL_INLINE
-SPSize3D SPProjectiveTransform3DGetTranslation(SPProjectiveTransform3D transform)
-__API_DEPRECATED("Use `SPProjectiveTransform3DGetOffset`.",
-                 macos(13.0, 13.0),
-                 ios(16.0, 16.0),
-                 watchos(9.0, 9.0),
-                 tvos(16.0, 16.0));
+SPATIAL_OVERLOADABLE
+SPVector3D SPProjectiveTransform3DGetTranslation(SPProjectiveTransform3D transform)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /*!
  @abstract Returns a projective transform's translation.
@@ -368,8 +384,13 @@ __API_DEPRECATED("Use `SPProjectiveTransform3DGetOffset`.",
  @returns A size structure that represents the transform's translation.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPVector3D SPProjectiveTransform3DGetOffset(SPProjectiveTransform3D transform)
-__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+__API_DEPRECATED("Use `SPProjectiveTransform3DGetTranslation`.",
+                 macos(13.0, 13.0),
+                 ios(16.0, 16.0),
+                 watchos(9.0, 9.0),
+                 tvos(16.0, 16.0));
 
 /*!
  @abstract Sets the translation component on the specified transform.
@@ -378,7 +399,23 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @param offset The translation.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 void SPProjectiveTransform3DSetOffset(SPProjectiveTransform3D *transform, SPVector3D offset)
+__API_DEPRECATED("Use `SPProjectiveTransform3DSetTranslation`.",
+                 macos(13.0, 13.0),
+                 ios(16.0, 16.0),
+                 watchos(9.0, 9.0),
+                 tvos(16.0, 16.0));
+
+/*!
+ @abstract Sets the translation component on the specified transform.
+ 
+ @param transform The transform.
+ @param offset The translation.
+*/
+SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
+void SPProjectiveTransform3DSetTranslation(SPProjectiveTransform3D *transform, SPVector3D offset)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 // MARK: - Transform equality
@@ -425,6 +462,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A transform that's scaled by the specified values.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DScaleBy(SPProjectiveTransform3D transform,
                                                        double x, double y, double z)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
@@ -437,6 +475,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A transform that's scaled by the specified value.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DScaleBySize(SPProjectiveTransform3D transform, SPSize3D scale)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -448,6 +487,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A transform that's uniformly scaled by the specified value.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DScaleUniform(SPProjectiveTransform3D transform, double scale)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -459,6 +499,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A transform that's rotated by the specified rotation.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DRotate(SPProjectiveTransform3D transform,
                                                       SPRotation3D rotation)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
@@ -471,6 +512,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A transform that's rotated by the specified quaternion.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DRotateByQuaternion(SPProjectiveTransform3D transform,
                                                                   simd_quatd quaternion)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
@@ -518,8 +560,9 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  If you pass a flip axis that's not @p x , @p y , or @p z , the function returns @p transform unmodified.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DShear(SPProjectiveTransform3D transform,
-                                                     enum SPAxis shearAxis,
+                                                     SPAxis shearAxis,
                                                      double shearFactor0,
                                                      double shearFactor1)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
@@ -535,8 +578,9 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  If you pass a shear axis that's not @p x , @p y , or @p z , the function returns @p transform unmodified.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DFlip(SPProjectiveTransform3D transform,
-                                                    enum SPAxis flipAxis)
+                                                    SPAxis flipAxis)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 // MARK: Header inline implementations
@@ -544,6 +588,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 // MARK: - Creating a projective transform
 
 SPATIAL_SWIFT_NAME(ProjectiveTransform3D.init(_:))
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DMakeWith4x4Matrix(simd_double4x4 matrix) {
     SPProjectiveTransform3D transform = { .matrix = matrix };
     
@@ -551,6 +596,7 @@ SPProjectiveTransform3D SPProjectiveTransform3DMakeWith4x4Matrix(simd_double4x4 
 }
 
 SPATIAL_SWIFT_NAME(ProjectiveTransform3D.init(_:))
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DMakeWithAffine(SPAffineTransform3D transform) {
     
     simd_double4 col0 = simd_make_double4(transform.matrix.columns[0], 0);
@@ -566,6 +612,7 @@ SPProjectiveTransform3D SPProjectiveTransform3DMakeWithAffine(SPAffineTransform3
 }
 
 SPATIAL_SWIFT_NAME(ProjectiveTransform3D.init(scale:))
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DMakeScale(SPSize3D scale) {
     
     simd_double4x4 matrix = simd_diagonal_matrix((simd_double4){
@@ -581,6 +628,7 @@ SPProjectiveTransform3D SPProjectiveTransform3DMakeScale(SPSize3D scale) {
 }
 
 SPATIAL_SWIFT_NAME(ProjectiveTransform3D.init(rotation:))
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DMakeRotation(SPRotation3D rotation) {
     
     simd_quatd quaternion = SPRotation3DGetQuaternion(rotation);
@@ -648,7 +696,8 @@ SPProjectiveTransform3D SPProjectiveTransform3DMake(SPSize3D scale,
 }
 
 SPATIAL_REFINED_FOR_SWIFT
-SPProjectiveTransform3D SPProjectiveTransform3DMakeShear(enum SPAxis shearAxis,
+SPATIAL_OVERLOADABLE
+SPProjectiveTransform3D SPProjectiveTransform3DMakeShear(SPAxis shearAxis,
                                                          double shearFactor0,
                                                          double shearFactor1) {
     
@@ -661,6 +710,7 @@ SPProjectiveTransform3D SPProjectiveTransform3DMakeShear(enum SPAxis shearAxis,
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DMakeWithRHPerspective(double fovyRadians,
                                                                      double aspectRatio,
                                                                      double nearZ,
@@ -670,6 +720,7 @@ SPProjectiveTransform3D SPProjectiveTransform3DMakeWithRHPerspective(double fovy
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DMakeWithRHPerspective(double fovyRadians,
                                                                      double aspectRatio,
                                                                      double nearZ,
@@ -679,6 +730,7 @@ SPProjectiveTransform3D SPProjectiveTransform3DMakeWithRHPerspective(double fovy
 }
 
 SPATIAL_SWIFT_NAME(ProjectiveTransform3D.init(fovyRadians:aspectRatio:nearZ:farZ:))
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DMakeWithRightHandPerspective(double fovyRadians,
                                                                             double aspectRatio,
                                                                             double nearZ,
@@ -688,6 +740,7 @@ SPProjectiveTransform3D SPProjectiveTransform3DMakeWithRightHandPerspective(doub
 }
 
 SPATIAL_SWIFT_NAME(ProjectiveTransform3D.init(fovyRadians:aspectRatio:nearZ:farZ:reverseZ:))
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DMakeWithRightHandPerspective(double fovyRadians,
                                                                             double aspectRatio,
                                                                             double nearZ,
@@ -724,6 +777,7 @@ SPProjectiveTransform3D SPProjectiveTransform3DMakeWithRightHandPerspective(doub
 }
 
 SPATIAL_SWIFT_NAME(ProjectiveTransform3D.init(leftTangent:rightTangent:topTangent:bottomTangent:nearZ:farZ:reverseZ:))
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DMakeFromTangents(double leftTangent,
                                                                 double rightTangent,
                                                                 double topTangent,
@@ -769,6 +823,7 @@ SPProjectiveTransform3D SPProjectiveTransform3DMakeFromTangents(double leftTange
 // MARK: - Querying transform properties
 
 SPATIAL_SWIFT_NAME(ProjectiveTransform3D.is3DProjection(self:))
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIs3DProjection(SPProjectiveTransform3D transform) {
     
     if (!SPProjectiveTransform3DIsAffine(transform)) {
@@ -781,6 +836,7 @@ bool SPProjectiveTransform3DIs3DProjection(SPProjectiveTransform3D transform) {
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIsValid(SPProjectiveTransform3D transform) {
     return (simd_all(_sp_simd_isfinite(transform.matrix.columns[0])) &&
             simd_all(_sp_simd_isfinite(transform.matrix.columns[1])) &&
@@ -789,6 +845,7 @@ bool SPProjectiveTransform3DIsValid(SPProjectiveTransform3D transform) {
 }
 
 SPATIAL_SWIFT_NAME(getter:ProjectiveTransform3D.isAffine(self:))
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIsAffine(SPProjectiveTransform3D transform) {
     
     return (transform.matrix.columns[0].w == 0 &&
@@ -798,6 +855,7 @@ bool SPProjectiveTransform3DIsAffine(SPProjectiveTransform3D transform) {
 }
 
 SPATIAL_SWIFT_NAME(getter:ProjectiveTransform3D.isIdentity(self:))
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIsIdentity(SPProjectiveTransform3D transform) {
     
     return (simd_equal(transform.matrix.columns[0], (simd_double4){1, 0, 0, 0}) &&
@@ -808,6 +866,7 @@ bool SPProjectiveTransform3DIsIdentity(SPProjectiveTransform3D transform) {
 }
 
 SPATIAL_SWIFT_NAME(getter:ProjectiveTransform3D.isTranslation(self:))
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIsTranslation(SPProjectiveTransform3D transform) {
     
     return (simd_equal(transform.matrix.columns[0], (simd_double4){1, 0, 0, 0}) &&
@@ -817,6 +876,7 @@ bool SPProjectiveTransform3DIsTranslation(SPProjectiveTransform3D transform) {
 }
 
 SPATIAL_SWIFT_NAME(getter:ProjectiveTransform3D.isRectilinear(self:))
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIsRectilinear(SPProjectiveTransform3D transform) {
     
     bool isAffine = SPProjectiveTransform3DIsAffine(transform);
@@ -830,6 +890,7 @@ bool SPProjectiveTransform3DIsRectilinear(SPProjectiveTransform3D transform) {
 }
 
 SPATIAL_SWIFT_NAME(getter:ProjectiveTransform3D.isUniform(self:))
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIsUniform(SPProjectiveTransform3D transform) {
     
     bool isAffine = SPProjectiveTransform3DIsAffine(transform);
@@ -843,8 +904,9 @@ bool SPProjectiveTransform3DIsUniform(SPProjectiveTransform3D transform) {
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIsUniformOverDimensions(SPProjectiveTransform3D transform,
-                                                     enum SPAxis dimensionFlags) {
+                                                     SPAxis dimensionFlags) {
     bool isAffine = SPProjectiveTransform3DIsAffine(transform);
     
     if (isAffine) {
@@ -855,7 +917,8 @@ bool SPProjectiveTransform3DIsUniformOverDimensions(SPProjectiveTransform3D tran
     }
 }
 
-SPATIAL_SWIFT_NAME(getter:AffineTransform3D.isInvertible(self:))
+SPATIAL_SWIFT_NAME(getter:ProjectiveTransform3D.isInvertible(self:))
+SPATIAL_OVERLOADABLE
 bool SPProjectiveTransform3DIsInvertible(SPProjectiveTransform3D transform) {
 
     return simd_determinant(transform.matrix) != 0;
@@ -864,6 +927,7 @@ bool SPProjectiveTransform3DIsInvertible(SPProjectiveTransform3D transform) {
 // MARK: - Deriving new transforms
 
 SPATIAL_SWIFT_NAME(ProjectiveTransform3D.concatenating(self:_:))
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DConcatenation(SPProjectiveTransform3D t1,
                                                              SPProjectiveTransform3D t2) {
     
@@ -911,6 +975,7 @@ SPProjectiveTransform3D SPProjectiveTransform3DConcatenation(SPProjectiveTransfo
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DInverted(SPProjectiveTransform3D transform) {
 
     if (!SPProjectiveTransform3DIsInvertible(transform)) {
@@ -924,8 +989,8 @@ SPProjectiveTransform3D SPProjectiveTransform3DInverted(SPProjectiveTransform3D 
 
 // MARK: Extracting component transforms
 
-//SPATIAL_SWIFT_NAME(getter:ProjectiveTransform3D.scale(self:))
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPSize3D SPProjectiveTransform3DGetScale(SPProjectiveTransform3D transform) {
     
     simd_double4x4 p = transform.matrix;
@@ -946,6 +1011,7 @@ SPSize3D SPProjectiveTransform3DGetScale(SPProjectiveTransform3D transform) {
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPRotation3D SPProjectiveTransform3DGetRotation(SPProjectiveTransform3D transform) {
     
     simd_double4x4 p = transform.matrix;
@@ -965,15 +1031,17 @@ SPRotation3D SPProjectiveTransform3DGetRotation(SPProjectiveTransform3D transfor
     
 }
 
-SPATIAL_SWIFT_NAME(getter:ProjectiveTransform3D.translation(self:))
-SPSize3D SPProjectiveTransform3DGetTranslation(SPProjectiveTransform3D transform) {
+SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
+SPVector3D SPProjectiveTransform3DGetTranslation(SPProjectiveTransform3D transform) {
     
     simd_double3 translation = transform.matrix.columns[3].xyz;
     
-    return (SPSize3D){translation.x, translation.y, translation.z};
+    return (SPVector3D){ .vector = translation };
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPVector3D SPProjectiveTransform3DGetOffset(SPProjectiveTransform3D transform) {
     
     simd_double3 translation = transform.matrix.columns[3].xyz;
@@ -982,7 +1050,15 @@ SPVector3D SPProjectiveTransform3DGetOffset(SPProjectiveTransform3D transform) {
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 void SPProjectiveTransform3DSetOffset(SPProjectiveTransform3D *transform, SPVector3D offset) {
+    
+    SPProjectiveTransform3DSetTranslation(transform, offset);
+}
+
+SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
+void SPProjectiveTransform3DSetTranslation(SPProjectiveTransform3D *transform, SPVector3D offset) {
     
     transform->matrix.columns[3].xyz = offset.vector;
 }
@@ -1005,6 +1081,7 @@ bool SPProjectiveTransform3DAlmostEqualToTransform(SPProjectiveTransform3D t1,
 // MARK: - Applying transform
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DScaleBy(SPProjectiveTransform3D transform,
                                                        double x, double y, double z) {
     
@@ -1015,6 +1092,7 @@ SPProjectiveTransform3D SPProjectiveTransform3DScaleBy(SPProjectiveTransform3D t
 }
 
 SPATIAL_SWIFT_NAME(ProjectiveTransform3D.scaled(self:by:))
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DScaleBySize(SPProjectiveTransform3D transform,
                                                            SPSize3D scale) {
     SPProjectiveTransform3D scaleTransform = SPProjectiveTransform3DMakeScale(scale);
@@ -1023,6 +1101,7 @@ SPProjectiveTransform3D SPProjectiveTransform3DScaleBySize(SPProjectiveTransform
 }
 
 SPATIAL_SWIFT_NAME(ProjectiveTransform3D.uniformlyScaled(self:by:))
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DScaleUniform(SPProjectiveTransform3D transform,
                                                             double scale) {
     SPSize3D scaleSize = (SPSize3D){scale, scale, scale};
@@ -1032,6 +1111,7 @@ SPProjectiveTransform3D SPProjectiveTransform3DScaleUniform(SPProjectiveTransfor
 }
 
 SPATIAL_SWIFT_NAME(ProjectiveTransform3D.rotated(self:by:))
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DRotate(SPProjectiveTransform3D transform,
                                                       SPRotation3D rotation) {
     SPProjectiveTransform3D rotationTransform = SPProjectiveTransform3DMakeRotation(rotation);
@@ -1040,6 +1120,7 @@ SPProjectiveTransform3D SPProjectiveTransform3DRotate(SPProjectiveTransform3D tr
 }
 
 SPATIAL_SWIFT_NAME(ProjectiveTransform3D.rotated(self:by:))
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DRotateByQuaternion(SPProjectiveTransform3D transform,
                                                                   simd_quatd quaternion) {
     SPRotation3D rotation = SPRotation3DMakeWithQuaternion(quaternion);
@@ -1067,8 +1148,9 @@ SPProjectiveTransform3D SPProjectiveTransform3DTranslate(SPProjectiveTransform3D
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DShear(SPProjectiveTransform3D transform,
-                                                     enum SPAxis shearAxis,
+                                                     SPAxis shearAxis,
                                                      double shearFactor0,
                                                      double shearFactor1) {
     
@@ -1079,8 +1161,9 @@ SPProjectiveTransform3D SPProjectiveTransform3DShear(SPProjectiveTransform3D tra
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPProjectiveTransform3D SPProjectiveTransform3DFlip(SPProjectiveTransform3D transform,
-                                                    enum SPAxis flipAxis) {
+                                                    SPAxis flipAxis) {
     if (!SPProjectiveTransform3DIsAffine(transform)) {
         return SPProjectiveTransform3DInvalid;
     }
@@ -1091,5 +1174,27 @@ SPProjectiveTransform3D SPProjectiveTransform3DFlip(SPProjectiveTransform3D tran
     return SPProjectiveTransform3DMakeWithAffine(affine);
 }
 
+// MARK: - make from pose
+
+/*!
+ @abstract Returns a new projective transform structure from the specified pose structure.
+
+ @param pose The source pose.
+ @returns A new projective
+ */
+SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
+SPProjectiveTransform3D SPProjectiveTransform3DMakeWithPose(SPPose3D pose)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+
+SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
+SPProjectiveTransform3D SPProjectiveTransform3DMakeWithPose(SPPose3D pose) {
+
+    return SPProjectiveTransform3DMake((SPSize3D){ 1, 1, 1},
+                                   pose.rotation,
+                                   (SPVector3D){ .vector = pose.position.vector });
+
+}
 
 #endif /* Spatial_SPProjectiveTransform3D_h */

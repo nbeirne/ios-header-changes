@@ -158,16 +158,14 @@ CG_EXTERN CGRect CG_PURE CGRectApplyAffineTransform(CGRect rect, CGAffineTransfo
  *  @return A decomposed set of geometric operations, the product of which is the CGAffineTransform.  */
 CG_EXTERN
  CGAffineTransformComponents CG_PURE CGAffineTransformDecompose( CGAffineTransform transform )
-CF_SWIFT_NAME(CGAffineTransformComponents.decomposed(self:))
-CG_AVAILABLE_STARTING( 13.0, 16.0 );
+CF_REFINED_FOR_SWIFT CG_AVAILABLE_STARTING( 13.0, 16.0 );
 
 /*! @abstract Create CGAffineTransform from scale * shear * rotation * translation CGAffineTransformComponents
  *  @param components        The set of CGAffineTransformComponents to use to create a new CGAffineTransform
  *  @return A new CGAffineTransform built from the provided components  */
 CG_EXTERN
  CGAffineTransform CG_PURE CGAffineTransformMakeWithComponents( CGAffineTransformComponents components )
-CF_SWIFT_NAME(CGAffineTransformComponents.init(_:))
-CG_AVAILABLE_STARTING( 13.0, 16.0 );
+CF_REFINED_FOR_SWIFT CG_AVAILABLE_STARTING( 13.0, 16.0 );
 
 /*** Definitions of inline functions. ***/
 

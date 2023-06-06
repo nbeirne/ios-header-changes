@@ -59,6 +59,11 @@ API_AVAILABLE(ios(16.0), macos(13.0)) API_UNAVAILABLE(watchos, tvos)
 - (void)lookAroundViewControllerWillUpdateScene:(MKLookAroundViewController *)viewController;
 - (void)lookAroundViewControllerDidUpdateScene:(MKLookAroundViewController *)viewController;
 
+- (void)lookAroundViewControllerWillPresentFullScreen:(MKLookAroundViewController *)viewController;
+- (void)lookAroundViewControllerDidPresentFullScreen:(MKLookAroundViewController *)viewController;
+- (void)lookAroundViewControllerWillDismissFullScreen:(MKLookAroundViewController *)viewController;
+- (void)lookAroundViewControllerDidDismissFullScreen:(MKLookAroundViewController *)viewController;
+
 @end
 
 NS_ASSUME_NONNULL_END

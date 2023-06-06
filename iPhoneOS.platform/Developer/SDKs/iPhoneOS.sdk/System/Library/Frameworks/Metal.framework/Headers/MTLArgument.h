@@ -208,7 +208,7 @@ typedef NS_ENUM(NSUInteger, MTLArgumentType) {
     MTLArgumentTypePrimitiveAccelerationStructure API_AVAILABLE(macos(11.0), ios(14.0)) = 25,
     MTLArgumentTypeInstanceAccelerationStructure API_AVAILABLE(macos(11.0), ios(14.0)) = 26,
     MTLArgumentTypeIntersectionFunctionTable API_AVAILABLE(macos(11.0), ios(14.0)) = 27,
-} API_DEPRECATED_WITH_REPLACEMENT("MTLBindingType", macos(10.11, API_TO_BE_DEPRECATED), ios(8.0, API_TO_BE_DEPRECATED));
+} API_DEPRECATED_WITH_REPLACEMENT("MTLBindingType", macos(10.11, 13.0), ios(8.0, 16.0));
 
 /*!
  @enum MTLArgumentAccess
@@ -302,7 +302,7 @@ MTL_EXPORT API_AVAILABLE(macos(10.13), ios(11.0))
  MTLArgument
 */
 MTL_EXPORT
-API_DEPRECATED_WITH_REPLACEMENT("MTLBinding", macos(10.11, API_TO_BE_DEPRECATED), ios(8.0, API_TO_BE_DEPRECATED))
+API_DEPRECATED_WITH_REPLACEMENT("MTLBinding", macos(10.11, 13.0), ios(8.0, 16.0))
 @interface MTLArgument : NSObject
 
 @property (readonly) NSString *name;

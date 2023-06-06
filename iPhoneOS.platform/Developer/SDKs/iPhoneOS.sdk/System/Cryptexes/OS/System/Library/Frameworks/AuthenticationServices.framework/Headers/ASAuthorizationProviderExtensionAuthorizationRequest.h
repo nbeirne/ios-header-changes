@@ -17,6 +17,10 @@ typedef NSString * ASAuthorizationProviderAuthorizationOperation API_AVAILABLE(i
 */
 AS_EXTERN ASAuthorizationProviderAuthorizationOperation const ASAuthorizationProviderAuthorizationOperationConfigurationRemoved API_AVAILABLE(ios(14.0), macos(11.0)) API_UNAVAILABLE(watchos, tvos);
 
+/*! @abstract Operation which is invoked when a request is sent direct to the extension instead of loaded in an ASWebAuthenticationSession.
+ */
+AS_EXTERN ASAuthorizationProviderAuthorizationOperation const ASAuthorizationProviderAuthorizationOperationDirectRequest API_AVAILABLE(ios(16.0), macos(13.0)) API_UNAVAILABLE(watchos, tvos);
+
 @class ASAuthorizationProviderExtensionAuthorizationRequest;
 
 AS_EXTERN API_AVAILABLE(ios(13.0), macCatalyst(14.0), macos(10.15)) API_UNAVAILABLE(watchos, tvos)

@@ -1,3 +1,5 @@
+#import <TargetConditionals.h>
+#if !TARGET_OS_TV
 //
 //  SWRemoveParticipantAlertController.h
 //  SWRemoveParticipantAlertController
@@ -14,7 +16,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-API_AVAILABLE(ios(16.0), tvos(16.0)) API_UNAVAILABLE(watchos, macos)
+API_AVAILABLE(ios(16.0))
 SW_EXTERN @interface SWRemoveParticipantAlertController : UIViewController
 
 + (instancetype)alertControllerWithParticipant:(SWPerson *)participant highlight:(SWCollaborationHighlight *)highlight;
@@ -25,3 +27,5 @@ SW_EXTERN @interface SWRemoveParticipantAlertController : UIViewController
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif // !TARGET_OS_TV

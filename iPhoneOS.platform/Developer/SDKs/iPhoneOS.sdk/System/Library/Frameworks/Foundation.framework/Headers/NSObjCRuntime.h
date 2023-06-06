@@ -260,6 +260,12 @@
 #  define NS_SWIFT_ASYNC_THROWS_ON_FALSE(FALSE_PARAMETER_INDEX)
 #endif
 
+#if __has_attribute(__swift_attr__)
+#  define NS_SWIFT_UNAVAILABLE_FROM_ASYNC(msg) __attribute__((__swift_attr__("@_unavailableFromAsync(message: \"" msg "\")")))
+#else
+#  define NS_SWIFT_UNAVAILABLE_FROM_ASYNC(msg)
+#endif
+
 #define __NS_HEADER_AUDIT_BEGIN_nullability _Pragma("clang assume_nonnull begin")
 #define __NS_HEADER_AUDIT_END_nullability   _Pragma("clang assume_nonnull end")
 

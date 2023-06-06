@@ -10,14 +10,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/****************    User Query    ****************/
-
 API_AVAILABLE(macos(10.13), ios(16.0)) CS_TVOS_UNAVAILABLE
 @interface CSUserQueryContext : CSSearchQueryContext
 
 + (CSUserQueryContext *)userQueryContext;
 + (CSUserQueryContext *)userQueryContextWithCurrentSuggestion:(CSSuggestion * _Nullable)currentSuggestion;
 
+@property (nonatomic, assign) BOOL enableRankedResults;
+
+// maxResultCount is maximum number of search results to retrieve. (defaults to 0)
+// If maxResultCount == 0, Spotlight will retrieve all results related to query. (committed search)
+@property (nonatomic, assign) NSInteger maxResultCount;
+// maxSuggestionCount is maximum number of suggestion results to retrieve. (defaults to 0)
 @property (nonatomic, assign) NSInteger maxSuggestionCount;
 
 @end
@@ -25,7 +29,7 @@ API_AVAILABLE(macos(10.13), ios(16.0)) CS_TVOS_UNAVAILABLE
 API_AVAILABLE(macos(10.13), ios(16.0)) CS_TVOS_UNAVAILABLE
 @interface CSUserQuery : CSSearchQuery
 
-- (instancetype)initWithUserQueryString:(NSString * _Nullable)userQueryString queryContext:(CSUserQueryContext *)queryContext NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithUserQueryString:(NSString * _Nullable)userQueryString userQueryContext:(CSUserQueryContext * _Nullable)userQueryContext NS_DESIGNATED_INITIALIZER;
 
 // The query will update the count before each foundSuggestionsHandler invocation to reflect
 // the number of suggestions found so far; if foundSuggestionsHandler is nil then the count will be zero.
@@ -40,22 +44,4 @@ API_AVAILABLE(macos(10.13), ios(16.0)) CS_TVOS_UNAVAILABLE
 
 @end
 
-/****************    Top Hit Query    ****************/
-
-API_AVAILABLE(macos(10.13), ios(16.0)) CS_TVOS_UNAVAILABLE
-@interface CSTopHitQueryContext : CSUserQueryContext
-
-+ (CSTopHitQueryContext *)topHitQueryContext;
-+ (CSTopHitQueryContext *)topHitQueryContextWithCurrentSuggestion:(CSSuggestion * _Nullable)currentSuggestion;
-
-@property (nonatomic, assign) NSInteger maxItemCount;
-
-@end
-
-API_AVAILABLE(macos(10.13), ios(16.0)) CS_TVOS_UNAVAILABLE
-@interface CSTopHitQuery : CSUserQuery
-
-- (instancetype)initWithUserQueryString:(NSString * _Nullable)userQueryString queryContext:(CSTopHitQueryContext *)queryContext NS_DESIGNATED_INITIALIZER;
-
-@end
 NS_ASSUME_NONNULL_END

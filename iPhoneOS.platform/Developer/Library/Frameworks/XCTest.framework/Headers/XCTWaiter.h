@@ -61,34 +61,197 @@ typedef NS_ENUM(NSInteger, XCTWaiterResult) {
 @property (readonly) NSArray<XCTestExpectation *> *fulfilledExpectations;
 
 /*!
- * @method -waitForExpectations:timeout:
- * Wait on a group of expectations for up to the specified timeout. May return early based on fulfillment
- * of the waited on expectations.
+ * @method -waitForExpectations:
+ *
+ * Waits on a group of expectations indefinitely.
+ *
+ * @param expectations
+ * An array of expectations that must be fulfilled.
+ *
+ * @discussion
+ * The test will continue to run until @a expectations are fulfilled or the
+ * test reaches its execution time allowance.
+ *
+ * Expectations can only appear in the list once. This method may return
+ * early based on fulfillment of the provided expectations.
+ *
+ * Enabling test timeouts is recommended when using this method to prevent a
+ * runaway expectation from hanging the test.
+ *
+ * @returns A value describing the outcome of waiting for @a expectations.
  */
-- (XCTWaiterResult)waitForExpectations:(NSArray<XCTestExpectation *> *)expectations timeout:(NSTimeInterval)seconds;
+- (XCTWaiterResult)waitForExpectations:(NSArray<XCTestExpectation *> *)expectations XCT_SWIFT_UNAVAILABLE_FROM_ASYNC("Use await fulfillment(of:timeout:enforceOrder:) instead");
+
+/*!
+ * @method -waitForExpectations:timeout:
+ *
+ * Waits on a group of expectations for up to the specified timeout.
+ *
+ * @param expectations
+ * An array of expectations that must be fulfilled.
+ *
+ * @param seconds
+ * The number of seconds within which all expectations must be fulfilled.
+ *
+ * @discussion
+ * Expectations can only appear in the list once. This method may return
+ * early based on fulfillment of the provided expectations.
+ *
+ * @returns A value describing the outcome of waiting for @a expectations.
+ */
+- (XCTWaiterResult)waitForExpectations:(NSArray<XCTestExpectation *> *)expectations timeout:(NSTimeInterval)seconds XCT_SWIFT_UNAVAILABLE_FROM_ASYNC("Use await fulfillment(of:timeout:enforceOrder:) instead");
+
+/*!
+ * @method -waitForExpectations:enforceOrder:
+ *
+ * Waits on a group of expectations indefinitely, optionally enforcing their
+ * order of fulfillment.
+ *
+ * @param expectations
+ * An array of expectations that must be fulfilled.
+ *
+ * @param enforceOrderOfFulfillment
+ * If @c YES, the expectations specified by the @a expectations parameter must
+ * be satisfied in the order they appear in the array.
+ *
+ * @discussion
+ * The test will continue to run until @a expectations are fulfilled or the
+ * test reaches its execution time allowance.
+ *
+ * Expectations can only appear in the list once. This method may return
+ * early based on fulfillment of the provided expectations.
+ *
+ * Enabling test timeouts is recommended when using this method to prevent a
+ * runaway expectation from hanging the test.
+ *
+ * @returns A value describing the outcome of waiting for @a expectations.
+ */
+- (XCTWaiterResult)waitForExpectations:(NSArray<XCTestExpectation *> *)expectations enforceOrder:(BOOL)enforceOrderOfFulfillment XCT_SWIFT_UNAVAILABLE_FROM_ASYNC("Use await fulfillment(of:timeout:enforceOrder:) instead");
 
 /*!
  * @method -waitForExpectations:timeout:enforceOrder:
- * Wait on expectations and specify whether they must be fulfilled in the given order. Expectations can
- * only appear in the list once.
+ *
+ * Waits on a group of expectations for up to the specified timeout, optionally
+ * enforcing their order of fulfillment.
+ *
+ * @param expectations
+ * An array of expectations that must be fulfilled.
+ *
+ * @param seconds
+ * The number of seconds within which all expectations must be fulfilled.
+ *
+ * @param enforceOrderOfFulfillment
+ * If @c YES, the expectations specified by the @a expectations parameter must
+ * be satisfied in the order they appear in the array.
+ *
+ * @discussion
+ * Expectations can only appear in the list once. This method may return
+ * early based on fulfillment of the provided expectations.
+ *
+ * @returns A value describing the outcome of waiting for @a expectations.
  */
-- (XCTWaiterResult)waitForExpectations:(NSArray<XCTestExpectation *> *)expectations timeout:(NSTimeInterval)seconds enforceOrder:(BOOL)enforceOrderOfFulfillment;
+- (XCTWaiterResult)waitForExpectations:(NSArray<XCTestExpectation *> *)expectations timeout:(NSTimeInterval)seconds enforceOrder:(BOOL)enforceOrderOfFulfillment XCT_SWIFT_UNAVAILABLE_FROM_ASYNC("Use await fulfillment(of:timeout:enforceOrder:) instead");
+
+/*!
+ * @method +waitForExpectations:
+ *
+ * Creates a waiter that waits on a group of expectations indefinitely.
+ *
+ * @param expectations
+ * An array of expectations that must be fulfilled.
+ *
+ * @discussion
+ * The test will continue to run until @a expectations are fulfilled or the
+ * test reaches its execution time allowance.
+ *
+ * Expectations can only appear in the list once. This method may return
+ * early based on fulfillment of the provided expectations.
+ *
+ * Enabling test timeouts is recommended when using this method to prevent a
+ * runaway expectation from hanging the test.
+ *
+ * The waiter is discarded when the wait completes.
+ *
+ * @returns A value describing the outcome of waiting for @a expectations.
+ */
++ (XCTWaiterResult)waitForExpectations:(NSArray<XCTestExpectation *> *)expectations XCT_WARN_UNUSED XCT_SWIFT_UNAVAILABLE_FROM_ASYNC("Use await fulfillment(of:timeout:enforceOrder:) instead");
 
 /*!
  * @method +waitForExpectations:timeout:
- * Convenience API that creates a waiter object which then waits on a group of expectations for up to
- * the specified timeout. May return early based on fulfillment of the waited on expectations. The waiter
- * is discarded when the wait completes.
+ *
+ * Creates a waiter that waits on a group of expectations for up to the
+ * specified timeout.
+ *
+ * @param expectations
+ * An array of expectations that must be fulfilled.
+ *
+ * @param seconds
+ * The number of seconds within which all expectations must be fulfilled.
+ *
+ * @discussion
+ * Expectations can only appear in the list once. This method may return
+ * early based on fulfillment of the provided expectations.
+ *
+ * The waiter is discarded when the wait completes.
+ *
+ * @returns A value describing the outcome of waiting for @a expectations.
  */
-+ (XCTWaiterResult)waitForExpectations:(NSArray<XCTestExpectation *> *)expectations timeout:(NSTimeInterval)seconds XCT_WARN_UNUSED;
++ (XCTWaiterResult)waitForExpectations:(NSArray<XCTestExpectation *> *)expectations timeout:(NSTimeInterval)seconds XCT_WARN_UNUSED XCT_SWIFT_UNAVAILABLE_FROM_ASYNC("Use await fulfillment(of:timeout:enforceOrder:) instead");
+
+/*!
+ * @method +waitForExpectations:enforceOrder:
+ *
+ * Creates a waiter that waits on a group of expectations indefinitely,
+ * optionally enforcing their order of fulfillment.
+ *
+ * @param expectations
+ * An array of expectations that must be fulfilled.
+ *
+ * @param enforceOrderOfFulfillment
+ * If @c YES, the expectations specified by the @a expectations parameter must
+ * be satisfied in the order they appear in the array.
+ *
+ * @discussion
+ * The test will continue to run until @a expectations are fulfilled or the
+ * test reaches its execution time allowance.
+ *
+ * Expectations can only appear in the list once. This method may return
+ * early based on fulfillment of the provided expectations.
+ *
+ * Enabling test timeouts is recommended when using this method to prevent a
+ * runaway expectation from hanging the test.
+ *
+ * The waiter is discarded when the wait completes.
+ *
+ * @returns A value describing the outcome of waiting for @a expectations.
+ */
++ (XCTWaiterResult)waitForExpectations:(NSArray<XCTestExpectation *> *)expectations enforceOrder:(BOOL)enforceOrderOfFulfillment XCT_WARN_UNUSED XCT_SWIFT_UNAVAILABLE_FROM_ASYNC("Use await fulfillment(of:timeout:enforceOrder:) instead");
 
 /*!
  * @method +waitForExpectations:timeout:enforceOrder:
- * Convenience API that creates a waiter object which then waits on a group of expectations and optionally
- * enforces the order in which they are fulfilled. Expectations can only appear in the list once. The waiter
- * is discarded when the wait completes.
+ *
+ * Creates a waiter that waits on a group of expectations for up to the
+ * specified timeout, optionally enforcing their order of fulfillment.
+ *
+ * @param expectations
+ * An array of expectations that must be fulfilled.
+ *
+ * @param seconds
+ * The number of seconds within which all expectations must be fulfilled.
+ *
+ * @param enforceOrderOfFulfillment
+ * If @c YES, the expectations specified by the @a expectations parameter must
+ * be satisfied in the order they appear in the array.
+ *
+ * @discussion
+ * Expectations can only appear in the list once. This method may return
+ * early based on fulfillment of the provided expectations.
+ *
+ * The waiter is discarded when the wait completes.
+ *
+ * @returns A value describing the outcome of waiting for @a expectations.
  */
-+ (XCTWaiterResult)waitForExpectations:(NSArray<XCTestExpectation *> *)expectations timeout:(NSTimeInterval)seconds enforceOrder:(BOOL)enforceOrderOfFulfillment XCT_WARN_UNUSED;
++ (XCTWaiterResult)waitForExpectations:(NSArray<XCTestExpectation *> *)expectations timeout:(NSTimeInterval)seconds enforceOrder:(BOOL)enforceOrderOfFulfillment XCT_WARN_UNUSED XCT_SWIFT_UNAVAILABLE_FROM_ASYNC("Use await fulfillment(of:timeout:enforceOrder:) instead");
 
 @end
 

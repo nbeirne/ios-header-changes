@@ -11,11 +11,13 @@
 #import <XCTest/XCUIApplication.h>
 #import <XCTest/XCUICoordinate.h>
 #import <XCTest/XCUIDevice.h>
+#import <XCTest/XCUIDeviceButton.h>
 #import <XCTest/XCUIElement.h>
 #import <XCTest/XCUIElementAttributes.h>
 #import <XCTest/XCUIElementQuery.h>
 #import <XCTest/XCUIElementTypeQueryProvider.h>
 #import <XCTest/XCUIElementTypes.h>
+#import <XCTest/XCUILocation.h>
 #import <XCTest/XCUIKeyboardKeys.h>
 #import <XCTest/XCUIProtectedResource.h>
 #import <XCTest/XCUIRemote.h>
@@ -23,3 +25,4 @@
 #import <XCTest/XCUIScreenshot.h>
 #import <XCTest/XCUIScreenshotProviding.h>
 #import <XCTest/XCUISiriService.h>
+#import <XCTest/XCUISystem.h>

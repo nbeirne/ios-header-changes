@@ -136,9 +136,9 @@ MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
 @property (nonnull, readonly) NSArray <id<MTLBinding>> *tileBindings API_AVAILABLE(macos(13.0), ios(16.0));
 @property (nonnull, readonly) NSArray <id<MTLBinding>> *objectBindings API_AVAILABLE(macos(13.0), ios(16.0));
 @property (nonnull, readonly) NSArray <id<MTLBinding>> *meshBindings API_AVAILABLE(macos(13.0), ios(16.0));
-@property (nullable, readonly) NSArray <MTLArgument *> *vertexArguments API_DEPRECATED_WITH_REPLACEMENT("vertexBindings", macos(10.11, API_TO_BE_DEPRECATED), ios(8.0, API_TO_BE_DEPRECATED));
-@property (nullable, readonly) NSArray <MTLArgument *> *fragmentArguments API_DEPRECATED_WITH_REPLACEMENT("fragmentBindings", macos(10.11, API_TO_BE_DEPRECATED), ios(8.0, API_TO_BE_DEPRECATED));
-@property (nullable, readonly) NSArray <MTLArgument *> *tileArguments API_DEPRECATED_WITH_REPLACEMENT("tileBindings", macos(11.0, API_TO_BE_DEPRECATED), macCatalyst(14.0, API_TO_BE_DEPRECATED), ios(11.0, API_TO_BE_DEPRECATED), tvos(14.5, API_TO_BE_DEPRECATED));
+@property (nullable, readonly) NSArray <MTLArgument *> *vertexArguments API_DEPRECATED_WITH_REPLACEMENT("vertexBindings", macos(10.11, 13.0), ios(8.0, 16.0));
+@property (nullable, readonly) NSArray <MTLArgument *> *fragmentArguments API_DEPRECATED_WITH_REPLACEMENT("fragmentBindings", macos(10.11, 13.0), ios(8.0, 16.0));
+@property (nullable, readonly) NSArray <MTLArgument *> *tileArguments API_DEPRECATED_WITH_REPLACEMENT("tileBindings", macos(11.0, 13.0), macCatalyst(14.0, 16.0), ios(11.0, 16.0), tvos(14.5, 16.0));
 @end
 
 MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))

@@ -374,6 +374,10 @@ FOUNDATION_EXPORT NSStringTransform const NSStringTransformStripDiacritics      
 - (instancetype)initWithFormat:(NSString *)format arguments:(va_list)argList NS_FORMAT_FUNCTION(1,0);
 - (instancetype)initWithFormat:(NSString *)format locale:(nullable id)locale, ... NS_FORMAT_FUNCTION(1,3);
 - (instancetype)initWithFormat:(NSString *)format locale:(nullable id)locale arguments:(va_list)argList NS_FORMAT_FUNCTION(1,0);
+- (nullable instancetype)initWithValidatedFormat:(NSString *)format validFormatSpecifiers:(NSString *)validFormatSpecifiers error:(NSError **)error, ... NS_FORMAT_FUNCTION(2, 4) API_AVAILABLE(macos(13.0), ios(16.0), watchos(8.0), tvos(8.0)) NS_SWIFT_UNAVAILABLE("Use string interpolations instead");
+- (nullable instancetype)initWithValidatedFormat:(NSString *)format validFormatSpecifiers:(NSString *)validFormatSpecifiers locale:(nullable id)locale error:(NSError **)error, ... NS_FORMAT_FUNCTION(2, 5) API_AVAILABLE(macos(13.0), ios(16.0), watchos(8.0), tvos(8.0)) NS_SWIFT_UNAVAILABLE("Use string interpolations instead");
+- (nullable instancetype)initWithValidatedFormat:(NSString *)format validFormatSpecifiers:(NSString *)validFormatSpecifiers arguments:(va_list)argList error:(NSError **)error NS_FORMAT_FUNCTION(2, 0) API_AVAILABLE(macos(13.0), ios(16.0), watchos(8.0), tvos(8.0)) NS_SWIFT_UNAVAILABLE("Use string interpolations instead");
+- (nullable instancetype)initWithValidatedFormat:(NSString *)format validFormatSpecifiers:(NSString *)validFormatSpecifiers locale:(nullable id)locale arguments:(va_list)argList error:(NSError **)error NS_FORMAT_FUNCTION(2, 0) API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0), tvos(11.0)) NS_SWIFT_UNAVAILABLE("Use string interpolations instead");
 - (nullable instancetype)initWithData:(NSData *)data encoding:(NSStringEncoding)encoding;
 - (nullable instancetype)initWithBytes:(const void *)bytes length:(NSUInteger)len encoding:(NSStringEncoding)encoding;
 - (nullable instancetype)initWithBytesNoCopy:(void *)bytes length:(NSUInteger)len encoding:(NSStringEncoding)encoding freeWhenDone:(BOOL)freeBuffer;	/* "NoCopy" is a hint */
@@ -385,6 +389,8 @@ FOUNDATION_EXPORT NSStringTransform const NSStringTransformStripDiacritics      
 + (nullable instancetype)stringWithUTF8String:(const char *)nullTerminatedCString NS_FORMAT_ARGUMENT(1);
 + (instancetype)stringWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
 + (instancetype)localizedStringWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
++ (nullable instancetype)stringWithValidatedFormat:(NSString *)format validFormatSpecifiers:(NSString *)validFormatSpecifiers error:(NSError **)error, ... NS_FORMAT_FUNCTION(2,4) API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0), tvos(11.0)) NS_SWIFT_UNAVAILABLE("Use string interpolations instead");
++ (nullable instancetype)localizedStringWithValidatedFormat:(NSString *)format validFormatSpecifiers:(NSString *)validFormatSpecifiers error:(NSError **)error, ... NS_FORMAT_FUNCTION(2, 4) API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0), tvos(11.0)) NS_SWIFT_UNAVAILABLE("Use string interpolations instead");
 
 - (nullable instancetype)initWithCString:(const char *)nullTerminatedCString encoding:(NSStringEncoding)encoding NS_FORMAT_ARGUMENT(1);
 + (nullable instancetype)stringWithCString:(const char *)cString encoding:(NSStringEncoding)enc NS_FORMAT_ARGUMENT(1);

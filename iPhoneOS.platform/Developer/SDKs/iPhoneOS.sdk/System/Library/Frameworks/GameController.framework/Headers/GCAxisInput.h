@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  An object conforming to \c GCAxisInput represents an input that produces
- normalized values along an axis with a fixed origin.
+ normalized values - between [-1, 1] - along an axis with a fixed origin.
+ The origin - a value of 0 - corresponds the neutral state of the input.
  */
 API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0))
 @protocol GCAxisInput <NSObject>

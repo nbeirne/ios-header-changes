@@ -23,6 +23,7 @@ HK_EXTERN HKQuantityTypeIdentifier const HKQuantityTypeIdentifierHeight API_AVAI
 HK_EXTERN HKQuantityTypeIdentifier const HKQuantityTypeIdentifierBodyMass API_AVAILABLE(ios(8.0), watchos(2.0), macCatalyst(13.0), macos(13.0));                            // Mass,                        Discrete
 HK_EXTERN HKQuantityTypeIdentifier const HKQuantityTypeIdentifierLeanBodyMass API_AVAILABLE(ios(8.0), watchos(2.0), macCatalyst(13.0), macos(13.0));                        // Mass,                        Discrete
 HK_EXTERN HKQuantityTypeIdentifier const HKQuantityTypeIdentifierWaistCircumference API_AVAILABLE(ios(11.0), watchos(4.0), macCatalyst(13.0), macos(13.0));                 // Length,                      Discrete
+HK_EXTERN HKQuantityTypeIdentifier const HKQuantityTypeIdentifierAppleSleepingWristTemperature API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0));      // Temperature,                 Discrete
 
 // Fitness
 HK_EXTERN HKQuantityTypeIdentifier const HKQuantityTypeIdentifierStepCount API_AVAILABLE(ios(8.0), watchos(2.0), macCatalyst(13.0), macos(13.0));                           // Scalar(Count),               Cumulative
@@ -134,6 +135,8 @@ HK_EXTERN HKQuantityTypeIdentifier const HKQuantityTypeIdentifierUVExposure API_
 
 HK_EXTERN HKQuantityTypeIdentifier const HKQuantityTypeIdentifierAtrialFibrillationBurden API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0));           // Scalar(Percent, 0.0 - 1.0),  Discrete
 
+HK_EXTERN HKQuantityTypeIdentifier const HKQuantityTypeIdentifierUnderwaterDepth API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0));                    // Length, Discrete
+HK_EXTERN HKQuantityTypeIdentifier const HKQuantityTypeIdentifierWaterTemperature API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0));                   // Temperature, Discrete
 
 /*--------------------------------*/
 /*   HKCategoryType Identifiers   */
@@ -149,6 +152,10 @@ HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierPregnancyTestRe
 HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierProgesteroneTestResult API_AVAILABLE(ios(15.0), watchos(8.0), macCatalyst(15.0), macos(13.0));             // HKCategoryValueProgesteroneTestResult
 HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierMenstrualFlow API_AVAILABLE(ios(9.0), watchos(2.0), macCatalyst(13.0), macos(13.0));                       // HKCategoryValueMenstrualFlow
 HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierIntermenstrualBleeding API_AVAILABLE(ios(9.0), watchos(2.0), macCatalyst(13.0), macos(13.0));              // (Spotting) HKCategoryValue
+HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierPersistentIntermenstrualBleeding API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0));   // HKCategoryValue
+HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierProlongedMenstrualPeriods API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0));          // HKCategoryValue
+HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierIrregularMenstrualCycles API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0));           // HKCategoryValue
+HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierInfrequentMenstrualCycles API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0));          // HKCategoryValue
 HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierSexualActivity API_AVAILABLE(ios(9.0), watchos(2.0), macCatalyst(13.0), macos(13.0));                      // HKCategoryValue
 HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierMindfulSession API_AVAILABLE(ios(10.0), watchos(3.0), macCatalyst(13.0), macos(13.0));                     // HKCategoryValue
 HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierHighHeartRateEvent API_AVAILABLE(ios(12.2), watchos(5.2), macCatalyst(13.0), macos(13.0));                 // HKCategoryValue
@@ -159,7 +166,7 @@ HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierAudioExposureEv
 HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierToothbrushingEvent API_AVAILABLE(ios(13.0), watchos(6.0), macCatalyst(13.0), macos(13.0));                 // HKCategoryValue
 HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierPregnancy API_AVAILABLE(ios(14.3), watchos(7.2), macCatalyst(14.3), macos(13.0));                          // HKCategoryValue
 HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierLactation API_AVAILABLE(ios(14.3), watchos(7.2), macCatalyst(14.3), macos(13.0));                          // HKCategoryValue
-HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierContraceptive API_AVAILABLE(ios(14.3), watchos(7.2), macCatalyst(13.0), macos(13.0));                      // HKCategoryValueContraceptive
+HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierContraceptive API_AVAILABLE(ios(14.3), watchos(7.2), macCatalyst(14.3), macos(13.0));                      // HKCategoryValueContraceptive
 HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierEnvironmentalAudioExposureEvent API_AVAILABLE(ios(14.0), watchos(7.0), macCatalyst(14.0), macos(13.0));    // HKCategoryValueEnvironmentalAudioExposureEvent
 HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierHeadphoneAudioExposureEvent API_AVAILABLE(ios(14.2), watchos(7.1), macCatalyst(14.2), macos(13.0));        // HKCategoryValueHeadphoneAudioExposureEvent
 HK_EXTERN HKCategoryTypeIdentifier const HKCategoryTypeIdentifierHandwashingEvent API_AVAILABLE(ios(14.0), watchos(7.0), macCatalyst(14.0), macos(13.0));                   // HKCategoryValue

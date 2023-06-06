@@ -103,7 +103,7 @@ API_AVAILABLE(macos(10.0), ios(3.0), watchos(2.0), tvos(9.0))
     @discussion
       As with other undo operations, this does not strongly retain target. Care should be taken to avoid introducing retain cycles by other references captured by the block.
  */
-- (void)registerUndoWithTarget:(id)target handler:(void (/*NS_SWIFT_SENDABLE*/ ^)(id target))undoHandler API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0)) NS_REFINED_FOR_SWIFT;
+- (void)registerUndoWithTarget:(id)target handler:(void (NS_SWIFT_SENDABLE ^)(id target))undoHandler API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0)) NS_REFINED_FOR_SWIFT;
 
 - (void)setActionIsDiscardable:(BOOL)discardable API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0));
    // Set the latest undo action to discardable if it may be safely discarded when a document can not be saved for any reason. An example might be an undo action that changes the viewable area of a document. To find out if an undo group contains only discardable actions, look for the NSUndoManagerGroupIsDiscardableKey in the userInfo dictionary of the NSUndoManagerDidCloseUndoGroupNotification.

@@ -24,6 +24,7 @@
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @class UIFindInteraction, UIFont, UIColor, UIMenu, UIMenuElement, UITextView, NSTextContainer, NSTextLayoutManager, NSLayoutManager, NSTextStorage, NSTextAttachment;
+@protocol UIEditMenuInteractionAnimating;
 
 NS_SWIFT_UI_ACTOR
 @protocol UITextViewDelegate <NSObject, UIScrollViewDelegate>
@@ -57,6 +58,22 @@ NS_SWIFT_UI_ACTOR
  * @return Return a UIMenu describing the desired menu hierarchy. Return @c nil to present the default system menu.
  */
 - (nullable UIMenu *)textView:(UITextView *)textView editMenuForTextInRange:(NSRange)range suggestedActions:(NSArray<UIMenuElement *> *)suggestedActions API_AVAILABLE(ios(16.0));
+
+/**
+ * @abstract Called when the text view is about to present the edit menu.
+ *
+ * @param textView      The text view displaying the menu.
+ * @param animator      Appearance animator. Add animations to this object to run them alongside the appearance transition.
+ */
+- (void)textView:(UITextView *)textView willPresentEditMenuWithAnimator:(id<UIEditMenuInteractionAnimating>)animator API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
+
+/**
+ * @abstract Called when the text view is about to dismiss the edit menu.
+ *
+ * @param textView      The text view displaying the menu.
+ * @param animator      Dismissal animator. Add animations to this object to run them alongside the dismissal transition.
+ */
+- (void)textView:(UITextView *)textView willDismissEditMenuWithAnimator:(id<UIEditMenuInteractionAnimating>)animator API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
 
 @end
 
@@ -107,7 +124,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) NS_SWIFT_UI_ACTOR
 // This property accesses the TextKit 2 NSTextLayoutManager. You should generally prefer to use it over the TextKit 1 .layoutManager property if it exists. This property will return nil if TextKit 1 is in use.
 @property(nonatomic, nullable, readonly) NSTextLayoutManager *textLayoutManager API_AVAILABLE(ios(16.0), tvos(16.0));
 
-// To ensure compatibilty with older code, accessing the .layoutManager of a UITextView - or its .textContainer's .layoutManager - will cause a UITextView that's using TextKit 2 to 'fall back' to TextKit 1, and return a newly created NSLayoutManager. After this happens, .textLayoutManager will return nil - and _any TextKit 2 objects you may have cached will cease functioning_. Be careful about this if you are intending to be using TextKit 2!
+// To ensure compatibility with older code, accessing the .layoutManager of a UITextView - or its .textContainer's .layoutManager - will cause a UITextView that's using TextKit 2 to 'fall back' to TextKit 1, and return a newly created NSLayoutManager. After this happens, .textLayoutManager will return nil - and _any TextKit 2 objects you may have cached will cease functioning_. Be careful about this if you are intending to be using TextKit 2!
 @property(nonatomic, readonly) NSLayoutManager *layoutManager API_AVAILABLE(ios(7.0));
 
 // The textual contents of the text view.

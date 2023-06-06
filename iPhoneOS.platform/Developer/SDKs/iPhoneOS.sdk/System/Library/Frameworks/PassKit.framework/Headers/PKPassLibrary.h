@@ -1,7 +1,7 @@
 #if !__has_include(<PassKitCore/PKPassLibrary.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKPassLibrary.h
-//  PassKit
+//    PassKit
 //
 //  Copyright (c) 2011 Apple, Inc. All rights reserved.
 //
@@ -130,5 +130,6 @@ extern PKPassLibraryNotificationKey const PKPassLibraryRecoveredPassesUserInfoKe
 NS_ASSUME_NONNULL_END
 
 #else
+#import <TargetConditionals.h>
 #import <PassKitCore/PKPassLibrary.h>
 #endif

@@ -17,6 +17,7 @@
 #include <Spatial/SPRect3D.h>
 #include <Spatial/SPRay3D.h>
 #include <Spatial/SPSize3D.h>
+#include <Spatial/SPPose3D.h>
 
 extern const int SpatialVersionNumber;
 extern const int SpatialVersionString;

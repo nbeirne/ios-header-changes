@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 	
 	Note that arrays of AVMetadataItems vended by AVAsset and other classes are "lazy", similar to array-based keys that support key-value observing, meaning that you can obtain objects from those arrays without incurring overhead for items you don't ultimately inspect.
  
-	AVMetadataItem conforms to NSMutableCopying, but for some "lazy" instances of AVMetadataItem, creating a mutable copy can cause properties to load synchrounsly.  This can cause the calling thread to block while synchronous I/O is performed.  To avoid the possiblity of blocking, use the methods of the AVAsynchronousKeyValueLoading protocol to asynchronously load the `value` and `extraAttributes` properties prior to making a mutable copy.
+	AVMetadataItem conforms to NSMutableCopying, but for some "lazy" instances of AVMetadataItem, creating a mutable copy can cause properties to load synchronously.  This can cause the calling thread to block while synchronous I/O is performed.  To avoid the possiblity of blocking, which should be avoided on the main thread or when running on one of Swift's concurrency threads, ensure that the `value` and `extraAttributes` properties are loaded prior to making a mutable copy.  This can be done using the methods of AVAsynchronousKeyValueLoading, either to synchronously check whether loading has already occurred or to asynchronously load the property values.
 
 	You can filter arrays of AVMetadataItems by locale or by key and keySpace via the category AVMetadataItemArrayFiltering defined below.
 */

@@ -1,7 +1,7 @@
 #if !__has_include(<PassKitCore/PKAddShareablePassConfiguration.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKAddShareablePassConfiguration.h
-//  PassKit
+//    PassKit
 //
 //  Copyright © 2020 Apple, Inc. All rights reserved.
 //
@@ -136,5 +136,6 @@ API_UNAVAILABLE(watchos, tvos);
 NS_ASSUME_NONNULL_END
 
 #else
+#import <TargetConditionals.h>
 #import <PassKitCore/PKAddShareablePassConfiguration.h>
 #endif

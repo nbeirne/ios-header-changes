@@ -43,6 +43,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A quaternion with an axis and angle derived from the source rotation.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 simd_quatd SPRotation3DGetQuaternion(SPRotation3D rotation)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -53,17 +54,20 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A new rotation stucture.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRotation3D SPRotation3DMakeWithQuaternion(simd_quatd quaternion)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /// Returns @p true if both rotations are equal.
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPRotation3DEqualToRotation(SPRotation3D rotation1, SPRotation3D rotation2)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 // MARK: - Header inline implementations
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPRotation3D SPRotation3DMakeWithQuaternion(simd_quatd quaternion) {
   
     return (SPRotation3D) { .quaternion = quaternion };
@@ -92,11 +96,13 @@ SPRotation3D SPRotation3DMake(SPAngle angle, SPRotationAxis3D axis) {
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 simd_quatd SPRotation3DGetQuaternion(SPRotation3D rotation) {
     return rotation.quaternion;
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 bool SPRotation3DEqualToRotation(SPRotation3D rotation1, SPRotation3D rotation2) {
     
     return simd_equal(rotation1.quaternion.vector, rotation2.quaternion.vector) ||
@@ -107,9 +113,9 @@ bool SPRotation3DEqualToRotation(SPRotation3D rotation1, SPRotation3D rotation2)
 // MARK: - Look At
 
 /*!
- @abstract Returns a rotation that's the look at direction from the eye position to the target.
+ @abstract Returns a rotation that's the look at direction from the position position to the target.
  
- @param eye The eye position.
+ @param position The eye position.
  @param target The point that the rotation looks at.
  @param up The up direction.
  @returns A new rotation stucture.
@@ -117,25 +123,21 @@ bool SPRotation3DEqualToRotation(SPRotation3D rotation1, SPRotation3D rotation2)
 */
 SPATIAL_INLINE
 SPATIAL_OVERLOADABLE
-SPRotation3D SPRotation3DMakeLookAt(SPPoint3D eye, SPPoint3D target, SPVector3D up)
+SPRotation3D SPRotation3DMakeLookAt(SPPoint3D position, SPPoint3D target, SPVector3D up)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 SPATIAL_REFINED_FOR_SWIFT
 SPATIAL_OVERLOADABLE
-SPRotation3D SPRotation3DMakeLookAt(SPPoint3D eye, SPPoint3D target, SPVector3D up) {
+SPRotation3D SPRotation3DMakeLookAt(SPPoint3D position, SPPoint3D target, SPVector3D up) {
     
-    simd_double4 axisZ = simd_make_double4(simd_normalize(target.vector - eye.vector), 0);
-    simd_double4 axisX = simd_make_double4(simd_normalize(simd_cross(axisZ.xyz, simd_normalize(up.vector))), 0);
-    simd_double4 axisY = simd_make_double4(simd_cross(axisX.xyz, axisZ.xyz), 0);
+    simd_double3 axisZ = simd_normalize(target.vector - position.vector);
+    simd_double3 axisX = simd_normalize(simd_cross(axisZ, simd_normalize(up.vector)));
+    simd_double3 axisY = simd_normalize(simd_cross(axisX, axisZ));
     
-    axisX.w = -simd_dot(axisX.xyz, eye.vector);
-    axisY.w = -simd_dot(axisY.xyz, eye.vector);
-    axisZ.w = -simd_dot(axisZ.xyz, eye.vector);
+    simd_double3x3 m = simd_matrix(-axisX, axisY, axisZ);
+    simd_quatd q = simd_normalize(simd_quaternion(m));
     
-    simd_double4x4 m = simd_matrix_from_rows(axisX, axisY, -axisZ,
-                                             (simd_double4){ 0, 0, 0, 1});
-    
-    return  SPRotation3DMakeWithQuaternion(simd_quaternion(m));
+    return SPRotation3DMakeWithQuaternion(q);
 }
 
 /*!
@@ -155,9 +157,9 @@ SPATIAL_REFINED_FOR_SWIFT
 SPATIAL_OVERLOADABLE
 SPRotation3D SPRotation3DMakeLookAt(SPPoint3D target, SPVector3D up) {
  
-    SPPoint3D eye = (SPPoint3D){ .x = 0, .y = 0, .z = 0 };
+    SPPoint3D position = (SPPoint3D){ .x = 0, .y = 0, .z = 0 };
     
-    return SPRotation3DMakeLookAt(eye, target, up);
+    return SPRotation3DMakeLookAt(position, target, up);
 }
 
 /*!
@@ -177,11 +179,11 @@ SPATIAL_SWIFT_NAME(Rotation3D.init(forward:up:))
 SPATIAL_OVERLOADABLE
 SPRotation3D SPRotation3DMakeLookAt(SPVector3D forward, SPVector3D up) {
  
-    SPPoint3D eye = (SPPoint3D){ .x = 0, .y = 0, .z = 0 };
+    SPPoint3D position = (SPPoint3D){ .x = 0, .y = 0, .z = 0 };
     
     SPPoint3D target = (SPPoint3D) { .vector = forward.vector };
     
-    return SPRotation3DMakeLookAt(eye, target, up);
+    return SPRotation3DMakeLookAt(position, target, up);
 }
 
 // MARK: EULER headers
@@ -189,7 +191,7 @@ SPRotation3D SPRotation3DMakeLookAt(SPVector3D forward, SPVector3D up) {
 /*!
  @abstract Constants that specify the Euler angle order.
 */
-enum SPEulerAngleOrder: uint32_t {
+typedef enum: uint32_t {
     /*!
      @abstract Pitch-Yaw-Roll
      
@@ -205,7 +207,7 @@ enum SPEulerAngleOrder: uint32_t {
      Spatial applies these rotations in the reverse order of the components: first roll, then yaw, then pitch.
      */
     SPEulerPitchYawRoll SPATIAL_REFINED_FOR_SWIFT __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0)) = 0x0001,
-}
+} SPEulerAngleOrder
 SPATIAL_REFINED_FOR_SWIFT
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -214,7 +216,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 */
 typedef struct {
     simd_double3 angles;
-    enum SPEulerAngleOrder order;
+    SPEulerAngleOrder order;
 } SPEulerAngles
 SPATIAL_SWIFT_NAME(EulerAngles)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
@@ -226,6 +228,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A rotation structure.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRotation3D SPRotation3DMakeWithEulerAngles(SPEulerAngles eulerAngles)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -237,14 +240,16 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A rotation structure.
 */
 SPATIAL_INLINE
-SPEulerAngles SPRotation3DGetEulerAngles(SPRotation3D rotation, enum SPEulerAngleOrder order)
+SPATIAL_OVERLOADABLE
+SPEulerAngles SPRotation3DGetEulerAngles(SPRotation3D rotation, SPEulerAngleOrder order)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 
 SPATIAL_SWIFT_NAME(Rotation3D.init(eulerAngles:))
+SPATIAL_OVERLOADABLE
 SPRotation3D SPRotation3DMakeWithEulerAngles(SPEulerAngles eulerAngles) {
     
-    enum SPEulerAngleOrder order = eulerAngles.order;
+    SPEulerAngleOrder order = eulerAngles.order;
     
     if (order != SPEulerPitchYawRoll) {
         return SPRotation3DInvalid;
@@ -276,7 +281,8 @@ SPRotation3D SPRotation3DMakeWithEulerAngles(SPEulerAngles eulerAngles) {
 }
 
 SPATIAL_SWIFT_NAME(Rotation3D.eulerAngles(self:order:))
-SPEulerAngles SPRotation3DGetEulerAngles(SPRotation3D rotation, enum SPEulerAngleOrder order) {
+SPATIAL_OVERLOADABLE
+SPEulerAngles SPRotation3DGetEulerAngles(SPRotation3D rotation, SPEulerAngleOrder order) {
     
     if (order != SPEulerPitchYawRoll) {
         return (SPEulerAngles){ { NAN, NAN, NAN }, order};
@@ -324,15 +330,40 @@ SPEulerAngles SPRotation3DGetEulerAngles(SPRotation3D rotation, enum SPEulerAngl
  @returns An angle structure.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPAngle SPRotation3DGetAngle(SPRotation3D rotation)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
-SPATIAL_SWIFT_NAME(getter:Rotation3D.angle(self:))
+SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPAngle SPRotation3DGetAngle(SPRotation3D rotation) {
     
     double radians = simd_angle(rotation.quaternion);
     
     return SPAngleMakeWithRadians(radians);
+}
+
+/*!
+ @abstract Sets the angle on the specified rotation structure.
+ 
+ @param rotation A pointer to the rotation structure.
+ @param angle The angle structure.
+ */
+
+SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
+void SPRotation3DSetAngle(SPRotation3D *rotation, SPAngle angle)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+
+SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
+void SPRotation3DSetAngle(SPRotation3D *rotation, SPAngle angle) {
+    
+    simd_double3 axis = simd_axis(rotation->quaternion);
+    
+    simd_quatd quaternion = simd_quaternion(angle.radians, axis);
+    
+    rotation->quaternion = quaternion;
 }
 
 /*!
@@ -342,15 +373,41 @@ SPAngle SPRotation3DGetAngle(SPRotation3D rotation) {
  @returns An angle structure.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRotationAxis3D SPRotation3DGetAxis(SPRotation3D rotation)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
-SPATIAL_SWIFT_NAME(getter:Rotation3D.axis(self:))
+SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPRotationAxis3D SPRotation3DGetAxis(SPRotation3D rotation) {
     
     simd_double3 axis = simd_axis(rotation.quaternion);
     
     return SPRotationAxis3DMakeWithVector(axis);
+}
+
+
+/*!
+ @abstract Sets the axis on the specified rotation structure.
+ 
+ @param rotation A pointer to the rotation structure.
+ @param axis The axis structure.
+ */
+
+SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
+void SPRotation3DSetAxis(SPRotation3D *rotation, SPRotationAxis3D axis)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+
+SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
+void SPRotation3DSetAxis(SPRotation3D *rotation, SPRotationAxis3D axis) {
+    
+    double angle = simd_angle(rotation->quaternion);
+    
+    simd_quatd quaternion = simd_quaternion(angle, axis.vector);
+    
+    rotation->quaternion = quaternion;
 }
 
 /*!
@@ -360,33 +417,18 @@ SPRotationAxis3D SPRotation3DGetAxis(SPRotation3D rotation) {
  @returns A Boolean value that indicates whether the rotation is zero.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPRotation3DIsZero(SPRotation3D rotation)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 SPATIAL_SWIFT_NAME(getter:Rotation3D.isZero(self:))
+SPATIAL_OVERLOADABLE
 bool SPRotation3DIsZero(SPRotation3D rotation) {
 
     SPAngle angle = SPRotation3DGetAngle(rotation);
     
     return angle.radians == 0;
 }
-
-/*!
- @abstract Returns a Boolean value that indicates whether a rotation structure represents a valid rotation.
- 
- @param rotation The source rotation.
- @returns A Boolean value that indicates whether a rotation structure represents a valid rotation.
-*/
-SPATIAL_INLINE
-bool SPRotation3DIsValid(SPRotation3D rotation)
-__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
-
-SPATIAL_REFINED_FOR_SWIFT
-bool SPRotation3DIsValid(SPRotation3D rotation) {
-
-    return simd_all(_sp_simd_isfinite(rotation.quaternion.vector));
-}
-
 
 #endif /* Spatial_SPRotation3D_h */
 

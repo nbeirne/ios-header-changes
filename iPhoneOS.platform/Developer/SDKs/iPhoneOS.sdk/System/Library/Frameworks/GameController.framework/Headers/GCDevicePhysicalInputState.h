@@ -20,7 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  An object conforming to \c GCDevicePhysicalInputState contains the state of
- a device's physical inputs.
+ a device's physical inputs.  This may be either the "live" physical input
+ state if the same object also conforms to \c GCDevicePhysicalInput, or a
+ snapshot of the physical input state.
  */
 API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0))
 @protocol GCDevicePhysicalInputState <NSObject>

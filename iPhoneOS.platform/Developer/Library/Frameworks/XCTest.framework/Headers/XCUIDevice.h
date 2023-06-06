@@ -10,33 +10,30 @@
 #import <XCTest/XCTestDefines.h>
 #import <XCTest/XCUISiriService.h>
 #import <XCTest/XCUIElement.h>
+#import <XCTest/XCUIDeviceButton.h>
+#import <XCTest/XCUILocation.h>
 
 @class XCUISiriService;
+@class XCUISystem;
 
 #if TARGET_OS_IPHONE && !TARGET_OS_MACCATALYST
-
 #import <UIKit/UIKit.h>
+#endif
 
 NS_ASSUME_NONNULL_BEGIN
 
 /*!
- * @enum XCUIDeviceButton
+ * @enum XCUIDeviceAppearance
  *
- * Represents a physical button on a device.
+ * Represents the light or dark UI style of a device.
  *
- * @note Some buttons are not available in the Simulator, and should not be used in your tests.
- * You can use a block like this:
- *
- *     #if !TARGET_OS_SIMULATOR
- *     // test code that depends on buttons not available in the Simulator
- *     #endif
- *
- * in your test code to ensure it does not call unavailable APIs.
+ * @note To maintain alignment with UIUserInterfaceStyle, we use `XCUIDeviceAppearanceUnspecified` to describe
+ * UI styles that are unset.
  */
-typedef NS_ENUM(NSInteger, XCUIDeviceButton) {
-    XCUIDeviceButtonHome = 1,
-    XCUIDeviceButtonVolumeUp XCTEST_SIMULATOR_UNAVAILABLE("This API is not available in the Simulator, see the XCUIDeviceButton documentation for details.") = 2,
-    XCUIDeviceButtonVolumeDown XCTEST_SIMULATOR_UNAVAILABLE("This API is not available in the Simulator, see the XCUIDeviceButton documentation for details.") = 3
+typedef NS_ENUM(NSInteger, XCUIDeviceAppearance) {
+    XCUIDeviceAppearanceUnspecified = 0,
+    XCUIDeviceAppearanceLight = 1,
+    XCUIDeviceAppearanceDark = 2,
 };
 
 /*! Represents a device, providing an interface for simulating events involving physical buttons and device state. */
@@ -50,6 +47,10 @@ typedef NS_ENUM(NSInteger, XCUIDeviceButton) {
     XCT_DEPRECATED_WITH_REPLACEMENT("XCUIDevice.sharedDevice")
     XCT_DEPRECATED_WITH_SWIFT_REPLACEMENT("XCUIDevice.shared");
 
+#if TARGET_OS_IPHONE && !TARGET_OS_MACCATALYST
+- (BOOL)hasHardwareButton:(XCUIDeviceButton)button API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0), watchos(9.0));
+#endif
+
 #if TARGET_OS_IOS
 /*! The orientation of the device. */
 @property (nonatomic) UIDeviceOrientation orientation;
@@ -61,8 +62,15 @@ typedef NS_ENUM(NSInteger, XCUIDeviceButton) {
 @property (readonly) BOOL supportsPointerInteraction;
 #endif
 
+/*!
+ * The location currently being simulated by the device, if any.
+ */
+@property (nonatomic, strong, nullable) XCUILocation *location API_AVAILABLE(macos(13.3), ios(16.4), tvos(16.4), watchos(9.4));
+
+#if TARGET_OS_IPHONE && !TARGET_OS_MACCATALYST
 /*! Simulates the user pressing a physical button. */
 - (void)pressButton:(XCUIDeviceButton)button;
+#endif
 
 #if TARGET_OS_WATCH
 /*!
@@ -91,10 +99,18 @@ typedef NS_ENUM(NSInteger, XCUIDeviceButton) {
 - (void)rotateDigitalCrownByDelta:(CGFloat)rotationalDelta withVelocity:(XCUIGestureVelocity)velocity;
 #endif // TARGET_OS_WATCHOS
 
+/*!
+ * Get or set the UI style of the device. Uses the `XCUIDeviceAppearance` enum to describe the UI style.
+ */
+@property (nonatomic) XCUIDeviceAppearance appearance API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos);
+
+/*!
+ * Access system features of the device, such as its running applications, or the ability to open files on it.
+ */
+@property (nonatomic, readonly) XCUISystem *system;
+
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif
 
 #endif

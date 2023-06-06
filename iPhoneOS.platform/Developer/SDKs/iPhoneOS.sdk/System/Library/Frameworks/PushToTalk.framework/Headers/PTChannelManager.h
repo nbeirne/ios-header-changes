@@ -21,6 +21,15 @@ typedef NS_ENUM(NSInteger, PTServiceStatus) {
     PTServiceStatusUnavailable,
 } API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, macCatalyst, tvos, watchos);
 
+typedef NS_ENUM(NSInteger, PTTransmissionMode) {
+    /// Users can transmit and receive simultaneously.
+    PTTransmissionModeFullDuplex,
+    /// Users can transmit and receive but not simultaneously. This is the default value.
+    PTTransmissionModeHalfDuplex,
+    /// User is able to receive only, transmit is not permitted.
+    PTTransmissionModeListenOnly,
+} API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, macCatalyst, tvos, watchos);
+
 NS_ASSUME_NONNULL_BEGIN
 
 NS_SWIFT_SENDABLE
@@ -58,6 +67,9 @@ PT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, macCatalyst, tvos, wat
 
 /// The default value for service status is PTServiceStatusReady. If your underlying network connection is experiencing issues, set the appropriate service status. The service status will be reflected in the system user interface.
 - (void)setServiceStatus:(PTServiceStatus)status forChannelUUID:(NSUUID *)channelUUID completionHandler:(void (^_Nullable)(NSError * _Nullable))completionHandler NS_SWIFT_NAME(setServiceStatus(_:channelUUID:completionHandler:));
+
+/// The default value for transmission mode is PTTransmissionModeHalfDuplex. If your application support one of the other transmission modes set it using this function. The system user interface will be updated to reflect the transmission mode.
+- (void)setTransmissionMode:(PTTransmissionMode)transmissionMode forChannelUUID:(NSUUID *)channelUUID completionHandler:(void (^_Nullable)(NSError * _Nullable))completionHandler NS_SWIFT_NAME(setTransmissionMode(_:channelUUID:completionHandler:));
 
 @end
 

@@ -2,6 +2,17 @@
 	Copyright (c) 1994-2019, Apple Inc. All rights reserved.
 */
 
+/*
+ An NSAttributedString object manages a string of characters and associated sets of attributes (for example, font, color, kerning) that apply to individual characters or ranges of characters in the string.
+ 
+ While NSAttributedString and its mutable counterpart NSMutableAttributedString are declared in Foundation, higher level UI frameworks (UIKit, AppKit) extend their APIs with functionality and types available in those frameworks.
+ 
+ NSAttributedString and NSMutableAttributedString themselves are abstract, with concrete implementations returned by the various initialization APIs. The APIs and these concrete implementations are optimized for dealing with the contents in terms of ranges of runs of same attributes. If traversing thru an NSAttributedString, it's best to pay attention to the effectiveRange or longestEffectiveRange return values to process the contents in chunks and advance by runs, rather than character at a time.
+
+ NSAttributedString and NSMutableAttributedString are designed to be easily subclassed. To subclass, provide implementations of the "primitive" methods, which are listed in the core class definitions below. For NSAttributedString, these are string and attributesAtIndex:effectiveRange:. For NSMutableAttributedString, additionally override replaceCharactersInRange:withString: and setAttributes:range:. You can also override any other methods, if needed, for performance. For instance if you have a mutableString backing store for the characters, overriding NSMutableAttributedString's mutableString can be useful.
+ 
+ Unless you are providing your own custom storage, using an instance of NSMutableAttributeString as your storage can be a practical way to subclass NSMutableAttributeString. You can have the above methods call directly into that instance, in addition to doing whatever customizations you need for your subclass.
+ */
 
 #import <Foundation/NSString.h>
 #import <Foundation/NSDictionary.h>
@@ -13,6 +24,7 @@ typedef NSString * NSAttributedStringKey NS_TYPED_EXTENSIBLE_ENUM;
 API_AVAILABLE(macos(10.0), ios(3.2), watchos(2.0), tvos(9.0))
 @interface NSAttributedString : NSObject <NSCopying, NSMutableCopying, NSSecureCoding>
 
+// Override these two APIs when subclassing NSAttributedString
 @property (readonly, copy) NSString *string;
 - (NSDictionary<NSAttributedStringKey, id> *)attributesAtIndex:(NSUInteger)location effectiveRange:(nullable NSRangePointer)range;
 
@@ -46,6 +58,7 @@ typedef NS_OPTIONS(NSUInteger, NSAttributedStringEnumerationOptions) {
 API_AVAILABLE(macos(10.0), ios(3.2), watchos(2.0), tvos(9.0))
 @interface NSMutableAttributedString : NSAttributedString
 
+// Override these two APIs (in addition to the two for NSAttributedString) when subclassing NSMutableAttributedString
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)str;
 - (void)setAttributes:(nullable NSDictionary<NSAttributedStringKey, id> *)attrs range:(NSRange)range;
 

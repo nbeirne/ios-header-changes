@@ -32,7 +32,7 @@ typedef NS_ENUM(NSInteger, SWAttributionViewDisplayContext) {
     SWAttributionViewDisplayContextSummary = 0,
     /// Indicates that the attributed content shown along with this view is being actively consumed by the user
     SWAttributionViewDisplayContextDetail,
-} NS_SWIFT_NAME(SWAttributionView.DisplayContext);
+} NS_SWIFT_NAME(SWAttributionView.DisplayContext) API_AVAILABLE(ios(16.0), macos(13.0), tvos(16.0));
 
 /*!
     @abstract The horizontal alignment of SWAttributionView's contents
@@ -46,7 +46,7 @@ typedef NS_ENUM(NSInteger, SWAttributionViewHorizontalAlignment) {
     SWAttributionViewHorizontalAlignmentCenter,
     /// Horizontally align with the trailing edge of the view (depends on the user interface layout direction)
     SWAttributionViewHorizontalAlignmentTrailing
-} NS_SWIFT_NAME(SWAttributionView.HorizontalAlignment);
+} NS_SWIFT_NAME(SWAttributionView.HorizontalAlignment) API_AVAILABLE(ios(16.0), macos(13.0), tvos(16.0));
 
 /*!
     @abstract The background styling of SWAttributionView's contents
@@ -58,7 +58,7 @@ typedef NS_ENUM(NSInteger, SWAttributionViewBackgroundStyle) {
     SWAttributionViewBackgroundStyleColor,
     /// A material background blur for the view's contents, best when placed over multicolored backgrounds
     SWAttributionViewBackgroundStyleMaterial
-} NS_SWIFT_NAME(SWAttributionView.BackgroundStyle);
+} NS_SWIFT_NAME(SWAttributionView.BackgroundStyle) API_AVAILABLE(ios(16.0), macos(13.0), tvos(16.0));
 
 /*!
      @class SWAttributionView
@@ -67,8 +67,10 @@ typedef NS_ENUM(NSInteger, SWAttributionViewBackgroundStyle) {
  */
 
 #if TARGET_OS_OSX
+API_AVAILABLE(macos(13.0))
 SW_EXTERN @interface SWAttributionView : NSView
 #else
+API_AVAILABLE(ios(16.0), tvos(16.0))
 SW_EXTERN @interface SWAttributionView : UIView
 #endif
 

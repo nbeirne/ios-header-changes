@@ -1,3 +1,5 @@
+#import <TargetConditionals.h>
+#if !TARGET_OS_TV
 //
 //  SWCollaborationView.h
 //  SocialLayer
@@ -17,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class SWCollaborationView;
 
+API_AVAILABLE(ios(16.0), macos(13.0))
 @protocol SWCollaborationViewDelegate <NSObject>
 
 @optional
@@ -28,11 +31,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 #if TARGET_OS_OSX
+API_AVAILABLE(macos(13.0))
 @interface SWCollaborationView : NSView
 @property (nullable, weak) id <NSCloudSharingServiceDelegate> cloudSharingDelegate;
 
 - (void)setContentView:(NSView *)detailViewListContentView;
 #else
+API_AVAILABLE(ios(16.0))
 @interface SWCollaborationView : UIView
 
 #if !TARGET_OS_TV
@@ -52,6 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *headerSubtitle;
 #if TARGET_OS_OSX
 @property (nonatomic, strong) NSImage *headerImage;
+@property (readonly) NSMenuItem *menuFormRepresentation API_AVAILABLE(macos(13.1));
 #else
 @property (nonatomic, strong) UIImage *headerImage;
 #endif
@@ -88,3 +94,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif // !TARGET_OS_TV

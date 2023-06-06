@@ -27,7 +27,7 @@ MP_API(ios(16.0), tvos(16.0))
 
 MP_INIT_UNAVAILABLE
 
-- (instancetype)initWithTimeRange:(CMTimeRange)timeRange;
+- (instancetype)initWithTimeRange:(CMTimeRange)timeRange NS_SWIFT_NAME(init(_:));
 
 @end
 
@@ -46,7 +46,7 @@ MP_INIT_UNAVAILABLE
 
 /// When YES, now playing info will be automatically published, and nowPlayingInfoCenter must not be used.
 ///  Now playing info keys to be incorporated by automatic publishing can be set on the AVPlayerItem's nowPlayingInfo property.
-@property (nonatomic, assign) BOOL automaticallyPublishNowPlayingInfo MP_API(ios(16.0), tvos(16.0));
+@property (nonatomic, assign) BOOL automaticallyPublishesNowPlayingInfo MP_API(ios(16.0), tvos(16.0));
 
 /// The now playing info center that is associated with this session.
 @property (nonatomic, strong, readonly) MPNowPlayingInfoCenter *nowPlayingInfoCenter;

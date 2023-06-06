@@ -22,7 +22,7 @@ MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
 @interface MTLComputePipelineReflection : NSObject
 
 @property (nonnull, readonly) NSArray<id<MTLBinding>> *bindings API_AVAILABLE(macos(13.0), ios(16.0));
-@property (readonly) NSArray <MTLArgument *> *arguments API_DEPRECATED_WITH_REPLACEMENT("bindings", macos(10.11, API_TO_BE_DEPRECATED), ios(8.0, API_TO_BE_DEPRECATED));
+@property (readonly) NSArray <MTLArgument *> *arguments API_DEPRECATED_WITH_REPLACEMENT("bindings", macos(10.11, 13.0), ios(8.0, 16.0));
 
 @end
 

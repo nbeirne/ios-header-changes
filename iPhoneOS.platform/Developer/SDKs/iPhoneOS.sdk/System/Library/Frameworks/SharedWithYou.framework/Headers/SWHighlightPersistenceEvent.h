@@ -1,3 +1,5 @@
+#import <TargetConditionals.h>
+#if !TARGET_OS_TV
 //  Copyright (c) 2022 Apple. All rights reserved.
 
 
@@ -12,12 +14,13 @@ typedef NS_ENUM(NSInteger, SWHighlightPersistenceEventTrigger) {
     SWHighlightPersistenceEventTriggerDeleted = 2,
     SWHighlightPersistenceEventTriggerRenamed = 3,
     SWHighlightPersistenceEventTriggerMoved = 4,
-};
+} API_AVAILABLE(ios(16.0), macos(13.0));
 
 /*!
  @class SWHighlightPersistenceEvent
  @abstract A model object representing a persistence event that has happened on some content.
  */
+API_AVAILABLE(ios(16.0), macos(13.0))
 SW_EXTERN @interface SWHighlightPersistenceEvent : NSObject <SWHighlightEvent>
 
 // The type of persistence event for the highlight.
@@ -34,3 +37,5 @@ SW_EXTERN @interface SWHighlightPersistenceEvent : NSObject <SWHighlightEvent>
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif // !TARGET_OS_TV

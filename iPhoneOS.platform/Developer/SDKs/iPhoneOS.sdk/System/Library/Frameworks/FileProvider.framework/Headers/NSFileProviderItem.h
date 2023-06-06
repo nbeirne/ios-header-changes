@@ -681,6 +681,39 @@ FILEPROVIDER_API_AVAILABILITY_V3_IOS;
  the provider can set NSExtensionFileProviderAllowsContextualMenuDownloadEntry=0 in the provider's Info.plist.
  This will ensure that the system does not display the "Download Now" button in the contextual menu.
 
+ When `sourceItem` or `destinationItem` are present in a UserInteraction, a subset of the fields present on the item will be available for use.
+ The subset includes:
+ - `userInfo`
+ - `itemIdentifier`
+ - `parentItemIdentifier`
+ - `contentType`
+ - `typeIdentifier`
+ - `isTrashed`
+ - `filename`
+ - `capabilities`
+ - `documentSize`
+ - `childItemCount`
+ - `creationDate`
+ - `contentModificationDate`
+ - `lastUsedDate`
+ - `tagData`
+ - `favoriteRank`
+ - `isUploaded`
+ - `isUploading`
+ - `uploadingError`
+ - `isDownloaded`
+ - `isDownloading`
+ - `downloadingError`
+ - `isMostRecentVersionDownloaded`
+ - `isShared`
+ - `isSharedByCurrentUser`
+ - `ownerNameComponents`
+ - `mostRecentEditorNameComponents`
+ - `versionIdentifier`
+ - `inheritedUserInfo`
+ - `resolvedUserInfo`
+ - `isRecursivelyDownloaded`
+
  Here is a sample extension Info.plist:
 
  ```

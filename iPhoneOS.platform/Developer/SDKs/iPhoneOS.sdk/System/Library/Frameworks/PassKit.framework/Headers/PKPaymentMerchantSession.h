@@ -1,7 +1,7 @@
 #if !__has_include(<PassKitCore/PKPaymentMerchantSession.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKPaymentMerchantSession.h
-//  PassKit
+//    PassKit
 //  Copyright © 2020 Apple, Inc. All rights reserved.
 //
 
@@ -24,5 +24,6 @@ NS_ASSUME_NONNULL_END
 #endif // __PKPAYMENTMERCHANTSESSION_H__
 
 #else
+#import <TargetConditionals.h>
 #import <PassKitCore/PKPaymentMerchantSession.h>
 #endif

@@ -85,14 +85,13 @@ CS_TVOS_UNAVAILABLE
 
 @end
 
-CS_AVAILABLE(13_0, 16_0)
-CS_TVOS_UNAVAILABLE
+API_AVAILABLE(macos(13))
 @interface CSSearchableIndex (CSExternalProvider)
 
-- (void)provideDataForBundle:(NSString *)bundle
-                  identifier:(NSString *)identifier
-                        type:(NSString *)type
-           completionHandler:(void (^)(NSData * _Nullable, NSError * _Nullable))completionHandler;
+- (void)fetchDataForBundleIdentifier:(NSString *)bundleIdentifier
+                      itemIdentifier:(NSString *)itemIdentifier
+                         contentType:(UTType *)contentType
+                   completionHandler:(void (^)(NSData * _Nullable, NSError * _Nullable))completionHandler;
 
 
 @end

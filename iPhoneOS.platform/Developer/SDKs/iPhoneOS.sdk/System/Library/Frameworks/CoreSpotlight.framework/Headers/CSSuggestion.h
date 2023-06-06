@@ -24,6 +24,9 @@ API_AVAILABLE(macos(10.13), ios(16.0)) CS_TVOS_UNAVAILABLE
 @property (nonnull, nonatomic, readonly) NSAttributedString *localizedAttributedSuggestion NS_REFINED_FOR_SWIFT;
 @property (nonatomic, readonly) CSSuggestionKind suggestionKind;
 
+// For suggestions that have been ranked by the query
+- (NSComparisonResult)compareByRank:(CSSuggestion *)other;
+
 - (NSComparisonResult)compare:(CSSuggestion *)other;
 
 @end

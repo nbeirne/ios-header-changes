@@ -182,7 +182,7 @@ typedef NS_OPTIONS(uint64_t, NSActivityOptions) {
 /* 
  * Perform an expiring background task, which obtains an expiring task assertion on iOS. The block contains any work which needs to be completed as a background-priority task. The block will be scheduled on a system-provided concurrent queue. After a system-specified time, the block will be called with the `expired` parameter set to YES. The `expired` parameter will also be YES if the system decides to prematurely terminate a previous non-expiration invocation of the block.
  */
-- (void)performExpiringActivityWithReason:(NSString *)reason usingBlock:(void(/*NS_SWIFT_SENDABLE*/ ^)(BOOL expired))block API_AVAILABLE(ios(8.2), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos);
+- (void)performExpiringActivityWithReason:(NSString *)reason usingBlock:(void(NS_SWIFT_SENDABLE ^)(BOOL expired))block API_AVAILABLE(ios(8.2), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos);
 
 @end
 

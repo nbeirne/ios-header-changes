@@ -93,8 +93,8 @@ FOUNDATION_EXPORT NSString * const NSFileHandleNotificationMonitorModes API_DEPR
 - (void)waitForDataInBackgroundAndNotify;
 
 #ifdef __BLOCKS__
-@property (nullable, copy) void (/*NS_SWIFT_SENDABLE*/ ^readabilityHandler)(NSFileHandle *)  API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0));
-@property (nullable, copy) void (/*NS_SWIFT_SENDABLE*/ ^writeabilityHandler)(NSFileHandle *) API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0));
+@property (nullable, copy) void (NS_SWIFT_SENDABLE ^readabilityHandler)(NSFileHandle *)  API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0));
+@property (nullable, copy) void (NS_SWIFT_SENDABLE ^writeabilityHandler)(NSFileHandle *) API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0));
 #endif
 
 @end

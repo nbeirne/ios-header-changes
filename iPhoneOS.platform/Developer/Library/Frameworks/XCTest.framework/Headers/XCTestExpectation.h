@@ -6,9 +6,9 @@
 //  Copyright (c) 2016 Apple Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <XCTest/XCTestDefines.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+XCT_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 /*!
  * @class XCTestExpectation
@@ -16,7 +16,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
  * @discussion
  * Expectations represent specific conditions in asynchronous testing.
  */
-NS_SWIFT_SENDABLE
+XCT_SWIFT_SENDABLE
 @interface XCTestExpectation : NSObject
 
 /*!
@@ -43,7 +43,7 @@ NS_SWIFT_SENDABLE
 /*!
  * @property expectedFulfillmentCount
  * The expectedFulfillmentCount is the number of times -fulfill must be called on the expectation in order for it
- * to report complete fulfillment to its waiter. By default, expectations have a fufillmentCount of 1.
+ * to report complete fulfillment to its waiter. By default, expectations have an expectedFufillmentCount of 1.
  * This value must be greater than 0 and is not meaningful if combined with \@inverted.
  */
 @property (nonatomic) NSUInteger expectedFulfillmentCount;
@@ -68,6 +68,6 @@ NS_SWIFT_SENDABLE
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+XCT_HEADER_AUDIT_END(nullability, sendability)
 
 #endif

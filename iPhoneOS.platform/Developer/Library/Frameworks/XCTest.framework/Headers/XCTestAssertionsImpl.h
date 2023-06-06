@@ -438,8 +438,9 @@ NS_ASSUME_NONNULL_END
         _didThrow = YES; \
     } \
     _XCT_CATCH (...) { \
+        NSString *_xct_reason; \
         _didThrow = YES; \
-        NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
+        _xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterFailure(test, _XCTFailureDescription(_XCTAssertion_ThrowsSpecific, 0, expressionStr, @#exception_class, @#exception_class, _xct_reason), __VA_ARGS__); \
     } \
     if (!_didThrow) { \

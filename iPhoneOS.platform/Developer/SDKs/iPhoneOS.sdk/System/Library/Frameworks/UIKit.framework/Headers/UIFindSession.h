@@ -68,8 +68,13 @@ UIKIT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI
 /// Defines how results are reported through the find panel's UI. The default style is @c CurrentAndTotal.
 @property (nonatomic, readwrite) UIFindSessionSearchResultDisplayStyle searchResultDisplayStyle;
 
-/// Return YES if replacement is allowed generally, or specifically for the currently highlighted item.
-@property (nonatomic, readonly) BOOL allowsReplacement;
+/// Return YES if replacement is supported. This gates the appearance of replace UI in the find navigator panel. Default is NO.
+@property (nonatomic, readonly) BOOL supportsReplacement;
+
+/// Return YES if replacement is allowed for the currently highlighted item. This property controls the enabled state
+/// of the "replace" button in the find navigator, as well as various hardware keyboard shortcuts involving replacement.
+/// Default is YES, if supportsReplacement is YES. 
+@property (nonatomic, readonly) BOOL allowsReplacementForCurrentlyHighlightedResult;
 
 /// Called when the user requests a search to be performed for @c query, using @c options.
 ///
@@ -103,9 +108,11 @@ UIKIT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI
 /// @param direction    Which direction the user intends to move, either forward or backward.
 - (void)highlightNextResultInDirection:(UITextStorageDirection)direction;
 
-/// Call this method to invalidate all currently shown ranges. This will cause the system find panel to update
-/// it's current state, and may trigger a new search using `performSearchWithQuery:` immediately after.
+/// This method will be called whenever the current find session's found/highlighted results are to be invalidated. For instance,
+/// when the search query is cleared, options changed, or any other event where we may not perform another search right away.
 - (void)invalidateFoundResults;
+
+@property (nonatomic, readonly) BOOL allowsReplacement API_DEPRECATED_WITH_REPLACEMENT("supportsReplacement", ios(16.0, 16.0));
 
 @end
 

@@ -46,6 +46,9 @@
 #if __has_include(<PassKit/PKDeferredPaymentSummaryItem.h>)
 #import <PassKit/PKDeferredPaymentSummaryItem.h>
 #endif
+#if __has_include(<PassKit/PKDeferredPaymentRequest.h>)
+#import <PassKit/PKDeferredPaymentRequest.h>
+#endif
 #if __has_include(<PassKit/PKPaymentTokenContext.h>)
 #import <PassKit/PKPaymentTokenContext.h>
 #endif
@@ -149,17 +152,8 @@
 #if __has_include(<PassKit/PKIdentityDocument.h>)
 #import <PassKit/PKIdentityDocument.h>
 #endif
-#if __has_include(<PassKit/PKIdentityDocumentAgeThreshold.h>)
-#import <PassKit/PKIdentityDocumentAgeThreshold.h>
-#endif
 #if __has_include(<PassKit/PKIdentityDocumentDescriptor.h>)
 #import <PassKit/PKIdentityDocumentDescriptor.h>
-#endif
-#if __has_include(<PassKit/PKIdentityDocumentIssuingAuthority.h>)
-#import <PassKit/PKIdentityDocumentIssuingAuthority.h>
-#endif
-#if __has_include(<PassKit/PKIdentityDocumentRawElements.h>)
-#import <PassKit/PKIdentityDocumentRawElements.h>
 #endif
 #if __has_include(<PassKit/PKIdentityElement.h>)
 #import <PassKit/PKIdentityElement.h>

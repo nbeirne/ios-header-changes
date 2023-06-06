@@ -18,6 +18,7 @@
  @returns A new rectangle stucture.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DMakeAtOrigin(SPPoint3D origin,
                               SPSize3D size)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
@@ -31,6 +32,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A new rectangle stucture.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DMakeAtCenter(SPPoint3D center,
                               SPSize3D size)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
@@ -97,6 +99,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A point that's clamped to the rectangle.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPPoint3D SPPoint3DClampToRect(SPPoint3D point, SPRect3D rect)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -109,6 +112,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A Boolean value that indicates whether the rectangle contains any of the specified points.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPRect3DContainsAnyPoint(SPRect3D rect,
                                const SPPoint3D *points, int pointCount)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
@@ -121,6 +125,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A Boolean value that indicates whether the rectangle contains the point.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPRect3DContainsPoint(SPRect3D rect, SPPoint3D other)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -132,6 +137,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A new rectangle stucture.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DMakeBoundingFromPoints(SPPoint3D points[], int pointCount)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -157,6 +163,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  */
 
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 void SPRect3DGetCornerPoints(SPRect3D rect, SPPoint3D points[])
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -169,6 +176,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A point that represents the center of the rectangle.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPPoint3D SPRect3DGetCenter(SPRect3D rect)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -179,6 +187,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A Boolean value that  that indicates if two or three of the dimensions are zero.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPRect3DIsEmpty(SPRect3D rect)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -234,6 +243,7 @@ __API_DEPRECATED("This function is deprecated.",
  @returns A point that represents the corner of the rectangle with smallest x-, y-, and z-coordinates.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPPoint3D SPRect3DGetMinimum(SPRect3D rect)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -244,11 +254,13 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A point that represents the corner of the rectangle with largest x-, y-, and z-coordinates.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPPoint3D SPRect3DGetMaximum(SPRect3D rect)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /// Returns @p true if both rectangles are equal.
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPRect3DEqualToRect(SPRect3D rect1, SPRect3D rect2)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -267,6 +279,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  rectangle.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DIntegral(SPRect3D rect)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -285,6 +298,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  are negative values, the rectangle’s size is increased on that dimension.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DInset(SPRect3D rect, SPSize3D dXYZ)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -296,6 +310,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A rectangle structure that is the smallest rectangle that contains two sizes.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DUnion(SPRect3D rect, SPRect3D other)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -307,11 +322,13 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A rectangle structure that is the intersection of the two rectangles.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DIntersection(SPRect3D rect, SPRect3D other)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /// Returns a rectangle with a positive width and height.
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DStandardize(SPRect3D rect)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -327,6 +344,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A rectangle that's scaled by the specified values.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DScaleBy(SPRect3D rect, double x, double y, double z)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -338,6 +356,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A rectangle that's scaled by the specified value.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DScaleBySize(SPRect3D rect, SPSize3D scale)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -349,6 +368,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A rectangle that's uniformly scaled by the specified value.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DScaleUniform(SPRect3D rect, double scale)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -364,6 +384,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  Because affine transforms do not preserve rectangles in general, this function returns the smallest rectangle that contains the transformed corner points of the `rect` parameter.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DRotateByQuaternion(SPRect3D rect, simd_quatd quaternion)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -380,6 +401,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  Because affine transforms do not preserve rectangles in general, this function returns the smallest rectangle that contains the transformed corner points of the `rect` parameter.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DRotate(SPRect3D rect, SPRotation3D rotation)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -392,6 +414,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A point that's rotated by the specified rotation.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DRotateAroundPoint(SPRect3D rect, SPRotation3D rotation, SPPoint3D pivot)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -404,6 +427,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A point that's rotated by the specified rotation.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DRotateByQuaternionAroundPoint(SPRect3D rect, simd_quatd quaternion, SPPoint3D pivot)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -444,6 +468,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @discussion Because affine transforms do not preserve rectangles in general, this function returns the smallest rectangle that contains the transformed corner points of the `rect` parameter. If the affine transform `transform` consists solely of scaling and translation operations, then the returned rectangle coincides with the rectangle constructed from the eight transformed corners.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DApplyAffineTransform(SPRect3D rect, SPAffineTransform3D transform)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -456,6 +481,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @discussion Because affine transforms do not preserve rectangles in general, this function returns the smallest rectangle that contains the transformed corner points of the `rect` parameter. If the affine transform `transform` consists solely of scaling and translation operations, then the returned rectangle coincides with the rectangle constructed from the eight transformed corners.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DApplyProjectiveTransform(SPRect3D rect,
                                           SPProjectiveTransform3D transform)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
@@ -469,6 +495,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @note The transform must be rectilinear otherwise this function returns @p SPRect3DNull .
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DUnapplyAffineTransform(SPRect3D rect,
                                         SPAffineTransform3D transform)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
@@ -482,6 +509,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @note The transform must be rectilinear otherwise this function returns @p SPRect3DNull .
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DUnapplyProjectiveTransform(SPRect3D rect,
                                             SPProjectiveTransform3D transform)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
@@ -504,8 +532,9 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  Because affine transforms do not preserve rectangles in general, this function returns the smallest rectangle that contains the transformed corner points of the rect parameter.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DShear(SPRect3D rect,
-                       enum SPAxis shearAxis,
+                       SPAxis shearAxis,
                        double shearFactor0,
                        double shearFactor1)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
@@ -521,6 +550,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A Boolean value that indicates whether two rectangles intersect.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPRect3DIntersectsRect(SPRect3D rect, SPRect3D other)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -532,6 +562,7 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A Boolean value that indicates whether the first rectangle contains the second rectangle.
  */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPRect3DContainsRect(SPRect3D rect, SPRect3D other)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -540,12 +571,14 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 // MARK: - Creating a rectangle
 
 SPATIAL_SWIFT_NAME(Rect3D.init(origin:size:))
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DMakeAtOrigin(SPPoint3D origin,
                               SPSize3D size) {
     return (SPRect3D){ .origin = origin, .size = size };
 }
 
 SPATIAL_SWIFT_NAME(Rect3D.init(center:size:))
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DMakeAtCenter(SPPoint3D center,
                               SPSize3D size) {
     
@@ -589,6 +622,7 @@ SPRect3D SPRect3DMakeAtCenterWithVector(SPVector3D center,
 // MARK: - Working with points
 
 SPATIAL_SWIFT_NAME(Point3D.clamped(self:to:))
+SPATIAL_OVERLOADABLE
 SPPoint3D SPPoint3DClampToRect(SPPoint3D point, SPRect3D rect) {
     
     rect = SPRect3DStandardize(rect);
@@ -606,6 +640,7 @@ SPPoint3D SPPoint3DClampToRect(SPPoint3D point, SPRect3D rect) {
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 bool SPRect3DContainsAnyPoint(SPRect3D rect, const SPPoint3D *points, int pointCount) {
     for (int i=0; i<pointCount; i++) {
         if (SPRect3DContainsPoint(rect, points[i])) return 1;
@@ -614,6 +649,7 @@ bool SPRect3DContainsAnyPoint(SPRect3D rect, const SPPoint3D *points, int pointC
 }
 
 SPATIAL_SWIFT_NAME(Rect3D.contains(self:point:))
+SPATIAL_OVERLOADABLE
 bool SPRect3DContainsPoint(SPRect3D rect, SPPoint3D other) {
     simd_double3 r1_min = SPRect3DGetMinimum(rect).vector;
     simd_double3 r1_max = SPRect3DGetMaximum(rect).vector;
@@ -623,6 +659,7 @@ bool SPRect3DContainsPoint(SPRect3D rect, SPPoint3D other) {
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DMakeBoundingFromPoints(SPPoint3D points[], int pointCount) {
     if (pointCount == 0) { return (SPRect3D) { 0 }; }
     
@@ -642,6 +679,7 @@ SPRect3D SPRect3DMakeBoundingFromPoints(SPPoint3D points[], int pointCount) {
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 void SPRect3DGetCornerPoints(SPRect3D rect, SPPoint3D points[]) {
     
     SPPoint3D origin = rect.origin;
@@ -678,6 +716,7 @@ void SPRect3DGetCornerPoints(SPRect3D rect, SPPoint3D points[]) {
 // MARK: - Querying rectangle properties
 
 SPATIAL_SWIFT_NAME(getter:Rect3D.center(self:))
+SPATIAL_OVERLOADABLE
 SPPoint3D SPRect3DGetCenter(SPRect3D rect) {
     
     simd_double3 size = rect.size.vector;
@@ -686,6 +725,7 @@ SPPoint3D SPRect3DGetCenter(SPRect3D rect) {
 }
 
 SPATIAL_SWIFT_NAME(getter:Rect3D.isEmpty(self:))
+SPATIAL_OVERLOADABLE
 bool SPRect3DIsEmpty(SPRect3D rect) {
     simd_double3 size = rect.size.vector;
     
@@ -708,6 +748,7 @@ SPRotation3D SPRect3DRotationToRect(SPRect3D rect, SPRect3D other) {
 }
 
 SPATIAL_SWIFT_NAME(getter:Rect3D.min(self:))
+SPATIAL_OVERLOADABLE
 SPPoint3D SPRect3DGetMinimum(SPRect3D rect) {
     simd_double3 origin = rect.origin.vector;
     simd_double3 size = rect.size.vector;
@@ -718,6 +759,7 @@ SPPoint3D SPRect3DGetMinimum(SPRect3D rect) {
 }
 
 SPATIAL_SWIFT_NAME(getter:Rect3D.max(self:))
+SPATIAL_OVERLOADABLE
 SPPoint3D SPRect3DGetMaximum(SPRect3D rect) {
     simd_double3 origin = rect.origin.vector;
     simd_double3 size = rect.size.vector;
@@ -726,8 +768,8 @@ SPPoint3D SPRect3DGetMaximum(SPRect3D rect) {
     return (SPPoint3D){ .vector = result };
 }
 
-/// Returns @p true if both rectangles are equal.
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 bool SPRect3DEqualToRect(SPRect3D rect1, SPRect3D rect2) {
     
     return (SPPoint3DEqualToPoint(rect1.origin, rect2.origin) &&
@@ -737,6 +779,7 @@ bool SPRect3DEqualToRect(SPRect3D rect1, SPRect3D rect2) {
 // MARK: - Deriving new rectangles
 
 SPATIAL_SWIFT_NAME(getter:Rect3D.integral(self:))
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DIntegral(SPRect3D rect) {
     rect = SPRect3DStandardize(rect);
     
@@ -748,16 +791,17 @@ SPRect3D SPRect3DIntegral(SPRect3D rect) {
 }
 
 SPATIAL_SWIFT_NAME(Rect3D.inset(self:by:))
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DInset(SPRect3D rect, SPSize3D dXYZ) {
     rect = SPRect3DStandardize(rect);
     simd_double3 inset = dXYZ.vector;
     simd_double3 origin = rect.origin.vector + inset;
     simd_double3 size = rect.size.vector - 2*inset;
-    // TODO: what should happen when resulting size is negative?
     return SPRect3DMakeAtOriginWithVector(origin, size);
 }
 
 SPATIAL_SWIFT_NAME(Rect3D.union(self:_:))
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DUnion(SPRect3D rect, SPRect3D other) {
     
     rect = SPRect3DStandardize(rect);
@@ -775,6 +819,7 @@ SPRect3D SPRect3DUnion(SPRect3D rect, SPRect3D other) {
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DIntersection(SPRect3D rect, SPRect3D other) {
     
     rect = SPRect3DStandardize(rect);
@@ -798,6 +843,7 @@ SPRect3D SPRect3DIntersection(SPRect3D rect, SPRect3D other) {
 }
 
 SPATIAL_SWIFT_NAME(getter:Rect3D.standardized(self:))
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DStandardize(SPRect3D rect) {
     
     simd_double3 size = rect.size.vector;
@@ -812,6 +858,7 @@ SPRect3D SPRect3DStandardize(SPRect3D rect) {
 // MARK: - Transforming rectangles
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DScaleBy(SPRect3D rect, double x, double y, double z) {
     simd_double3 scale = simd_make_double3(x, y, z);
     return SPRect3DMakeAtOriginWithVector(rect.origin.vector * scale,
@@ -819,6 +866,7 @@ SPRect3D SPRect3DScaleBy(SPRect3D rect, double x, double y, double z) {
 }
 
 SPATIAL_SWIFT_NAME(Rect3D.scaled(self:by:))
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DScaleBySize(SPRect3D rect, SPSize3D scale) {
     simd_double3 vectorScale = scale.vector;
     return SPRect3DMakeAtOriginWithVector(rect.origin.vector * vectorScale,
@@ -826,12 +874,14 @@ SPRect3D SPRect3DScaleBySize(SPRect3D rect, SPSize3D scale) {
 }
 
 SPATIAL_SWIFT_NAME(Rect3D.uniformlyScaled(self:by:))
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DScaleUniform(SPRect3D rect, double scale) {
     return SPRect3DMakeAtOriginWithVector(rect.origin.vector * scale,
                                           rect.size.vector * scale);
 }
 
 SPATIAL_SWIFT_NAME(Rect3D.rotated(self:by:))
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DRotate(SPRect3D rect, SPRotation3D rotation) {
     
     SPAffineTransform3D transform = SPAffineTransform3DMakeRotation(rotation);
@@ -840,6 +890,7 @@ SPRect3D SPRect3DRotate(SPRect3D rect, SPRotation3D rotation) {
 }
 
 SPATIAL_SWIFT_NAME(Rect3D.rotated(self:by:))
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DRotateByQuaternion(SPRect3D rect, simd_quatd quaternion) {
     
     SPRotation3D rotation = SPRotation3DMakeWithQuaternion(quaternion);
@@ -849,6 +900,7 @@ SPRect3D SPRect3DRotateByQuaternion(SPRect3D rect, simd_quatd quaternion) {
 }
 
 SPATIAL_SWIFT_NAME(Rect3D.rotated(self:by:around:))
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DRotateAroundPoint(SPRect3D rect, SPRotation3D rotation, SPPoint3D pivot) {
 
     SPPoint3D points[8] = {0};
@@ -865,6 +917,7 @@ SPRect3D SPRect3DRotateAroundPoint(SPRect3D rect, SPRotation3D rotation, SPPoint
 }
 
 SPATIAL_SWIFT_NAME(Rect3D.rotated(self:by:around:))
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DRotateByQuaternionAroundPoint(SPRect3D rect, simd_quatd quaternion, SPPoint3D pivot) {
     
     SPRotation3D rotation = SPRotation3DMakeWithQuaternion(quaternion);
@@ -886,6 +939,7 @@ SPRect3D SPRect3DTranslate(SPRect3D rect, SPVector3D offset) {
 }
 
 SPATIAL_SWIFT_NAME(Rect3D.applying(self:_:))
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DApplyAffineTransform(SPRect3D rect, SPAffineTransform3D transform) {
     
     SPPoint3D points[8] = {0};
@@ -902,6 +956,7 @@ SPRect3D SPRect3DApplyAffineTransform(SPRect3D rect, SPAffineTransform3D transfo
 }
 
 SPATIAL_SWIFT_NAME(Rect3D.applying(self:_:))
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DApplyProjectiveTransform(SPRect3D rect, SPProjectiveTransform3D transform){
     
     SPPoint3D points[8] = {0};
@@ -918,6 +973,7 @@ SPRect3D SPRect3DApplyProjectiveTransform(SPRect3D rect, SPProjectiveTransform3D
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DUnapplyAffineTransform(SPRect3D rect, SPAffineTransform3D transform) {
     
     if(!SPAffineTransform3DIsRectilinear(transform)) {
@@ -930,6 +986,7 @@ SPRect3D SPRect3DUnapplyAffineTransform(SPRect3D rect, SPAffineTransform3D trans
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DUnapplyProjectiveTransform(SPRect3D rect, SPProjectiveTransform3D transform) {
     
     if(!SPProjectiveTransform3DIsRectilinear(transform)) {
@@ -942,8 +999,9 @@ SPRect3D SPRect3DUnapplyProjectiveTransform(SPRect3D rect, SPProjectiveTransform
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPRect3D SPRect3DShear(SPRect3D rect,
-                       enum SPAxis shearAxis,
+                       SPAxis shearAxis,
                        double shearFactor0,
                        double shearFactor1) {
     
@@ -957,6 +1015,7 @@ SPRect3D SPRect3DShear(SPRect3D rect,
 // MARK: - Volumetric operations
 
 SPATIAL_SWIFT_NAME(Rect3D.contains(self:_:))
+SPATIAL_OVERLOADABLE
 bool SPRect3DContainsRect(SPRect3D rect, SPRect3D other) {
     
     simd_double3 r1_min = SPRect3DGetMinimum(rect).vector;
@@ -969,8 +1028,79 @@ bool SPRect3DContainsRect(SPRect3D rect, SPRect3D other) {
 }
 
 SPATIAL_SWIFT_NAME(Rect3D.intersects(self:_:))
+SPATIAL_OVERLOADABLE
 bool SPRect3DIntersectsRect(SPRect3D rect, SPRect3D other) {
     return !SPRect3DIsEmpty(SPRect3DIntersection(rect, other));
+}
+
+// MARK: - Transform by Pose
+
+/*!
+ @abstract Returns a rectangle that's transformed by the specified pose.
+ 
+ @param rect The source rectangle.
+ @param pose The pose that the function applies to the size.
+ @returns The transformed rectangle.
+ */
+SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
+SPRect3D SPRect3DApplyPose(SPRect3D rect,
+                           SPPose3D pose)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+
+SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
+SPRect3D SPRect3DApplyPose(SPRect3D rect,
+                           SPPose3D pose) {
+    
+    SPPoint3D points[8] = {0};
+    
+    SPRect3DGetCornerPoints(rect, points);
+    
+    for (int i = 0; i < 8; ++i) {
+        
+        points[i] = SPPoint3DApplyPose(points[i], pose);
+    }
+    
+    SPRect3D transformed = SPRect3DMakeBoundingFromPoints(points, 8);
+    
+    return transformed;
+}
+
+/*!
+ @abstract Returns a rectangle that's transformed by the inverse of the specified pose.
+ 
+ @param rect The source rectangle.
+ @param pose The pose that the function unapplies to the size.
+ @returns The transformed rectangle.
+ @note The pose's rotation angle must be zero, otherwise this function returns @p SPRect3DNull .
+ */
+SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
+SPRect3D SPRect3DUnapplyPose(SPRect3D rect,
+                             SPPose3D pose)
+__API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
+
+SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
+SPRect3D SPRect3DUnapplyPose(SPRect3D rect,
+                             SPPose3D pose) {
+    
+    if(fabs(simd_angle(pose.rotation.quaternion)) > SPDefaultTolerance) {
+        return SPRect3DNull;
+    }
+    
+    SPPoint3D points[8] = {0};
+    
+    SPRect3DGetCornerPoints(rect, points);
+    
+    for (int i = 0; i < 8; ++i) {
+        points[i] = SPPoint3DUnapplyPose(points[i], pose);
+    }
+    
+    SPRect3D transformed = SPRect3DMakeBoundingFromPoints(points, 8);
+    
+    return transformed;
 }
 
 #endif /* Spatial_SPRect3D_h */

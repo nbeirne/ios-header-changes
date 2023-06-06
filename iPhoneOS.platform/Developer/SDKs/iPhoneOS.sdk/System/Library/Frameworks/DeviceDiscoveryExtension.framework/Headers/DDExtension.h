@@ -23,7 +23,7 @@ DD_EXTERN
 @interface DDDiscoverySession : NSObject
 
 /// Reports an event to the host.
-- (void) reportEvent:(DDEvent *) inEvent;
+- (void) reportEvent:(DDDeviceEvent *) inEvent;
 
 @end
 

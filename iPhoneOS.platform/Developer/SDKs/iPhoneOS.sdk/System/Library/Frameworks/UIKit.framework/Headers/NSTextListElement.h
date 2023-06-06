@@ -20,15 +20,15 @@ API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0)) API_UNAVAILABLE(watchos)
 @interface NSTextListElement : NSTextParagraph
 #pragma mark Initializer
 // Designated initializer. Initializes 2 types of NSTextListElement: a standard list item and nesting parent element. Either of contents, markerAttributes, or childElements must be non-nil. Clients should typically use one of 2 factory methods below for instantiating with a specific type. When markerAttributes!=nil, it will be used to format the marker; otherwise, it is derived from contents.
-- (instancetype)initWithParentElement:(nullable NSTextListElement *)parentElement textList:(NSTextList *)textList contents:(nullable NSAttributedString *)contents markerAttributes:(nullable NSDictionary<NSAttributedStringKey, id> *)markerAttributes childElements:(nullable NSArray<NSTextListElement *> *)childElements NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithParentElement:(nullable NSTextListElement *)parent textList:(NSTextList *)textList contents:(nullable NSAttributedString *)contents markerAttributes:(nullable NSDictionary<NSAttributedStringKey, id> *)markerAttributes childElements:(nullable NSArray<NSTextListElement *> *)children NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithAttributedString:(nullable NSAttributedString *)attributedString NS_UNAVAILABLE;
 
 // Instantiates a standard text list.
-+ (instancetype)textListElementWithContents:(NSAttributedString *)contents markerAttributes:(nullable NSDictionary<NSAttributedStringKey, id> *)markerAttributes textList:(NSTextList *)textList childElements:(nullable NSArray<NSTextListElement *> *)childElements;
++ (instancetype)textListElementWithContents:(NSAttributedString *)contents markerAttributes:(nullable NSDictionary<NSAttributedStringKey, id> *)markerAttributes textList:(NSTextList *)textList childElements:(nullable NSArray<NSTextListElement *> *)children;
 
 // Returns an instance with childElements without contents. Returns nil if childElements.count == 0. nestingLevel specifies the number of shifts represented by the tree elements returned. Raises an exception when nestingLevel < 0. textList specifies NSTextList used by the new instance.
-+ (nullable instancetype)textListElementWithChildElements:(NSArray<NSTextListElement *> *)childElements textList:(NSTextList *)textList nestingLevel:(NSInteger)nestingLevel;
++ (nullable instancetype)textListElementWithChildElements:(NSArray<NSTextListElement *> *)children textList:(NSTextList *)textList nestingLevel:(NSInteger)nestingLevel;
 
 #pragma mark Properties
 @property (readonly, strong) NSTextList *textList;

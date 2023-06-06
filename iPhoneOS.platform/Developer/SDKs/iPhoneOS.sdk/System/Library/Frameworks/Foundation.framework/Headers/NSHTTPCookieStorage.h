@@ -147,7 +147,7 @@ API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
 
 @interface NSHTTPCookieStorage (NSURLSessionTaskAdditions)
 - (void)storeCookies:(NSArray<NSHTTPCookie *> *)cookies forTask:(NSURLSessionTask *)task API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
-- (void)getCookiesForTask:(NSURLSessionTask *)task completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^) (NSArray<NSHTTPCookie *> * _Nullable cookies))completionHandler API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
+- (void)getCookiesForTask:(NSURLSessionTask *)task completionHandler:(void (NS_SWIFT_SENDABLE ^) (NSArray<NSHTTPCookie *> * _Nullable cookies))completionHandler API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
 @end
 
 /*!

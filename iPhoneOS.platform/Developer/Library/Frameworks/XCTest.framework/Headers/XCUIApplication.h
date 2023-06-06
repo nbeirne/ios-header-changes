@@ -56,6 +56,15 @@ typedef NS_ENUM(NSUInteger, XCUIApplicationState) {
 - (void)launch;
 
 /*!
+ * Launches the application synchronously using the provided URL. On return the application is ready
+ * to handle events, similar to the behavior of -launch.
+ *
+ * Any failure in the launch sequence, or any failure in using the provided URL, will be reported as a
+ * test failure and the test will be halted at that point.
+*/
+- (void)openURL:(NSURL *)url API_AVAILABLE(macos(13.3), ios(16.4), tvos(16.4), watchos(9.4));
+
+/*!
  * Activates the application synchronously. On return the application is ready to handle events.
  * If the application was not running prior, it will be launched automatically. If the application
  * would be launched as a result of this method and was previously launched via -launch, the launch

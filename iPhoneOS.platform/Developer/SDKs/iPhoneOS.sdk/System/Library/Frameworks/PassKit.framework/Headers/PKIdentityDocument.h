@@ -1,15 +1,13 @@
 #if !__has_include(<PassKitCore/PKIdentityDocument.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKIdentityDocument.h
-//  PassKit
+//    PassKit
 //
 //  Copyright © 2022 Apple, Inc. All rights reserved.
 //
 
 
 #import <Foundation/Foundation.h>
-
-@class PKIdentityDocumentRawElements;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,13 +21,6 @@ API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, watchos, tvos)
 /// This data is not intended to be read on-device.
 @property (nonatomic, readonly) NSData *encryptedData;
 
-/// The unsigned, unencrypted representation of the elements in the response, as specified by the issuer.
-/// When element values are returned, they match the corresponding element values within encryptedData, but
-/// do not possess an issuer signature. They can be used locally for use cases that do not require the
-/// authenticity guarantees provided by the issuer signature, but should never be used in situations that
-/// require trusted information.
-@property (nonatomic, readonly, nullable) PKIdentityDocumentRawElements *rawElements;
-
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
@@ -39,5 +30,6 @@ NS_ASSUME_NONNULL_END
 
 
 #else
+#import <TargetConditionals.h>
 #import <PassKitCore/PKIdentityDocument.h>
 #endif

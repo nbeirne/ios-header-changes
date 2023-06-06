@@ -1,6 +1,7 @@
+#if !__has_include(<PassKitUI/PKAddPassButton.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKAddPassButton.h
-//  PassKit
+//    PassKit
 //
 //  Copyright © 2015 Apple, Inc. All rights reserved.
 //
@@ -36,5 +37,12 @@ API_AVAILABLE(ios(9.0))
 
 NS_ASSUME_NONNULL_END
 
+#endif
+#endif
+
+#else
+#if !TARGET_OS_OSX 
+#import <TargetConditionals.h>
+#import <PassKitUI/PKAddPassButton.h>
 #endif
 #endif

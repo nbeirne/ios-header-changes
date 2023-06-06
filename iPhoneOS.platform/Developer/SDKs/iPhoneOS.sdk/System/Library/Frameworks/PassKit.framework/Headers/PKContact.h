@@ -1,7 +1,7 @@
 #if !__has_include(<PassKitCore/PKContact.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKContact.h
-//  PassKit
+//    PassKit
 //  Copyright © 2015 Apple, Inc. All rights reserved.
 //
 
@@ -38,5 +38,6 @@ API_AVAILABLE(macos(10.12), ios(9.0), watchos(3.0))
 #endif
 
 #else
+#import <TargetConditionals.h>
 #import <PassKitCore/PKContact.h>
 #endif

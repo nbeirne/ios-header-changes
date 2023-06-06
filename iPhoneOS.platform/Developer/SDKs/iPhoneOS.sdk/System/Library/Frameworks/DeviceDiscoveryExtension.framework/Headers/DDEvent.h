@@ -16,18 +16,17 @@ extern "C" {
 #endif
 
 @class DDDevice;
-@class DDEvent;
+@class DDDeviceEvent;
 
 //===========================================================================================================================
 /// Type of event.
 typedef NS_ENUM( NSInteger, DDEventType )
 {
-	DDEventTypeUnknown					= 0,	/// Unknown event. Placeholder for initializing event types.
-	DDEventTypeDeviceFound				= 40,	/// [DDDeviceEvent] Device found.
-	DDEventTypeDeviceLost				= 41,	/// [DDDeviceEvent] Device lost.
-	DDEventTypeDeviceChanged			= 42,	/// [DDDeviceEvent] Device changed.
-	DDEventTypeDevicesPresentChanged	= 50,	/// [DDDeviceEvent] Device changed.
-};
+	DDEventTypeUnknown NS_SWIFT_NAME(unknown)								= 0,	/// Unknown event. Placeholder for initializing event types.
+	DDEventTypeDeviceFound NS_SWIFT_NAME(deviceFound)						= 40,	/// [DDDeviceEvent] Device found.
+	DDEventTypeDeviceLost NS_SWIFT_NAME(deviceLost)							= 41,	/// [DDDeviceEvent] Device lost.
+	DDEventTypeDeviceChanged NS_SWIFT_NAME(deviceChanged)					= 42,	/// [DDDeviceEvent] Device changed.
+} NS_SWIFT_NAME(DDDeviceEvent.EventType);
 
 /// Converts an event to a string for logging, etc.
 DD_EXTERN
@@ -35,24 +34,14 @@ API_AVAILABLE( ios( 16.0 ) )
 NSString * DDEventTypeToString( DDEventType inValue );
 
 /// Invoked when an event occurs.
-typedef void ( ^DDEventHandler )( DDEvent *inEvent );
-
-//===========================================================================================================================
-/// Event for status and other updates.
-DD_EXTERN
-@interface DDEvent : NSObject
-
-/// Type of event. Type may indicate the subclass of DAEvent to provide additional properties.
-@property (readonly, assign, nonatomic) DDEventType eventType;
-
-@end
+typedef void ( ^DDEventHandler )( DDDeviceEvent *inEvent );
 
 //===========================================================================================================================
 
 /// Device-related event (e.g. found, lost).
 DD_EXTERN
 API_AVAILABLE( ios( 16.0 ) )
-@interface DDDeviceEvent : DDEvent
+@interface DDDeviceEvent : NSObject
 
 /// Initializes a device event.
 - (instancetype) initWithEventType:(DDEventType) type device:(DDDevice *) device;
@@ -60,16 +49,8 @@ API_AVAILABLE( ios( 16.0 ) )
 /// Device found or lost.
 @property (readonly, strong, nonatomic) DDDevice *device;
 
-@end
-
-//===========================================================================================================================
-/// Reports the one or more devices are present changes.
-DD_EXTERN
-API_AVAILABLE( ios( 16.0 ) )
-@interface DDEventDevicesPresent : DDEvent
-
-/// One or more devices are present.
-@property (readonly, assign, nonatomic) BOOL devicesPresent;
+/// Type of event.
+@property (readonly, assign, nonatomic) DDEventType eventType;
 
 @end
 

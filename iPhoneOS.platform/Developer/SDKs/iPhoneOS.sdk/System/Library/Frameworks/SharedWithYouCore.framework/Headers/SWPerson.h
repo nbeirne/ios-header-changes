@@ -1,3 +1,5 @@
+#import <TargetConditionals.h>
+#if !TARGET_OS_TV
 //
 //  SWPerson.h
 //  SocialLayer
@@ -12,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class SWPersonIdentity;
 
+API_AVAILABLE(ios(16.0), macos(13.0))
 SW_EXTERN @interface SWPerson : NSObject <NSSecureCoding>
 
 /*!
@@ -29,3 +32,5 @@ SW_EXTERN @interface SWPerson : NSObject <NSSecureCoding>
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif // !TARGET_OS_TV

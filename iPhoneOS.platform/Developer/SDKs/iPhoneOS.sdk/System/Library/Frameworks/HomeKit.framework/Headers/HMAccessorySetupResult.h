@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 HM_EXTERN API_AVAILABLE(ios(15.4)) API_UNAVAILABLE(watchos, tvos) API_UNAVAILABLE(macos, macCatalyst)
-@interface HMAccessorySetupResult : NSObject <NSCopying>
+    @interface HMAccessorySetupResult : NSObject<NSCopying>
 
 /*!
  *  @abstract   The -[HMHome uniqueIdentifier] that the accessories were added to

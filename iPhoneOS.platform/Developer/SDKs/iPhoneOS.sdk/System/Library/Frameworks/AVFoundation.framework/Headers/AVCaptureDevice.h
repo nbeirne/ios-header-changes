@@ -603,7 +603,7 @@ API_AVAILABLE(macos(13.0), macCatalyst(16.0)) API_UNAVAILABLE(ios, tvos, watchos
 
     Applications that adopt this API should always key-value observe this property and update their AVCaptureSession’s input device to reflect changes to the systemPreferredCamera. The application can still offer users the ability to pick a camera by calling -setUserPreferredCamera:, which will cause the systemPreferredCamera API to put the user’s choice first until either another Apple-preferred device becomes available or the machine is rebooted (after which it reverts to its original behavior of returning the internally determined best camera to use).
 
-    If the application wishes to offer users a fully manual camera selection mode in addition to automatic camera selection, it is recommended to call setUserPeferredCamera: each time the user makes a camera selection, but ignore key-value observer updates to systemPreferredCamera while in manual selection mode.
+    If the application wishes to offer users a fully manual camera selection mode in addition to automatic camera selection, it is recommended to call setUserPreferredCamera: each time the user makes a camera selection, but ignore key-value observer updates to systemPreferredCamera while in manual selection mode.
 */
 @property(class, readonly, nullable) AVCaptureDevice *systemPreferredCamera API_AVAILABLE(macos(13.0), macCatalyst(16.0)) API_UNAVAILABLE(ios, tvos, watchos);
 
@@ -1738,13 +1738,13 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0)) API_UNAVAILABLE(tvos) AP
  @property videoZoomFactor
  @abstract
     Controls zoom level of image outputs
-
+ 
  @discussion
-    Applies a centered crop for all image outputs, scaling as necessary to maintain output dimensions. Minimum value of 1.0 yields full field of view, increasing values will increase magnification, up to a maximum value specified in the activeFormat's videoMaxZoomFactor property. Modifying the zoom factor will cancel any active rampToVideoZoomFactor:withRate:, and snap directly to the assigned value. Assigning values outside the acceptable range will generate an NSRangeException. Clients can key value observe the value of this property.
-
+    Applies a centered crop for all image outputs, scaling as necessary to maintain output dimensions. Minimum value of 1.0 yields full field of view, increasing values will increase magnification, up to a maximum value specified in the activeFormat's videoMaxZoomFactor property. Modifying the zoom factor will cancel any active rampToVideoZoomFactor:withRate:, and snap directly to the assigned value. Assigning values outside the acceptable range will generate an NSRangeException. Clients can key value observe the value of this property. When depth data delivery is enabled, changing the zoom factor sets the videoZoomFactor to the nearest supportedVideoZoomFactor from -[AVCaptureDeviceFormat supportedVideoZoomFactorsForDepthDataDelivery] with a disruptive reconfiguration of the capture render pipeline.
+ 
     -setVideoZoomFactor: throws an NSGenericException if called without first obtaining exclusive access to the receiver using lockForConfiguration:.
-
- @seealso -[AVCaptureDeviceFormat videoMaxZoomFactor] and -[AVCaptureDeviceFormat videoZoomFactorUpscaleThreshold]
+ 
+ @seealso -[AVCaptureDeviceFormat videoMaxZoomFactor], -[AVCaptureDeviceFormat videoZoomFactorUpscaleThreshold], -[AVCaptureDevice minAvailableVideoZoomFactor], -[AVCaptureDevice maxAvailableVideoZoomFactor],  -[AVCaptureDeviceFormat supportedVideoZoomFactorsForDepthDataDelivery], -[AVCaptureDeviceFormat videoMinZoomFactorForCenterStage] and -[AVCaptureDeviceFormat videoMaxZoomFactorForCenterStage]
  */
 @property(nonatomic) CGFloat videoZoomFactor API_AVAILABLE(ios(7.0), macCatalyst(14.0)) API_UNAVAILABLE(macos, tvos);
 
@@ -1759,6 +1759,8 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0)) API_UNAVAILABLE(tvos) AP
     The zoom transition will stop at the specified factor, which must be in the valid range for videoZoomFactor. Assignments to videoZoomFactor while a ramp is in progress will cancel the ramp and snap to the assigned value.
  
     The zoom factor is continuously scaled by pow(2,rate * time). A rate of 0 causes no change in zoom factor, equivalent to calling cancelVideoZoomRamp. A rate of 1 will cause the magnification to double every second (or halve every second if zooming out), and similarly larger or smaller values will zoom faster or slower respectively. Only the absolute value of the rate is significant--sign is corrected for the direction of the target. Changes in rate will be smoothed by an internal acceleration limit.
+ 
+    When depth data delivery is enabled, -rampToVideoZoomFactor:withRate: sets the videoZoomFactor to the nearest supportedVideoZoomFactor from -[AVCaptureDeviceFormat supportedVideoZoomFactorsForDepthDataDelivery] with a disruptive reconfiguration of the capture render pipeline.
  
     -rampToVideoZoomFactor:withRate: throws an NSGenericException if called without first obtaining exclusive access to the receiver using lockForConfiguration:.
  */
@@ -2045,9 +2047,11 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0)) API_UNAVAILABLE(tvos) AP
  @property minAvailableVideoZoomFactor
  @abstract
     Indicates the minimum zoom factor available for the AVCaptureDevice's videoZoomFactor property.
-
+ 
  @discussion
-     On non-virtual devices the minAvailableVideoZoomFactor is always 1.0. On a virtual device the minAvailableVideoZoomFactor can change when the device is delivering depth data to one or more outputs (see -[AVCaptureDeviceFormat videoMinZoomFactorForDepthDataDelivery]). If the device's videoZoomFactor property is assigned a value smaller than 1.0, an NSRangeException is thrown. Setting the videoZoomFactor to a value greater than or equal to 1.0, but lower than minAvailableVideoZoomFactor results in the value being clamped to the minAvailableVideoZoomFactor. Clients can key value observe the value of this property.
+    On non-virtual devices the minAvailableVideoZoomFactor is always 1.0. If the device's videoZoomFactor property is assigned a value smaller than 1.0, an NSRangeException is thrown.
+    On a virtual device the minAvailableVideoZoomFactor can change when the device is delivering depth data to one or more outputs (see -[AVCaptureDeviceFormat supportedVideoZoomFactorsForDepthDataDelivery]). When depth data delivery is enabled, allowed zoom factor values are governed by -[AVCaptureDeviceFormat supportedVideoZoomFactorsForDepthDataDelivery] and this contains the absolute minimum zoom of all allowed zoom factors.
+    Setting the videoZoomFactor to a value greater than or equal to 1.0, but lower than minAvailableVideoZoomFactor results in the value being clamped to the minAvailableVideoZoomFactor. Clients can key value observe the value of this property.
  */
 @property(nonatomic, readonly) CGFloat minAvailableVideoZoomFactor API_AVAILABLE(ios(11.0), macCatalyst(14.0)) API_UNAVAILABLE(macos, tvos);
 
@@ -2055,9 +2059,11 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0)) API_UNAVAILABLE(tvos) AP
  @property maxAvailableVideoZoomFactor
  @abstract
     Indicates the maximum zoom factor available for the AVCaptureDevice's videoZoomFactor property.
-
+ 
  @discussion
-    On non-virtual devices the maxAvailableVideoZoomFactor is always equal to the activeFormat.videoMaxZoomFactor. On a virtual device the maxAvailableVideoZoomFactor can change when the device is delivering depth data to one or more outputs (see -[AVCaptureDeviceFormat videoMaxZoomFactorForDepthDataDelivery]). If the device's videoZoomFactor property is assigned a value greater than activeFormat.videoMaxZoomFactor, an NSRangeException is thrown. Setting the videoZoomFactor to a value less than or equal to activeFormat.videoMaxZoomFactor, but greater than maxAvailableVideoZoomFactor results in the value being clamped to the maxAvailableVideoZoomFactor. Clients can key value observe the value of this property.
+    On non-virtual devices the maxAvailableVideoZoomFactor is always equal to the activeFormat.videoMaxZoomFactor. If the device's videoZoomFactor property is assigned a value greater than activeFormat.videoMaxZoomFactor, an NSRangeException is thrown.
+    On a virtual device the maxAvailableVideoZoomFactor can change when the device is delivering depth data to one or more outputs (see -[AVCaptureDeviceFormat supportedVideoZoomFactorsForDepthDataDelivery]). When depth data delivery is enabled, allowed zoom factor values are governed by -[AVCaptureDeviceFormat supportedVideoZoomFactorsForDepthDataDelivery] and this contains the absolute maximum zoom of all allowed zoom factors.
+    Setting the videoZoomFactor to a value less than or equal to activeFormat.videoMaxZoomFactor, but greater than maxAvailableVideoZoomFactor results in the value being clamped to the maxAvailableVideoZoomFactor. Clients can key value observe the value of this property.
  */
 @property(nonatomic, readonly) CGFloat maxAvailableVideoZoomFactor API_AVAILABLE(ios(11.0), macCatalyst(14.0)) API_UNAVAILABLE(macos, tvos);
 
@@ -2173,6 +2179,34 @@ typedef NS_ENUM(NSInteger, AVCaptureCenterStageControlMode) {
     This property is key-value observable.
  */
 @property(nonatomic, readonly, getter=isCenterStageActive) BOOL centerStageActive API_AVAILABLE(macos(12.3), ios(14.5), macCatalyst(14.5)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
+
+/*!
+ @property centerStageRectOfInterestSupported
+ @abstract
+    Indicates whether the device supports the Center Stage Rect of Interest feature.
+ 
+ @discussion
+    This property returns YES if the device supports Center Stage Rect of Interest.
+ */
+@property(nonatomic, readonly, getter=isCenterStageRectOfInterestSupported) BOOL centerStageRectOfInterestSupported API_UNAVAILABLE(macos, ios, macCatalyst) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
+
+/*!
+ @property centerStageRectOfInterest
+ @abstract
+    Specifies the effective region within the output pixel buffer that will be used to perform Center Stage framing.
+ 
+ @discussion
+    Applications that wish to apply additional processing (such as cropping) on top of Center Stage's output can use this property to guide Center Stage's framing.
+ 
+    The rectangle's origin is top left and is relative to the coordinate space of the output pixel buffer. The default value of this property is the value CGRectMake(0, 0, 1, 1), where {0,0} represents the top left of the picture area, and {1,1} represents the bottom right on an unrotated picture. This rectangle of interest is applied prior to rotation, mirroring or scaling.
+ 
+    Pixels outside of this rectangle of interest will be blackened out.
+ 
+    Setting this property has no impact on objects specified in the metadata output.
+ 
+    -setCenterStageRectOfInterest: throws an NSGenericException if called without first obtaining exclusive access to the receiver using -lockForConfiguration:. -setCenterStageRectOfInterest: throws an NSInvalidArgumentException if none of the AVCaptureDeviceFormats supported by the receiver support CenterStage. -setCenterStageRectOfInterest: throws an NSInvalidArgumentException if +centerStageEnabled is NO on the AVCaptureDevice class. -setCenterStageRectOfInterest: throws an NSInvalidArgumentException if the provided rectOfInterest goes outside the normalized (0-1) coordinate space.
+ */
+@property(nonatomic) CGRect centerStageRectOfInterest API_AVAILABLE(macos(13.3), ios(16.4), macCatalyst(16.4)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
 
 @end
 
@@ -2307,8 +2341,8 @@ typedef NS_ENUM(NSInteger, AVCaptureSystemUserInterface) {
  @abstract
     Displays the system's user interface for video effects or microphone modes.
  
-  @param systemUserInterface
-     The system UI to show.
+ @param systemUserInterface
+    The system UI to show.
  
  @discussion
     This method allows the calling application to prompt the user to make changes to Video Effects (such as Center Stage or the Portrait Effect) or Microphone Modes. It brings up the system user interface and deep links to the appropriate module. This method is non-blocking. After presenting the desired system user interface, control returns immediately to the application.
@@ -2670,7 +2704,7 @@ AV_INIT_UNAVAILABLE
        - Depth data accompanying still images is not supported by AVCaptureStillImageOutput. You must use AVCapturePhotoOutput.
        - By opting in for depth data ( -[AVCapturePhotoSettings setDepthDataDeliveryEnabled:YES] ), you implicitly opt in for high resolution depth data if it's available. You may query the -[AVCaptureDevice activeDepthDataFormat]'s highResolutionStillImageDimensions to discover the depth data resolution that will be delivered with captured photos.
  */
-@property(nonatomic, readonly) CMVideoDimensions highResolutionStillImageDimensions API_AVAILABLE(ios(8.0), macCatalyst(14.0)) API_UNAVAILABLE(macos, tvos);
+@property(nonatomic, readonly) CMVideoDimensions highResolutionStillImageDimensions API_DEPRECATED("Use supportedMaxPhotoDimensions instead.", ios(8.0, 16.0), macCatalyst(14.0, 16.0)) API_UNAVAILABLE(macos, tvos);
 
 /*!
  @property highPhotoQualitySupported
@@ -2719,22 +2753,26 @@ AV_INIT_UNAVAILABLE
 /*!
  @property videoMinZoomFactorForDepthDataDelivery
  @abstract
-    Indicates the minimum zoom factor available for the AVCaptureDevice's videoZoomFactor property when delivering depth data to one or more outputs.
-
- @discussion
-    Virtual devices support a limited zoom range when delivering depth data to any output. If this device format has no -supportedDepthDataFormats, this property returns 1.0.
+    A deprecated property. Please use supportedVideoZoomFactorsForDepthDataDelivery instead
  */
-@property(nonatomic, readonly) CGFloat videoMinZoomFactorForDepthDataDelivery API_AVAILABLE(ios(11.0), macCatalyst(14.0)) API_UNAVAILABLE(macos, tvos);
+@property(nonatomic, readonly) CGFloat videoMinZoomFactorForDepthDataDelivery API_DEPRECATED_WITH_REPLACEMENT("supportedVideoZoomFactorsForDepthDataDelivery", ios(11.0,16.0), macCatalyst(14.0,16.0)) API_UNAVAILABLE(macos, tvos);
 
 /*!
  @property videoMaxZoomFactorForDepthDataDelivery
  @abstract
-    Indicates the maximum zoom factor available for the AVCaptureDevice's videoZoomFactor property when delivering depth data to one or more outputs.
-
- @discussion
-    Virtual devices support a limited zoom range when delivering depth data to any output. If this device format has no -supportedDepthDataFormats, this property returns videoMaxZoomFactor.
+    A deprecated property. Please use supportedVideoZoomFactorsForDepthDataDelivery instead
  */
-@property(nonatomic, readonly) CGFloat videoMaxZoomFactorForDepthDataDelivery API_AVAILABLE(ios(11.0), macCatalyst(14.0)) API_UNAVAILABLE(macos, tvos);
+@property(nonatomic, readonly) CGFloat videoMaxZoomFactorForDepthDataDelivery API_DEPRECATED_WITH_REPLACEMENT("supportedVideoZoomFactorsForDepthDataDelivery", ios(11.0,16.0), macCatalyst(14.0,16.0)) API_UNAVAILABLE(macos, tvos);
+
+/*!
+ @property supportedVideoZoomFactorsForDepthDataDelivery
+ @abstract
+    Indicates the sorted zoom factors available for the AVCaptureDevice's videoZoomFactor property when delivering depth data to one or more outputs.
+ 
+ @discussion
+    Virtual devices support limited zoom factors when delivering depth data to any output. If this device format has no -supportedDepthDataFormats, this property returns an empty array.
+ */
+@property(nonatomic, readonly) NSArray<NSNumber *> *supportedVideoZoomFactorsForDepthDataDelivery API_AVAILABLE(ios(16.0), macCatalyst(16.0)) API_UNAVAILABLE(macos, tvos) API_UNAVAILABLE(watchos) NS_REFINED_FOR_SWIFT;
 
 /*!
  @property supportedDepthDataFormats
@@ -2755,6 +2793,26 @@ AV_INIT_UNAVAILABLE
     As a rule, AVCaptureDeviceFormats of a given mediaType are available for use with all AVCaptureOutputs that accept that media type, but there are exceptions. For instance, on apps linked against iOS versions earlier than 12.0, the photo resolution video formats may not be used as sources for AVCaptureMovieFileOutput due to bandwidth limitations. On DualCamera devices, AVCaptureDepthDataOutput is not supported when outputting full resolution (i.e. 12 MP) video due to bandwidth limitations. In order to stream depth data plus video data from a photo format, ensure that your AVCaptureVideoDataOutput's deliversPreviewSizedOutputBuffers property is set to YES. Likewise, to stream depth data while capturing video to a movie file using AVCaptureMovieFileOutput, call -[AVCaptureSession setSessionPreset:AVCaptureSessionPresetPhoto]. When using the photo preset, video is captured at preview resolution rather than the full sensor resolution.
  */
 @property(nonatomic, readonly) NSArray<Class> *unsupportedCaptureOutputClasses API_AVAILABLE(ios(11.0), macCatalyst(14.0)) API_UNAVAILABLE(macos, tvos);
+
+/*!
+@property supportedMaxPhotoDimensions
+@abstract
+    This property lists all of the supported maximum photo dimensions for this format. The array contains CMVideoDimensions structs encoded as NSValues.
+
+@discussion
+    Enumerate all supported resolution settings for which this format may be configured to capture photos. Use these values to set AVCapturePhotoOutput.maxPhotoDimensions and AVCapturePhotoSettings.maxPhotoDimensions.
+ */
+@property(nonatomic, readonly) NSArray<NSValue *> *supportedMaxPhotoDimensions API_AVAILABLE(ios(16.0), macos(13.0), macCatalyst(16.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) NS_REFINED_FOR_SWIFT;
+
+/*!
+@property secondaryNativeResolutionZoomFactors
+@abstract
+    Indicates zoom factors at which this device transitions to secondary native resolution modes.
+
+@discussion
+    Devices with this property have the means to switch their pixel sampling mode on the fly to produce a high-fidelity, non-upsampled images at a fixed zoom factor beyond 1.0x.
+ */
+@property(nonatomic, readonly) NSArray<NSNumber *> *secondaryNativeResolutionZoomFactors API_AVAILABLE(ios(16.0), macos(13.0), macCatalyst(16.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) NS_REFINED_FOR_SWIFT;
 
 @end
 
@@ -2890,7 +2948,7 @@ API_AVAILABLE(macos(13.0), ios(16.0), macCatalyst(16.0)) API_UNAVAILABLE(tvos) A
  @discussion
     This property changes to reflect the Studio Light state in Control Center. It is key-value observable.
  */
-@property(class, getter=isStudioLightEnabled) BOOL studioLightEnabled API_AVAILABLE(macos(13.0), ios(16.0), macCatalyst(16.0), tvos(16.0)) API_UNAVAILABLE(watchos);
+@property(class, readonly, getter=isStudioLightEnabled) BOOL studioLightEnabled API_AVAILABLE(macos(13.0), ios(16.0), macCatalyst(16.0), tvos(16.0)) API_UNAVAILABLE(watchos);
 
 /*!
  @property studioLightActive

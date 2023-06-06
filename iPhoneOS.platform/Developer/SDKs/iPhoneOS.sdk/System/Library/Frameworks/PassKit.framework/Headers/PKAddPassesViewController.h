@@ -1,6 +1,7 @@
+#if !__has_include(<PassKitUI/PKAddPassesViewController.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKAddPassesViewController.h
-//  PassKit
+//    PassKit
 //
 //  Copyright (c) 2011 Apple, Inc. All rights reserved.
 //
@@ -32,6 +33,7 @@ API_AVAILABLE(ios(6.0))
  */
 - (nullable instancetype)initWithPass:(PKPass *)pass;
 - (nullable instancetype)initWithPasses:(NSArray<PKPass *> *)passes API_AVAILABLE(ios(7.0));
+- (nullable instancetype)initWithIssuerData:(NSData *)issuerData signature:(NSData *)signature error:(NSError **)error API_AVAILABLE(ios(16.4));
 + (BOOL)canAddPasses API_AVAILABLE(ios(8.0));
 
 @property(nonatomic, weak, nullable) id <PKAddPassesViewControllerDelegate> delegate;
@@ -40,5 +42,12 @@ API_AVAILABLE(ios(6.0))
 
 NS_ASSUME_NONNULL_END
 
+#endif
+#endif
+
+#else
+#if !TARGET_OS_OSX 
+#import <TargetConditionals.h>
+#import <PassKitUI/PKAddPassesViewController.h>
 #endif
 #endif

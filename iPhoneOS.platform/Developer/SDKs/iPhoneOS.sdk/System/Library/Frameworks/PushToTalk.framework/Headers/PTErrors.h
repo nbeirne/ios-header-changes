@@ -56,5 +56,8 @@ typedef NS_ERROR_ENUM(PTChannelErrorDomain, PTChannelError) {
     
     /// A Screen Time restriction prevented the action
     PTChannelErrorScreenTimeRestriction = 8,
+
+    /// A transmission is not allowed due to the current transmission mode of the channel
+    PTChannelErrorTransmissionNotAllowed = 9,
 } API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, macCatalyst, tvos, watchos);
 

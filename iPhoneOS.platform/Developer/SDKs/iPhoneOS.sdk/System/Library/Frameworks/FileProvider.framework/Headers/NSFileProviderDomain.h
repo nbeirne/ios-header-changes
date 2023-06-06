@@ -157,7 +157,7 @@ FILEPROVIDER_API_AVAILABILITY_V2_V3
  */
 @property (readonly, getter=isDisconnected) BOOL disconnected FILEPROVIDER_API_AVAILABILITY_V3;
 
-/** If user has disabled this domain from Files.app on iOS or System Preferences on macOS, this will bet set
+/** If user has disabled this domain from Files.app on iOS or System Settings on macOS, this will be set
  to NO.
 */
 @property (readonly) BOOL userEnabled FILEPROVIDER_API_AVAILABILITY_V3_IOS;
@@ -219,10 +219,15 @@ FILEPROVIDER_API_AVAILABILITY_V2_V3
  This property only applies for extensions that implement NSFileProviderReplicatedExtension.
 
  Defaults to YES. Set this to NO to indicate that the domain cannot sync the trash.
- In the case that the domain cannot sync the trash, the system might still offer trashing to the local trash when appropriate,
- but the operation will look like a delete to the extension.
+ If this property is set to YES the system will move the trashed item to the domain trash.
+ If this property is set to NO and the trashed item does not have the NSFileProviderItemCapabilitiesAllowsTrashing capability, the system will offer to permanently delete the item.
+ If this property is set to NO and the trashed item does have the NSFileProviderItemCapabilitiesAllowsTrashing capability, then the system will behave differently based on whether the item
+ is recursively materialized. If the item is fully materialized, it will be moved to the user's home trash and the operation will look like a delete to the extension.
+ If the item is not fully materialized, the system will offer to permanently delete the item.
  */
 @property (readwrite, assign) BOOL supportsSyncingTrash FILEPROVIDER_API_AVAILABILITY_V5_0;
+
+@property (nonatomic, readonly, nullable) NSUUID *volumeUUID;
 
 @end
 

@@ -1,7 +1,7 @@
 #if !__has_include(<PassKitCore/PKRecurringPaymentSummaryItem.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKRecurringPaymentSummaryItem.h
-//  PassKit
+//    PassKit
 //  Copyright © 2021 Apple, Inc. All rights reserved.
 //
 
@@ -34,5 +34,6 @@ NS_ASSUME_NONNULL_END
 #endif // __PKRECURRINGPAYMENTSUMMARYITEM_H__
 
 #else
+#import <TargetConditionals.h>
 #import <PassKitCore/PKRecurringPaymentSummaryItem.h>
 #endif

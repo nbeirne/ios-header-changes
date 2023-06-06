@@ -13,4 +13,4 @@ typedef NS_ENUM(NSInteger, SWHighlightCenterErrorCode) {
     SWHighlightCenterErrorCodeInternalError,
     SWHighlightCenterErrorCodeInvalidURL,
     SWHighlightCenterErrorCodeAccessDenied,
-};
+} API_AVAILABLE(ios(16.0), macos(13.0), tvos(16.0));

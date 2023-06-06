@@ -31,9 +31,9 @@ DD_EXTERN DDDeviceProtocolString const DDDeviceProtocolStringDIAL NS_SWIFT_NAME(
 
 typedef NS_ENUM( NSInteger, DDDeviceProtocol )
  {
-	DDDeviceProtocolInvalid											= 0,	/// Invalid protocol.
-	DDDeviceProtocolDIAL NS_SWIFT_NAME(DDDeviceProtocol.dial)		= 1,	/// DIAL protocol.
- };
+	DDDeviceProtocolInvalid NS_SWIFT_NAME(invalid)					= 0,	/// Invalid protocol.
+	DDDeviceProtocolDIAL NS_SWIFT_NAME(dial)						= 1,	/// DIAL protocol.
+ } NS_SWIFT_NAME(DDDevice.Protocol);
 
 /// Converts a device protocol type to a string for logging, etc.
 DD_EXTERN
@@ -72,6 +72,20 @@ typedef NS_ENUM( NSInteger, DDDeviceState )
 DD_EXTERN
 API_AVAILABLE( ios( 16.0 ) )
 NSString * DDDeviceStateToString( DDDeviceState inValue );
+
+//===========================================================================================================================
+/// State of media playback on the device.
+typedef NS_ENUM( NSInteger, DDDeviceMediaPlaybackState )
+{
+	DDDeviceMediaPlaybackStateNoContent		= 0, /// Not playing any media content.
+	DDDeviceMediaPlaybackStatePaused		= 1, /// Media content playback is paused.
+	DDDeviceMediaPlaybackStatePlaying		= 2, /// Media content is playing.
+} NS_SWIFT_NAME(DDDevice.MediaPlaybackState);
+
+/// Converts a device media playback state to a string for logging, etc.
+DD_EXTERN
+API_AVAILABLE( ios( 16.0 ) )
+NSString * DDDeviceMediaPlaybackStateToString( DDDeviceMediaPlaybackState inValue );
 
 //===========================================================================================================================
 /// DeviceDiscoveryExtension device.
@@ -117,6 +131,15 @@ API_AVAILABLE( ios( 16.0 ) )
 /// URL used for SSDP connection.
 /// The URL must have a valid hostname, no query parameters, and a maximum size of 100 bytes.
 @property (readwrite, copy, nonatomic) NSURL *url;
+
+/// Current state of media playback on this device.
+@property (readwrite, assign, nonatomic) DDDeviceMediaPlaybackState mediaPlaybackState;
+
+/// Title of the media content being played.
+@property (readwrite, copy, nullable, nonatomic) NSString *mediaContentTitle;
+
+/// Subtitle of the media content being played. It can be used to display extra information about the content, such as the name of the artist.
+@property (readwrite, copy, nullable, nonatomic) NSString *mediaContentSubtitle;
 
 @end
 

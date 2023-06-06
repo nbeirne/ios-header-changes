@@ -1,7 +1,7 @@
 #if !__has_include(<PassKitCore/PKLabeledValue.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKLabeledValue.h
-//  PassKit
+//    PassKit
 //
 //  Copyright © 2016 Apple, Inc. All rights reserved.
 //
@@ -23,5 +23,6 @@ API_AVAILABLE(ios(10.1))
 NS_ASSUME_NONNULL_END
 
 #else
+#import <TargetConditionals.h>
 #import <PassKitCore/PKLabeledValue.h>
 #endif

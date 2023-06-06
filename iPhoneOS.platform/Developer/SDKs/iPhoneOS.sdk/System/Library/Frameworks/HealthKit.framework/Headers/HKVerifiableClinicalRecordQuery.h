@@ -33,7 +33,7 @@ API_UNAVAILABLE(watchos)
  @property      sourceTypes
  @abstract      The source type(s) of the records.
  */
-@property (readonly, copy) NSArray<HKVerifiableClinicalRecordSourceType> *sourceTypes API_AVAILABLE(ios(15.4));
+@property (readonly, copy) NSArray<HKVerifiableClinicalRecordSourceType> *sourceTypes API_AVAILABLE(ios(15.4), macCatalyst(15.4), macos(13.0));
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
@@ -66,7 +66,7 @@ API_UNAVAILABLE(watchos)
                           predicate:(nullable NSPredicate *)predicate
                      resultsHandler:(void(^)(HKVerifiableClinicalRecordQuery *query,
                                              NSArray<HKVerifiableClinicalRecord *> * _Nullable records,
-                                             NSError * _Nullable error))resultsHandler API_AVAILABLE(ios(15.4));
+                                             NSError * _Nullable error))resultsHandler API_AVAILABLE(ios(15.4), macCatalyst(15.4), macos(13.0));
 
 @end
 

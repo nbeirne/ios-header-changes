@@ -27,7 +27,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 - (id)remoteObjectProxy;
 
 // Returns a proxy object which will invoke the error handling block if an error occurs on the connection. If the message sent to the proxy has a reply handler, then either the error handler or the reply handler will be called exactly once. This proxy object will also conform with the NSXPCProxyCreating protocol.
-- (id)remoteObjectProxyWithErrorHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSError *error))handler;
+- (id)remoteObjectProxyWithErrorHandler:(void (NS_SWIFT_SENDABLE ^)(NSError *error))handler;
 
 @optional
 
@@ -108,7 +108,7 @@ API_AVAILABLE(macos(10.8), ios(6.0), watchos(2.0), tvos(9.0))
 @property (readonly) gid_t effectiveGroupIdentifier;
 
 // Get the current connection, in the context of a call to a method on your exported object. Useful for determining 'who called this'.
-+ (nullable NSXPCConnection *)currentConnection API_AVAILABLE(macos(10.8), ios(6.0), watchos(2.0), tvos(9.0));
++ (nullable NSXPCConnection *)currentConnection API_AVAILABLE(macos(10.8), ios(6.0), watchos(2.0), tvos(9.0)) NS_SWIFT_UNAVAILABLE_FROM_ASYNC("currentConnection cannot be used from async contexts.");
 
 // Add a barrier block to be executed on the connection. This barrier block will run after any outstanding sends have completed. Note: This does not guarantee that messages will be received by the remote process by the time the block is invoked. If you need to ensure receipt of a message by the remote process, waiting for a reply to come back is the best option.
 - (void)scheduleSendBarrierBlock:(void (^)(void))block API_AVAILABLE(macos(10.15), ios(13.0), watchos(6.0), tvos(13.0));

@@ -1,7 +1,7 @@
 #if !__has_include(<PassKitCore/PKPayment.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKPayment.h
-//  PassKit
+//    PassKit
 //  Copyright (c) 2014 Apple, Inc. All rights reserved.
 //
 
@@ -57,5 +57,6 @@ API_AVAILABLE(macos(11.0), ios(8.0), watchos(3.0))
 #endif
 
 #else
+#import <TargetConditionals.h>
 #import <PassKitCore/PKPayment.h>
 #endif

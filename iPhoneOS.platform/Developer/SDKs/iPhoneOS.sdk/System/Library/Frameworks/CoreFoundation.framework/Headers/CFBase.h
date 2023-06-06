@@ -312,6 +312,12 @@ CF_EXTERN_C_BEGIN
 # define CF_SWIFT_NAME(_name)
 #endif
 
+#if __has_attribute(__swift_attr__)
+#  define CF_SWIFT_UNAVAILABLE_FROM_ASYNC(msg) __attribute__((__swift_attr__("@_unavailableFromAsync(message: \"" msg "\")")))
+#else
+#  define CF_SWIFT_UNAVAILABLE_FROM_ASYNC(msg)
+#endif
+
 #if __has_attribute(noescape)
 #define CF_NOESCAPE __attribute__((noescape))
 #else
@@ -726,6 +732,5 @@ CFTypeRef CFMakeCollectable(CFTypeRef cf) CF_AUTOMATED_REFCOUNT_UNAVAILABLE;
 
 CF_EXTERN_C_END
 
-#include <CoreFoundation/CFCGTypes.h>
 #endif /* ! __COREFOUNDATION_CFBASE__ */
 

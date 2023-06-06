@@ -21,6 +21,7 @@ FOUNDATION_EXPORT const unsigned char SharedWithYouCoreVersionString[];
 #import <SharedWithYouCore/SWCollaborationCoordinator.h>
 #import <SharedWithYouCore/SWCollaborationOption.h>
 #import <SharedWithYouCore/SWCollaborationOptionsGroup.h>
+#import <SharedWithYouCore/SWCollaborationOptionsPickerGroup.h>
 #import <SharedWithYouCore/SWCollaborationShareOptions.h>
 #import <SharedWithYouCore/SWCollaborationMetadata.h>
 #import <SharedWithYouCore/SWPerson.h>

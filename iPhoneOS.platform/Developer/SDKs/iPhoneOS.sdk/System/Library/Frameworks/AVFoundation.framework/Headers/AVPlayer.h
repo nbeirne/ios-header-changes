@@ -24,10 +24,6 @@
 
 	  To allow clients to add and remove their objects as key-value observers safely, AVPlayer serializes notifications of
 	  changes that occur dynamically during playback on a dispatch queue. By default, this queue is the main queue. See dispatch_get_main_queue().
-	  
-	  To ensure safe access to AVPlayer's nonatomic properties while dynamic changes in playback state may be reported, clients must
-	  serialize their access with the receiver's notification queue. In the common case, such serialization is naturally achieved
-	  by invoking AVPlayer's various methods on the main thread or queue.
 */
 
 #import <AVFoundation/AVBase.h>
@@ -120,7 +116,7 @@ API_AVAILABLE(macos(10.7), ios(4.0), tvos(9.0), watchos(1.0))
 	instance needs to be created in its place. When this happens, clients can check the value of the error property to
 	determine the nature of the failure. This property is key value observable.
  */
-@property (nonatomic, readonly) AVPlayerStatus status;
+@property (readonly) AVPlayerStatus status;
 
 /*!
  @property error
@@ -131,7 +127,7 @@ API_AVAILABLE(macos(10.7), ios(4.0), tvos(9.0), watchos(1.0))
 	The value of this property is an NSError that describes what caused the receiver to no longer be able to play items.
 	If the receiver's status is not AVPlayerStatusFailed, the value of this property is nil.
  */
-@property (nonatomic, readonly, nullable) NSError *error;
+@property (readonly, nullable) NSError *error;
 
 @end
 
@@ -177,7 +173,7 @@ AVF_EXPORT AVPlayerRateDidChangeReason const AVPlayerRateDidChangeReasonAppBackg
  
  Before macOS 13, iOS 16, tvOS 16, and watchOS 9, this property must be accessed on the main thread/queue.
  */
-@property (nonatomic) float rate
+@property float rate
 #if ! AVF_DEPLOYING_TO_2022_RELEASES_AND_LATER
 NS_SWIFT_UI_ACTOR
 #endif
@@ -249,7 +245,7 @@ typedef NS_ENUM(NSInteger, AVPlayerTimeControlStatus) {
  
 When automaticallyWaitsToMinimizeStalling is YES, absent intervention in the form of invocations of -setRate: or -pause or, on iOS, an interruption that requires user intervention before playback can resume, the value of the property timeControlStatus automatically changes between AVPlayerTimeControlStatusPlaying and AVPlayerTimeControlStatusWaitingToPlayAtSpecifiedRate depending on whether sufficient media data is available to continue playback. This property is key value observable.
 */
-@property (nonatomic, readonly) AVPlayerTimeControlStatus timeControlStatus API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
+@property (readonly) AVPlayerTimeControlStatus timeControlStatus API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
 
 /*!
  @typedef AVPlayerWaitingReason
@@ -301,7 +297,7 @@ AVF_EXPORT AVPlayerWaitingReason const AVPlayerWaitingForCoordinatedPlaybackReas
     Possible values are AVPlayerWaitingWithNoItemToPlayReason, AVPlayerWaitingWhileEvaluatingBufferingRateReason, and AVPlayerWaitingToMinimizeStallsReason.
 */
 
-@property (nonatomic, readonly, nullable) AVPlayerWaitingReason reasonForWaitingToPlay API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
+@property (readonly, nullable) AVPlayerWaitingReason reasonForWaitingToPlay API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
 
 
 /*!
@@ -325,7 +321,7 @@ API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
 @interface AVPlayer (AVPlayerItemControl)
 
 /* indicates the current item of the player */
-@property (nonatomic, readonly, nullable) AVPlayerItem *currentItem;
+@property (readonly, nullable) AVPlayerItem *currentItem;
 
 /*!
 	@method			replaceCurrentItemWithPlayerItem:
@@ -720,7 +716,7 @@ API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0), watchos(1.0));
 @property BOOL allowsExternalPlayback API_AVAILABLE(macos(10.11), ios(6.0), tvos(9.0)) API_UNAVAILABLE(watchos);
 
 /* Indicates whether the player is currently playing video in "external playback" mode. */
-@property (nonatomic, readonly, getter=isExternalPlaybackActive) BOOL externalPlaybackActive API_AVAILABLE(macos(10.11), ios(6.0), tvos(9.0)) API_UNAVAILABLE(watchos);
+@property (readonly, getter=isExternalPlaybackActive) BOOL externalPlaybackActive API_AVAILABLE(macos(10.11), ios(6.0), tvos(9.0)) API_UNAVAILABLE(watchos);
 
 /* Indicates whether the player should automatically switch to "external playback" mode while the "external 
 	screen" mode is active in order to play video content and switching back to "external screen" mode as soon 
@@ -743,7 +739,7 @@ API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0), watchos(1.0));
 
 /* Indicates whether the player is currently playing video via AirPlay. 
 	This property is deprecated. Use AVPlayer's -externalPlaybackActive instead.*/
-@property (nonatomic, readonly, getter=isAirPlayVideoActive) BOOL airPlayVideoActive API_DEPRECATED_WITH_REPLACEMENT("externalPlaybackActive", ios(5.0, 6.0), tvos(9.0, 9.0)) API_UNAVAILABLE(watchos) API_UNAVAILABLE(macos);
+@property (readonly, getter=isAirPlayVideoActive) BOOL airPlayVideoActive API_DEPRECATED_WITH_REPLACEMENT("externalPlaybackActive", ios(5.0, 6.0), tvos(9.0, 9.0)) API_UNAVAILABLE(watchos) API_UNAVAILABLE(macos);
 
 /* Indicates whether the player should automatically switch to AirPlay Video while AirPlay Screen is active in order to play video content, switching back to AirPlay Screen as soon as playback is done. 
 	The default value is NO. Has no effect if allowsAirPlayVideo is NO.
@@ -777,7 +773,7 @@ API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0), watchos(1.0));
 		current item. These requirements are inherent to the content itself and cannot be externally specified.
 		If the current item does not require external protection, the value of this property will be NO.
  */
-@property (nonatomic, readonly) BOOL outputObscuredDueToInsufficientExternalProtection API_AVAILABLE(macos(10.12), ios(6.0), tvos(9.0)) API_UNAVAILABLE(watchos);
+@property (readonly) BOOL outputObscuredDueToInsufficientExternalProtection API_AVAILABLE(macos(10.12), ios(6.0), tvos(9.0)) API_UNAVAILABLE(watchos);
 
 @end
 
@@ -807,7 +803,7 @@ typedef NS_OPTIONS(NSInteger, AVPlayerHDRMode) {
 	 @discussion
 		 This property indicates all of the HDR modes that the device can play.  Each value indicates that an appropriate HDR display is available for the specified HDR mode.  Additionally, the device must be capable of playing the specified HDR type.  This property does not indicate whether video contains HDR content, whether HDR video is currently playing, or whether video is playing on an HDR display.
 */
-@property (class, nonatomic, readonly) AVPlayerHDRMode availableHDRModes API_AVAILABLE(ios(11.2), tvos(11.2)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos);
+@property (class, readonly) AVPlayerHDRMode availableHDRModes API_AVAILABLE(ios(11.2), tvos(11.2)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos);
 
 /*!
 	 @constant		AVPlayerAvailableHDRModesDidChangeNotification
@@ -826,7 +822,7 @@ AVF_EXPORT NSNotificationName const AVPlayerAvailableHDRModesDidChangeNotificati
  @discussion
  This property is YES if an HDR display is available and the device is capable of playing HDR content from an appropriate AVAsset, NO otherwise.  This property does not indicate whether video contains HDR content, whether HDR video is currently playing, or whether video is playing on an HDR display.  This property is not KVO observable.
  */
-@property (class, nonatomic, readonly) BOOL eligibleForHDRPlayback API_AVAILABLE(macos(10.15), ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
+@property (class, readonly) BOOL eligibleForHDRPlayback API_AVAILABLE(macos(10.15), ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
 
 /*!
  @constant		eligibleForHDRPlaybackDidChangeNotification

@@ -1,7 +1,7 @@
 #if !__has_include(<PassKitCore/PKVehicleConnectionSession.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKVehicleConnectionSession.h
-//  PassKit
+//    PassKit
 //
 //  Copyright © 2021 Apple, Inc. All rights reserved.
 //
@@ -66,5 +66,6 @@ API_DEPRECATED("PKVehicleConnectionSession has been deprecated. Please migrate a
 NS_ASSUME_NONNULL_END
 
 #else
+#import <TargetConditionals.h>
 #import <PassKitCore/PKVehicleConnectionSession.h>
 #endif

@@ -1,3 +1,5 @@
+#import <TargetConditionals.h>
+#if !TARGET_OS_TV
 //
 //  SWUpdateCollaborationParticipantsAction.h
 //  SharedWithYouCore
@@ -13,7 +15,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SWUpdateCollaborationParticipantsAction : SWAction <NSSecureCoding, NSCopying>
+API_AVAILABLE(ios(16.0), macos(13.0))
+SW_EXTERN @interface SWUpdateCollaborationParticipantsAction : SWAction <NSSecureCoding, NSCopying>
 
 @property (nonatomic, readonly) SWCollaborationMetadata *collaborationMetadata;
 
@@ -27,3 +30,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif // !TARGET_OS_TV

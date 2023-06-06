@@ -66,7 +66,7 @@
  */
 
 #ifndef _DNS_SD_H
-#define _DNS_SD_H 1789000000
+#define _DNS_SD_H 1807102002
 
 /* DNS-SD API version strings are of the form x[.y[.z]].
  * Version strings less than or equal to 1661 are encoded as (x * 10000) + (y * 100) + z, where 0 ≤ y,z ≤ 99.
@@ -2299,7 +2299,10 @@ typedef void (DNSSD_API *DNSServiceRegisterRecordReply)
  *
  *  @discussion
  *                  Note that name conflicts occurring for records registered via this call must be handled
- *                  by the client in the callback.
+ *                  by the client in the callback. The RecordRef object returned by the DNSServiceRegisterRecord
+ *                  call in this case is not disposed of as a result of the error. The caller is responsible
+ *                  for disposing of it either calling DNSServiceRemoveRecord on the value returned in RecordRef,
+ *                  or by calling DNSServiceRefDeallocate on the DNSServiceRef value passed in sdRef.
  */
 DNSSD_EXPORT
 DNSServiceErrorType DNSSD_API DNSServiceRegisterRecord
@@ -3186,7 +3189,8 @@ DNSServiceErrorType DNSSD_API DNSServiceAttributeSetAAAAPolicy
  *  @param attr
  *                  DNSServiceAttribute pointer.
  *  @param timestamp
- *                  Time since epoch in seconds.
+ *                  Relative time in seconds. Should be zero if the timestamp is now,
+ *                  30 if the timestamp is 30 seconds in the past, and so on.
  *  @result
  *                  Returns kDNSServiceErr_NoError.
  */

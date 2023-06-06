@@ -2,9 +2,11 @@
 //  INIntentResponses.h
 //  Intents
 //
-//  Copyright (c) 2016-2022 Apple Inc. All rights reserved.
+//  Copyright (c) 2016-2023 Apple Inc. All rights reserved.
 //
 
+#import <Intents/INAnswerCallIntentResponse.h>
+#import <Intents/INHangUpCallIntentResponse.h>
 #import <Intents/INSearchCallHistoryIntentResponse.h>
 #import <Intents/INStartAudioCallIntentResponse.h>
 #import <Intents/INStartCallIntentResponse.h>

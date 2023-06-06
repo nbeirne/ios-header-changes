@@ -1,3 +1,5 @@
+#import <TargetConditionals.h>
+#if !TARGET_OS_TV
 //  Copyright (c) 2022 Apple. All rights reserved.
 
 #import <Foundation/Foundation.h>
@@ -9,12 +11,13 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, SWHighlightChangeEventTrigger) {
     SWHighlightChangeEventTriggerEdit = 1,
     SWHighlightChangeEventTriggerComment = 2,
-};
+} API_AVAILABLE(ios(16.0), macos(13.0));
 
 /*!
  @class SWHighlightChangeEvent
  @abstract A model object representing activity that has happened on some content.
  */
+API_AVAILABLE(ios(16.0), macos(13.0))
 SW_EXTERN @interface SWHighlightChangeEvent : NSObject <SWHighlightEvent>
 
 // The type of change event for the highlight.
@@ -33,3 +36,5 @@ SW_EXTERN @interface SWHighlightChangeEvent : NSObject <SWHighlightEvent>
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif // !TARGET_OS_TV

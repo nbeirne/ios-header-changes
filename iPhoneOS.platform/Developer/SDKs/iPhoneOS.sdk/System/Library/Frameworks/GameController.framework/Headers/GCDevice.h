@@ -44,7 +44,6 @@ API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0))
  Gets the physical input profile for the device.
 
  @note This is equivalent to the controller's gamepad, microGamepad, or extendedGamepad instance.
- @see GCController.gamepad
  @see GCController.microGamepad
  @see GCController.extendedGamepad
 */

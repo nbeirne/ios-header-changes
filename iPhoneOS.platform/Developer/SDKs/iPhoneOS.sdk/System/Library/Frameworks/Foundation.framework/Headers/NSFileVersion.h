@@ -49,7 +49,7 @@ When a version is successfully downloaded, its contents are cached locally, and 
  
 If you need to get all versions for a document, both local and non-local, you should use an NSFilePresenter that implements -presentedItemDidGainVersion: and -presentedItemDidLoseVersion: and invoke +[NSFileCoordinator addFilePresenter:], +[NSFileVersion otherVersionsOfItemAtURL:], and this method within a single coordinated read.
 */
-+ (void)getNonlocalVersionsOfItemAtURL:(NSURL *)url completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSArray<NSFileVersion *> * _Nullable nonlocalFileVersions, NSError * _Nullable error))completionHandler API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
++ (void)getNonlocalVersionsOfItemAtURL:(NSURL *)url completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSArray<NSFileVersion *> * _Nullable nonlocalFileVersions, NSError * _Nullable error))completionHandler API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
 
 /* For a file located by a URL, return the NSFileVersion identified by a persistent identifier of the sort returned by -persistentIdentifier, or nil if the version no longer exists.
 */

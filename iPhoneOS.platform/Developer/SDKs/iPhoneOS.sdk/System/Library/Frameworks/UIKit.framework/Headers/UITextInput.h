@@ -41,6 +41,7 @@ NS_SWIFT_UI_ACTOR
 
 @protocol UITextInputTokenizer;
 @protocol UITextInputDelegate;
+@protocol UIEditMenuInteractionAnimating;
 
 typedef NS_ENUM(NSInteger, UITextStorageDirection) {
     UITextStorageDirectionForward = 0,
@@ -238,6 +239,10 @@ NS_SWIFT_UI_ACTOR
  * @return Return a UIMenu describing the desired menu hierarchy. Return @c nil to present the default system menu.
  */
 - (nullable UIMenu *)editMenuForTextRange:(UITextRange *)textRange suggestedActions:(NSArray<UIMenuElement *> *)suggestedActions API_AVAILABLE(ios(16.0));
+
+/* These are optional methods for clients that wish to know the visiblity of text editing menus */
+- (void)willPresentEditMenuWithAnimator:(id<UIEditMenuInteractionAnimating>)animator API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos, tvos);
+- (void)willDismissEditMenuWithAnimator:(id<UIEditMenuInteractionAnimating>)animator API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos, tvos);
 
 @end
 

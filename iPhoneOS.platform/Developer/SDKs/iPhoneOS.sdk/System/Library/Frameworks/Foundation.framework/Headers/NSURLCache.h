@@ -256,7 +256,7 @@ API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0))
 
 @interface NSURLCache (NSURLSessionTaskAdditions)
 - (void)storeCachedResponse:(NSCachedURLResponse *)cachedResponse forDataTask:(NSURLSessionDataTask *)dataTask API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
-- (void)getCachedResponseForDataTask:(NSURLSessionDataTask *)dataTask completionHandler:(void (/*NS_SWIFT_SENDABLE*/ ^) (NSCachedURLResponse * _Nullable cachedResponse))completionHandler API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
+- (void)getCachedResponseForDataTask:(NSURLSessionDataTask *)dataTask completionHandler:(void (NS_SWIFT_SENDABLE ^) (NSCachedURLResponse * _Nullable cachedResponse))completionHandler API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
 - (void)removeCachedResponseForDataTask:(NSURLSessionDataTask *)dataTask API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
 @end
 

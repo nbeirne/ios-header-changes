@@ -1,3 +1,5 @@
+#import <TargetConditionals.h>
+#if !TARGET_OS_TV
 //
 //  SWHighlightMentionEvent_Private.h
 //  SocialLayer
@@ -18,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
  @class _SWHighlightMentionEvent
  @abstract A model object representing a mention event that has happened on some content.
  */
+API_AVAILABLE(ios(16.0), macos(13.0))
 SW_EXTERN @interface SWHighlightMentionEvent : NSObject <SWHighlightEvent>
 
 /// The person being mentioned by the sender.
@@ -39,3 +42,5 @@ SW_EXTERN @interface SWHighlightMentionEvent : NSObject <SWHighlightEvent>
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif // !TARGET_OS_TV

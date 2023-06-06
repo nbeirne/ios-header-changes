@@ -676,14 +676,14 @@ HK_EXTERN NSString * const HKMetadataKeySWOLFScore API_AVAILABLE(ios(16.0), watc
 
 /*!
  @constant      HKMetadataKeyQuantityClampedToLowerBound
- @abstract      Represents the quantity being clamped to a lower bound.
+ @abstract      Indicates the quantity was clamped to a lower bound.
  @discussion    Value is a BOOL indicating whether or not the quantity value in the sample has been clamped to some lower bound
  */
 HK_EXTERN NSString * const HKMetadataKeyQuantityClampedToLowerBound API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0));
 
 /*!
  @constant      HKMetadataKeyQuantityClampedToUpperBound
- @abstract      Represents the quantity being clamped to an upper bound.
+ @abstract      Indicates the quantity was clamped to an upper bound.
  @discussion    Value is a BOOL indicating whether or not the quantity value in the sample has been clamped to some upper bound
  */
 HK_EXTERN NSString * const HKMetadataKeyQuantityClampedToUpperBound API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0));
@@ -695,5 +695,13 @@ HK_EXTERN NSString * const HKMetadataKeyQuantityClampedToUpperBound API_AVAILABL
                 Users may also customize their glasses for different scenarios. The value of the metadata is a NSString that describes the purpose of a HKGlassesPrescription.
   */
  HK_EXTERN NSString * const HKMetadataKeyGlassesPrescriptionDescription API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0));
+
+/*!
+ @constant      HKMetadataKeyHeadphoneGain
+ @abstract      Represents the headphone gain associated with a Headphone audio exposure event.
+ @discussion    The expected value is an HKQuantity whose value is the gain
+                associated with the event measured in decibels in A-weighted Sound Pressure Level units.
+ */
+HK_EXTERN NSString * const HKMetadataKeyHeadphoneGain API_AVAILABLE(ios(16.4), watchos(9.4), macCatalyst(16.4), macos(13.4));
 
 NS_ASSUME_NONNULL_END

@@ -49,6 +49,10 @@ UIKIT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI
 /// @param document (Optional) If multiple documents are used, the document identifier for the range provided.
 - (void)invalidateFoundRange:(UITextRange *)range inDocument:(nullable UITextSearchDocumentIdentifier)document;
 
+/// Call this method to invalidate all currently shown ranges. This will cause the system find panel to update
+/// it's current state, and may trigger a new search using `performTextSearchWithQueryString:` immediately after.
+- (void)invalidate;
+
 /// Call this method after all documents have been searched.
 - (void)finishedSearching;
 
@@ -65,7 +69,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI
 /// the system find panel to know which @c UITextRange to highlight next when the user taps the "next" or "previous"
 /// result buttons.
 ///
-/// @param fromRange    Developer-provided range to compare from.
+/// @param foundRange    Developer-provided range to compare from.
 /// @param toRange  Developer-provided range to compare to.
 /// @param document If multiple documents are used, a document identifier will be provided here. Ranges are only
 ///                compared between other ranges of the same document.

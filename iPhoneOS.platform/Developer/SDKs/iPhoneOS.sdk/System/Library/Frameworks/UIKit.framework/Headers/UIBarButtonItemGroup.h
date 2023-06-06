@@ -41,6 +41,9 @@ UIKIT_EXTERN API_AVAILABLE(ios(9.0)) NS_SWIFT_UI_ACTOR
 /// Returns YES if the representativeItem of this group is currently being displayed, rather than its barButtonItems.
 @property (nonatomic, readonly, assign, getter = isDisplayingRepresentativeItem) BOOL displayingRepresentativeItem;
 
+/// Instructs UIKit to ensure that the functionality in this group is made available to the user regardless of customization status. On iPhone and iPad idioms, UIKit currently places these items in the overflow menu; this property has no effect on macOS idiom.
+@property (nonatomic, readwrite, assign) BOOL alwaysAvailable API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
+
 /// A UIMenuElement that should substitute for the UIBarButtonItemGroup when displayed in a menu.
 @property (nonatomic, readwrite, copy, nullable) UIMenuElement *menuRepresentation API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
 

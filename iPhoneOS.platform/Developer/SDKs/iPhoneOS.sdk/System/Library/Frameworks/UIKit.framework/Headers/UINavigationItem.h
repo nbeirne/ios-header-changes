@@ -154,9 +154,13 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) NS_SWIFT_UI_ACTOR
 
 /// UIBarButtonItemGroups to be displayed in the trailing section of the navigation bar. Items set via this method will replace items set via .rightBarButtonItem or .rightBarButtonItems.
 @property (nonatomic, readwrite, copy) NSArray<UIBarButtonItemGroup *> *trailingItemGroups API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
+/// Set a group of items to be placed on the trailing edge of the bar, past the overflow & search items (if present). If you wish to have more than 1 item, it is HIGHLY recommended to assign a representative item to the group to avoid overflowing the bar as this group cannot move to the overflow.
+@property (nonatomic, readwrite, strong, nullable) UIBarButtonItemGroup *pinnedTrailingGroup API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
 
 /// Additional items to add to the overflow menu. Setting this property to a non-nil value will force the overflow button to appear, regardless of if you provide any content in the element's callback. Items returned are displayed directly in the presented menu.
 @property (nonatomic, readwrite, strong, nullable) UIDeferredMenuElement *additionalOverflowItems API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
+/// If the overflow button for this item is currently present, then this will return a non-nil item that can be used as a presentation source (e.g. for popovers). Otherwise it will return nil.
+@property (nonatomic, readonly, strong, nullable) id<UIPopoverPresentationControllerSourceItem> overflowPresentationSource API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
 
 /// When UINavigationBar.prefersLargeTitles=YES, this property controls when the larger out-of-line title is displayed. If prefersLargeTitles=NO, this property has no effect. The default value is Automatic.
 @property (nonatomic, readwrite, assign) UINavigationItemLargeTitleDisplayMode largeTitleDisplayMode API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(tvos);

@@ -89,7 +89,7 @@ typedef NS_OPTIONS(NSUInteger, NSFileProviderMaterializationFlags) {
      file to be marked as materialized. This is useful if the resulting file is known to contain sparse parts,
      and all the remaining parts have been filled in.
      This flag is ignored if the provided range doesn't cover the entire file (ie. [0, EOF]).
-     This flag is currently ignored.
+     This flag is not functional prior to macOS 13.3.
      */
     NSFileProviderMaterializationFlagsKnownSparseRanges = (1 << 0)
 } FILEPROVIDER_API_AVAILABILITY_V4_1;
@@ -948,6 +948,12 @@ NS_SWIFT_NAME(createItem(basedOn:fields:contents:options:request:completionHandl
 
  These constraints imply that initial transfer of a file from the disk to the provider will not
  be listed in the pending set, even though the transfer could take several minutes to complete
+
+ Furthermore, the pending set can only contain a limited number of items.
+ The pending set provides an easy way to design an "in progress" UI containing a few items
+ and to detect whether there's any activity pending on the system.
+ In case the pending set reached its maximum size items, newly pending items won't be included
+ in it. Already present items in the pending set will remain until they no longer are pending.
 
  The pending set is refreshed regurlary but only if there are meaningful changes:
  new pending items, items that were pending but are not anymore (deletions from the set),

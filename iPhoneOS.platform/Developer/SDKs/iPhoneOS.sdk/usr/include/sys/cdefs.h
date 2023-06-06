@@ -67,12 +67,6 @@
 #ifndef _CDEFS_H_
 #define _CDEFS_H_
 
-#if __has_attribute(returns_nonnull)
-#define __returns_nonnull __attribute((returns_nonnull))
-#else
-#define __returns_nonnull
-#endif
-
 #if defined(__cplusplus)
 #define __BEGIN_DECLS   extern "C" {
 #define __END_DECLS     }
@@ -186,6 +180,13 @@
 #define __cold          __attribute__((__cold__))
 #else
 #define __cold
+#endif
+
+/* __returns_nonnull marks functions that return a non-null pointer. */
+#if __has_attribute(returns_nonnull)
+#define __returns_nonnull __attribute((returns_nonnull))
+#else
+#define __returns_nonnull
 #endif
 
 /* __exported denotes symbols that should be exported even when symbols

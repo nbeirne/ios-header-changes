@@ -91,8 +91,9 @@ typedef NSDictionary<MPSGraphTensor*, MPSGraphShapedType *> MPSGraphTensorShaped
 typedef void (^MPSGraphCompletionHandler)(MPSGraphTensorDataDictionary * resultsDictionary,
                                           NSError * _Nullable error);
 
-/*! @abstract   A notification when graph execution: has finished
+/*! @abstract   A notification when graph execution: has been scheduled
  *  @param      resultsDictionary  If no error, the results dictionary produced by the graph operation.
+ *                                If Graph has not yet allocated the results will be NSNull
  *  @param      error   If an error occurs, more information might be found here.
  */
 typedef void (^MPSGraphScheduledHandler)(MPSGraphTensorDataDictionary * resultsDictionary,
@@ -368,7 +369,7 @@ MPS_SWIFT_NAME( encode(to:feeds:targetTensors:targetOperations:executionDescript
  *  @abstract   Encodes the graph for given feeds to return targetTensor values in the resultsDictionary provided by the user,
  *              ensuring all target operations also executed. This call  is asynchronous and will return immediately if a completionHandler is set.
  *
- *  @param      commandBuffer                                      commandBuffer passed to exectute the graph on, commitAndContinue might be called, please don't rely on underlying MTLCommandBuffer to remain uncommitted
+ *  @param      commandBuffer                                      commandBuffer passed to execute the graph on, commitAndContinue might be called, please don't rely on underlying MTLCommandBuffer to remain uncommitted
  *  @param      feeds                                                       Feeds dictionary for the placeholder tensors
  *  @param      targetOperations                              Operations to be completed at the end of the run
  *  @param      resultsDictionary                            MPSGraphTensors dictionary passed by user, these will be filled with graph output data

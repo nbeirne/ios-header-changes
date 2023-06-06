@@ -108,8 +108,8 @@ It is expected that only the “owner” of an NSError domain specifies the prov
  
 If an appropriate result for the requested key cannot be provided, return nil rather than choosing to manufacture a generic fallback response such as "Operation could not be completed, error 42." NSError will take care of the fallback cases.
 */
-+ (void)setUserInfoValueProviderForDomain:(NSErrorDomain)errorDomain provider:(id _Nullable (/*NS_SWIFT_SENDABLE*/ ^ _Nullable)(NSError *err, NSErrorUserInfoKey userInfoKey))provider API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0));
-+ (id _Nullable (/*NS_SWIFT_SENDABLE*/ ^ _Nullable)(NSError *err, NSErrorUserInfoKey userInfoKey))userInfoValueProviderForDomain:(NSErrorDomain)errorDomain API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0));
++ (void)setUserInfoValueProviderForDomain:(NSErrorDomain)errorDomain provider:(id _Nullable (NS_SWIFT_SENDABLE ^ _Nullable)(NSError *err, NSErrorUserInfoKey userInfoKey))provider API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0));
++ (id _Nullable (NS_SWIFT_SENDABLE ^ _Nullable)(NSError *err, NSErrorUserInfoKey userInfoKey))userInfoValueProviderForDomain:(NSErrorDomain)errorDomain API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0));
 
 @end
 

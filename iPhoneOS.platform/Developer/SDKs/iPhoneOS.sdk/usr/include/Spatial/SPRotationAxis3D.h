@@ -14,6 +14,7 @@
  @returns A new rotation axis.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 SPRotationAxis3D SPRotationAxis3DMake(double x, double y, double z)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
@@ -46,17 +47,20 @@ __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
  @returns A three-element vector that contains the axis values.
 */
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 simd_double3 SPRotationAxis3DGetVector(SPRotationAxis3D axis)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 /// Returns @p true if both rotation axes are equal.
 SPATIAL_INLINE
+SPATIAL_OVERLOADABLE
 bool SPRotationAxis3DEqualToRotationAxis(SPRotationAxis3D axis1, SPRotationAxis3D axis2)
 __API_AVAILABLE(macos(13.0), ios(16.0), watchos(9.0), tvos(16.0));
 
 // MARK: - Header inline implementations
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 SPRotationAxis3D SPRotationAxis3DMake(double x, double y, double z) {
     return (SPRotationAxis3D){ .x = x, .y = y, .z = z };
   }
@@ -74,11 +78,13 @@ SPRotationAxis3D SPRotationAxis3DMakeWithVector(SPVector3D xyz) {
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 simd_double3 SPRotationAxis3DGetVector(SPRotationAxis3D axis) {
     return axis.vector;
 }
 
 SPATIAL_REFINED_FOR_SWIFT
+SPATIAL_OVERLOADABLE
 bool SPRotationAxis3DEqualToRotationAxis(SPRotationAxis3D axis1, SPRotationAxis3D axis2) {
     return simd_equal(axis1.vector, axis2.vector);
 }

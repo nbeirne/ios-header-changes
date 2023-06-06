@@ -1,7 +1,7 @@
 #if !__has_include(<PassKitCore/PKStoredValuePassBalance.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKStoredValuePassBalance.h
-//  PassKit
+//    PassKit
 //
 //  Copyright © 2020 Apple, Inc. All rights reserved.
 //
@@ -32,5 +32,6 @@ API_AVAILABLE(ios(15.0), watchos(8.0))
 NS_ASSUME_NONNULL_END
 
 #else
+#import <TargetConditionals.h>
 #import <PassKitCore/PKStoredValuePassBalance.h>
 #endif

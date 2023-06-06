@@ -92,4 +92,33 @@ struct CGAffineTransform {
     CGFloat tx, ty;
 };
 
+#define CF_DEFINES_CGAFFINETRANSFORMCOMPONENTS
+
+/*                      |------------------ CGAffineTransformComponents ----------------|
+ *
+ *      | a  b  0 |     | sx  0  0 |   |  1  0  0 |   | cos(t)  sin(t)  0 |   | 1  0  0 |
+ *      | c  d  0 |  =  |  0 sy  0 | * | sh  1  0 | * |-sin(t)  cos(t)  0 | * | 0  1  0 |
+ *      | tx ty 1 |     |  0  0  1 |   |  0  0  1 |   |   0       0     1 |   | tx ty 1 |
+ *  CGAffineTransform      scale           shear            rotation          translation
+ */
+typedef struct CGAffineTransformComponents CGAffineTransformComponents
+    CF_SWIFT_NAME(CGAffineTransform.Components);
+
+struct CGAffineTransformComponents {
+
+    /* initial scaling in X and Y dimensions. {sx,sy} */
+    /* Negative values indicate the image has been flipped in this dimension. */
+    CGSize      scale;
+
+    /* shear distortion (sh). Turns rectangles to parallelograms. 0 for no shear. Typically 0. */
+    CGFloat     horizontalShear;
+
+    /* Rotation angle in radians about the origin. (t) Sign convention for clockwise rotation */
+    /* may differ between various Apple frameworks based on origin placement. Please see discussion. */
+    CGFloat     rotation;
+
+    /* Displacement from the origin (ty, ty) */
+    CGVector    translation;
+};
+
 #endif /* ! __COREFOUNDATION_CFCGTYPES__ */

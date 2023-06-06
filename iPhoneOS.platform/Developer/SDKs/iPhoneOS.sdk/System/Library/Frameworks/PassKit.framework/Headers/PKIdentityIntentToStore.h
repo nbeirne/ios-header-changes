@@ -1,7 +1,7 @@
 #if !__has_include(<PassKitCore/PKIdentityIntentToStore.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKIdentityIntentToStore.h
-//  PassKit
+//    PassKit
 //
 //  Copyright © 2022 Apple, Inc. All rights reserved.
 //
@@ -36,5 +36,6 @@ NS_ASSUME_NONNULL_END
 
 
 #else
+#import <TargetConditionals.h>
 #import <PassKitCore/PKIdentityIntentToStore.h>
 #endif

@@ -3,6 +3,12 @@
 
 #define SPDefaultTolerance sqrt(__DBL_EPSILON__)
 
+// Returns `true` if `x` and `y` are equal within `SPDefaultTolerance`
+#define _sp_almost_equal(x, y) (fabs((x) - (y)) < SPDefaultTolerance)
+
+// Returns `true` if the square matrix `x` is orthogonal.
+#define _sp_is_orthogonal(x, identity) simd_almost_equal_elements(simd_mul((x), simd_transpose((x))), (identity), SPDefaultTolerance)
+
 #if __has_attribute(swift_name)
 # define SPATIAL_SWIFT_NAME(_name) __attribute__((swift_name(#_name)))
 #else

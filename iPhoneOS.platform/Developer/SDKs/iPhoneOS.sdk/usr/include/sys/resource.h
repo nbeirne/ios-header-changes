@@ -407,7 +407,9 @@ struct rusage_info_v6 {
 	uint64_t ri_system_ptime;
 	uint64_t ri_pinstructions;
 	uint64_t ri_pcycles;
-	uint64_t ri_reserved[16];
+	uint64_t ri_energy_nj;
+	uint64_t ri_penergy_nj;
+	uint64_t ri_reserved[14];
 };
 
 typedef struct rusage_info_v6 rusage_info_current;

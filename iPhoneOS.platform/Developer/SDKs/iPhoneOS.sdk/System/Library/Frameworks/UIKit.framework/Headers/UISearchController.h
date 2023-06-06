@@ -14,6 +14,17 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
+typedef NS_ENUM(NSInteger, UISearchControllerScopeBarActivation) {
+    /// System-defined automatic showing and hiding of the scope bar
+    UISearchControllerScopeBarActivationAutomatic,
+    /// Showing and hiding the scope bar will be controlled by client code through the `showsScopeBar` API on the UISearchController's `searchBar`
+    UISearchControllerScopeBarActivationManual,
+    /// The search controller shows the scope bar when typing begins in the search field, and hides it when search is cancelled
+    UISearchControllerScopeBarActivationOnTextEntry,
+    /// The search controller shows the scope bar when search becomes active, and hides it when search is cancelled
+    UISearchControllerScopeBarActivationOnSearchActivation,
+} API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_NAME(UISearchController.ScopeBarActivation);
+
 @class UISearchController;
 
 NS_SWIFT_UI_ACTOR
@@ -101,8 +112,19 @@ UIKIT_EXTERN API_AVAILABLE(ios(8.0)) NS_SWIFT_UI_ACTOR
  
  Additionally, setting the showsScopeBar property on the searchController's searchBar
  will change the UISearchController's automaticallyShowsScopeBar property to NO.
+ 
+ On iOS, this will be fully deprecated in a future release in favor of `scopeBarActivation`
  */
-@property (nonatomic) BOOL automaticallyShowsScopeBar API_AVAILABLE(ios(13.0)); // Defaults to YES
+@property (nonatomic) BOOL automaticallyShowsScopeBar API_DEPRECATED("Use scopeBarActivation instead", ios(13.0,API_TO_BE_DEPRECATED)) API_AVAILABLE(tvos(13.0));
+
+/// Controls if and when the UISearchController shows and hides the scope bar
+/// However, UISearchBar will not show the scope bar if `scopeButtonTitles` contains fewer than two titles
+/// Defaults to `UISearchControllerScopeBarActivationAutomatic`
+/// `UISearchControllerScopeBarActivationAutomatic` is equivalent to earlier `automaticallyShowsScopeBar == YES`
+/// `UISearchControllerScopeBarActivationManual` is equivalent to earlier `automaticallyShowsScopeBar == NO`
+/// Similar to the behavior of `automaticallyShowsScopeBar`, setting the `showsScopeBar` property on the `searchController`'s `searchBar`
+/// will change `scopeBarActivation` to `UISearchControllerScopeBarActivationManual`
+@property (nonatomic) UISearchControllerScopeBarActivation scopeBarActivation API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
 
 /// List of search hint objects to be displayed under keyboard on tvOS,
 /// as a menu under the search field when the search bar is placed inline on iOS 16,

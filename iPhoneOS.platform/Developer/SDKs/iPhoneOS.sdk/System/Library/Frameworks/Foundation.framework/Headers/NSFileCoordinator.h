@@ -167,7 +167,7 @@ Coordinated writing of an item triggers the sending of messages to NSFilePresent
  
 For both coordinated reading and writing, if there are multiple NSFilePresenters involved then the order in which they are messaged is undefined. If an NSFilePresenter signals failure then waiting will fail and *outError will be set to an NSError describing the failure.
 */
-- (void)coordinateAccessWithIntents:(NSArray<NSFileAccessIntent *> *)intents queue:(NSOperationQueue *)queue byAccessor:(void (/*NS_SWIFT_SENDABLE*/ ^)(NSError * _Nullable error))accessor API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
+- (void)coordinateAccessWithIntents:(NSArray<NSFileAccessIntent *> *)intents queue:(NSOperationQueue *)queue byAccessor:(void (NS_SWIFT_SENDABLE ^)(NSError * _Nullable error))accessor API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
 
 #pragma mark *** Synchronous File Coordination ***
 
@@ -192,7 +192,7 @@ The -coordinate... methods must use interprocess communication to message instan
 
 In most cases it is redundant to pass the same reading or writing options in an invocation of this method as are passed to individual invocations of the -coordinate... methods invoked by the block passed to an invocation of this method. For example, when Finder invokes this method during a copy operation it does not pass NSFileCoordinatorReadingWithoutChanges because it is appropriate to trigger the saving of document changes right away, but it does pass it when doing the nested invocations of -coordinate... methods because it is not necessary to trigger saving again, even if the user changes the document before the Finder proceeds far enough to actually copy that document's file.
 */
-- (void)prepareForReadingItemsAtURLs:(NSArray<NSURL *> *)readingURLs options:(NSFileCoordinatorReadingOptions)readingOptions writingItemsAtURLs:(NSArray<NSURL *> *)writingURLs options:(NSFileCoordinatorWritingOptions)writingOptions error:(NSError **)outError byAccessor:(void (NS_NOESCAPE NS_SWIFT_NONSENDABLE ^)(void (/*NS_SWIFT_SENDABLE*/ ^completionHandler)(void)))batchAccessor;
+- (void)prepareForReadingItemsAtURLs:(NSArray<NSURL *> *)readingURLs options:(NSFileCoordinatorReadingOptions)readingOptions writingItemsAtURLs:(NSArray<NSURL *> *)writingURLs options:(NSFileCoordinatorWritingOptions)writingOptions error:(NSError **)outError byAccessor:(void (NS_NOESCAPE NS_SWIFT_NONSENDABLE ^)(void (NS_SWIFT_SENDABLE ^completionHandler)(void)))batchAccessor;
 
 #pragma mark *** Renaming and Moving Notification ***
 

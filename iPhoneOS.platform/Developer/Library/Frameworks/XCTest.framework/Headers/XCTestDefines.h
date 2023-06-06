@@ -104,6 +104,36 @@ NS_ASSUME_NONNULL_BEGIN
 #define XCT_SWIFT_MAIN_ACTOR
 #endif
 
+#if __has_attribute(swift_attr)
+#define XCT_SWIFT_UNAVAILABLE_FROM_ASYNC(msg) __attribute__((swift_attr("@_unavailableFromAsync(message: \"" msg "\")")))
+#else
+#define XCT_SWIFT_UNAVAILABLE_FROM_ASYNC(msg)
+#endif
+
+#ifndef XCT_HEADER_AUDIT_BEGIN
+    #if defined(NS_HEADER_AUDIT_BEGIN)
+        #define XCT_HEADER_AUDIT_BEGIN(...) NS_HEADER_AUDIT_BEGIN(__VA_ARGS__)
+    #else
+        #define XCT_HEADER_AUDIT_BEGIN(...) NS_ASSUME_NONNULL_BEGIN
+    #endif
+#endif
+
+#ifndef XCT_HEADER_AUDIT_END
+    #if defined(NS_HEADER_AUDIT_END)
+        #define XCT_HEADER_AUDIT_END(...) NS_HEADER_AUDIT_END(__VA_ARGS__)
+    #else
+        #define XCT_HEADER_AUDIT_END(...) NS_ASSUME_NONNULL_END
+    #endif
+#endif
+
+#ifndef XCT_SWIFT_SENDABLE
+    #if defined(__SWIFT_ATTR_SUPPORTS_SENDABLE_DECLS) && __SWIFT_ATTR_SUPPORTS_SENDABLE_DECLS
+        #define XCT_SWIFT_SENDABLE __attribute__((swift_attr("@Sendable")))
+    #else
+        #define XCT_SWIFT_SENDABLE
+    #endif
+#endif
+
 NS_ASSUME_NONNULL_END
 
 #endif

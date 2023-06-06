@@ -1,3 +1,5 @@
+#import <TargetConditionals.h>
+#if !TARGET_OS_TV
 //  Copyright (c) 2022 Apple. All rights reserved.
 
 #import <Foundation/Foundation.h>
@@ -5,8 +7,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-SW_EXTERN
-@interface SWAction : NSObject <NSCopying, NSSecureCoding>
+API_AVAILABLE(ios(16.0), macos(13.0))
+SW_EXTERN @interface SWAction : NSObject <NSCopying, NSSecureCoding>
 
 @property (nonatomic, readonly) NSUUID *uuid;
 @property (nonatomic, readonly, getter=isComplete) BOOL complete;
@@ -17,3 +19,5 @@ SW_EXTERN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif // !TARGET_OS_TV

@@ -1,7 +1,7 @@
 #if !__has_include(<PassKitCore/PKTransitPassProperties.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKTransitPassProperties.h
-//  PassKit
+//    PassKit
 //
 //  Copyright © 2017 Apple, Inc. All rights reserved.
 //
@@ -29,5 +29,6 @@ API_AVAILABLE(ios(11.3), watchos(4.3))
 NS_ASSUME_NONNULL_END
 
 #else
+#import <TargetConditionals.h>
 #import <PassKitCore/PKTransitPassProperties.h>
 #endif

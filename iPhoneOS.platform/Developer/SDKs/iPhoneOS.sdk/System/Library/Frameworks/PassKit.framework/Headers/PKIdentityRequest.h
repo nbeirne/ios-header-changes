@@ -1,7 +1,7 @@
 #if !__has_include(<PassKitCore/PKIdentityRequest.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKIdentityRequest.h
-//  PassKit
+//    PassKit
 //
 //  Copyright © 2022 Apple, Inc. All rights reserved.
 //
@@ -35,5 +35,6 @@ NS_ASSUME_NONNULL_END
 
 
 #else
+#import <TargetConditionals.h>
 #import <PassKitCore/PKIdentityRequest.h>
 #endif

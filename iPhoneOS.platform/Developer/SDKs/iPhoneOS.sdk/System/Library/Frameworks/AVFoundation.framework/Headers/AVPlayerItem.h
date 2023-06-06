@@ -4,7 +4,7 @@
 
 	Framework:  AVFoundation
  
-	Copyright 2010-2021 Apple Inc. All rights reserved.
+	Copyright 2010-2022 Apple Inc. All rights reserved.
 
 */
 
@@ -23,10 +23,6 @@
 	  To allow clients to add and remove their objects as key-value observers safely, AVPlayerItem serializes notifications of
 	  changes that occur dynamically during playback on the same dispatch queue on which notifications of playback state changes
 	  are serialized by its associated AVPlayer. By default, this queue is the main queue. See dispatch_get_main_queue().
-	  
-	  To ensure safe access to AVPlayerItem's nonatomic properties while dynamic changes in playback state may be reported, clients must
-	  serialize their access with the associated AVPlayer's notification queue. In the common case, such serialization is naturally
-	  achieved by invoking AVPlayerItem's various methods on the main thread or queue.
 */
 
 #import <AVFoundation/AVBase.h>
@@ -312,7 +308,7 @@ NS_SWIFT_UI_ACTOR
  @abstract		A recommended value for configuredTimeOffsetFromLive, based on observed network conditions.
  @discussion	For non-live assets this value is kCMTimeInvalid.
  */
-@property (nonatomic, readonly) CMTime recommendedTimeOffsetFromLive API_AVAILABLE(macos(10.15), ios(13.0), tvos(13.0), watchos(6.0));
+@property (readonly) CMTime recommendedTimeOffsetFromLive API_AVAILABLE(macos(10.15), ios(13.0), tvos(13.0), watchos(6.0));
 
 /*!
  @property		automaticallyPreservesTimeOffsetFromLive
@@ -465,7 +461,7 @@ NS_SWIFT_UI_ACTOR
  @abstract		The item's timebase.
  @discussion 
    You can examine the timebase to discover the relationship between the item's time and the source clock used for drift synchronization.
-   This timebase is read-only; you cannot set its time or rate to affect playback.  The value of this property may change during playback.
+   This timebase is read-only; you cannot set its time or rate to affect playback.
  */
 @property (nonatomic, readonly, nullable) __attribute__((NSObject)) CMTimebaseRef timebase API_AVAILABLE(macos(10.8), ios(6.0), tvos(9.0), watchos(1.0));
 
@@ -496,8 +492,7 @@ API_AVAILABLE(macos(10.7), ios(4.0), tvos(9.0)) API_UNAVAILABLE(watchos);
  @property customVideoCompositor
  @abstract Indicates the custom video compositor instance.
  @discussion
- 	This property is nil if there is no video compositor, or if the internal video compositor is in use. This reference can be used to provide
-	extra context to the custom video compositor instance if required.
+ 	This property is nil if there is no video compositor, or if the internal video compositor is in use. This reference can be used to provide extra context to the custom video compositor instance if required.  The value of this property can change as a result of setting the `videoComposition` property.
  
 	Before macOS 13, iOS 16, tvOS 16, and watchOS 9, this property must be accessed on the main thread/queue.
  */
@@ -781,7 +776,7 @@ API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0), watchos(1.0));
   @property		currentMediaSelection
   @abstract		Provides an instance of AVMediaSelection carrying current selections for each of the receiver's media selection groups.
 */
-@property (nonatomic, readonly) AVMediaSelection *currentMediaSelection API_AVAILABLE(macos(10.11), ios(9.0), tvos(9.0), watchos(2.0));
+@property (readonly) AVMediaSelection *currentMediaSelection API_AVAILABLE(macos(10.11), ios(9.0), tvos(9.0), watchos(2.0));
 
 @end
 

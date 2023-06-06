@@ -1,7 +1,7 @@
 #if !__has_include(<PassKitCore/PKDisbursementVoucher.h>) || PK_USE_PUBLIC_PASSKIT
 //
 //  PKDisbursementVoucher.h
-//  PassKit
+//    PassKit
 //  Copyright © 2019 Apple, Inc. All rights reserved.
 //
 
@@ -23,5 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 NS_ASSUME_NONNULL_END
 
 #else
+#import <TargetConditionals.h>
 #import <PassKitCore/PKDisbursementVoucher.h>
 #endif

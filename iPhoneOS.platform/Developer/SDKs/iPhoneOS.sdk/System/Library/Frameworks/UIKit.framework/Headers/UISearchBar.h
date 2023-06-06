@@ -100,6 +100,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) NS_SWIFT_UI_ACTOR
  If the search bar is owned by a UISearchController, then using the setter
  for this property (as well as -setShowsScopeBar:animated:) will implicitly
  set the UISearchController's automaticallyShowsScopeBar property to NO.
+ On iOS 16.0, UISearchController's scopeBarActivation is set to UISearchControllerScopeBarActivationManual
  */
 @property(nonatomic)      BOOL       showsScopeBar            API_AVAILABLE(ios(3.0)); // default is NO. if YES, shows the scope bar. call sizeToFit: to update frame
 - (void)setShowsScopeBar:(BOOL)show animated:(BOOL)animate API_AVAILABLE(ios(13.0));
@@ -107,6 +108,11 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) NS_SWIFT_UI_ACTOR
 /* Allow placement of an input accessory view to the keyboard for the search bar
  */
 @property (nullable, nonatomic, readwrite, strong) UIView *inputAccessoryView;
+
+/// When set to false, user interaction will be prevented and the search bar will take on a disabled appearance
+/// If the search bar is associated with a UINavigationItem with `UINavigationItemSearchBarPlacementInline`,
+/// then the minimized (icon-only) UISearchBar will not grow to the text field while `enabled` is false.
+@property (nonatomic, getter=isEnabled) BOOL enabled API_AVAILABLE(ios(16.4),tvos(16.4)); // Default YES
 
 // 1pt wide images and resizable images will be scaled or tiled according to the resizable area, otherwise the image will be tiled
 @property(nullable, nonatomic,strong) UIImage *backgroundImage API_AVAILABLE(ios(5.0)) UI_APPEARANCE_SELECTOR;

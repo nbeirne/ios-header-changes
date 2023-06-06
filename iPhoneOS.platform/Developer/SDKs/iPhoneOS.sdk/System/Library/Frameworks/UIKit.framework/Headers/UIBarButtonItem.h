@@ -76,8 +76,17 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) NS_SWIFT_UI_ACTOR
 /// Creates a plain-style bar button item with the given title. The constructed item will present the menu immediately when touched.
 - (instancetype)initWithTitle:(nullable NSString *)title menu:(nullable UIMenu *)menu API_AVAILABLE(ios(14.0));
 
-/// Creates a plain-style bar button item with the given item. The constructed item will present the menu immediately when touched.
+/// Creates a plain-style bar button item with the given image. The constructed item will present the menu immediately when touched.
 - (instancetype)initWithImage:(nullable UIImage *)image menu:(nullable UIMenu *)menu API_AVAILABLE(ios(14.0));
+
+/// Creates a plain-style bar button item from the properties of primaryAction. primaryAction is copied.
+- (instancetype)initWithPrimaryAction:(nullable UIAction *)primaryAction menu:(nullable UIMenu *)menu API_AVAILABLE(ios(16.0));
+
+/// Creates a bar button item for the given systemItem. The primaryAction is copied, and its title & image are ignored.
+- (instancetype)initWithBarButtonSystemItem:(UIBarButtonSystemItem)systemItem primaryAction:(nullable UIAction *)primaryAction menu:(nullable UIMenu *)menu API_AVAILABLE(ios(16.0));
+
+/// Creates a plain-style bar button item with the given title and image.
+- (instancetype)initWithTitle:(nullable NSString *)title image:(nullable UIImage *)image target:(nullable id)target action:(nullable SEL)action menu:(nullable UIMenu *)menu API_AVAILABLE(ios(16.0));
 
 /// Construct a new fixed space item with the given width.
 + (instancetype)fixedSpaceItemOfWidth:(CGFloat)width API_AVAILABLE(ios(14.0));

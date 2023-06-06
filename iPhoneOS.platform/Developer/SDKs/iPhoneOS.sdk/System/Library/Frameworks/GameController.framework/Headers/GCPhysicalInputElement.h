@@ -9,6 +9,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ The \c GCPhysicalInputElement protocol is a base protocol for specific types
+ of elements that represent controls on a device.
+ */
 API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0))
 @protocol GCPhysicalInputElement <NSObject>
 

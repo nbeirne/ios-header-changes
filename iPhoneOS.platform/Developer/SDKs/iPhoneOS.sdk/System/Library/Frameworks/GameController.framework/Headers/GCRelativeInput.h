@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  An object conforming to \c GCRelativeInput represents an input that reports
  its change in position along an axis (delta) since the previous event.
+ Relative inputs have no fixed origin from which a coordinate syatem can be
+ defined.
  */
 API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0))
 @protocol GCRelativeInput <NSObject>

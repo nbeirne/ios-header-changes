@@ -32,6 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 			 AVPlayerItem *playerItemForSnapshotOfMovie = [[AVPlayerItem alloc] initWithAsset:immutableSnapshotOfMyMovie]; 
  
  					When performing media insertions, AVMutableMovie interleaves the media data from the tracks in the source asset in order to create movie files that are optimized for playback. It's possible, however, that performing a series of media insertions may result in a movie file that is not optimally interleaved. You can create a well-interleaved, self-contained, fast-start movie file from an instance of AVMutableMovie by passing that instance to an AVAssetExportSession using the export preset AVAssetExportPresetPassthrough and setting the setShouldOptimizeForNetworkUse property to YES.
+
+					AVMovie conforms to NSMutableCopying, but creating a mutable copy of a movie can cause its properties to be loaded synchronously.  This can cause the calling thread to block while synchronous I/O is performed.  To avoid the worst side-effects of blocking, such as user interface hangs, avoid making a mutable copy from the main thread or from a thread owned by Swift's concurrency thread pool.
+
 */
 
 // Keys for options dictionary for use with various AVMovie initialization methods
