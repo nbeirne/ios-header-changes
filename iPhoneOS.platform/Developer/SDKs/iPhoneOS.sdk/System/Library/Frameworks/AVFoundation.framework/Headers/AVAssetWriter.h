@@ -372,7 +372,7 @@ AV_INIT_UNAVAILABLE
 	
 	This method should not be called concurrently with -[AVAssetWriterInput appendSampleBuffer:] or -[AVAssetWriterInputPixelBufferAdaptor appendPixelBuffer:withPresentationTime:].
 */
-- (BOOL)finishWriting API_DEPRECATED_WITH_REPLACEMENT("finishWritingWithCompletionHandler:", macos(10.7, 10.9), ios(4.1, 6.0), tvos(9.0, 9.0)) API_UNAVAILABLE(watchos);
+- (BOOL)finishWriting API_DEPRECATED_WITH_REPLACEMENT("finishWritingWithCompletionHandler:", macos(10.7, 10.9), ios(4.1, 6.0), tvos(9.0, 9.0)) API_UNAVAILABLE(watchos, xros);
 
 /*!
  @method finishWritingWithCompletionHandler:
@@ -397,7 +397,7 @@ API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
  @property movieFragmentInterval
  @abstract
 	For file types that support movie fragments, specifies the frequency at which movie fragments should be written.
- 
+
  @discussion
 	When movie fragments are used, a partially written asset whose writing is unexpectedly interrupted can be successfully opened and played up to multiples of the specified time interval. The default value of this property is kCMTimeInvalid, which indicates that movie fragments should not be used.
 

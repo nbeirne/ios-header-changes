@@ -344,6 +344,7 @@
 
 DISPATCH_ASSUME_ABI_SINGLE_BEGIN
 
+DISPATCH_SWIFT_UNAVAILABLE("Unavailable in Swift")
 typedef void (*dispatch_function_t)(void *_Nullable);
 
 DISPATCH_ASSUME_ABI_SINGLE_END

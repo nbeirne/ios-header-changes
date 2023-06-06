@@ -317,9 +317,9 @@ FILEPROVIDER_API_AVAILABILITY_V3_IOS
  The system takes ownership of the item and will move it out of the sandbox of
  the provider.
 
- If the provider wishes to force materialization of a given item, the provider should use the NSFileCoordinator
- API to coordinate a read on the user visible URL of the item, retrieved using
- -[NSFileProviderManager getUserVisibleURLForItemIdentifier:completionHandler:]
+ If the provider wishes to force materialization of a given item, the provider should use
+ `-[NSFileProviderManager requestDownloadForItemWithIdentifier:requestedRange:completionHandler:]`,
+ or configure the `-[NSFileProviderItem contentPolicy]`.
 
  The requestedVersion parameter specifies which version should be returned. A nil value
  means that the latest known version should be returned. Except for the error case, the

@@ -15,7 +15,8 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 API_AVAILABLE(macos(13.0), ios(16.0))
 API_UNAVAILABLE(tvos, watchos)
-NS_SWIFT_SENDABLE // This is a partial lie, it's only available on iOS 16.4 and later: 103448861
+CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer apply
+// NS_SWIFT_SENDABLE on macos(13.3), macCatalyst(16.4), ios(16.4)
 @interface CKSystemSharingUIObserver : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;

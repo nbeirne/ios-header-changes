@@ -17,7 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
  * percentUnlikely + percentLikely = 1.0
  * Please note dyskinetic symptom measurements are designed for subjects with known presence of chorea in the arm and should not be displayed to users who do not report episodes of dyskinetic symptoms.
  */
+#if defined(TARGET_OS_XR) && TARGET_OS_XR
+API_AVAILABLE(ios(12.0), watchos(5.0)) API_UNAVAILABLE(macos, tvos) API_UNAVAILABLE(xros)
+#else
 API_AVAILABLE(ios(12.0), watchos(5.0)) API_UNAVAILABLE(macos, tvos)
+#endif // defined(TARGET_OS_XR) && TARGET_OS_XR
 @interface CMDyskineticSymptomResult : NSObject <NSCopying, NSSecureCoding>
 
 /*!

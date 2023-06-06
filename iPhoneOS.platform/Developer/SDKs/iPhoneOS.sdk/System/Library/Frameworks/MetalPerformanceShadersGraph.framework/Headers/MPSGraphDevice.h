@@ -13,35 +13,27 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- *  @typedef    MPSGraphDeviceType
- *  @abstract   Device type, Metal
- *
- *  @constant   MPSGraphDeviceTypeMetal           Device of type Metal
- */
+/// Device type
 typedef NS_ENUM(uint32_t, MPSGraphDeviceType)
 {
+    /// Device of type Metal
     MPSGraphDeviceTypeMetal                            MPS_ENUM_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0)) MPS_SWIFT_NAME(metal)  =   0L,
 };
 
 MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
-@interface MPSGraphDevice : NSObject
+@interface MPSGraphDevice : MPSGraphObject
 
-/*! @property   type
- */
+/// MPSGraphDeviceType of the MPSGraphDevice
 @property (readonly, nonatomic) MPSGraphDeviceType type;
 
-/*! @property   metalDevice
- *  @discussion if deviceType GPU then returns MTLDevice or nil
- */
+/// if deviceType is Metal then returns MTLDevice else nil
 @property (readonly, nonatomic, nullable) id<MTLDevice> metalDevice;
 
-/*!
- *  @abstract   Creates a Metal MPSGraphDevice from a MTLDevice
- *
- *  @param      metalDevice                                           MTLDevice to create an MPSGraphDevice from
- *  @return     A valid MPSGraphDevice
- */
+/// Creates a Metal MPSGraphDevice from a MTLDevice
+///
+/// - Parameters:
+///   - metalDevice: MTLDevice to create an MPSGraphDevice from
+/// - Returns: A valid MPSGraphDevice
 +(instancetype) deviceWithMTLDevice:(id<MTLDevice>) metalDevice;
 
 @end

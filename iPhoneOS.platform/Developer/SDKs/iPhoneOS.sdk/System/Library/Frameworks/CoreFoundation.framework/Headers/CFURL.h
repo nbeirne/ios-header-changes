@@ -947,6 +947,9 @@ const CFStringRef kCFURLFileProtectionCompleteUnlessOpen API_AVAILABLE(ios(9.0),
 CF_EXPORT
 const CFStringRef kCFURLFileProtectionCompleteUntilFirstUserAuthentication API_AVAILABLE(ios(9.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos); // The file is stored in an encrypted format on disk and cannot be accessed until after the device has booted. After the user unlocks the device for the first time, your app can access the file and continue to access it even if the user subsequently locks the device.
 
+CF_EXPORT
+const CFStringRef kCFURLFileProtectionCompleteWhenUserInactive API_AVAILABLE(ios(17.0), watchos(10.0), tvos(17.0)) API_UNAVAILABLE(macos); // The file is stored in an encrypted format on disk and cannot be read from or written to while the device is locked or booting. Transient data files with this protection type should be excluded from backups using kCFURLIsExcludedFromBackupKey.
+
 /* Volume Properties */
 
 /* As a convenience, volume properties can be requested from any file system URL. The value returned will reflect the property value for the volume on which the resource is located. */

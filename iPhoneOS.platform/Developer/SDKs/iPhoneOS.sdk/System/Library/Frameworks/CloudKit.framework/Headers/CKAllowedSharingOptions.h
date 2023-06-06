@@ -35,6 +35,7 @@ typedef NS_OPTIONS(NSUInteger, CKSharingParticipantPermissionOption) {
 
 API_AVAILABLE(macos(13.0), ios(16.0))
 API_UNAVAILABLE(tvos, watchos)
+CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer apply
 // NS_SWIFT_SENDABLE on macos(13.3), macCatalyst(16.4), ios(16.4))
 @interface CKAllowedSharingOptions : NSObject <NSSecureCoding, NSCopying>
 - (instancetype)initWithAllowedParticipantPermissionOptions:(CKSharingParticipantPermissionOption)allowedParticipantPermissionOptions allowedParticipantAccessOptions:(CKSharingParticipantAccessOption)allowedParticipantAccessOptions;

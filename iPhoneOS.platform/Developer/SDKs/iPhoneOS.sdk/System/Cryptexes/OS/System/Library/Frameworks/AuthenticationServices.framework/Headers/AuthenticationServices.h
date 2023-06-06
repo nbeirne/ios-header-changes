@@ -74,7 +74,22 @@
 
 
 
+
 #import <AuthenticationServices/ASAuthorizationWebBrowserExternallyAuthenticatableRequest.h>
 #import <AuthenticationServices/ASAuthorizationWebBrowserPlatformPublicKeyCredential.h>
 #import <AuthenticationServices/ASAuthorizationWebBrowserPublicKeyCredentialManager.h>
 
+#import <AuthenticationServices/ASCredentialIdentity.h>
+#import <AuthenticationServices/ASCredentialRequest.h>
+#import <AuthenticationServices/ASPasskeyAssertionCredential.h>
+#import <AuthenticationServices/ASPasskeyCredentialIdentity.h>
+#import <AuthenticationServices/ASPasskeyCredentialRequest.h>
+#import <AuthenticationServices/ASPasskeyRegistrationCredential.h>
+#import <AuthenticationServices/ASPasswordCredentialRequest.h>
+
+#import <AuthenticationServices/ASAuthorizationWebBrowserPlatformPublicKeyCredentialAssertionRequest.h>
+#import <AuthenticationServices/ASAuthorizationWebBrowserPlatformPublicKeyCredentialProvider.h>
+#import <AuthenticationServices/ASAuthorizationWebBrowserPlatformPublicKeyCredentialRegistrationRequest.h>
+#import <AuthenticationServices/ASPublicKeyCredentialClientData.h>
+
+#import <AuthenticationServices/ASSettingsHelper.h>

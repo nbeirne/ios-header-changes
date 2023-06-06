@@ -1,13 +1,8 @@
-//
-//  GKAchievementDescription.h
-//  Game Center
-//
-//  Copyright 2010-2023 Apple Inc. All rights reserved.
-//
+// Copyright © Apple Inc. All rights reserved.
 
+#import <TargetConditionals.h>
 #import <Foundation/Foundation.h>
 #import <GameKit/GKDefines.h>
-
 
 NS_ASSUME_NONNULL_BEGIN
 /// GKAchievementDescription is a full description of the achievement as defined before app submission in App Store Connect.
@@ -35,20 +30,21 @@ NS_CLASS_AVAILABLE(10_8, 4_1) __WATCHOS_AVAILABLE(3_0)
 @end
 NS_ASSUME_NONNULL_END
 
+
+#if !TARGET_OS_WATCH
+
 #if TARGET_OS_IPHONE
 @class UIImage;
 #else
 @class NSImage;
 #endif
 
-#import <GameKit/GKAchievementDescription.h>
-
 @interface GKAchievementDescription (UI)
 
 #if TARGET_OS_IPHONE
 
 // Image for completed achievement. Not valid until loadImage: has completed. Deprecated -- use loadImageWithCompletionHandler: instead.
-@property(nonatomic, retain, readonly, nullable) UIImage *image NS_DEPRECATED(10_8, 10_10, 4_1, 7_0, "Use loadImageWithCompletionHandler: instead");
+@property(nonatomic, retain, readonly, nullable) UIImage *image API_DEPRECATED_WITH_REPLACEMENT("-loadImageWithCompletionHandler:", ios(4.1,7.0), macos(10.8,10.10));
 
 // Asynchronously load the image. Error will be nil on success.
 - (void)loadImageWithCompletionHandler:(void(^ __nullable)(UIImage * __nullable image, NSError * __nullable error))completionHandler;
@@ -81,4 +77,4 @@ NS_ASSUME_NONNULL_END
 
 @end
 
-
+#endif

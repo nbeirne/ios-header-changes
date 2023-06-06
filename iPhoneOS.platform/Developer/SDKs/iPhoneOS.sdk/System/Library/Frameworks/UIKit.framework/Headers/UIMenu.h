@@ -22,6 +22,9 @@ typedef NS_OPTIONS(NSUInteger, UIMenuOptions) {
     /// Indicates whether the menu (and any submenus) should only allow a single "on" menu item.
     UIMenuOptionsSingleSelection API_AVAILABLE(ios(15.0)) = 1 << 5,
     
+    /// Indicates that this menu should be rendered as a palette.
+    UIMenuOptionsDisplayAsPalette API_AVAILABLE(ios(17.0)) = 1 << 7,
+    
 } NS_SWIFT_NAME(UIMenu.Options) API_AVAILABLE(ios(13.0));
 
 typedef NS_ENUM(NSInteger, UIMenuElementSize) {
@@ -209,6 +212,9 @@ UIKIT_EXTERN const UIMenuIdentifier UIMenuLearn API_AVAILABLE(ios(13.0));
 
 /// Format top-level menu
 UIKIT_EXTERN const UIMenuIdentifier UIMenuFormat API_AVAILABLE(ios(13.0));
+
+/// Text insertion sub-menu group, containing Scan Text, Emoji, and Form-Filling items.
+UIKIT_EXTERN const UIMenuIdentifier UIMenuInsert API_AVAILABLE(ios(17.0));
 
 /// Font menu contained within Format menu (contains UIMenuTextStyle)
 UIKIT_EXTERN const UIMenuIdentifier UIMenuFont API_AVAILABLE(ios(13.0));

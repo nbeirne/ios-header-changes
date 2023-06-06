@@ -27,6 +27,17 @@ API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0))
  */
 @property (weak, readonly) id<GCDevice> device;
 
+/**
+ The dispatch queue that element value change handlers and other callbacks are
+ submitted on.
+ 
+ The default queue is the \c handlerQueue of the associated \c device.  Set
+ this property if your application wants to receive input callbacks on a
+ different queue.  You should set this property before configuring other
+ callbacks.
+ */
+@property (atomic, strong, nullable) dispatch_queue_t queue API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0));
+
 #pragma mark Immediate Input
 
 /**
@@ -45,7 +56,7 @@ API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0))
  @param element
  The element that has been modified.
  */
-@property (copy, nullable) void (^elementValueDidChangeHandler)(__kindof id<GCDevicePhysicalInput> physicalInput, __kindof id<GCPhysicalInputElement> element);
+@property (atomic, copy, nullable) void (^elementValueDidChangeHandler)(__kindof id<GCDevicePhysicalInput> physicalInput, __kindof id<GCPhysicalInputElement> element);
 
 /**
  Polls the current state vector of the physical input and saves it to a new
@@ -94,7 +105,7 @@ API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0))
         }
     };
  */
-@property (copy, nullable) void (^inputStateAvailableHandler)(__kindof id<GCDevicePhysicalInput> physicalInput);
+@property (atomic, copy, nullable) void (^inputStateAvailableHandler)(__kindof id<GCDevicePhysicalInput> physicalInput);
 
 /**
  The maximum number of input states to buffer.  If your application does not
@@ -106,7 +117,7 @@ API_AVAILABLE(macos(13.0), ios(16.0), tvos(16.0))
  value of \c 20 should be more than enough to ensure no input state changes
  are missed.
  */
-@property (readwrite) NSInteger inputStateQueueDepth;
+@property (atomic, readwrite) NSInteger inputStateQueueDepth;
 
 /**
  Pop the oldest pending input state from the queue.  This method returns \c nil

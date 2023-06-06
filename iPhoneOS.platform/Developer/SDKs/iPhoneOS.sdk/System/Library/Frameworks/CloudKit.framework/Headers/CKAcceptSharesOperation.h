@@ -29,7 +29,7 @@ API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0))
  *  should not be concurrently used outside of blocks assigned to this operation.
  */
 @property (nonatomic, copy, nullable) void (^perShareCompletionBlock)(CKShareMetadata *shareMetadata, CKShare * _Nullable acceptedShare, NSError * _Nullable error)
-CK_SWIFT_DEPRECATED("Use perShareResultBlock instead", macos(10.12, 12.0), ios(10.0, 15.0), tvos(10.0, 15.0), watchos(3.0, 8.0));
+CK_SWIFT_DEPRECATED("Use perShareResultBlock instead", macos(10.12, 12.0), ios(10.0, 15.0), tvos(10.0, 15.0), watchos(3.0, 8.0), xros(1.0, 1.0));
 
 /*! @abstract This block is called when the operation completes.
  *
@@ -40,7 +40,7 @@ CK_SWIFT_DEPRECATED("Use perShareResultBlock instead", macos(10.12, 12.0), ios(1
  *  should not be concurrently used outside of blocks assigned to this operation.
  */
 @property (nonatomic, copy, nullable) void (^acceptSharesCompletionBlock)(NSError * _Nullable operationError)
-CK_SWIFT_DEPRECATED("Use acceptSharesResultBlock instead", macos(10.12, 12.0), ios(10.0, 15.0), tvos(10.0, 15.0), watchos(3.0, 8.0));
+CK_SWIFT_DEPRECATED("Use acceptSharesResultBlock instead", macos(10.12, 12.0), ios(10.0, 15.0), tvos(10.0, 15.0), watchos(3.0, 8.0), xros(1.0, 1.0));
 
 @end
 

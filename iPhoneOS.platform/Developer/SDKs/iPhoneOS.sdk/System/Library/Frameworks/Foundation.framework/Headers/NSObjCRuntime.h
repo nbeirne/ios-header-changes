@@ -5,7 +5,7 @@
 #include <TargetConditionals.h>
 #include <Availability.h>
 
-#if TARGET_OS_OSX || TARGET_OS_IPHONE
+#if TARGET_OS_OSX || TARGET_OS_IPHONE || 0
 #include <objc/NSObjCRuntime.h>
 #include <stdarg.h>
 #include <stdint.h>
@@ -614,8 +614,10 @@ FOUNDATION_EXPORT Protocol * _Nullable NSProtocolFromString(NSString *namestr) A
 
 FOUNDATION_EXPORT const char *NSGetSizeAndAlignment(const char *typePtr, NSUInteger * _Nullable sizep, NSUInteger * _Nullable alignp);
 
+
 FOUNDATION_EXPORT void NSLog(NSString *format, ...) NS_FORMAT_FUNCTION(1,2) NS_NO_TAIL_CALL;
 FOUNDATION_EXPORT void NSLogv(NSString *format, va_list args) NS_FORMAT_FUNCTION(1,0) NS_NO_TAIL_CALL;
+
 
 /*
  These constants are used to indicate how items in a request are ordered, from the first one given in a method invocation or function call to the last (that is, left to right in code).

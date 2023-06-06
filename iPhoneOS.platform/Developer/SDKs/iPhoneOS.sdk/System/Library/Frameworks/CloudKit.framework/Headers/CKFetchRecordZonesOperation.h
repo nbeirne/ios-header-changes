@@ -40,7 +40,7 @@ API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0))
  *  should not be concurrently used outside of blocks assigned to this operation.
  */
 @property (nonatomic, copy, nullable) void (^fetchRecordZonesCompletionBlock)(NSDictionary<CKRecordZoneID *, CKRecordZone *> * _Nullable recordZonesByZoneID, NSError * _Nullable operationError)
-CK_SWIFT_DEPRECATED("Use fetchRecordZonesResultBlock instead", macos(10.10, 12.0), ios(8.0, 15.0), tvos(9.0, 15.0), watchos(3.0, 8.0));
+CK_SWIFT_DEPRECATED("Use fetchRecordZonesResultBlock instead", macos(10.10, 12.0), ios(8.0, 15.0), tvos(9.0, 15.0), watchos(3.0, 8.0), xros(1.0, 1.0));
 
 @end
 

@@ -7,9 +7,11 @@
 
 #import <AuthenticationServices/ASAuthorizationWebBrowserExternallyAuthenticatableRequest.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+#import <AuthenticationServices/ASAuthorizationWebBrowserPlatformPublicKeyCredentialAssertionRequest.h>
 
-API_AVAILABLE(macos(12.0), ios(15.0)) API_UNAVAILABLE(watchos, tvos)
+AS_HEADER_AUDIT_BEGIN(nullability, sendability)
+
+API_AVAILABLE(macos(12.0), ios(15.0), tvos(16.0)) API_UNAVAILABLE(watchos)
 @interface ASAuthorizationPlatformPublicKeyCredentialAssertionRequest : ASAuthorizationRequest<ASAuthorizationPublicKeyCredentialAssertionRequest>
 
 /*! @abstract A list of credentials to allow for this request. If this ilist is nonempty, only credentials matching the provided descriptors can be used to sign in.
@@ -25,4 +27,8 @@ API_AVAILABLE(macos(13.3)) API_UNAVAILABLE(ios, watchos, tvos)
 @interface ASAuthorizationPlatformPublicKeyCredentialAssertionRequest () <ASAuthorizationWebBrowserExternallyAuthenticatableRequest>
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+API_AVAILABLE(macos(13.5), macCatalyst(16.6)) API_UNAVAILABLE(ios, tvos, watchos)
+@interface ASAuthorizationPlatformPublicKeyCredentialAssertionRequest () <ASAuthorizationWebBrowserPlatformPublicKeyCredentialAssertionRequest>
+@end
+
+AS_HEADER_AUDIT_END(nullability, sendability)

@@ -7,11 +7,14 @@
 
 #import <Foundation/Foundation.h>
 
+#import <CloudKit/CKDefines.h>
+
 @class CKRecordID, CKUserIdentityLookupInfo;
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0))
+CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer apply
 // NS_SWIFT_SENDABLE on macos(13.3), macCatalyst(16.4), ios(16.4), tvos(16.4), watchos(9.4)
 @interface CKUserIdentity : NSObject <NSSecureCoding, NSCopying>
 /*! Use @c CKDiscoverUserIdentitiesOperation or @c CKFetchShareParticipantsOperation to create a @c CKUserIdentity */

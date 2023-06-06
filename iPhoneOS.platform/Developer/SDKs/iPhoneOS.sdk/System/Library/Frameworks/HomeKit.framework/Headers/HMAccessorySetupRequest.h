@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class HMAccessorySetupPayload;
 @class MTRSetupPayload;
 
-HM_EXTERN API_AVAILABLE(ios(15.4)) API_UNAVAILABLE(watchos, tvos) API_UNAVAILABLE(macos, macCatalyst)
+HM_EXTERN API_AVAILABLE(ios(15.4)) API_UNAVAILABLE(watchos, tvos, xros) API_UNAVAILABLE(macos, macCatalyst)
     @interface HMAccessorySetupRequest : NSObject<NSCopying>
 
 /*!

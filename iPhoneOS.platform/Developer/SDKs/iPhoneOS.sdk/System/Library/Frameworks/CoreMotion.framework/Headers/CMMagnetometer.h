@@ -39,7 +39,11 @@ typedef struct {
  *  Discussion:
  *    Contains a single magnetometer measurement.
  */
+#if defined(TARGET_OS_XR) && TARGET_OS_XR
+COREMOTION_EXPORT API_AVAILABLE(ios(5.0)) API_UNAVAILABLE(xros)
+#else
 COREMOTION_EXPORT API_AVAILABLE(ios(5.0))
+#endif // defined(TARGET_OS_XR) && TARGET_OS_XR
 @interface CMMagnetometerData : CMLogItem
 {
 @private

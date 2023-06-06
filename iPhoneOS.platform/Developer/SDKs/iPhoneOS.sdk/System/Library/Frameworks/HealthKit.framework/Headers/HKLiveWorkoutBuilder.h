@@ -61,7 +61,7 @@ HK_EXTERN API_AVAILABLE(watchos(5.0)) API_UNAVAILABLE(ios)
 
 - (instancetype)initWithHealthStore:(HKHealthStore *)healthStore
                       configuration:(HKWorkoutConfiguration *)configuration
-                             device:(nullable HKDevice *)device NS_UNAVAILABLE;
+                             device:(nullable HKDevice *)device API_AVAILABLE(watchos(10.0)) API_UNAVAILABLE(ios) API_UNAVAILABLE(tvos, macCatalyst);
 
 /*!
  @property      delegate

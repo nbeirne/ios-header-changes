@@ -29,7 +29,11 @@ NS_CLASS_AVAILABLE(10_8, 4_0)
 @interface EKCalendar : EKObject
 
 // Create a new calendar in the specified event store. You should use calendarForEntityType in iOS 6 or later.
-+ (EKCalendar*)calendarWithEventStore:(EKEventStore *)eventStore NS_DEPRECATED(NA, NA, 4_0, 6_0);
++ (EKCalendar*)calendarWithEventStore:(EKEventStore *)eventStore NS_DEPRECATED(NA, NA, 4_0, 6_0)
+#if defined(TARGET_OS_XR) && TARGET_OS_XR
+API_UNAVAILABLE(xros)
+#endif
+;
 
 /*!
     @method     calendarForEntityType:

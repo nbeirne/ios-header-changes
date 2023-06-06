@@ -2,11 +2,13 @@
 
 #import <AuthenticationServices/ASAuthorizationPublicKeyCredentialRegistrationRequest.h>
 #import <AuthenticationServices/ASAuthorizationRequest.h>
-#import <Foundation/Foundation.h>
+#import <AuthenticationServices/ASFoundation.h>
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+#import <AuthenticationServices/ASAuthorizationWebBrowserPlatformPublicKeyCredentialRegistrationRequest.h>
 
-API_AVAILABLE(macos(12.0), ios(15.0)) API_UNAVAILABLE(watchos, tvos)
+AS_HEADER_AUDIT_BEGIN(nullability, sendability)
+
+API_AVAILABLE(macos(12.0), ios(15.0), tvos(16.0)) API_UNAVAILABLE(watchos)
 @interface ASAuthorizationPlatformPublicKeyCredentialRegistrationRequest : ASAuthorizationRequest <ASAuthorizationPublicKeyCredentialRegistrationRequest>
 
 + (instancetype)new NS_UNAVAILABLE;
@@ -14,4 +16,8 @@ API_AVAILABLE(macos(12.0), ios(15.0)) API_UNAVAILABLE(watchos, tvos)
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
+API_AVAILABLE(macos(13.5), macCatalyst(16.6)) API_UNAVAILABLE(ios, tvos, watchos)
+@interface ASAuthorizationPlatformPublicKeyCredentialRegistrationRequest () <ASAuthorizationWebBrowserPlatformPublicKeyCredentialRegistrationRequest>
+@end
+
+AS_HEADER_AUDIT_END(nullability, sendability)

@@ -13,7 +13,7 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0))
+API_DEPRECATED("No longer supported. Please see Sharing CloudKit Data with Other iCloud Users.", macos(10.12, 14.0), ios(10.0, 17.0), tvos(10.0, 17.0), watchos(3.0, 10.0))
 @interface CKDiscoverUserIdentitiesOperation : CKOperation
 
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
@@ -37,7 +37,7 @@ API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0))
  *  should not be concurrently used outside of blocks assigned to this operation.
  */
 @property (nonatomic, copy, nullable) void (^discoverUserIdentitiesCompletionBlock)(NSError * _Nullable operationError)
-CK_SWIFT_DEPRECATED("Use discoverUserIdentitiesResultBlock instead", macos(10.12, 12.0), ios(10.0, 15.0), tvos(10.0, 15.0), watchos(3.0, 8.0));
+CK_SWIFT_DEPRECATED("Use discoverUserIdentitiesResultBlock instead", macos(10.12, 12.0), ios(10.0, 15.0), tvos(10.0, 15.0), watchos(3.0, 8.0), xros(1.0, 1.0));
 
 @end
 

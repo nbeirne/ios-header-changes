@@ -5,7 +5,7 @@
 
 #import <TargetConditionals.h>
 
-#if TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_TV
+#if TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH
 
 #import <CoreImage/CIFilter.h>
 @class CIVector;
@@ -713,6 +713,12 @@ NS_ASSUME_NONNULL_BEGIN
   @property (nonatomic) float radius;
   @property (nonatomic, retain) CIColor *color;
 @end
+@protocol CIRoundedRectangleStrokeGenerator <CIFilter>
+  @property (nonatomic) CGRect extent;
+  @property (nonatomic) float radius;
+  @property (nonatomic) float width;
+  @property (nonatomic, retain) CIColor *color;
+@end
 @protocol CIStarShineGenerator <CIFilter>
   @property (nonatomic) CGPoint center;
   @property (nonatomic, retain) CIColor *color;
@@ -757,6 +763,14 @@ NS_ASSUME_NONNULL_BEGIN
   @property (nonatomic, retain, nullable) CIImage *inputImage;
   @property (nonatomic) float radius;
   @property (nonatomic) float intensity;
+@end
+@protocol CICannyEdgeDetector <CIFilter>
+  @property (nonatomic, retain, nullable) CIImage *inputImage;
+  @property (nonatomic) float gaussianSigma;
+  @property (nonatomic) bool perceptual;
+  @property (nonatomic) float thresholdHigh;
+  @property (nonatomic) float thresholdLow;
+  @property (nonatomic) NSInteger hysteresisPasses;
 @end
 @protocol CIComicEffect <CIFilter>
   @property (nonatomic, retain, nullable) CIImage *inputImage;
@@ -851,6 +865,9 @@ NS_ASSUME_NONNULL_BEGIN
   @property (nonatomic, retain, nullable) CIImage *inputImage;
   @property (nonatomic, retain, nullable) CIImage *shadingImage;
   @property (nonatomic) float scale;
+@end
+@protocol CISobelGradients <CIFilter>
+  @property (nonatomic, retain, nullable) CIImage *inputImage;
 @end
 @protocol CISpotColor <CIFilter>
   @property (nonatomic, retain, nullable) CIImage *inputImage;
@@ -1172,6 +1189,7 @@ NS_CLASS_AVAILABLE(10_15, 13_0)
 + (CIFilter<CIQRCodeGenerator>*) QRCodeGenerator;
 + (CIFilter<CIRandomGenerator>*) randomGeneratorFilter;
 + (CIFilter<CIRoundedRectangleGenerator>*) roundedRectangleGeneratorFilter;
++ (CIFilter<CIRoundedRectangleStrokeGenerator>*) roundedRectangleStrokeGeneratorFilter NS_AVAILABLE(14_0, 17_0);
 + (CIFilter<CIStarShineGenerator>*) starShineGeneratorFilter;
 + (CIFilter<CIStripesGenerator>*) stripesGeneratorFilter;
 + (CIFilter<CISunbeamsGenerator>*) sunbeamsGeneratorFilter;
@@ -1183,6 +1201,7 @@ NS_CLASS_AVAILABLE(10_15, 13_0)
 + (CIFilter<CIBlendWithMask>*) blendWithMaskFilter;
 + (CIFilter<CIBlendWithMask>*) blendWithRedMaskFilter;
 + (CIFilter<CIBloom>*) bloomFilter;
++ (CIFilter<CICannyEdgeDetector>*) cannyEdgeDetectorFilter NS_AVAILABLE(14_0, 17_0);
 + (CIFilter<CIComicEffect>*) comicEffectFilter;
 + (CIFilter<CIConvolution>*) convolution3X3Filter;
 + (CIFilter<CIConvolution>*) convolution5X5Filter;
@@ -1211,6 +1230,7 @@ NS_CLASS_AVAILABLE(10_15, 13_0)
 + (CIFilter<CIPointillize>*) pointillizeFilter;
 + (CIFilter<CISaliencyMap>*) saliencyMapFilter;
 + (CIFilter<CIShadedMaterial>*) shadedMaterialFilter;
++ (CIFilter<CISobelGradients>*) sobelGradientsFilter NS_AVAILABLE(14_0, 17_0);
 + (CIFilter<CISpotColor>*) spotColorFilter;
 + (CIFilter<CISpotLight>*) spotLightFilter;
 

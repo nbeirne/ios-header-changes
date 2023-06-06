@@ -53,6 +53,7 @@ API_AVAILABLE(macos(10.15), ios(13), tvos(13))
  */
 #pragma mark -
 OS_EXPORT
+NS_SWIFT_SENDABLE
 @interface PHPhotoLibrary : NSObject
 
 + (PHPhotoLibrary *)sharedPhotoLibrary;

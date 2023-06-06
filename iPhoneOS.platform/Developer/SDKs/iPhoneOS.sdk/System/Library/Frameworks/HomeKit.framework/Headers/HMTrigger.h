@@ -44,7 +44,7 @@ HM_EXTERN API_AVAILABLE(ios(8.0), watchos(2.0), tvos(10.0), macCatalyst(14.0)) A
 /*!
  * @brief The date that this trigger was most recently fired.
  */
-@property (readonly, copy, nonatomic, nullable) NSDate *lastFireDate;
+@property (readonly, copy, nonatomic, nullable) NSDate *lastFireDate API_DEPRECATED("No longer supported", macos(11.0, 14.0), ios(8.0, 17.0), watchos(2.0, 10.0), tvos(10.0, 17.0));
 
 /*!
  * @brief A unique identifier for the trigger.

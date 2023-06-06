@@ -124,6 +124,12 @@ API_AVAILABLE( ios( 16.0 ) )
 /// State of the device.
 @property (readwrite, assign, nonatomic) DDDeviceState state;
 
+/// Whether the device supports grouping with other devices with the same protocol.
+@property (readwrite, assign, nonatomic) BOOL supportsGrouping;
+
+/// The identifier of the potential pre-configured group the device is in.
+@property (readwrite, copy, nullable, nonatomic) NSString *groupIdentifier;
+
 /// TXT record of the device.
 @property (readwrite, copy, nullable, nonatomic) NSData *txtRecordData
 	NS_REFINED_FOR_SWIFT;

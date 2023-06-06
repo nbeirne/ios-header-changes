@@ -23,6 +23,8 @@ typedef NS_ENUM(NSInteger, CKSubscriptionType) {
 typedef NSString *CKSubscriptionID;
 
 API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0))
+// This class should not be subclassed. If it is, Sendable may no longer apply.
+// NS_SWIFT_SENDABLE on macos(14.0), ios(17.0), tvos(17.0), watchos(10.0)
 @interface CKSubscription : NSObject <NSSecureCoding, NSCopying>
 
 - (instancetype)init NS_UNAVAILABLE;
@@ -54,17 +56,19 @@ typedef NS_OPTIONS(NSUInteger, CKQuerySubscriptionOptions) {
  *  @discussion @c CKQuerySubscriptions are not supported in a @c sharedCloudDatabase
  */
 API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(6.0))
+CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer apply
+// NS_SWIFT_SENDABLE on macos(14.0), ios(17.0), tvos(17.0), watchos(10.0)
 @interface CKQuerySubscription : CKSubscription <NSSecureCoding, NSCopying>
 
-- (instancetype)initWithRecordType:(CKRecordType)recordType predicate:(NSPredicate *)predicate options:(CKQuerySubscriptionOptions)querySubscriptionOptions;
+- (instancetype)initWithRecordType:(CKRecordType)recordType predicate:(NSPredicate *)predicate options:(CKQuerySubscriptionOptions)querySubscriptionOptions API_DEPRECATED_WITH_REPLACEMENT("initWithRecordType:predicate:subscriptionID:options:", macos(10.12, 10.12), ios(10.0, 10.0), tvos(10.0, 10.0), watchos(6.0, 6.0));
 - (instancetype)initWithRecordType:(CKRecordType)recordType predicate:(NSPredicate *)predicate subscriptionID:(CKSubscriptionID)subscriptionID options:(CKQuerySubscriptionOptions)querySubscriptionOptions NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 
 /*! The record type that this subscription watches */
-@property (nonatomic, readonly, copy) CKRecordType recordType;
+@property (atomic, readonly, copy) CKRecordType recordType;
 
 /*! A predicate that determines when the subscription fires. */
-@property (nonatomic, readonly, copy) NSPredicate *predicate;
+@property (atomic, readonly, copy) NSPredicate *predicate;
 
 /*! Optional property.  If set, a query subscription is scoped to only record changes in the indicated zone.
  *  Query Subscriptions that do not specify a @c zoneID are scoped to record changes across all zones in the database.
@@ -78,7 +82,7 @@ API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(6.0))
  *  @c CKQuerySubscriptionOptionsFiresOnRecordUpdate, or
  *  @c CKQuerySubscriptionOptionsFiresOnRecordDeletion must be specified or an @c NSInvalidArgumentException will be thrown.
  */
-@property (nonatomic, readonly, assign) CKQuerySubscriptionOptions querySubscriptionOptions;
+@property (atomic, readonly, assign) CKQuerySubscriptionOptions querySubscriptionOptions;
 
 @end
 
@@ -91,10 +95,11 @@ API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(6.0))
  *  @c CKRecordZoneSubscriptions are not supported in a @c sharedCloudDatabase
  */
 API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(6.0))
+CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer apply
 // NS_SWIFT_SENDABLE on macos(13.3), macCatalyst(16.4), ios(16.4), tvos(16.4), watchos(9.4)
 @interface CKRecordZoneSubscription : CKSubscription <NSSecureCoding, NSCopying>
 
-- (instancetype)initWithZoneID:(CKRecordZoneID *)zoneID;
+- (instancetype)initWithZoneID:(CKRecordZoneID *)zoneID API_DEPRECATED_WITH_REPLACEMENT("initWithZoneID:subscriptionID:", macos(10.12, 10.12), ios(10.0, 10.0), tvos(10.0, 10.0), watchos(6.0, 6.0));
 - (instancetype)initWithZoneID:(CKRecordZoneID *)zoneID subscriptionID:(CKSubscriptionID)subscriptionID NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 
@@ -113,10 +118,11 @@ API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(6.0))
  *  @discussion @c CKDatabaseSubscription is only supported in the Private and Shared databases.
  */
 API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(6.0))
+CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer apply
 // NS_SWIFT_SENDABLE on macos(13.3), macCatalyst(16.4), ios(16.4), tvos(16.4), watchos(9.4)
 @interface CKDatabaseSubscription : CKSubscription <NSSecureCoding, NSCopying>
 
-- (instancetype)init;
+- (instancetype)init API_DEPRECATED_WITH_REPLACEMENT("initWithSubscriptionID:", macos(10.12, 10.12), ios(10.0, 10.0), tvos(10.0, 10.0), watchos(6.0, 6.0));
 + (instancetype)new OBJC_SWIFT_UNAVAILABLE("use object initializers instead");
 - (instancetype)initWithSubscriptionID:(CKSubscriptionID)subscriptionID NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
@@ -135,6 +141,7 @@ API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(6.0))
  *  On tvOS, alerts, badges, sounds, and categories are not handled in push notifications. However, CKSubscriptions remain available to help you avoid polling the server.
  */
 API_AVAILABLE(macos(10.10), ios(8.0), watchos(6.0))
+CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer apply
 // NS_SWIFT_SENDABLE on macos(13.3), macCatalyst(16.4), ios(16.4), tvos(16.4), watchos(9.4)
 @interface CKNotificationInfo : NSObject <NSSecureCoding, NSCopying>
 

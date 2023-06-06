@@ -16,6 +16,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 /* Because NSBundle caches allocated instances, subclasses should be prepared
    to receive an already initialized object back from [super initWithPath:] */
+NS_SWIFT_SENDABLE
 @interface NSBundle : NSObject
 
 /* Methods for creating or retrieving bundle instances. */

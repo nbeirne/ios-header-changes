@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
  * be fulfilled or not. This allows the caller to check Darwin state variables or perform other logic
  * beyond simply verifying that the notification has been posted.
  */
-typedef BOOL (^XCTDarwinNotificationExpectationHandler)(void);
+typedef BOOL (^XCT_SWIFT_SENDABLE XCTDarwinNotificationExpectationHandler)(void);
 
 /*!
  * @class XCTDarwinNotificationExpectation

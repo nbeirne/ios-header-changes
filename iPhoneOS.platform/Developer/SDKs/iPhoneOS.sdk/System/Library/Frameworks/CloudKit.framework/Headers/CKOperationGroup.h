@@ -47,6 +47,7 @@ typedef NS_ENUM(NSInteger, CKOperationGroupTransferSize) {
  *  You associate @c CKOperationGroup s with@c  CKOperation s by setting the @c CKOperation.group property.  Create a new @c CKOperationGroup instance for each distinct user action.
  */
 API_AVAILABLE(macos(10.13), ios(11.0), tvos(11.0), watchos(4.0))
+CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer apply
 // NS_SWIFT_SENDABLE on macos(13.3), macCatalyst(16.4), ios(16.4), tvos(16.4), watchos(9.4)
 @interface CKOperationGroup : NSObject <NSSecureCoding>
 

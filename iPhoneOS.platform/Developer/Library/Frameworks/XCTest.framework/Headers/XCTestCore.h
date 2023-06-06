@@ -9,9 +9,7 @@
 #import <XCTest/XCTestAssertions.h>
 #import <XCTest/XCTestAssertionsImpl.h>
 #import <XCTest/XCTestCase.h>
-#import <XCTest/XCTestCase+AsynchronousTesting.h>
 #import <XCTest/XCTestCaseRun.h>
-#import <XCTest/XCTestExpectation.h>
 #import <XCTest/XCTestLog.h>
 #import <XCTest/XCTestObserver.h>
 #import <XCTest/XCTestObservationCenter.h>
@@ -26,13 +24,18 @@
 #import <XCTest/XCTActivity.h>
 #import <XCTest/XCTAttachment.h>
 #import <XCTest/XCTContext.h>
-#import <XCTest/XCTDarwinNotificationExpectation.h>
 #import <XCTest/XCTExpectedFailure.h>
 #import <XCTest/XCTIssue.h>
-#import <XCTest/XCTKVOExpectation.h>
 #import <XCTest/XCTMeasureOptions.h>
 #import <XCTest/XCTMetric.h>
+#import <XCTest/XCTSourceCodeContext.h>
+
+#ifndef XCTEST_DEFINES_DISABLE_WAITERS // NOTE: This conditional is processed before compilation by the unifdef tool. It will not be present in the final framework header
+#import <XCTest/XCTestCase+AsynchronousTesting.h>
+#import <XCTest/XCTestExpectation.h>
+#import <XCTest/XCTDarwinNotificationExpectation.h>
+#import <XCTest/XCTKVOExpectation.h>
 #import <XCTest/XCTNSNotificationExpectation.h>
 #import <XCTest/XCTNSPredicateExpectation.h>
-#import <XCTest/XCTSourceCodeContext.h>
 #import <XCTest/XCTWaiter.h>
+#endif

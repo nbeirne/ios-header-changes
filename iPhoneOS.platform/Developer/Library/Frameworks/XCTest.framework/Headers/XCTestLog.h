@@ -35,6 +35,8 @@
 
 #import <XCTest/XCTestObserver.h>
 
+@class NSFileHandle;
+
 /*!
  * XCTestLog is deprecated.
  */

@@ -87,7 +87,7 @@ API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0))
  *  should not be concurrently used outside of blocks assigned to this operation.
  */
 @property (nonatomic, copy, nullable) void (^fetchDatabaseChangesCompletionBlock)(CKServerChangeToken * _Nullable serverChangeToken, BOOL moreComing, NSError * _Nullable operationError)
-CK_SWIFT_DEPRECATED("Use fetchDatabaseChangesResultBlock instead", macos(10.12, 12.0), ios(10.0, 15.0), tvos(10.0, 15.0), watchos(3.0, 8.0));
+CK_SWIFT_DEPRECATED("Use fetchDatabaseChangesResultBlock instead", macos(10.12, 12.0), ios(10.0, 15.0), tvos(10.0, 15.0), watchos(3.0, 8.0), xros(1.0, 1.0));
 
 @end
 

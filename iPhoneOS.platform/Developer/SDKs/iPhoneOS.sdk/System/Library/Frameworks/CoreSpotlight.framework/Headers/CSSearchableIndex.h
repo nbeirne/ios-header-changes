@@ -2,7 +2,7 @@
 //  CSSearchableIndex.h
 //  CoreSpotlight
 //
-//  Copyright © 2022 Apple. All rights reserved.
+//  Copyright © 2015–2022 Apple Inc. All rights reserved.
 //
 
 #import <CoreSpotlight/CSSearchableItem.h>

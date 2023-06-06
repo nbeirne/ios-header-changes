@@ -1,3 +1,7 @@
 // Copyright © 2015 Apple Inc. All rights reserved.
 
-#import <UIKit/UIKit.h>
+#if !__METAL_VERSION__
+# import <UIKit/UIKit.h>
+#else
+# include <SwiftUI/SwiftUI_Metal.h>
+#endif

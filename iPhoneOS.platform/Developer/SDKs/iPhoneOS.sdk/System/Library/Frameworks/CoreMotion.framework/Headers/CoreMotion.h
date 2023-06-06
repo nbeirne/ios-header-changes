@@ -34,6 +34,9 @@
 #import <CoreMotion/CMStepCounter.h>
 #import <CoreMotion/CMSensorRecorder.h>
 #import <CoreMotion/CMRecordedPressureData.h>
+#import <CoreMotion/CMHighFrequencyHeartRateData.h>
+#import <CoreMotion/CMOdometer.h>
 #import <CoreMotion/CMWaterSubmersionManager.h>
+#import <CoreMotion/CMBatchedSensorManager.h>
 
 #endif /* __COREMOTION__ */

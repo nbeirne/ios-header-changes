@@ -64,6 +64,26 @@ NS_SWIFT_SENDABLE // Immutable with no mutable subclasses. Internal resource val
 + (nullable instancetype)URLWithString:(NSString *)URLString;
 + (nullable instancetype)URLWithString:(NSString *)URLString relativeToURL:(nullable NSURL *)baseURL;
 
+/// Initializes an `NSURL` with a URL string and the option to add (or skip) IDNA- and percent-encoding of invalid characters.
+/// If `encodingInvalidCharacters` is false, and the URL string is invalid according to RFC 3986, `nil` is returned.
+/// If `encodingInvalidCharacters` is true, `NSURL` will try to encode the string to create a valid URL.
+/// If the URL string is still invalid after encoding, `nil` is returned.
+///
+/// - Parameter URLString: The URL string.
+/// - Parameter encodingInvalidCharacters: True if `NSURL` should try to encode an invalid URL string, false otherwise.
+/// - Returns: An `NSURL` instance for a valid URL, or `nil` if the URL is invalid.
+- (nullable instancetype)initWithString:(NSString *)URLString encodingInvalidCharacters:(BOOL)encodingInvalidCharacters API_AVAILABLE(macos(14.0), ios(17.0), watchos(10.0), tvos(17.0));
+
+/// Initializes and returns a newly created `NSURL` with a URL string and the option to add (or skip) IDNA- and percent-encoding of invalid characters.
+/// If `encodingInvalidCharacters` is false, and the URL string is invalid according to RFC 3986, `nil` is returned.
+/// If `encodingInvalidCharacters` is true, `NSURL` will try to encode the string to create a valid URL.
+/// If the URL string is still invalid after encoding, `nil` is returned.
+///
+/// - Parameter URLString: The URL string.
+/// - Parameter encodingInvalidCharacters: True if `NSURL` should try to encode an invalid URL string, false otherwise.
+/// - Returns: An `NSURL` instance for a valid URL, or `nil` if the URL is invalid.
++ (nullable instancetype)URLWithString:(NSString *)URLString encodingInvalidCharacters:(BOOL)encodingInvalidCharacters API_AVAILABLE(macos(14.0), ios(17.0), watchos(10.0), tvos(17.0));
+
 
 /* Initializes a newly created NSURL using the contents of the given data, relative to a base URL. If the data representation is not a legal URL string as ASCII bytes, the URL object may not behave as expected.
  */
@@ -283,6 +303,7 @@ FOUNDATION_EXPORT NSURLFileProtectionType const NSURLFileProtectionNone API_AVAI
 FOUNDATION_EXPORT NSURLFileProtectionType const NSURLFileProtectionComplete API_AVAILABLE(macos(11.0), ios(9.0), watchos(2.0), tvos(9.0)); // The file is stored in an encrypted format on disk and cannot be read from or written to while the device is locked or booting. Transient data files with this protection type should be excluded from backups using NSURLIsExcludedFromBackupKey.
 FOUNDATION_EXPORT NSURLFileProtectionType const NSURLFileProtectionCompleteUnlessOpen API_AVAILABLE(macos(11.0), ios(9.0), watchos(2.0), tvos(9.0)); // The file is stored in an encrypted format on disk. Files can be created while the device is locked, but once closed, cannot be opened again until the device is unlocked. If the file is opened when unlocked, you may continue to access the file normally, even if the user locks the device. There is a small performance penalty when the file is created and opened, though not when being written to or read from. This can be mitigated by changing the file protection to NSURLFileProtectionComplete when the device is unlocked. Transient data files with this protection type should be excluded from backups using NSURLIsExcludedFromBackupKey.
 FOUNDATION_EXPORT NSURLFileProtectionType const NSURLFileProtectionCompleteUntilFirstUserAuthentication API_AVAILABLE(macos(11.0), ios(9.0), watchos(2.0), tvos(9.0)); // The file is stored in an encrypted format on disk and cannot be accessed until after the device has booted. After the user unlocks the device for the first time, your app can access the file and continue to access it even if the user subsequently locks the device.
+FOUNDATION_EXPORT NSURLFileProtectionType const NSURLFileProtectionCompleteWhenUserInactive API_AVAILABLE(ios(17.0), watchos(10.0), tvos(17.0)) API_UNAVAILABLE(macos); // The file is stored in an encrypted format on disk and cannot be accessed until after first unlock after the device has booted. After this first unlock, your app can access the file even while the device is locked until access expiry. Access is renewed once the user unlocks the device again.
 
 /* Volumes resource keys 
  
@@ -506,6 +527,26 @@ API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0))
 
 // Initializes and returns a newly created NSURLComponents with a URL string. If the URLString is malformed, nil is returned.
 + (nullable instancetype)componentsWithString:(NSString *)URLString;
+
+/// Initializes an `NSURLComponents` with a URL string and the option to add (or skip) IDNA- and percent-encoding of invalid characters.
+/// If `encodingInvalidCharacters` is false, and the URL string is invalid according to RFC 3986, `nil` is returned.
+/// If `encodingInvalidCharacters` is true, `NSURLComponents` will try to encode the string to create a valid URL.
+/// If the URL string is still invalid after encoding, `nil` is returned.
+///
+/// - Parameter URLString: The URL string.
+/// - Parameter encodingInvalidCharacters: True if `NSURLComponents` should try to encode an invalid URL string, false otherwise.
+/// - Returns: An `NSURLComponents` instance for a valid URL, or `nil` if the URL is invalid.
+- (nullable instancetype)initWithString:(NSString *)URLString encodingInvalidCharacters:(BOOL)encodingInvalidCharacters API_AVAILABLE(macos(14.0), ios(17.0), watchos(10.0), tvos(17.0));
+
+/// Initializes and returns a newly created `NSURLComponents` with a URL string and the option to add (or skip) IDNA- and percent-encoding of invalid characters.
+/// If `encodingInvalidCharacters` is false, and the URL string is invalid according to RFC 3986, `nil` is returned.
+/// If `encodingInvalidCharacters` is true, `NSURLComponents` will try to encode the string to create a valid URL.
+/// If the URL string is still invalid after encoding, nil is returned.
+///
+/// - Parameter URLString: The URL string.
+/// - Parameter encodingInvalidCharacters: True if `NSURLComponents` should try to encode an invalid URL string, false otherwise.
+/// - Returns: An `NSURLComponents` instance for a valid URL, or `nil` if the URL is invalid.
++ (nullable instancetype)componentsWithString:(NSString *)URLString encodingInvalidCharacters:(BOOL)encodingInvalidCharacters API_AVAILABLE(macos(14.0), ios(17.0), watchos(10.0), tvos(17.0));
 
 // Returns a URL created from the NSURLComponents. If the NSURLComponents has an authority component (user, password, host or port) and a path component, then the path must either begin with "/" or be an empty string. If the NSURLComponents does not have an authority component (user, password, host or port) and has a path component, the path component must not start with "//". If those requirements are not met, nil is returned.
 @property (nullable, readonly, copy) NSURL *URL;

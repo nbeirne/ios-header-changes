@@ -37,6 +37,7 @@ typedef NS_ENUM(NSInteger, XCTWaiterResult) {
  * support libraries to provide convenience methods for waiting without having to pass test cases through
  * those APIs.
  */
+NS_SWIFT_SENDABLE
 @interface XCTWaiter : NSObject
 
 /*!
@@ -56,7 +57,8 @@ typedef NS_ENUM(NSInteger, XCTWaiterResult) {
  * Returns an array containing the expectations that were fulfilled, in that order, up until the waiter
  * stopped waiting. Expectations fulfilled after the waiter stopped waiting will not be in the array.
  * The array will be empty until the waiter has started waiting, even if expectations have already been
- * fulfilled.
+ * fulfilled. If a waiter is used to wait multiple times, this array will contain all of the
+ * fulfilled expectations from each wait operation.
  */
 @property (readonly) NSArray<XCTestExpectation *> *fulfilledExpectations;
 
@@ -263,7 +265,7 @@ typedef NS_ENUM(NSInteger, XCTWaiterResult) {
  * @note These methods are invoked on an arbitrary queue.
  */
 @protocol XCTWaiterDelegate <NSObject>
-
+@optional
 /*!
  * @method -waiter:didTimeoutWithUnfulfilledExpectations:
  * Invoked when not all waited on expectations are fulfilled during the timeout period. If the delegate

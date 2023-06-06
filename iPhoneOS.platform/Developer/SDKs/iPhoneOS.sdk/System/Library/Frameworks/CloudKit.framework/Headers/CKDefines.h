@@ -43,4 +43,10 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
     #define CK_SUBCLASSING_RESTRICTED __attribute__((__objc_subclassing_restricted__))
 #endif
 
+
+#ifndef CK_SUBCLASSING_DEPRECATED
+    #define CK_SUBCLASSING_DEPRECATED // we can't actually emit a warning, but heed this annotation anyway!
+#endif // CK_SUBCLASSING_DEPRECATED
+
+
 NS_HEADER_AUDIT_END(nullability, sendability)

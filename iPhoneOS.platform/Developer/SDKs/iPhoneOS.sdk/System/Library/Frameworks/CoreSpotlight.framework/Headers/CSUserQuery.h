@@ -2,7 +2,7 @@
 //  CSUserQuery.h
 //  CoreSpotlight
 //
-//  Copyright © 2021 Apple. All rights reserved.
+//  Copyright © 2022 Apple Inc. All rights reserved.
 //
 
 #import <CoreSpotlight/CSBase.h>

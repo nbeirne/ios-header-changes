@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @return
  * Return YES if the expectation is fulfilled, NO if it is not.
  */
-typedef BOOL (^XCNotificationExpectationHandler)(NSNotification *notification);
+typedef BOOL (^XCT_SWIFT_SENDABLE XCNotificationExpectationHandler)(NSNotification *notification);
 
 /*!
  * @class XCTNSNotificationExpectation

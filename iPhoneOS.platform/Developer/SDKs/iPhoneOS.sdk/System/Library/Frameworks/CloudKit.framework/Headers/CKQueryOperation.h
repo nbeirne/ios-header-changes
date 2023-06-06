@@ -16,6 +16,7 @@
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0))
+CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer apply
 // NS_SWIFT_SENDABLE on macos(13.3), macCatalyst(16.4), ios(16.4), tvos(16.4), watchos(9.4)
 @interface CKQueryCursor : NSObject <NSCopying, NSSecureCoding>
 - (instancetype)init NS_UNAVAILABLE;
@@ -89,7 +90,7 @@ API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0))
  *  should not be concurrently used outside of blocks assigned to this operation.
  */
 @property (nonatomic, copy, nullable) void (^queryCompletionBlock)(CKQueryCursor * _Nullable cursor, NSError * _Nullable operationError)
-CK_SWIFT_DEPRECATED("Use queryResultBlock instead", macos(10.10, 12.0), ios(8.0, 15.0), tvos(9.0, 15.0), watchos(3.0, 8.0));
+CK_SWIFT_DEPRECATED("Use queryResultBlock instead", macos(10.10, 12.0), ios(8.0, 15.0), tvos(9.0, 15.0), watchos(3.0, 8.0), xros(1.0, 1.0));
 
 @end
 

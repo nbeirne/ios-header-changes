@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @return
  * Return YES if the expectation is fulfilled, NO if it is not.
  */
-typedef BOOL (^XCKeyValueObservingExpectationHandler)(id observedObject, NSDictionary *change);
+typedef BOOL (^XCT_SWIFT_SENDABLE XCKeyValueObservingExpectationHandler)(id observedObject, NSDictionary *change);
 
 /*!
  * @class XCTKVOExpectation

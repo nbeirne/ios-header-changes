@@ -116,8 +116,6 @@ XCT_EXPORT XCUIGestureVelocity const XCUIGestureVelocityFast;
  */
 + (void)performWithKeyModifiers:(XCUIKeyModifierFlags)flags block:(XCT_NOESCAPE void (^)(void))block API_AVAILABLE(ios(15.0), macCatalyst(13.0));
 
-#if TARGET_OS_OSX || TARGET_OS_MACCATALYST
-
 /*!
  * Types a single key with the specified modifier flags. Although `key` is a string, it must represent
  * a single key on a physical keyboard; strings that resolve to multiple keys will raise an error at runtime.
@@ -125,8 +123,6 @@ XCT_EXPORT XCUIGestureVelocity const XCUIGestureVelocityFast;
  * command, control, option, and function keys can be typed using constants defined for them in XCUIKeyboardKeys.h
  */
 - (void)typeKey:(NSString *)key modifierFlags:(XCUIKeyModifierFlags)flags;
-
-#endif // TARGET_OS_OSX || TARGET_OS_MACCATALYST
 
 #endif // TARGET_OS_OSX || TARGET_OS_MACCATALYST || TARGET_OS_IOS
 

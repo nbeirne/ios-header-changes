@@ -47,6 +47,7 @@ API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(macos, watchos, tvos)
 /**
  A now playing button that indicates the current shuffle mode for your app.
  */
+API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(macos, watchos, tvos)
 @interface CPNowPlayingShuffleButton : CPNowPlayingButton
 @end
 
@@ -54,6 +55,7 @@ API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(macos, watchos, tvos)
  A now playing button that can be used to allow the user to add the current
  playing item to a collection, like their library.
  */
+API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(macos, watchos, tvos)
 @interface CPNowPlayingAddToLibraryButton : CPNowPlayingButton
 @end
 
@@ -62,6 +64,7 @@ API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(macos, watchos, tvos)
  your app could present a @c CPActionSheetTemplate to show more actions
  when the user taps this button.
  */
+API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(macos, watchos, tvos)
 @interface CPNowPlayingMoreButton : CPNowPlayingButton
 @end
 
@@ -69,6 +72,7 @@ API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(macos, watchos, tvos)
  A now playing button that shows the current playback rate and allows
  the user to cycle between different playback rates provided by your app.
  */
+API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(macos, watchos, tvos)
 @interface CPNowPlayingPlaybackRateButton : CPNowPlayingButton
 @end
 
@@ -76,6 +80,7 @@ API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(macos, watchos, tvos)
  A now playing button that shows the current repeat state, like "once"
  or "all".
  */
+API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(macos, watchos, tvos)
 @interface CPNowPlayingRepeatButton : CPNowPlayingButton
 @end
 
@@ -83,6 +88,7 @@ API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(macos, watchos, tvos)
  A now playing button that shows a custom image provided by your app
  for any other custom actions on the now playing screen.
  */
+API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(macos, watchos, tvos)
 @interface CPNowPlayingImageButton : CPNowPlayingButton
 
 /**

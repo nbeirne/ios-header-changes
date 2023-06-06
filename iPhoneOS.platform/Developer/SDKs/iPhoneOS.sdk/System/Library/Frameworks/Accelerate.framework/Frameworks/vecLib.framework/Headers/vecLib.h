@@ -3,7 +3,7 @@
  
      Contains:   Master include for vecLib framework
  
-     Version:    vecLib-818.100
+     Version:    vecLib-1038.0
  
      Copyright:  Copyright (c) 2000-2023 by Apple Inc. All rights reserved.
  
@@ -16,7 +16,6 @@
 #ifndef __VECLIB__
 #define __VECLIB__
 
-
 #ifndef __VECLIBTYPES__
 #include <vecLib/vecLibTypes.h>
 #endif
@@ -24,6 +23,10 @@
 #ifndef __VBASICOPS__
 #include <vecLib/vBasicOps.h>
 #endif
+
+#include <TargetConditionals.h>
+
+
 
 #ifndef __VBIGNUM__
 #include <vecLib/vBigNum.h>

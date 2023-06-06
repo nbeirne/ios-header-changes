@@ -34,7 +34,7 @@ typedef NS_ENUM(NSInteger, UIPencilPreferredAction) {
 
 @protocol UIPencilInteractionDelegate;
 
-UIKIT_EXTERN API_AVAILABLE(ios(12.1)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(12.1)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR
 @interface UIPencilInteraction : NSObject <UIInteraction>
 
 @property (class, nonatomic, readonly) UIPencilPreferredAction preferredTapAction;
@@ -47,7 +47,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(12.1)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI
 @end
 
 
-API_AVAILABLE(ios(12.1)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR
+API_AVAILABLE(ios(12.1)) API_UNAVAILABLE(watchos, tvos) API_UNAVAILABLE(xros) NS_SWIFT_UI_ACTOR
 @protocol UIPencilInteractionDelegate <NSObject>
 
 @optional

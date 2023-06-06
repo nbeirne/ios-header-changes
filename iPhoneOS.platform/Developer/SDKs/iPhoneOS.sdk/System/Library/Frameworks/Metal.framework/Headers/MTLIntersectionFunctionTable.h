@@ -40,7 +40,6 @@ typedef NS_OPTIONS(NSUInteger, MTLIntersectionFunctionSignature) {
 	 */
     MTLIntersectionFunctionSignatureWorldSpaceData = (1 << 2),
     
-    
     /**
      * @brief The intersection functions may be called from intersectors using the
      * instance_motion intersection tag as described in the Metal Shading Language Guide.
@@ -59,7 +58,11 @@ typedef NS_OPTIONS(NSUInteger, MTLIntersectionFunctionSignature) {
      */
     MTLIntersectionFunctionSignatureExtendedLimits API_AVAILABLE(macos(12.0), ios(15.0)) = (1 << 5),
     
-    
+    /**
+     * @brief The intersection functions may be called from intersectors using the
+     * max_levels intersection tag as described in the Metal Shading Language Guide.
+     */
+    MTLIntersectionFunctionSignatureMaxLevels API_AVAILABLE(macos(14.0), ios(17.0)) = (1 << 6),
 } MTL_EXPORT API_AVAILABLE(macos(11.0), ios(14.0));
 
 MTL_EXPORT API_AVAILABLE(macos(11.0), ios(14.0))

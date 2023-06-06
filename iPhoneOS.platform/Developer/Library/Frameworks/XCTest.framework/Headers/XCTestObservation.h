@@ -10,6 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class NSBundle;
 @class XCTestCase;
 @class XCTestSuite;
 @class XCTExpectedFailure;

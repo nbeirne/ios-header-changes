@@ -72,7 +72,7 @@ typedef NS_ENUM(NSInteger, XCUIDeviceAppearance) {
 - (void)pressButton:(XCUIDeviceButton)button;
 #endif
 
-#if TARGET_OS_WATCH
+#if TARGET_OS_WATCH || TARGET_OS_XR
 /*!
  * Rotate the digital crown by a specified amount.
  *
@@ -97,7 +97,7 @@ typedef NS_ENUM(NSInteger, XCUIDeviceAppearance) {
  *
  */
 - (void)rotateDigitalCrownByDelta:(CGFloat)rotationalDelta withVelocity:(XCUIGestureVelocity)velocity;
-#endif // TARGET_OS_WATCHOS
+#endif // TARGET_OS_WATCHOS || TARGET_OS_XR
 
 /*!
  * Get or set the UI style of the device. Uses the `XCUIDeviceAppearance` enum to describe the UI style.

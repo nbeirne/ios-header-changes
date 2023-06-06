@@ -47,6 +47,27 @@ API_AVAILABLE(ios(13.0), macos(12.0)) API_UNAVAILABLE(tvos, watchos)
  */
 @property (readonly, strong, nonnull) NSString *platformArchitecture API_AVAILABLE(ios(14.0), macos(12.0)) API_UNAVAILABLE(tvos, watchos);
 
+/*!
+ @property      lowPowerModeEnabled
+ @abstract      A boolean representing low power mode enablement on device
+ */
+
+@property (readonly) bool lowPowerModeEnabled API_AVAILABLE(macos(14.0), ios(17.0)) API_UNAVAILABLE(tvos, watchos);
+
+/*!
+ @property      isTestFlightApp
+ @abstract      A boolean representing if the app is registered as a testFlightApp
+ */
+
+@property (readonly) bool isTestFlightApp API_AVAILABLE(macos(14.0), ios(17.0)) API_UNAVAILABLE(tvos, watchos);
+
+/*!
+ @property      pid
+ @abstract      pid of the process for which this diagnostic  was generated
+ */
+
+@property (readonly) pid_t pid API_AVAILABLE(macos(14.0), ios(17.0)) API_UNAVAILABLE(tvos, watchos);
+
 
 /*!
  @method        JSONRepresentation

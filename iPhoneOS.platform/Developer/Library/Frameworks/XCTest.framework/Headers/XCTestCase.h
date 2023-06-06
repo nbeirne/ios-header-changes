@@ -213,8 +213,54 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property NSTimeInterval executionTimeAllowance;
 
-#pragma mark - Measuring Performance Metrics
+@end
 
+@interface XCTestCase (XCTestSuiteExtensions)
+
+/*!
+ * @property defaultTestSuite
+ * Returns a test suite containing test cases for all of the tests in the class.
+ */
+@property (class, readonly) XCTestSuite *defaultTestSuite;
+
+/*!
+ * @method +setUp
+ * Suite-level setup method called before the class begins to run any of its test methods or their associated
+ * per-instance setUp methods.
+ */
++ (void)setUp;
+
+/*!
+ * @method +tearDown
+ * Suite-level teardown method called after the class has finished running all of its test methods and their
+ * associated per-instance tearDown methods and teardown blocks.
+ */
++ (void)tearDown;
+
+@end
+
+/*!
+ * XCTestCase conforms to XCTActivity, allowing test attachments to be added directly from test methods.
+ *
+ * See XCTAttachment.h for details on how to create attachments. Once created, they can be added directly to XCTestCase:
+ *
+ * @textblock
+ 
+     - (void)testFoo
+     {
+         XCTAttachment *attachment = ...
+         [self addAttachment:attachment];
+     }
+ 
+ * @/textblock
+ */
+@interface XCTestCase (XCTActivity) <XCTActivity>
+@end
+
+/*!
+ * Interface extension for measure related API.
+ */
+@interface XCTestCase (XCTPerformanceAnalysis)
 
 typedef NSString * XCTPerformanceMetric NS_TYPED_EXTENSIBLE_ENUM;
 
@@ -303,55 +349,6 @@ XCT_EXPORT XCTPerformanceMetric const XCTPerformanceMetric_WallClockTime;
  * Measurement of metrics will stop at this point.
  */
 - (void)stopMeasuring;
-
-@end
-
-@interface XCTestCase (XCTestSuiteExtensions)
-
-/*!
- * @property defaultTestSuite
- * Returns a test suite containing test cases for all of the tests in the class.
- */
-@property (class, readonly) XCTestSuite *defaultTestSuite;
-
-/*!
- * @method +setUp
- * Suite-level setup method called before the class begins to run any of its test methods or their associated
- * per-instance setUp methods.
- */
-+ (void)setUp;
-
-/*!
- * @method +tearDown
- * Suite-level teardown method called after the class has finished running all of its test methods and their
- * associated per-instance tearDown methods and teardown blocks.
- */
-+ (void)tearDown;
-
-@end
-
-/*!
- * XCTestCase conforms to XCTActivity, allowing test attachments to be added directly from test methods.
- *
- * See XCTAttachment.h for details on how to create attachments. Once created, they can be added directly to XCTestCase:
- *
- * @textblock
- 
-     - (void)testFoo
-     {
-         XCTAttachment *attachment = ...
-         [self addAttachment:attachment];
-     }
- 
- * @/textblock
- */
-@interface XCTestCase() <XCTActivity>
-@end
-
-/*!
- * Interface extension for measure related API.
- */
-@interface XCTestCase (XCTPerformanceAnalysis)
 
 /*!
  * @property defaultMetrics

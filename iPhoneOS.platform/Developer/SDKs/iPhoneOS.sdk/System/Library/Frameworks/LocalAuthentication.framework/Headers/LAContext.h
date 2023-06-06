@@ -71,7 +71,7 @@ typedef NS_ENUM(NSInteger, LAPolicy)
     ///             unavailable it behaves as LAPolicyDeviceOwnerAuthenticationWithWatch.
     ///
     ///             Watch authentication dialog looks and behaves similarly to biometric variant. When both
-    ///             machanisms are available, user is asked to use biometry and watch authentication will run in
+    ///             mechanisms are available, user is asked to use biometry and watch authentication will run in
     ///             parallel.
     LAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch API_AVAILABLE(macos(10.15), macCatalyst(13.0)) API_UNAVAILABLE(ios, watchos, tvos) = kLAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch,
     

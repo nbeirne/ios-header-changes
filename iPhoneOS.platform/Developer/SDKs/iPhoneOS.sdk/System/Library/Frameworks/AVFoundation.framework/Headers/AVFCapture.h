@@ -16,7 +16,9 @@
 #import <AVFoundation/AVCaptureSession.h>
 #import <AVFoundation/AVCaptureSystemPressure.h>
 #import <AVFoundation/AVCaptureVideoPreviewLayer.h>
-#import <AVFoundation/AVMetadataObject.h>
+#import <AVFoundation/AVContinuityDevice.h>
 #import <AVFoundation/AVDepthData.h>
+#import <AVFoundation/AVMetadataObject.h>
 #import <AVFoundation/AVPortraitEffectsMatte.h>
 #import <AVFoundation/AVSemanticSegmentationMatte.h>
+#import <AVFoundation/AVCaptureReactions.h>

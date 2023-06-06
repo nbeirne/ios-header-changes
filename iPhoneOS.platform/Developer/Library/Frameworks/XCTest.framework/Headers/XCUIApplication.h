@@ -9,6 +9,7 @@
 #import <XCTest/XCTestDefines.h>
 #import <XCTest/XCUIElement.h>
 #import <XCTest/XCUIProtectedResource.h>
+#import <XCTest/XCUIAccessibilityAuditIssue.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -140,6 +141,16 @@ typedef NS_ENUM(NSUInteger, XCUIApplicationState) {
  * @endcode
  */
 - (void)resetAuthorizationStatusForResource:(XCUIProtectedResource)resource XCT_PROTECTED_RESOURCES_RESET_API_AVAILABLE;
+
+/*!
+ * @method -performAccessibilityAuditWithAuditTypes:issueHandler:error:
+ * Runs an accessibility audit on the current view. Generates XCTIssue objects for each issue returned by the audit, and fails the test case by recording each of these issues. Returns an error if the audit failed to run.
+ *
+ * @param auditTypes Set of audit types which which configure what the audit will test for.
+ * @param block An optional filter can be used to determine whether or not an issue should be recorded. To prevent an issue from recorded, return YES to handle it yourself.
+ */
+- (BOOL)performAccessibilityAuditWithAuditTypes:(XCUIAccessibilityAuditType)auditTypes issueHandler:(nullable XCT_NOESCAPE BOOL (^)(XCUIAccessibilityAuditIssue *issue))block error:(NSError **)outError API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0), watchos(10.0)) NS_REFINED_FOR_SWIFT;
+
 
 @end
 

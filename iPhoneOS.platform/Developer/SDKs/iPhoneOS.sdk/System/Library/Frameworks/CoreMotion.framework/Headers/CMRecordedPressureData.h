@@ -17,7 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
  * Discussion:
  *   CMRecordedPressureData contains data for each pressure sample.
  */
+#if defined(TARGET_OS_XR) && TARGET_OS_XR
+COREMOTION_EXPORT API_AVAILABLE(ios(12.0), watchos(5.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(xros)
+#else
 COREMOTION_EXPORT API_AVAILABLE(ios(12.0), watchos(5.0)) API_UNAVAILABLE(macos)
+#endif // defined(TARGET_OS_XR) && TARGET_OS_XR
 @interface CMRecordedPressureData : CMAmbientPressureData
 
 /*

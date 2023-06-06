@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  * be queried each time the notification is received to determine whether the expectation should be fulfilled
  * or not.
  */
-typedef BOOL (^XCPredicateExpectationHandler)(void);
+typedef BOOL (^ XCT_SWIFT_SENDABLE XCPredicateExpectationHandler)(void);
 
 /*!
  * @class XCTNSPredicateExpectation

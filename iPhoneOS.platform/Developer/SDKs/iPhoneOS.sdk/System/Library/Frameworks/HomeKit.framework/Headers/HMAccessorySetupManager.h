@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
  *              of adding one or more accessories to a particular home and follow up with additional setup.
  *              These APIs do not require that the current app has home data authorization
  */
-HM_EXTERN API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos, tvos) API_UNAVAILABLE(macos, macCatalyst)
+HM_EXTERN API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos, tvos, xros) API_UNAVAILABLE(macos, macCatalyst)
     @interface HMAccessorySetupManager : NSObject
 
 /*!

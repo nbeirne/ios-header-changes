@@ -1419,6 +1419,13 @@ CF_ENUM(AudioChannelLayoutTag)
     kAudioChannelLayoutTag_CICP_19 					= (210U<<16) | 12,						///< L R C LFE Rls Rrs Lss Rss Vhl Vhr Ltr Rtr
     kAudioChannelLayoutTag_CICP_20 					= (211U<<16) | 14,						///< L R C LFE Rls Rrs Lss Rss Vhl Vhr Ltr Rtr Leos Reos
 
+    kAudioChannelLayoutTag_Ogg_3_0                  = kAudioChannelLayoutTag_AC3_3_0,		///< 3 channels, L C R
+    kAudioChannelLayoutTag_Ogg_4_0                  = kAudioChannelLayoutTag_WAVE_4_0_B,	///< 4 channels, L R Rls Rrs
+    kAudioChannelLayoutTag_Ogg_5_0                  = (212U<<16) | 5,	                    ///< 5 channels, L C R Rls Rrs
+    kAudioChannelLayoutTag_Ogg_5_1                  = (213U<<16) | 6,	                    ///< 6 channels, L C R Rls Rrs LFE
+    kAudioChannelLayoutTag_Ogg_6_1                  = (214U<<16) | 7,						///< 7 channels, L C R Ls Rs Cs LFE
+    kAudioChannelLayoutTag_Ogg_7_1                  = (215U<<16) | 8,						///< 8 channels, L C R Ls Rs Rls Rrs LFE
+
     kAudioChannelLayoutTag_BeginReserved            = 0xF0000000,                           ///< Channel layout tag values in this range are reserved for internal use
     kAudioChannelLayoutTag_EndReserved              = 0xFFFEFFFF,
 	

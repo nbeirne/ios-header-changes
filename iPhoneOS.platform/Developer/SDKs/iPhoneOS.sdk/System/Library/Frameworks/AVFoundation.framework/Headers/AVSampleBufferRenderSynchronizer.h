@@ -188,7 +188,7 @@ AVF_EXPORT NSNotificationName const AVSampleBufferRenderSynchronizerRateDidChang
  
 		Each call to -addPeriodicTimeObserverForInterval:queue:usingBlock: should be paired with a corresponding call to -removeTimeObserver:.  Releasing the observer object without a call to -removeTimeObserver: will result in undefined behavior.
 */
-- (id)addPeriodicTimeObserverForInterval:(CMTime)interval queue:(nullable dispatch_queue_t)queue usingBlock:(void (^)(CMTime time))block;
+- (id)addPeriodicTimeObserverForInterval:(CMTime)interval queue:(nullable dispatch_queue_t)queue usingBlock:(void (^ NS_SWIFT_SENDABLE)(CMTime time))block;
 
 /*!
 	@method			addBoundaryTimeObserverForTimes:queue:usingBlock:
@@ -205,7 +205,7 @@ AVF_EXPORT NSNotificationName const AVSampleBufferRenderSynchronizerRateDidChang
 	@discussion
 		Each call to -addPeriodicTimeObserverForInterval:queue:usingBlock: should be paired with a corresponding call to -removeTimeObserver:.  Releasing the observer object without a call to -removeTimeObserver: will result in undefined behavior.
 */
-- (id)addBoundaryTimeObserverForTimes:(NSArray<NSValue *> *)times queue:(nullable dispatch_queue_t)queue usingBlock:(void (^)(void))block;
+- (id)addBoundaryTimeObserverForTimes:(NSArray<NSValue *> *)times queue:(nullable dispatch_queue_t)queue usingBlock:(void (^ NS_SWIFT_SENDABLE)(void))block;
 
 /*!
 	@method			removeTimeObserver:

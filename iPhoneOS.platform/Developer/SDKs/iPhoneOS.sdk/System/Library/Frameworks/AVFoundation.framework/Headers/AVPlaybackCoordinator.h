@@ -66,7 +66,9 @@ AVF_EXPORT AVCoordinatedPlaybackSuspensionReason const AVCoordinatedPlaybackSusp
 	@class		AVCoordinatedPlaybackSuspension
 	@abstract	A representation of a temporary break in participation.
 	@note		See AVPlaybackCoordinator's beginSuspensionForReason: method for details on use.
+	@discussion	Subclasses of this type that are used from Swift must fulfill the requirements of a Sendable type.
  */
+NS_SWIFT_SENDABLE
 API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos)
 @interface AVCoordinatedPlaybackSuspension : NSObject
 
@@ -167,7 +169,9 @@ AV_INIT_UNAVAILABLE
 /**
 	@class		AVCoordinatedPlaybackParticipant
 	@abstract	A participant in a coordinated playback group connected through AVPlaybackCoordinator.
+	@discussion	Subclasses of this type that are used from Swift must fulfill the requirements of a Sendable type.
 */
+NS_SWIFT_SENDABLE
 API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos)
 @interface AVCoordinatedPlaybackParticipant : NSObject
 
@@ -500,7 +504,9 @@ API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos)
 /**
 	@class		AVDelegatingPlaybackCoordinatorPlaybackControlCommand
 	@abstract	Abstract superclass for playback commands
+	@discussion	Subclasses of this type that are used from Swift must fulfill the requirements of a Sendable type.
 */
+NS_SWIFT_SENDABLE
 API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos)
 @interface AVDelegatingPlaybackCoordinatorPlaybackControlCommand : NSObject
 
@@ -529,7 +535,9 @@ AV_INIT_UNAVAILABLE
 /**
 	@class		AVDelegatingPlaybackCoordinatorPlayCommand
 	@abstract	A playback command requesting playback with specific timing.
+	@discussion	Subclasses of this type that are used from Swift must fulfill the requirements of a Sendable type.
 */
+NS_SWIFT_SENDABLE
 API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos)
 @interface AVDelegatingPlaybackCoordinatorPlayCommand : AVDelegatingPlaybackCoordinatorPlaybackControlCommand
 
@@ -565,7 +573,10 @@ AV_INIT_UNAVAILABLE
 	@abstract	A playback command requesting buffering in anticipation of playback.
 	@discussion Receiving this command should be reflected to the user as playback in a buffering state.
 				To cancel the group intent to begin playback and move back into a paused state, call [AVDelegatingPlaybackCoordinator coordinateRateChangeToRate:0 options: 0]
+ 
+				Subclasses of this type that are used from Swift must fulfill the requirements of a Sendable type.
 */
+NS_SWIFT_SENDABLE
 API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos)
 @interface AVDelegatingPlaybackCoordinatorBufferingCommand : AVDelegatingPlaybackCoordinatorPlaybackControlCommand
 
@@ -593,7 +604,9 @@ AV_INIT_UNAVAILABLE
 /**
 	@class		AVDelegatingPlaybackCoordinatorPauseCommand
 	@abstract	A playback command requesting a pause
+	@discussion	Subclasses of this type that are used from Swift must fulfill the requirements of a Sendable type.
 */
+NS_SWIFT_SENDABLE
 API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos)
 @interface AVDelegatingPlaybackCoordinatorPauseCommand : AVDelegatingPlaybackCoordinatorPlaybackControlCommand
 
@@ -621,7 +634,10 @@ AV_INIT_UNAVAILABLE
 	@class		AVDelegatingPlaybackCoordinatorSeekCommand
 	@abstract	A playback command requesting a seek.
 	@discussion	If the current playback rate is non-zero, playback should not automatically resume after the seek. Instead the delegate should pause and wait for the coordinator to issue another PlayCommand.
+
+				Subclasses of this type that are used from Swift must fulfill the requirements of a Sendable type.
 */
+NS_SWIFT_SENDABLE
 API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos)
 @interface AVDelegatingPlaybackCoordinatorSeekCommand : AVDelegatingPlaybackCoordinatorPlaybackControlCommand
 

@@ -335,7 +335,7 @@ MTL_EXPORT API_AVAILABLE(macos(10.13), ios(11.0))
  * @property access
  * @abstract Access flags for the argument
  */
-@property (nonatomic) MTLArgumentAccess access;
+@property (nonatomic) MTLBindingAccess access;
 
 /*!
  * @property textureType
@@ -353,6 +353,19 @@ MTL_EXPORT API_AVAILABLE(macos(10.13), ios(11.0))
 
 @end
 
+
+/*!
+ @class MTLArchitecture
+ @abstract Contains information about the device's architecture
+ */
+MTL_EXPORT API_AVAILABLE(macos(14.0), ios(17.0))
+@interface MTLArchitecture : NSObject <NSCopying>
+/*!
+ @property name
+ @abstract The device's architecture name.
+ */
+@property (readonly, nonnull) NSString *name;
+@end
 
 /*!
  @protocol MTLDevice
@@ -375,6 +388,11 @@ API_AVAILABLE(macos(10.11), ios(8.0))
 */
 @property (readonly) uint64_t registryID API_AVAILABLE(macos(10.13), ios(11.0)) ;
 
+/*!
+ @property architecture
+ @abstract Returns the device's architecture information.
+ */
+@property (nonnull, readonly) MTLArchitecture *architecture API_AVAILABLE(macos(14.0), ios(17.0));
 
 /*!
  @property maxThreadsPerThreadgroup
@@ -886,8 +904,8 @@ API_DEPRECATED("Use -newLibraryWithURL:error: instead", macos(10.11, 13.0), ios(
  * of the handle fails the return value will be nil and the optional error if passed in will be non-nil
  * with details of the error.
  */
--(nullable id<MTLIOFileHandle>) newIOHandleWithURL:(NSURL *)url
-                                error:(NSError **)error API_AVAILABLE(macos(13.0), ios(16.0));
+-(nullable id<MTLIOFileHandle>)newIOHandleWithURL:(NSURL *)url
+                                            error:(NSError **)error API_DEPRECATED_WITH_REPLACEMENT("Use newIOFileHandleWithURL:error: instead", macos(13.0, 14.0), ios(16.0, 17.0));
 
 
 /*!
@@ -896,8 +914,8 @@ API_DEPRECATED("Use -newLibraryWithURL:error: instead", macos(10.11, 13.0), ios(
  * of the queue fails the return value will be nil and the optional error if passed in will be non-nil
  * with details of the error.
  */
--(nullable id<MTLIOCommandQueue>) newIOCommandQueueWithDescriptor:(MTLIOCommandQueueDescriptor*)descriptor
-                                            error:(NSError **)error API_AVAILABLE(macos(13.0), ios(16.0));
+-(nullable id<MTLIOCommandQueue>)newIOCommandQueueWithDescriptor:(MTLIOCommandQueueDescriptor*)descriptor
+                                                           error:(NSError **)error API_AVAILABLE(macos(13.0), ios(16.0));
 
 
 /*!
@@ -908,9 +926,31 @@ API_DEPRECATED("Use -newLibraryWithURL:error: instead", macos(10.11, 13.0), ios(
  * of the handle fails the return value will be nil and the optional error if passed in will be non-nil
  * with details of the error.
  */
--(nullable id<MTLIOFileHandle>) newIOHandleWithURL:(NSURL *)url
-                    compressionMethod:(MTLIOCompressionMethod)compressionMethod
-                                error:(NSError **)error API_AVAILABLE(macos(13.0), ios(16.0));
+-(nullable id<MTLIOFileHandle>)newIOHandleWithURL:(NSURL *)url
+                                compressionMethod:(MTLIOCompressionMethod)compressionMethod
+                                            error:(NSError **)error API_DEPRECATED_WITH_REPLACEMENT("Use newIOFileHandleWithURL:compressionMethod:error: instead", macos(13.0, 14.0), ios(16.0, 17.0));
+
+/*!
+ * @method newIOFileHandleWithURL:error:
+ * @abstract Create and return a handle that points to a raw file on disk. This object can be used by
+ * MTLIOCommandBuffer load commands to source data for MTLResources. If the creation
+ * of the handle fails the return value will be nil and the optional error if passed in will be non-nil
+ * with details of the error.
+ */
+-(nullable id<MTLIOFileHandle>)newIOFileHandleWithURL:(NSURL *)url
+                                                error:(NSError **)error API_AVAILABLE(macos(14.0), ios(17.0));
+
+/*!
+ * @method newIOFileHandleWithURL:compressionMethod:error:
+ * @abstract Create and return a handle that points to a compressed file on disk (a file that was
+ * created with MTLIOCompressionContext). This object can be used by
+ * MTLIOCommandBuffer load commands to source data for MTLResources. If the creation
+ * of the handle fails the return value will be nil and the optional error if passed in will be non-nil
+ * with details of the error.
+ */
+-(nullable id<MTLIOFileHandle>)newIOFileHandleWithURL:(NSURL *)url
+                                    compressionMethod:(MTLIOCompressionMethod)compressionMethod
+                                                error:(NSError **)error API_AVAILABLE(macos(14.0), ios(17.0));
 
 
 
