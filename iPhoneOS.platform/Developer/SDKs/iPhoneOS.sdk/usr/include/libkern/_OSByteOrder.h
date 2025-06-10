@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006 Apple Computer, Inc. All rights reserved.
+ * Copyright (c) 2006-2023 Apple Computer, Inc. All rights reserved.
  *
  * @APPLE_OSREFERENCE_LICENSE_HEADER_START@
  *
@@ -29,14 +29,6 @@
 #ifndef _OS__OSBYTEORDER_H
 #define _OS__OSBYTEORDER_H
 
-/*
- * This header is normally included from <libkern/OSByteOrder.h>.  However,
- * <sys/_endian.h> also includes this in the case of little-endian
- * architectures, so that we can map OSByteOrder routines to the hton* and ntoh*
- * macros.  This results in the asymmetry below; we only include
- * <libkern/arch/_OSByteOrder.h> for little-endian architectures.
- */
-
 #include <sys/_types.h>
 
 /* Macros for swapping constant values in the preprocessing stage. */
@@ -62,19 +54,9 @@
 
 #if defined(__GNUC__)
 
-#if !defined(__DARWIN_OS_INLINE)
-# if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
-#        define __DARWIN_OS_INLINE static inline
-# elif defined(__MWERKS__) || defined(__cplusplus)
-#        define __DARWIN_OS_INLINE static inline
-# else
-#        define __DARWIN_OS_INLINE static __inline__
-# endif
-#endif
-
 
 #if defined (__arm__) || defined(__arm64__)
-#include <libkern/arm/OSByteOrder.h>
+#include <libkern/arm/_OSByteOrder.h>
 #endif
 
 

@@ -13,6 +13,8 @@ FOUNDATION_EXPORT double CoreSpotlightVersionNumber;
 //! Project version string for CoreSpotlight.
 FOUNDATION_EXPORT const unsigned char CoreSpotlightVersionString[];
 
+#define  CoreSpotlightAPIVersion 40
+
 #import <CoreSpotlight/CSBase.h>
 #import <CoreSpotlight/CSImportExtension.h>
 #import <CoreSpotlight/CSIndexExtensionRequestHandler.h>

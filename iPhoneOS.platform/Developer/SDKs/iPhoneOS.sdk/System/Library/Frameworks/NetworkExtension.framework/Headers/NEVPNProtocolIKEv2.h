@@ -17,9 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 typedef NS_ENUM(NSInteger, NEVPNIKEv2EncryptionAlgorithm) {
 	/*! @const NEVPNIKEv2EncryptionAlgorithmDES Data Encryption Standard (DES) */
-	NEVPNIKEv2EncryptionAlgorithmDES API_DEPRECATED("Use an encryption algorithm with 256-bit keys instead", macos(10.11, 14.0), ios(8.0, 17.0), tvos(17.0, 17.0)) = 1,
+	NEVPNIKEv2EncryptionAlgorithmDES API_DEPRECATED("Use an encryption algorithm with 256-bit keys instead", macos(10.11, 14.0), ios(8.0, 17.0)) API_UNAVAILABLE(tvos) = 1,
 	/*! @const NEVPNIKEv2EncryptionAlgorithm3DES Triple Data Encryption Algorithm (aka 3DES) */
-	NEVPNIKEv2EncryptionAlgorithm3DES API_DEPRECATED("Use an encryption algorithm with 256-bit keys instead", macos(10.11, 14.0), ios(8.0, 17.0), tvos(17.0, 17.0)) = 2,
+	NEVPNIKEv2EncryptionAlgorithm3DES API_DEPRECATED("Use an encryption algorithm with 256-bit keys instead", macos(10.11, 14.0), ios(8.0, 17.0)) API_UNAVAILABLE(tvos) = 2,
 	/*! @const NEVPNIKEv2EncryptionAlgorithmAES128 Advanced Encryption Standard 128 bit (AES128) */
 	NEVPNIKEv2EncryptionAlgorithmAES128 API_DEPRECATED("Use an encryption algorithm with 256-bit keys instead", macos(10.11, 14.0), ios(8.0, 17.0), tvos(17.0, 17.0)) = 3,
 	/*! @const NEVPNIKEv2EncryptionAlgorithmAES256 Advanced Encryption Standard 256 bit (AES256) */
@@ -38,9 +38,9 @@ typedef NS_ENUM(NSInteger, NEVPNIKEv2EncryptionAlgorithm) {
  */
 typedef NS_ENUM(NSInteger, NEVPNIKEv2IntegrityAlgorithm) {
 	/*! @const NEVPNIKEv2IntegrityAlgorithmSHA96 SHA-1 96 bit */
-	NEVPNIKEv2IntegrityAlgorithmSHA96 API_DEPRECATED("Use SHA-2 for integrity protection instead", macos(10.11, 14.0), ios(8.0, 17.0), tvos(17.0, 17.0)) = 1,
+	NEVPNIKEv2IntegrityAlgorithmSHA96 API_DEPRECATED("Use SHA-2 for integrity protection instead", macos(10.11, 14.0), ios(8.0, 17.0)) API_UNAVAILABLE(tvos) = 1,
 	/*! @const NEVPNIKEv2IntegrityAlgorithmSHA160 SHA-1 160 bit */
-	NEVPNIKEv2IntegrityAlgorithmSHA160 API_DEPRECATED("Use SHA-2 for integrity protection instead", macos(10.11, 14.0), ios(8.0, 17.0), tvos(17.0, 17.0)) = 2,
+	NEVPNIKEv2IntegrityAlgorithmSHA160 API_DEPRECATED("Use SHA-2 for integrity protection instead", macos(10.11, 14.0), ios(8.0, 17.0)) API_UNAVAILABLE(tvos) = 2,
 	/*! @const NEVPNIKEv2IntegrityAlgorithmSHA256 SHA-2 256 bit */
 	NEVPNIKEv2IntegrityAlgorithmSHA256 = 3,
 	/*! @const NEVPNIKEv2IntegrityAlgorithmSHA384 SHA-2 384 bit */
@@ -72,11 +72,11 @@ typedef NS_ENUM(NSInteger, NEVPNIKEv2DiffieHellmanGroup) {
 	/*! @const NEVPNIKEv2DiffieHellmanGroupInvalid Diffie Hellman group 0 is not a valid DH group*/
 	NEVPNIKEv2DiffieHellmanGroupInvalid = 0,
 	/*! @const NEVPNIKEv2DiffieHellmanGroup1 Diffie Hellman group 1 (768-bit MODP) */
-	NEVPNIKEv2DiffieHellmanGroup1 API_DEPRECATED("Use Diffie Hellman group 14 or greater instead", macos(10.11, 14.0), ios(8.0, 17.0), tvos(17.0, 17.0)) = 1,
+	NEVPNIKEv2DiffieHellmanGroup1 API_DEPRECATED("Use Diffie Hellman group 14 or greater instead", macos(10.11, 14.0), ios(8.0, 17.0)) API_UNAVAILABLE(tvos) = 1,
 	/*! @const NEVPNIKEv2DiffieHellmanGroup2 Diffie Hellman group 2 (1024-bit MODP) */
-	NEVPNIKEv2DiffieHellmanGroup2 API_DEPRECATED("Use Diffie Hellman group 14 or greater instead", macos(10.11, 14.0), ios(8.0, 17.0), tvos(17.0, 17.0)) = 2,
+	NEVPNIKEv2DiffieHellmanGroup2 API_DEPRECATED("Use Diffie Hellman group 14 or greater instead", macos(10.11, 14.0), ios(8.0, 17.0)) API_UNAVAILABLE(tvos) = 2,
 	/*! @const NEVPNIKEv2DiffieHellmanGroup5 Diffie Hellman group 5 (1536-bit MODP) */
-	NEVPNIKEv2DiffieHellmanGroup5 API_DEPRECATED("Use Diffie Hellman group 14 or greater instead", macos(10.11, 14.0), ios(8.0, 17.0), tvos(17.0, 17.0)) = 5,
+	NEVPNIKEv2DiffieHellmanGroup5 API_DEPRECATED("Use Diffie Hellman group 14 or greater instead", macos(10.11, 14.0), ios(8.0, 17.0)) API_UNAVAILABLE(tvos) = 5,
 	/*! @const NEVPNIKEv2DiffieHellmanGroup14 Diffie Hellman group 14 (2048-bit MODP) */
 	NEVPNIKEv2DiffieHellmanGroup14 = 14,
 	/*! @const NEVPNIKEv2DiffieHellmanGroup15 Diffie Hellman group 15 (3072-bit MODP) */
@@ -144,20 +144,21 @@ API_AVAILABLE(macos(10.11), ios(8.0), tvos(17.0)) API_UNAVAILABLE(watchos)
 
 /*!
  * @property encryptionAlgorithm
- * @discussion The algorithm used by the Security Association to encrypt and decrypt data. Default is NEVPNIKEv2EncryptionAlgorithmAES256 starting in macOS 11 and iOS 14. Prior to that the default was NEVPNIKEv2EncryptionAlgorithm3DES.
+ * @discussion The algorithm used by the Security Association to encrypt and decrypt data. On macOS and iOS, the default is NEVPNIKEv2EncryptionAlgorithmAES256 starting in macOS 11 and iOS 14.
+ * Prior to that the default was NEVPNIKEv2EncryptionAlgorithm3DES. On tvOS, the default is NEVPNIKEv2EncryptionAlgorithmAES256GCM.
  */
 @property NEVPNIKEv2EncryptionAlgorithm encryptionAlgorithm API_AVAILABLE(macos(10.11), ios(8.0), tvos(17.0)) API_UNAVAILABLE(watchos);
 
 /*!
  * @property integrityAlgorithm
  * @discussion The algorithm used by the Security Association to verify the integrity of data.  The IKE psedo-random function algorithm will be inferred based on the integrity algorithm.
- * Default is NEVPNIKEv2IntegrityAlgorithmSHA256 starting in macOS 11 and iOS 14.  Prior to that the default was NEVPNIKEv2IntegrityAlgorithmSHA160.
+ * Default is NEVPNIKEv2IntegrityAlgorithmSHA256 starting in macOS 11, iOS 14, and tvOS 17.  Prior to that the default was NEVPNIKEv2IntegrityAlgorithmSHA96.
  */
 @property NEVPNIKEv2IntegrityAlgorithm integrityAlgorithm API_AVAILABLE(macos(10.11), ios(8.0), tvos(17.0)) API_UNAVAILABLE(watchos);
 
 /*!
  * @property diffieHellmanGroup
- * @discussion The Diffie Hellman group used by the Security Association. Default is NEVPNIKEv2DiffieHellmanGroup14 starting in macOS 11 and iOS 14. Prior to that the default was NEVPNIKEv2DiffieHellmanGroup2.
+ * @discussion The Diffie Hellman group used by the Security Association. Default is NEVPNIKEv2DiffieHellmanGroup14 starting in macOS 11, iOS 14, and tvOS 17. Prior to that the default was NEVPNIKEv2DiffieHellmanGroup2.
  */
 @property NEVPNIKEv2DiffieHellmanGroup diffieHellmanGroup API_AVAILABLE(macos(10.11), ios(8.0), tvos(17.0)) API_UNAVAILABLE(watchos);
 
@@ -166,6 +167,44 @@ API_AVAILABLE(macos(10.11), ios(8.0), tvos(17.0)) API_UNAVAILABLE(watchos)
  * @discussion The life time of the Security Association, in minutes. Default is 60 for IKE Security Associations, and 30 for Child Security Associations. Before the lifetime is reached, IKEv2 will attempt to rekey the Security Association to maintain the connection.
  */
 @property int32_t lifetimeMinutes API_AVAILABLE(macos(10.11), ios(8.0), tvos(17.0)) API_UNAVAILABLE(watchos);
+
+@end
+
+/*!
+ * @interface NEVPNIKEv2PPKConfiguration
+ * @discussion The NEVPNIKEv2PPKConfiguration class declares the programmatic interface of an object that manages parameters for a Post-quantum Pre-shared Key (PPK)
+ *
+ * Instances of this class conform to RFC 8784.
+ * Instances of this class are thread safe.
+ */
+API_AVAILABLE(macos(15.0), ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos)
+@interface NEVPNIKEv2PPKConfiguration : NSObject<NSCopying>
+
+/*!
+ * @method initWithIdentifier:keychainReference:
+ * @discussion Initialize a newly-allocated NEVPNIKEv2PPKConfiguration object.
+ * @param identifier The identifier for the PPK.
+ * @param keychainReference A persistent reference to a keychain item of class kSecClassGenericPassword containing the PPK.
+ */
+- (instancetype)initWithIdentifier:(NSString *)identifier keychainReference:(NSData *)keychainReference;
+
+/*!
+ * @property identifier
+ * @discussion The identifer for the PPK.
+ */
+@property (readonly, copy) NSString *identifier;
+
+/*!
+ * @property keychainReference
+ * @discussion A persistent reference to a keychain item of class kSecClassGenericPassword containing the PPK.
+ */
+@property (readonly, copy) NSData *keychainReference;
+
+/*!
+ * @property isMandatory
+ * @discussion Boolean indicating whether use of the PPK is mandatory or not. Default is YES.
+ */
+@property BOOL isMandatory;
 
 @end
 
@@ -277,6 +316,12 @@ API_AVAILABLE(macos(10.11), ios(8.0), tvos(17.0)) API_UNAVAILABLE(watchos)
  * @discussion Maximum Transmission Unit (MTU) size in bytes to assign to the tunnel interface.
  */
 @property NSUInteger mtu API_AVAILABLE(macos(11.0), ios(14.0), tvos(17.0)) API_UNAVAILABLE(watchos);
+
+/*!
+ * @property ppkConfiguration
+ * @discussion Configuration for the use of a Post-quantum Pre-shared Key (PPK).
+ */
+@property (copy, nullable) NEVPNIKEv2PPKConfiguration *ppkConfiguration API_AVAILABLE(macos(15.0), ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
 
 @end
 

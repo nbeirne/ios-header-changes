@@ -67,13 +67,26 @@ DISPATCH_SWIFT_NAME(DispatchObject) OS_OBJECT_DECL_CLASS(dispatch_object);
 #define DISPATCH_DECL_SWIFT(name, swift_name) DISPATCH_SWIFT_NAME(swift_name) DISPATCH_DECL(name)
 #define DISPATCH_DECL_SUBCLASS_SWIFT(name, base, swift_name) \
 		DISPATCH_SWIFT_NAME(swift_name) DISPATCH_DECL_SUBCLASS(name, base)
+
+/*
+ * DISPATCH_DECL_SERIAL_EXECUTOR_SWIFT is for declaring subclasses of a serial executor base class. 
+ */
+#if DISPATCH_OSX_SUPPORTS_AT_LEAST(140000, 170000, 170000, 100000)
+#define DISPATCH_DECL_SERIAL_EXECUTOR_SWIFT(name, swift_name) \
+	DISPATCH_DECL_SUBCLASS_SWIFT(name, dispatch_queue_serial_executor, swift_name)
+#else
+#define DISPATCH_DECL_SERIAL_EXECUTOR_SWIFT(name, swift_name) \
+	DISPATCH_DECL_SUBCLASS_SWIFT(name, dispatch_queue, swift_name)
+#endif
+
 #else // OS_OBJECT_SWIFT3
 #define DISPATCH_DECL(name) OS_OBJECT_DECL_SUBCLASS(name, dispatch_object)
 #define DISPATCH_DECL_SUBCLASS(name, base) OS_OBJECT_DECL_SUBCLASS(name, base)
 #define DISPATCH_DECL_FACTORY_CLASS_SWIFT(name, swift_name) DISPATCH_DECL_SWIFT(name, swift_name)
 #define DISPATCH_DECL_SWIFT(name, swift_name) DISPATCH_DECL(name)
 #define DISPATCH_DECL_SUBCLASS_SWIFT(name, base, swift_name) DISPATCH_DECL_SUBCLASS(name, base)
-
+#define DISPATCH_DECL_SERIAL_EXECUTOR_SWIFT(name, swift_name) \
+		DISPATCH_DECL_SUBCLASS_SWIFT(name, dispatch_queue, swift_name)
 DISPATCH_INLINE DISPATCH_ALWAYS_INLINE DISPATCH_NONNULL_ALL DISPATCH_NOTHROW
 DISPATCH_SWIFT_UNAVAILABLE("Unavailable in Swift")
 void
@@ -105,6 +118,8 @@ private:
 #define DISPATCH_DECL_FACTORY_CLASS_SWIFT(name, swift_name) DISPATCH_DECL_SWIFT(name, swift_name)
 #define DISPATCH_DECL_SWIFT(name, swift_name) DISPATCH_DECL(name)
 #define DISPATCH_DECL_SUBCLASS_SWIFT(name, base, swift_name) DISPATCH_DECL_SUBCLASS(name, base)
+#define DISPATCH_DECL_SERIAL_EXECUTOR_SWIFT(name, swift_name) \
+		DISPATCH_DECL_SUBCLASS_SWIFT(name, dispatch_queue, swift_name)
 #define DISPATCH_GLOBAL_OBJECT(type, object) (static_cast<type>(&(object)))
 #define DISPATCH_RETURNS_RETAINED
 #else /* Plain C */
@@ -127,6 +142,8 @@ typedef union {
 #define DISPATCH_DECL_FACTORY_CLASS_SWIFT(name, swift_name) DISPATCH_DECL_SWIFT(name, swift_name)
 #define DISPATCH_DECL_SWIFT(name, swift_name) DISPATCH_DECL(name)
 #define DISPATCH_DECL_SUBCLASS_SWIFT(name, base, swift_name) DISPATCH_DECL_SUBCLASS(name, base)
+#define DISPATCH_DECL_SERIAL_EXECUTOR_SWIFT(name, swift_name) \
+		DISPATCH_DECL_SUBCLASS_SWIFT(name, dispatch_queue, swift_name)
 #define DISPATCH_GLOBAL_OBJECT(type, object) ((type)&(object))
 #define DISPATCH_RETURNS_RETAINED
 #endif

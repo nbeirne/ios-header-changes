@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
  A container for vector data of a geometry.
  */
 API_AVAILABLE(ios(13.4))
+NS_SWIFT_SENDABLE
 @interface ARGeometrySource : NSObject<NSSecureCoding>
 
 /**
@@ -68,6 +69,7 @@ typedef NS_ENUM(NSInteger, ARGeometryPrimitiveType) {
  A container for index data describing how vertices connect to define a geometry.
  */
 API_AVAILABLE(ios(13.4))
+NS_SWIFT_SENDABLE
 @interface ARGeometryElement : NSObject<NSSecureCoding>
 
 /**
@@ -122,6 +124,7 @@ typedef NS_ENUM(NSInteger, ARMeshClassification) {
 A three-dimensional shape that represents the geometry of a mesh.
 */
 API_AVAILABLE(ios(13.4))
+NS_SWIFT_SENDABLE
 @interface ARMeshGeometry : NSObject<NSSecureCoding>
 
 /**

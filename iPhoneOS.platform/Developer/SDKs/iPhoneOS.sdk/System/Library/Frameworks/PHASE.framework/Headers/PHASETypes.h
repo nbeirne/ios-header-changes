@@ -62,7 +62,7 @@ NS_SWIFT_NAME(PHASESoundEvent.RenderingState);
         Automatically select the spatialization mode based on the current output device.
     @constant PHASESpatializationModeAlwaysUseBinaural
         Always use binaural rendering, whether playing back on headphones or speakers.
-        Note that when rendering binaural over speakers, special filters are applied to achieve the expected behavior.
+        Note that when rendering binaural over built-in speakers, special filters are applied to achieve the expected behavior.
     @constant PHASESpatializationModeAlwaysUseChannelBased
         Always use the appropriate channel-based panning algorithm for the output layout.
         Note that when rendering channel-based over headphones, the sound will play back in stereo.
@@ -321,5 +321,15 @@ typedef NS_ENUM(NSInteger, PHASECalibrationMode) {
     PHASECalibrationModeAbsoluteSpl = 2,
 };
 
-#endif /* PHASETypes_h */
+/*!
+    @enum PHASEAutomaticHeadTrackingFlags
+    @abstract Automatic Head-Tracking flags.
+    @constant PHASEAutomaticHeadTrackingFlagOrientation
+        On capable devices, listener orientation will be automatically rotated based on user's head-orientation.
+ */
+typedef NS_OPTIONS(NSUInteger, PHASEAutomaticHeadTrackingFlags) {
+        PHASEAutomaticHeadTrackingFlagOrientation = 1UL << 0,
+}
+API_AVAILABLE(macos(15.0), ios(18.0), tvos(18.0)) API_UNAVAILABLE( watchos, visionos);
 
+#endif /* PHASETypes_h */

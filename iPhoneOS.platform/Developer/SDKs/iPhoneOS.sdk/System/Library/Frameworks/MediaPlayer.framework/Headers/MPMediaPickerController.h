@@ -20,8 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 // MPMediaPickerController is a UIViewController for visually selecting media items.
 // To display it, present it modally on an existing view controller.
 MP_API(ios(3.0))
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(watchos, xros)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(watchos, visionos)
 #else
 API_UNAVAILABLE(watchos)
 #endif
@@ -44,8 +44,8 @@ MP_UNAVAILABLE(tvos, macos)
 @end
 
 MP_UNAVAILABLE(tvos, macos)
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(watchos, xros)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(watchos, visionos)
 #else
 API_UNAVAILABLE(watchos)
 #endif

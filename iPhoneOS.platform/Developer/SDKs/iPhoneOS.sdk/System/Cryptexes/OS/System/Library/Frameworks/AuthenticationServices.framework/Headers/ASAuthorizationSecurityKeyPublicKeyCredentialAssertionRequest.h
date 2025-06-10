@@ -5,6 +5,8 @@
 #import <AuthenticationServices/ASAuthorizationSecurityKeyPublicKeyCredentialDescriptor.h>
 #import <Foundation/Foundation.h>
 
+#import <AuthenticationServices/ASAuthorizationWebBrowserSecurityKeyPublicKeyCredentialAssertionRequest.h>
+
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 API_AVAILABLE(macos(12.0), ios(15.0)) API_UNAVAILABLE(watchos, tvos)
@@ -14,6 +16,17 @@ API_AVAILABLE(macos(12.0), ios(15.0)) API_UNAVAILABLE(watchos, tvos)
  */
 @property (nonatomic, copy) NSArray<ASAuthorizationSecurityKeyPublicKeyCredentialDescriptor *> *allowedCredentials;
 
+/// Use this value to request the appid WebAuthn extension. This can only be requested by web browsers.
+@property (nonatomic, nullable, copy) NSString *appID AS_API_AVAILABLE(macos(14.5), ios(17.5));
+
+@end
+
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_AVAILABLE(macos(14.4), ios(17.4)) API_UNAVAILABLE(tvos, watchos, visionos)
+#else
+API_AVAILABLE(macos(14.4), ios(17.4)) API_UNAVAILABLE(tvos, watchos)
+#endif // defined(TARGET_OS_XR) && TARGET_OS_XR
+@interface ASAuthorizationSecurityKeyPublicKeyCredentialAssertionRequest () <ASAuthorizationWebBrowserSecurityKeyPublicKeyCredentialAssertionRequest>
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)

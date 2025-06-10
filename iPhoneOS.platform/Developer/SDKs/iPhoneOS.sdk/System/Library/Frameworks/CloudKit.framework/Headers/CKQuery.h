@@ -41,10 +41,10 @@ CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer
 /*! Use @code [NSPredicate predicateWithValue:YES] / NSPredicate(value: true) @endcode if you want to query for all records of a given type. */
 - (instancetype)initWithRecordType:(CKRecordType)recordType predicate:(NSPredicate *)predicate NS_DESIGNATED_INITIALIZER;
 
-@property (atomic, readonly, copy) CKRecordType recordType;
-@property (atomic, readonly, copy) NSPredicate *predicate;
+@property (readonly, copy) CKRecordType recordType;
+@property (readonly, copy) NSPredicate *predicate;
 
-@property (atomic, copy, nullable) NSArray<NSSortDescriptor *> *sortDescriptors;
+@property (nullable, copy) NSArray<NSSortDescriptor *> *sortDescriptors;
 
 @end
 

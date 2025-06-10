@@ -8,8 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <CloudKit/CKRecord.h>
 
-@class CKRecordZone, CKRecordZoneID, CKSyncEngineFailedRecordSave, CKSyncEngineFailedZoneSave, CKSyncEngineFetchedRecordDeletion, CKSyncEngineFetchedZoneDeletion, CKSyncEngineSendChangesContext, CKSyncEngineStateSerialization;
-@class CKSyncEngineStateUpdateEvent, CKSyncEngineAccountChangeEvent, CKSyncEngineFetchedDatabaseChangesEvent, CKSyncEngineFetchedRecordZoneChangesEvent, CKSyncEngineSentDatabaseChangesEvent, CKSyncEngineSentRecordZoneChangesEvent, CKSyncEngineWillFetchChangesEvent, CKSyncEngineWillFetchRecordZoneChangesEvent, CKSyncEngineDidFetchRecordZoneChangesEvent, CKSyncEngineDidFetchChangesEvent, CKSyncEngineWillSendChangesEvent, CKSyncEngineDidSendChangesEvent;
+@class CKRecordZone, CKRecordZoneID, CKSyncEngineAccountChangeEvent, CKSyncEngineDidFetchChangesEvent, CKSyncEngineDidFetchRecordZoneChangesEvent, CKSyncEngineDidSendChangesEvent, CKSyncEngineFailedRecordSave, CKSyncEngineFailedZoneSave, CKSyncEngineFetchChangesContext, CKSyncEngineFetchedDatabaseChangesEvent, CKSyncEngineFetchedRecordDeletion, CKSyncEngineFetchedRecordZoneChangesEvent, CKSyncEngineFetchedZoneDeletion, CKSyncEngineSendChangesContext, CKSyncEngineSentDatabaseChangesEvent, CKSyncEngineSentRecordZoneChangesEvent, CKSyncEngineStateSerialization, CKSyncEngineStateUpdateEvent, CKSyncEngineWillFetchChangesEvent, CKSyncEngineWillFetchRecordZoneChangesEvent, CKSyncEngineWillSendChangesEvent;
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -117,22 +116,22 @@ NS_REFINED_FOR_SWIFT
 NS_SWIFT_SENDABLE
 @interface CKSyncEngineEvent : NSObject
 
-@property (atomic, assign, readonly) CKSyncEngineEventType type;
+@property (readonly, assign) CKSyncEngineEventType type;
 
 // Helpers to cast an event to the proper subclass.
 // These will crash if used for the wrong event type.
-@property (nonatomic, readonly) CKSyncEngineStateUpdateEvent *stateUpdateEvent;
-@property (nonatomic, readonly) CKSyncEngineAccountChangeEvent *accountChangeEvent;
-@property (nonatomic, readonly) CKSyncEngineFetchedDatabaseChangesEvent *fetchedDatabaseChangesEvent;
-@property (nonatomic, readonly) CKSyncEngineFetchedRecordZoneChangesEvent *fetchedRecordZoneChangesEvent;
-@property (nonatomic, readonly) CKSyncEngineSentDatabaseChangesEvent *sentDatabaseChangesEvent;
-@property (nonatomic, readonly) CKSyncEngineSentRecordZoneChangesEvent *sentRecordZoneChangesEvent;
-@property (nonatomic, readonly) CKSyncEngineWillFetchChangesEvent *willFetchChangesEvent;
-@property (nonatomic, readonly) CKSyncEngineWillFetchRecordZoneChangesEvent *willFetchRecordZoneChangesEvent;
-@property (nonatomic, readonly) CKSyncEngineDidFetchRecordZoneChangesEvent *didFetchRecordZoneChangesEvent;
-@property (nonatomic, readonly) CKSyncEngineDidFetchChangesEvent *didFetchChangesEvent;
-@property (nonatomic, readonly) CKSyncEngineWillSendChangesEvent *willSendChangesEvent;
-@property (nonatomic, readonly) CKSyncEngineDidSendChangesEvent *didSendChangesEvent;
+@property (readonly, strong, nonatomic) CKSyncEngineStateUpdateEvent *stateUpdateEvent;
+@property (readonly, strong, nonatomic) CKSyncEngineAccountChangeEvent *accountChangeEvent;
+@property (readonly, strong, nonatomic) CKSyncEngineFetchedDatabaseChangesEvent *fetchedDatabaseChangesEvent;
+@property (readonly, strong, nonatomic) CKSyncEngineFetchedRecordZoneChangesEvent *fetchedRecordZoneChangesEvent;
+@property (readonly, strong, nonatomic) CKSyncEngineSentDatabaseChangesEvent *sentDatabaseChangesEvent;
+@property (readonly, strong, nonatomic) CKSyncEngineSentRecordZoneChangesEvent *sentRecordZoneChangesEvent;
+@property (readonly, strong, nonatomic) CKSyncEngineWillFetchChangesEvent *willFetchChangesEvent;
+@property (readonly, strong, nonatomic) CKSyncEngineWillFetchRecordZoneChangesEvent *willFetchRecordZoneChangesEvent;
+@property (readonly, strong, nonatomic) CKSyncEngineDidFetchRecordZoneChangesEvent *didFetchRecordZoneChangesEvent;
+@property (readonly, strong, nonatomic) CKSyncEngineDidFetchChangesEvent *didFetchChangesEvent;
+@property (readonly, strong, nonatomic) CKSyncEngineWillSendChangesEvent *willSendChangesEvent;
+@property (readonly, strong, nonatomic) CKSyncEngineDidSendChangesEvent *didSendChangesEvent;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
@@ -157,7 +156,7 @@ CK_SUBCLASSING_RESTRICTED
 NS_SWIFT_SENDABLE
 @interface CKSyncEngineStateUpdateEvent : CKSyncEngineEvent
     
-@property (nonatomic, readonly, copy) CKSyncEngineStateSerialization *stateSerialization;
+@property (readonly, copy, nonatomic) CKSyncEngineStateSerialization *stateSerialization;
 
 @end
 
@@ -204,19 +203,19 @@ NS_SWIFT_SENDABLE
 @interface CKSyncEngineAccountChangeEvent : CKSyncEngineEvent
 
 /// The type of account change that occurred.
-@property (nonatomic, readonly) CKSyncEngineAccountChangeType changeType;
+@property (readonly, assign, nonatomic) CKSyncEngineAccountChangeType changeType;
 
 /// The user record ID for the previous user.
 ///
 /// If the user just signed in, this will be `nil`.
 /// If the user signed out or switched accounts, this will be the old account.
-@property (nullable, nonatomic, readonly, copy) CKRecordID *previousUser;
+@property (nullable, readonly, copy, nonatomic) CKRecordID *previousUser;
 
 /// The user record ID for the current user.
 ///
 /// If the user just signed in or switched accounts, this will be the new user record ID.
 /// If the user signed out, this will be `nil`.
-@property (nullable, nonatomic, readonly, copy) CKRecordID *currentUser;
+@property (nullable, readonly, copy, nonatomic) CKRecordID *currentUser;
 
 @end
 
@@ -231,8 +230,8 @@ CK_SUBCLASSING_RESTRICTED
 NS_SWIFT_SENDABLE
 @interface CKSyncEngineFetchedDatabaseChangesEvent : CKSyncEngineEvent
 
-@property (nonatomic, readonly, copy) NSArray<CKRecordZone *> *modifications;
-@property (nonatomic, readonly, copy) NSArray<CKSyncEngineFetchedZoneDeletion *> *deletions;
+@property (readonly, copy, nonatomic) NSArray<CKRecordZone *> *modifications;
+@property (readonly, copy, nonatomic) NSArray<CKSyncEngineFetchedZoneDeletion *> *deletions;
 
 @end
 
@@ -247,8 +246,8 @@ CK_SUBCLASSING_RESTRICTED
 NS_SWIFT_SENDABLE
 @interface CKSyncEngineFetchedRecordZoneChangesEvent : CKSyncEngineEvent
 
-@property (nonatomic, readonly, copy) NSArray<CKRecord *> *modifications;
-@property (nonatomic, readonly, copy) NSArray<CKSyncEngineFetchedRecordDeletion *> *deletions;
+@property (readonly, copy, nonatomic) NSArray<CKRecord *> *modifications;
+@property (readonly, copy, nonatomic) NSArray<CKSyncEngineFetchedRecordDeletion *> *deletions;
 
 @end
 
@@ -261,11 +260,11 @@ CK_SUBCLASSING_RESTRICTED
 NS_SWIFT_SENDABLE
 @interface CKSyncEngineSentDatabaseChangesEvent : CKSyncEngineEvent
 
-@property (nonatomic, readonly, copy) NSArray<CKRecordZone *> *savedZones;
-@property (nonatomic, readonly, copy) NSArray<CKSyncEngineFailedZoneSave *> *failedZoneSaves;
+@property (readonly, copy, nonatomic) NSArray<CKRecordZone *> *savedZones;
+@property (readonly, copy, nonatomic) NSArray<CKSyncEngineFailedZoneSave *> *failedZoneSaves;
 
-@property (nonatomic, readonly, copy) NSArray<CKRecordZoneID *> *deletedZoneIDs;
-@property (nonatomic, readonly, copy) NSDictionary<CKRecordZoneID *, NSError *> *failedZoneDeletes;
+@property (readonly, copy, nonatomic) NSArray<CKRecordZoneID *> *deletedZoneIDs;
+@property (readonly, copy, nonatomic) NSDictionary<CKRecordZoneID *, NSError *> *failedZoneDeletes;
 
 @end
 
@@ -282,11 +281,11 @@ CK_SUBCLASSING_RESTRICTED
 NS_SWIFT_SENDABLE
 @interface CKSyncEngineSentRecordZoneChangesEvent : CKSyncEngineEvent
 
-@property (nonatomic, readonly, copy) NSArray<CKRecord *> *savedRecords;
-@property (nonatomic, readonly, copy) NSArray<CKSyncEngineFailedRecordSave *> *failedRecordSaves;
+@property (readonly, copy, nonatomic) NSArray<CKRecord *> *savedRecords;
+@property (readonly, copy, nonatomic) NSArray<CKSyncEngineFailedRecordSave *> *failedRecordSaves;
 
-@property (nonatomic, readonly, copy) NSArray<CKRecordID *> *deletedRecordIDs;
-@property (nonatomic, readonly, copy) NSDictionary<CKRecordID *, NSError *> *failedRecordDeletes;
+@property (readonly, copy, nonatomic) NSArray<CKRecordID *> *deletedRecordIDs;
+@property (readonly, copy, nonatomic) NSDictionary<CKRecordID *, NSError *> *failedRecordDeletes;
 
 @end
 
@@ -303,6 +302,9 @@ NS_REFINED_FOR_SWIFT
 CK_SUBCLASSING_RESTRICTED
 NS_SWIFT_SENDABLE
 @interface CKSyncEngineWillFetchChangesEvent : CKSyncEngineEvent
+
+@property (readonly, strong, nonatomic) CKSyncEngineFetchChangesContext *context API_AVAILABLE(macos(14.2), macCatalyst(17.2), ios(17.2), tvos(17.2), watchos(10.2));
+
 @end
 
 /// The sync engine is about to fetch record zone changes from the server for a specific zone.
@@ -314,7 +316,7 @@ CK_SUBCLASSING_RESTRICTED
 NS_SWIFT_SENDABLE
 @interface CKSyncEngineWillFetchRecordZoneChangesEvent : CKSyncEngineEvent
     
-@property (nonatomic, readonly, copy) CKRecordZoneID *zoneID;
+@property (readonly, copy, nonatomic) CKRecordZoneID *zoneID;
 
 @end
 
@@ -329,8 +331,8 @@ CK_SUBCLASSING_RESTRICTED
 NS_SWIFT_SENDABLE
 @interface CKSyncEngineDidFetchRecordZoneChangesEvent : CKSyncEngineEvent
 
-@property (nonatomic, readonly, copy) CKRecordZoneID *zoneID;
-@property (nullable, nonatomic, readonly, copy) NSError *error;
+@property (readonly, copy, nonatomic) CKRecordZoneID *zoneID;
+@property (nullable, readonly, copy, nonatomic) NSError *error;
 
 @end
 
@@ -344,6 +346,9 @@ NS_REFINED_FOR_SWIFT
 CK_SUBCLASSING_RESTRICTED
 NS_SWIFT_SENDABLE
 @interface CKSyncEngineDidFetchChangesEvent : CKSyncEngineEvent
+
+@property (readonly, strong, nonatomic) CKSyncEngineFetchChangesContext *context API_AVAILABLE(macos(14.2), macCatalyst(17.2), ios(17.2), tvos(17.2), watchos(10.2));
+
 @end
 
 /// The sync engine is about to send changes to the server.
@@ -353,7 +358,7 @@ CK_SUBCLASSING_RESTRICTED
 NS_SWIFT_SENDABLE
 @interface CKSyncEngineWillSendChangesEvent : CKSyncEngineEvent
     
-@property (nonatomic, readonly) CKSyncEngineSendChangesContext *context;
+@property (readonly, strong, nonatomic) CKSyncEngineSendChangesContext *context;
 
 @end
 
@@ -366,7 +371,7 @@ CK_SUBCLASSING_RESTRICTED
 NS_SWIFT_SENDABLE
 @interface CKSyncEngineDidSendChangesEvent : CKSyncEngineEvent
     
-@property (nonatomic, readonly) CKSyncEngineSendChangesContext *context;
+@property (readonly, strong, nonatomic) CKSyncEngineSendChangesContext *context;
 
 @end
 
@@ -381,8 +386,8 @@ NS_SWIFT_SENDABLE
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-@property (nonatomic, readonly, copy) CKRecordID *recordID;
-@property (nonatomic, readonly, copy) CKRecordType recordType;
+@property (readonly, copy, nonatomic) CKRecordID *recordID;
+@property (readonly, copy, nonatomic) CKRecordType recordType;
 
 @end
 
@@ -401,14 +406,6 @@ typedef NS_ENUM(NSInteger, CKSyncEngineZoneDeletionReason) {
     CKSyncEngineZoneDeletionReasonEncryptedDataReset,
 };
 
-API_DEPRECATED_WITH_REPLACEMENT("CKSyncEngineZoneDeletionReason", macos(14.0, 14.0), ios(17.0, 17.0), tvos(17.0, 17.0), watchos(10.0, 10.0))
-NS_REFINED_FOR_SWIFT
-typedef NS_ENUM(NSInteger, CKSyncEngineZoneDeletionType) {
-    CKSyncEngineZoneDeletionTypeDeleted,
-    CKSyncEngineZoneDeletionTypeUserDeleted,
-    CKSyncEngineZoneDeletionTypeEncryptedDataReset,
-};
-
 API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0), watchos(10.0))
 NS_REFINED_FOR_SWIFT
 CK_SUBCLASSING_RESTRICTED
@@ -418,9 +415,8 @@ NS_SWIFT_SENDABLE
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-@property (nonatomic, readonly, copy) CKRecordZoneID *zoneID;
-@property (nonatomic, readonly) CKSyncEngineZoneDeletionType type API_DEPRECATED_WITH_REPLACEMENT("reason", macos(14.0, 14.0), ios(17.0, 17.0), tvos(17.0, 17.0), watchos(10.0, 10.0));
-@property (nonatomic, readonly) CKSyncEngineZoneDeletionReason reason;
+@property (readonly, copy, nonatomic) CKRecordZoneID *zoneID;
+@property (readonly, assign, nonatomic) CKSyncEngineZoneDeletionReason reason;
 
 @end
 
@@ -433,8 +429,8 @@ NS_SWIFT_SENDABLE
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-@property (nonatomic, readonly, strong) CKRecord *record;
-@property (nonatomic, readonly, strong) NSError *error;
+@property (readonly, strong, nonatomic) CKRecord *record;
+@property (readonly, strong, nonatomic) NSError *error;
 
 @end
 
@@ -447,8 +443,8 @@ CK_SUBCLASSING_RESTRICTED
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-@property (nonatomic, readonly, strong) CKRecordZone *recordZone;
-@property (nonatomic, readonly, strong) NSError *error;
+@property (readonly, strong, nonatomic) CKRecordZone *recordZone;
+@property (readonly, strong, nonatomic) NSError *error;
 
 @end
 

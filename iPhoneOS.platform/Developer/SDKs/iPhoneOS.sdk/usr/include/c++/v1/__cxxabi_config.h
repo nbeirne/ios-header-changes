@@ -32,7 +32,7 @@
 #endif
 
 #if defined(_WIN32)
- #if defined(_LIBCXXABI_DISABLE_VISIBILITY_ANNOTATIONS)
+ #if defined(_LIBCXXABI_DISABLE_VISIBILITY_ANNOTATIONS) || (defined(__MINGW32__) && !defined(_LIBCXXABI_BUILDING_LIBRARY))
   #define _LIBCXXABI_HIDDEN
   #define _LIBCXXABI_DATA_VIS
   #define _LIBCXXABI_FUNC_VIS
@@ -101,6 +101,17 @@
 #define _LIBCXXABI_DTOR_FUNC __thiscall
 #else
 #define _LIBCXXABI_DTOR_FUNC
+#endif
+
+#if defined(__APPLE__) && defined(__arm64e__) && __has_feature(ptrauth_qualifier)
+#  include <ptrauth.h>
+#  define _LIBCXXABI_PTRAUTH(__key, __address_discriminated, __discriminator)                                          \
+    __ptrauth(__key, __address_discriminated, __builtin_ptrauth_string_discriminator(__discriminator))
+#  define _LIBCXXABI_PTRAUTH_RESTRICTED_INTPTR(__key, __address_discriminated, __discriminator)                        \
+    __ptrauth_restricted_intptr(__key, __address_discriminated, __builtin_ptrauth_string_discriminator(__discriminator))
+#else
+#  define _LIBCXXABI_PTRAUTH(__key, __address_discriminated, __discriminator)
+#  define _LIBCXXABI_PTRAUTH_RESTRICTED_INTPTR(__key, __address_discriminated, __discriminator)
 #endif
 
 #endif // ____CXXABI_CONFIG_H

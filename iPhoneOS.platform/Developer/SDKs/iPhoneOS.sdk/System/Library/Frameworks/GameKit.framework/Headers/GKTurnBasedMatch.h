@@ -95,7 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)player:(GKPlayer *)player wantsToQuitMatch:(GKTurnBasedMatch *)match NS_AVAILABLE(10_11, 9_0) __WATCHOS_AVAILABLE(3_0);
 
 /// Deprecated
-- (void)player:(GKPlayer *)player didRequestMatchWithPlayers:(NSArray<NSString *> *)playerIDsToInvite API_DEPRECATED_WITH_REPLACEMENT("-didRequestMatchWithOtherPlayers:", ios(7.0,8.0)) API_UNAVAILABLE(tvos);
+- (void)player:(GKPlayer *)player didRequestMatchWithPlayers:(NSArray<NSString *> *)playerIDsToInvite API_DEPRECATED_WITH_REPLACEMENT("-didRequestMatchWithOtherPlayers:", ios(7.0,8.0), macos(10.9,10.10)) API_UNAVAILABLE(tvos);
 
 @end
 

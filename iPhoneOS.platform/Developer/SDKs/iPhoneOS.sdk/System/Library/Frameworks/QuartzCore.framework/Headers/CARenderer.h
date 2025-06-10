@@ -13,9 +13,9 @@
 @class NSDictionary, CALayer;
 @protocol MTLTexture;
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0))
+API_AVAILABLE(macos(10.5), ios(2.0), tvos(9.0)) API_UNAVAILABLE(watchos)
 @interface CARenderer : NSObject
 {
 @private
@@ -28,7 +28,7 @@ API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0))
 
 + (CARenderer *)rendererWithMTLTexture:(id<MTLTexture>)tex
     options:(nullable NSDictionary *)dict
-    API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0), tvos(11.0));
+    API_AVAILABLE(macos(10.13), ios(11.0), tvos(11.0)) API_UNAVAILABLE(watchos);
 
 /* The root layer associated with the renderer. */
 
@@ -79,7 +79,7 @@ API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0))
 /* The CGColorSpaceRef object defining the output color space. */
 
 CA_EXTERN NSString * const kCARendererColorSpace
-    API_AVAILABLE(macos(10.6), ios(2.0), watchos(2.0), tvos(9.0));
+    API_AVAILABLE(macos(10.6), ios(2.0), tvos(9.0)) API_UNAVAILABLE(watchos);
 
 /* The Metal Command Queue object against which to submit work.
  *
@@ -91,8 +91,8 @@ CA_EXTERN NSString * const kCARendererColorSpace
  * automatically commits and waitUntilScheduled. */
 
 CA_EXTERN NSString * const kCARendererMetalCommandQueue
-    API_AVAILABLE(macos(10.14), ios(12.0), watchos(5.0), tvos(12.0));
+    API_AVAILABLE(macos(10.14), ios(12.0), tvos(12.0)) API_UNAVAILABLE(watchos);
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)
 
 #endif

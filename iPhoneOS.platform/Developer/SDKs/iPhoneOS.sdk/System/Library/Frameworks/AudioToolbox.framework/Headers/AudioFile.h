@@ -157,6 +157,7 @@ CF_ENUM(OSStatus) {
         kAudioFileInvalidPacketDependencyError			= 'dep?',		// 0x6465703F, 1684369471
         kAudioFileInvalidFileError						= 'dta?',		// 0x6474613F, 1685348671
 		kAudioFileOperationNotSupportedError			= 0x6F703F3F, 	// 'op??', integer used because of trigraph
+
 		// general file error codes
 		kAudioFileNotOpenError							= -38,
 		kAudioFileEndOfFileError						= -39,

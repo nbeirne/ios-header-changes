@@ -138,7 +138,10 @@ OS_EXPORT AVAudioSessionMode const AVAudioSessionModeDefault API_AVAILABLE(ios(5
 /*! Only valid with AVAudioSessionCategoryPlayAndRecord.  Appropriate for Voice over IP
  (VoIP) applications.  Reduces the number of allowable audio routes to be only those
  that are appropriate for VoIP applications and may engage appropriate system-supplied
- signal processing.  Has the side effect of setting AVAudioSessionCategoryOptionAllowBluetooth */
+ signal processing.  Has the side effect of setting AVAudioSessionCategoryOptionAllowBluetooth.
+ Using this mode without the VoiceProcessing IO unit or AVAudioEngine with voice processing enabled will result in the following:
+- Chat-specific signal processing such as echo cancellation or automatic gain correction will not be loaded
+- Dynamic processing on input and output will be disabled resulting in a lower output playback level. */
 OS_EXPORT AVAudioSessionMode const AVAudioSessionModeVoiceChat API_AVAILABLE(ios(5.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos);
 
 /*! Set by Game Kit on behalf of an application that uses a GKVoiceChat object; valid
@@ -156,14 +159,18 @@ OS_EXPORT AVAudioSessionMode const AVAudioSessionModeVideoRecording API_AVAILABL
  This mode disables some dynamics processing on input and output resulting in a lower output playback level. */
 OS_EXPORT AVAudioSessionMode const AVAudioSessionModeMeasurement API_AVAILABLE(ios(5.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos);
 
-/*! Engages appropriate output signal processing for movie playback scenarios.  Currently
- only applied during playback over built-in speaker. */
+/*! Appropriate for applications playing movie content. Only valid with AVAudioSessionCategoryPlayback.
+ Setting this mode engages appropriate output signal processing for movie playback scenarios.
+ Content using this mode is eligible for Enhance Dialogue processing on supported routes with capable hardware */
 OS_EXPORT AVAudioSessionMode const AVAudioSessionModeMoviePlayback API_AVAILABLE(ios(6.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos);
 
 /*! Only valid with kAudioSessionCategory_PlayAndRecord. Reduces the number of allowable audio
  routes to be only those that are appropriate for video chat applications. May engage appropriate
  system-supplied signal processing.  Has the side effect of setting
- AVAudioSessionCategoryOptionAllowBluetooth and AVAudioSessionCategoryOptionDefaultToSpeaker. */
+ AVAudioSessionCategoryOptionAllowBluetooth and AVAudioSessionCategoryOptionDefaultToSpeaker. 
+ Using this mode without the VoiceProcessing IO unit or AVAudioEngine with voice processing enabled will result in the following:
+- Chat-specific signal processing such as echo cancellation or automatic gain correction will not be loaded
+- Dynamic processing on input and output will be disabled resulting in a lower output playback level. */
 OS_EXPORT AVAudioSessionMode const AVAudioSessionModeVideoChat API_AVAILABLE(ios(7.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos);
 
 /*! Appropriate for applications which play spoken audio and wish to be paused (via audio session interruption) rather than ducked
@@ -176,6 +183,7 @@ OS_EXPORT AVAudioSessionMode const AVAudioSessionModeSpokenAudio API_AVAILABLE(i
  plays short prompts to the user. Typically, these same types of applications would also configure their session to use
  AVAudioSessionCategoryOptionDuckOthers and AVAudioSessionCategoryOptionInterruptSpokenAudioAndMixWithOthers */
 OS_EXPORT AVAudioSessionMode const AVAudioSessionModeVoicePrompt API_AVAILABLE(ios(12.0), watchos(5.0), tvos(12.0)) API_UNAVAILABLE(macos);
+
 
 #pragma mark-- enumerations --
 
@@ -379,7 +387,7 @@ typedef NS_ENUM(NSUInteger, AVAudioSessionRouteChangeReason) {
 typedef NS_OPTIONS(NSUInteger, AVAudioSessionCategoryOptions) {
     AVAudioSessionCategoryOptionMixWithOthers            = 0x1,
     AVAudioSessionCategoryOptionDuckOthers               = 0x2,
-    AVAudioSessionCategoryOptionAllowBluetooth API_UNAVAILABLE(tvos, watchos, macos) = 0x4,
+    AVAudioSessionCategoryOptionAllowBluetooth API_AVAILABLE(tvos(17.0), watchos(11.0)) API_UNAVAILABLE(macos) = 0x4,
     AVAudioSessionCategoryOptionDefaultToSpeaker API_UNAVAILABLE(tvos, watchos, macos) = 0x8,
     AVAudioSessionCategoryOptionInterruptSpokenAudioAndMixWithOthers API_AVAILABLE(ios(9.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos) = 0x11,
     AVAudioSessionCategoryOptionAllowBluetoothA2DP API_AVAILABLE(ios(10.0), watchos(3.0), tvos(10.0)) API_UNAVAILABLE(macos) = 0x20,
@@ -417,17 +425,24 @@ typedef NS_OPTIONS(NSUInteger, AVAudioSessionInterruptionOptions) {
  
     @var   AVAudioSessionInterruptionReasonRouteDisconnected
         The audio session was interrupted due to route getting disconnected.
+ 
+	@var   AVAudioSessionInterruptionReasonDeviceUnauthenticated
+		The audio session was interrupted due to device being doffed or locked.
+ 
  */
 typedef NS_ENUM(NSUInteger, AVAudioSessionInterruptionReason) {
     AVAudioSessionInterruptionReasonDefault         = 0,
     AVAudioSessionInterruptionReasonAppWasSuspended API_DEPRECATED("wasSuspended reason no longer present", ios(14.5, 16.0)) = 1,
     AVAudioSessionInterruptionReasonBuiltInMicMuted = 2,
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
+#if TARGET_OS_VISION
     ///The audio session was interrupted because its UIScene was backgrounded
     AVAudioSessionInterruptionReasonSceneWasBackgrounded = 3,
-#endif // TARGET_OS_XR
+#endif // TARGET_OS_VISION
     ///The audio session was interrupted because route was disconnected.
-    AVAudioSessionInterruptionReasonRouteDisconnected API_AVAILABLE(ios(17.0), watchos(10.0), tvos(17.0)) API_UNAVAILABLE(macos) = 4
+    AVAudioSessionInterruptionReasonRouteDisconnected API_AVAILABLE(ios(17.0), watchos(10.0), tvos(17.0)) API_UNAVAILABLE(macos) = 4,
+#if TARGET_OS_VISION
+	AVAudioSessionInterruptionReasonDeviceUnauthenticated API_UNAVAILABLE(visionos) = 5,
+#endif // TARGET_OS_VISION
 } NS_SWIFT_NAME(AVAudioSession.InterruptionReason);
 
 ///  options for use when calling setActive:withOptions:error:
@@ -605,6 +620,35 @@ typedef NS_ENUM(NSUInteger, AVAudioSessionRecordPermission) {
 	AVAudioSessionRecordPermissionDenied API_DEPRECATED_WITH_REPLACEMENT("AVAudioApplicationRecordPermissionDenied", ios(8.0, 17.0), watchos(4.0, 10.0)) API_UNAVAILABLE(macos, tvos) = 'deny',
 	AVAudioSessionRecordPermissionGranted API_DEPRECATED_WITH_REPLACEMENT("AVAudioApplicationRecordPermissionGranted", ios(8.0, 17.0), watchos(4.0, 10.0)) API_UNAVAILABLE(macos, tvos) = 'grnt'
 };
+
+/*!
+	@enum AVAudioSessionRenderingMode
+	@var  AVAudioSessionRenderingModeNotApplicable
+	@var  AVAudioSessionRenderingModeMonoStereo
+	@var  AVAudioSessionRenderingModeSurround
+	@var  AVAudioSessionRenderingModeSpatialAudio
+	@var  AVAudioSessionRenderingModeDolbyAudio
+	@var  AVAudioSessionRenderingModeDolbyAtmos
+*/
+typedef NS_ENUM(NSInteger, AVAudioSessionRenderingMode) {
+	/// Default Mode when no asset is loaded or playing
+	AVAudioSessionRenderingModeNotApplicable           = 0,
+ 
+	/// Default mode for non multi-channel cases
+	AVAudioSessionRenderingModeMonoStereo              = 1,
+ 
+	/// Default mode for multi-channel cases that do not fall into the modes below
+	AVAudioSessionRenderingModeSurround                = 2,
+
+	/// Fallback mode if provided content is Dolby variant but hardware capabilities don't support it
+	AVAudioSessionRenderingModeSpatialAudio            = 3,
+	
+	/// Dolby Audio mode
+	AVAudioSessionRenderingModeDolbyAudio              = 4,
+	
+	/// Dolby Atmos mode
+	AVAudioSessionRenderingModeDolbyAtmos              = 5,
+} NS_SWIFT_NAME(AVAudioSession.RenderingMode);
 
 #endif // AudioSession_AVAudioSessionTypes_h
 #else

@@ -9,14 +9,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-CORESPOTLIGHT_EXPORT NSErrorDomain const CSSearchQueryErrorDomain API_AVAILABLE(macos(10.12), ios(10.0)) CS_TVOS_UNAVAILABLE;
+CORESPOTLIGHT_EXPORT NSErrorDomain const CSSearchQueryErrorDomain API_AVAILABLE(macos(10.13), ios(10.0)) CS_TVOS_UNAVAILABLE;
 
 typedef NS_ENUM(NSInteger, CSSearchQueryErrorCode) {
     CSSearchQueryErrorCodeUnknown = -2000,
     CSSearchQueryErrorCodeIndexUnreachable = -2001,
     CSSearchQueryErrorCodeInvalidQuery = -2002,
     CSSearchQueryErrorCodeCancelled = -2003,
-} API_AVAILABLE(macos(10.12), ios(10.0)) CS_TVOS_UNAVAILABLE;
+} API_AVAILABLE(macos(10.13), ios(10.0)) CS_TVOS_UNAVAILABLE;
 
 typedef NS_OPTIONS(NSUInteger, CSSearchQuerySourceOptions) {
     CSSearchQuerySourceOptionDefault = 0,
@@ -25,7 +25,7 @@ typedef NS_OPTIONS(NSUInteger, CSSearchQuerySourceOptions) {
 
 @class CSSearchableItem;
 
-API_AVAILABLE(macos(10.12), ios(10.0)) CS_TVOS_UNAVAILABLE
+API_AVAILABLE(macos(10.13), ios(10.0)) CS_TVOS_UNAVAILABLE
 @interface CSSearchQueryContext : NSObject<NSSecureCoding, NSCopying>
 
 @property (nonatomic, strong) NSArray<NSString *> *fetchAttributes;
@@ -35,17 +35,17 @@ API_AVAILABLE(macos(10.12), ios(10.0)) CS_TVOS_UNAVAILABLE
 @property (nonatomic, assign) CSSearchQuerySourceOptions sourceOptions API_AVAILABLE(macos(13));
 @end
 
-API_AVAILABLE(macos(10.12), ios(10.0)) CS_TVOS_UNAVAILABLE
+API_AVAILABLE(macos(10.13), ios(10.0)) CS_TVOS_UNAVAILABLE
 @interface CSSearchQuery : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
 
 // queryString: The query string (e.g., 'contentType == "public.email-message" && subject != "Re:*"')
-- (instancetype)initWithQueryString:(NSString * _Nonnull)queryString queryContext:(CSSearchQueryContext * _Nullable)queryContext NS_DESIGNATED_INITIALIZER API_AVAILABLE(macos(10.13), ios(16.0)) CS_TVOS_UNAVAILABLE;
+- (instancetype)initWithQueryString:(NSString * _Nonnull)queryString queryContext:(CSSearchQueryContext * _Nullable)queryContext NS_DESIGNATED_INITIALIZER API_AVAILABLE(macos(13.0), ios(16.0)) CS_TVOS_UNAVAILABLE;
 
 // queryString: The query string (e.g., 'contentType == "public.email-message" && subject != "Re:*"')
 // attributes: The attributes to be fetched for the searchable items
-- (instancetype)initWithQueryString:(NSString *)queryString attributes:(NSArray<NSString *> * _Nullable)attributes;
+- (instancetype)initWithQueryString:(NSString *)queryString attributes:(NSArray<NSString *> * _Nullable)attributes NS_DEPRECATED(10_13, 13_0, 10_0, 16_0, "Use initWithQueryString:queryContext instead");
 
 @property (readonly, getter=isCancelled) BOOL cancelled;
 

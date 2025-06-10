@@ -52,7 +52,7 @@ NS_SWIFT_SENDABLE
  */
 + (CKContainer *)containerWithIdentifier:(NSString *)containerIdentifier;
 
-@property (nonatomic, readonly, copy, nullable) NSString *containerIdentifier;
+@property (nullable, readonly, copy, nonatomic) NSString *containerIdentifier;
 
 - (void)addOperation:(CKOperation *)operation;
 
@@ -76,9 +76,9 @@ NS_SWIFT_SENDABLE
  */
 @interface CKContainer (Database)
 
-@property (nonatomic, readonly) CKDatabase *privateCloudDatabase;
-@property (nonatomic, readonly) CKDatabase *publicCloudDatabase;
-@property (nonatomic, readonly) CKDatabase *sharedCloudDatabase API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
+@property (readonly, strong, nonatomic) CKDatabase *privateCloudDatabase;
+@property (readonly, strong, nonatomic) CKDatabase *publicCloudDatabase;
+@property (readonly, strong, nonatomic) CKDatabase *sharedCloudDatabase API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
 
 /*! @abstract Convenience methods
  *

@@ -48,9 +48,6 @@ NS_CLASS_AVAILABLE(10_8, 4_1) __WATCHOS_AVAILABLE(3_0)
 /// The identifier of the player that earned the achievement.
 @property(readonly, strong, nullable, NS_NONATOMIC_IOSONLY) GKPlayer *player NS_AVAILABLE(10_10, 8_0);
 
-/// If present, the rarity of the achievement expressed as a percentage of players that earned it. Null if not enough data is available to compute it.
-@property(copy, readonly, nullable) NSNumber *rarityPercent API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0)) NS_REFINED_FOR_SWIFT;
-
 @end
 
 @interface GKAchievement (Deprecated)
@@ -60,8 +57,8 @@ NS_CLASS_AVAILABLE(10_8, 4_1) __WATCHOS_AVAILABLE(3_0)
 
 @interface GKAchievement (Obsoleted)
 /*** This method is obsolete. Calling this initialiser does nothing and will return nil ***/
-- (nullable instancetype)initWithIdentifier:(nullable NSString *)identifier forPlayer:(NSString *)playerID API_DEPRECATED_WITH_REPLACEMENT("-initWithIdentifier:player:", ios(7.0,8.0)) API_UNAVAILABLE(tvos);
+- (nullable instancetype)initWithIdentifier:(nullable NSString *)identifier forPlayer:(NSString *)playerID API_DEPRECATED_WITH_REPLACEMENT("-initWithIdentifier:player:", ios(7.0,8.0), macos(10.9,10.10)) API_UNAVAILABLE(tvos);
 /*** This property is obsolete. ***/
-@property(readonly, copy, nullable, NS_NONATOMIC_IOSONLY)  NSString * playerID API_DEPRECATED_WITH_REPLACEMENT("-player:", ios(7.0,8.0)) API_UNAVAILABLE(tvos);
+@property(readonly, copy, nullable, NS_NONATOMIC_IOSONLY)  NSString * playerID API_DEPRECATED_WITH_REPLACEMENT("-player:", ios(7.0,8.0), macos(10.9,10.10)) API_UNAVAILABLE(tvos);
 @end
 NS_ASSUME_NONNULL_END

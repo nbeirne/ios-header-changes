@@ -18,7 +18,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(17.0), tvos(17.0), watchos(10.0)) NS_REFINED_FOR_
 @property (nonatomic, readwrite, assign) BOOL prefersHighDynamicRange;
 /// If set, images vended by the loader are automatically prepared for display. Default is NO.
 @property (nonatomic, readwrite, assign) BOOL preparesImagesForDisplay;
-/// If set, images loaded will be thumbnails of approximately the given size. Default value is CGSizeZero, indicating that thumb-nailing is disabled.
+/// If set, images loaded will be thumbnails of approximately the given size. Default value is CGSizeZero, indicating that thumb-nailing is disabled. This size is always in pixels.
 @property (nonatomic, readwrite, assign) CGSize preferredThumbnailSize;
 /// If non-zero when generating images, image metadata information (if present) will be used to determine the scale to assign to the image. If zero all images will be assigned a scale of 1.0. Always assigns integral scales. Defaults to 0.
 @property (nonatomic, readwrite, assign) CGFloat pixelsPerInch;

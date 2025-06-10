@@ -3,9 +3,9 @@
 
     Contains:   AltiVec DSP Interfaces
 
-    Version:    vecLib-1038.0
+    Version:    vecLib-1068.0
 
-    Copyright:  Copyright (c) 2000-2023 by Apple Inc. All rights reserved.
+    Copyright:  Copyright (c) 2000-2024 by Apple Inc. All rights reserved.
 
     For vDSP documentation, search for "vDSP" at <http://developer.apple.com>
     or search for one of the routine names below.
@@ -226,10 +226,16 @@ extern "C" {
 #endif
 
 
-#if !0
+#include <TargetConditionals.h>
+#if !0 && !0 && (__STDC_HOSTED__ == 1)
 
 #include <CoreFoundation/CFAvailability.h>
 #define vDSP_ENUM   CF_ENUM
+#else
+#define __vDSP_ENUM_GET_MACRO(_1, _2, NAME, ...) NAME
+#define __vDSP_NAMED_ENUM(_type, _name) _type _name; enum
+#define __vDSP_ANON_ENUM(_type) enum
+#define vDSP_ENUM(...) __vDSP_ENUM_GET_MACRO(__VA_ARGS__, __vDSP_NAMED_ENUM, __vDSP_ANON_ENUM)(__VA_ARGS__)
 #endif
 
 
@@ -252,7 +258,7 @@ extern "C" {
     vDSP_Version0 is a major version number.
     vDSP_Version1 is a minor version number.
 */
-#define vDSP_Version0   1038
+#define vDSP_Version0   1068
 #define vDSP_Version1   0
 
 

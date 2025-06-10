@@ -226,7 +226,7 @@ typedef NS_ENUM(NSInteger, NSDataCompressionAlgorithm) {
 
 @end
 
-#if !0 || !0
+#if !0
 /****************	    Purgeable Data	****************/
 
 API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0))

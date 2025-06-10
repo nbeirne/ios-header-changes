@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class AEAssessmentConfiguration;
 
 API_AVAILABLE(ios(13.4), macos(10.15.4), macCatalyst(14.0))
+API_UNAVAILABLE(visionos)
 @protocol AEAssessmentSessionDelegate <NSObject>
 @optional
 
@@ -24,9 +25,9 @@ API_AVAILABLE(ios(13.4), macos(10.15.4), macCatalyst(14.0))
 
 - (void)assessmentSessionDidEnd:(AEAssessmentSession *)session;
 
-- (void)assessmentSessionDidUpdate:(AEAssessmentSession *)session API_AVAILABLE(macCatalyst(15.0), macos(12.0)) API_UNAVAILABLE(ios);
+- (void)assessmentSessionDidUpdate:(AEAssessmentSession *)session API_AVAILABLE(ios(17.5), macCatalyst(15.0), macos(12.0));
 
-- (void)assessmentSession:(AEAssessmentSession *)session failedToUpdateToConfiguration:(AEAssessmentConfiguration *)configuration error:(NSError *)error API_AVAILABLE(macCatalyst(15.0), macos(12.0)) API_UNAVAILABLE(ios);
+- (void)assessmentSession:(AEAssessmentSession *)session failedToUpdateToConfiguration:(AEAssessmentConfiguration *)configuration error:(NSError *)error API_AVAILABLE(ios(17.5), macCatalyst(15.0), macos(12.0));
 
 @end
 

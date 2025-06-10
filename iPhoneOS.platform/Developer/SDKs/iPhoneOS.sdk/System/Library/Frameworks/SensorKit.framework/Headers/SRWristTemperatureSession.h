@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 NS_SWIFT_SENDABLE
-SR_EXTERN API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, xros) API_UNAVAILABLE(tvos, macos)
+SR_EXTERN API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, visionos) API_UNAVAILABLE(tvos, macos)
 @interface SRWristTemperatureSession : NSObject <NSCopying, NSSecureCoding>
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;

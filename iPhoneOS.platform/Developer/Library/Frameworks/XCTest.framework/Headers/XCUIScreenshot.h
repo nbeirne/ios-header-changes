@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  * Represents a captured screenshot.
  */
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUIScreenshot : NSObject
 
 + (instancetype)new XCT_UNAVAILABLE("Only XCUIScreenshotProviding objects create screenshots. See XCUIScreen or XCUIElement.");

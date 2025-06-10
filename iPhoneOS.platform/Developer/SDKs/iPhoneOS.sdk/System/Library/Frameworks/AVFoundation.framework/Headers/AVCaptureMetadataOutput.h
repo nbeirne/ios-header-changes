@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
  @discussion
     Instances of AVCaptureMetadataOutput emit arrays of AVMetadataObject instances (see AVMetadataObject.h), such as detected faces. Applications can access the metadata objects with the captureOutput:didOutputMetadataObjects:fromConnection: delegate method.
  */
-API_AVAILABLE(macos(13.0), ios(6.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(13.0), ios(6.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
 @interface AVCaptureMetadataOutput : AVCaptureOutput
 {
 @private
@@ -51,7 +51,7 @@ API_AVAILABLE(macos(13.0), ios(6.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILA
  
     Clients that need to minimize the chances of metadata being dropped should specify a queue on which a sufficiently small amount of processing is performed along with receiving metadata objects.
  
-    A serial dispatch queue must be used to guarantee that metadata objects will be delivered in order. The objectsCallbackQueue parameter may not be NULL, except when setting the objectsDelegate to nil.
+    A serial dispatch queue must be used to guarantee that metadata objects will be delivered in order. The objectsCallbackQueue parameter may not be NULL, except when setting the objectsDelegate to nil otherwise -setMetadataObjectsDelegate:queue: throws an NSInvalidArgumentException.
  */
 - (void)setMetadataObjectsDelegate:(nullable id<AVCaptureMetadataOutputObjectsDelegate>)objectsDelegate queue:(nullable dispatch_queue_t)objectsCallbackQueue;
 
@@ -105,7 +105,7 @@ API_AVAILABLE(macos(13.0), ios(6.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILA
  
     As of iOS 13, this property can be set without requiring a lengthy rebuild of the session in which video preview is disrupted.
  */
-@property(nonatomic) CGRect rectOfInterest API_AVAILABLE(ios(7.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros);
+@property(nonatomic) CGRect rectOfInterest API_AVAILABLE(ios(7.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos);
 
 @end
 
@@ -115,7 +115,7 @@ API_AVAILABLE(macos(13.0), ios(6.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILA
  @abstract
     Defines an interface for delegates of AVCaptureMetadataOutput to receive emitted objects.
  */
-API_AVAILABLE(macos(13.0), ios(6.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(13.0), ios(6.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
 @protocol AVCaptureMetadataOutputObjectsDelegate <NSObject>
 
 @optional

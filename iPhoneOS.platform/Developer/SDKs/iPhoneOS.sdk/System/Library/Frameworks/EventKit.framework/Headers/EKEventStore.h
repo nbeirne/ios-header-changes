@@ -128,8 +128,8 @@ typedef void(^EKEventStoreRequestAccessCompletionHandler)(BOOL granted, NSError 
                  you should use calendarsForEntityType:
 */
 @property(nonatomic, readonly) NSArray<EKCalendar *> *calendars NS_DEPRECATED(NA, NA, 4_0, 6_0)
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(visionos)
 #endif
 ;
 

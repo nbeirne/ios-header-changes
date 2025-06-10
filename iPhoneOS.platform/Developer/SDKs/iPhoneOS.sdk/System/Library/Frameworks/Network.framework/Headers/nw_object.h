@@ -30,6 +30,10 @@
 #  define NW_SWIFT_SENDABLE
 #endif // __has_attribute(__swift_attr__)
 
+#ifndef NW_NO_DESTROY
+#	define NW_NO_DESTROY [[clang::no_destroy]]
+#endif // NW_NO_DESTROY
+
 #if OS_OBJECT_USE_OBJC
 #  define NW_OBJECT_DECL(type) OS_OBJECT_DECL(type)
 #  define NW_SENDABLE_OBJECT_DECL(type) NW_SWIFT_SENDABLE NW_OBJECT_DECL(type)
@@ -137,14 +141,6 @@
 #ifndef NW_EXPORT_PROJECT
 #  define NW_EXPORT_PROJECT __attribute__((visibility("default")))
 #endif // !NW_EXPORT_PROJECT
-
-#ifndef NW_NOT_i386_MAC
-#  if !TARGET_OS_OSX || !defined(__i386__)
-#    define NW_NOT_i386_MAC 1
-#  else // !TARGET_OS_OSX || !__i386__
-#    define NW_NOT_i386_MAC 0
-#  endif // !TARGET_OS_OSX || !__i386__
-#endif // NW_NOT_i386_MAC
 
 
 #if !OS_OBJECT_USE_OBJC_RETAIN_RELEASE

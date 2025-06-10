@@ -49,4 +49,17 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 #endif // CK_SUBCLASSING_DEPRECATED
 
 
+#ifndef CK_UNAVAILABLE
+    #define CK_UNAVAILABLE(msg) __attribute__((unavailable(msg)))
+#endif
+
+#ifndef CK_NEWLY_UNAVAILABLE
+    #if (!defined(CK_BUILDING_CK) || !CK_BUILDING_CK)
+        #define CK_NEWLY_UNAVAILABLE(msg) __attribute__((unavailable(msg)))
+    #else
+        #define CK_NEWLY_UNAVAILABLE(msg) CK_EXTERN
+    #endif
+#endif
+
+
 NS_HEADER_AUDIT_END(nullability, sendability)

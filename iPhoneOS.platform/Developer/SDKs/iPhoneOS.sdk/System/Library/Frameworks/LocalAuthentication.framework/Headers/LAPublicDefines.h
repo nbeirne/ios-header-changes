@@ -14,6 +14,14 @@
 #define kLAPolicyDeviceOwnerAuthenticationWithWatch             3
 #define kLAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch 4
 #define kLAPolicyDeviceOwnerAuthenticationWithWristDetection    5
+#define kLAPolicyDeviceOwnerAuthenticationWithCompanion         kLAPolicyDeviceOwnerAuthenticationWithWatch
+#define kLAPolicyDeviceOwnerAuthenticationWithBiometricsOrCompanion kLAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch
+
+// Biometry types
+#define kLABiometryTypeNone           0
+#define kLABiometryTypeTouchID        1 << 0
+#define kLABiometryTypeFaceID         1 << 1
+#define kLABiometryTypeOpticID        1 << 2
 
 // Credential types
 #define kLACredentialTypeApplicationPassword                0
@@ -38,8 +46,13 @@
 #define kLAErrorBiometryNotPaired                         -12
 #define kLAErrorBiometryDisconnected                      -13
 #define kLAErrorInvalidDimensions                         -14
+#define kLAErrorCompanionNotAvailable                       kLAErrorWatchNotAvailable
 
 // Error domain
 #define kLAErrorDomain        "com.apple.LocalAuthentication"
+
+// Companion types
+#define kLACompanionTypeWatch           1 << 0
+#define kLACompanionTypeMac             1 << 1
 
 #endif

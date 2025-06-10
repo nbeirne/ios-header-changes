@@ -35,6 +35,26 @@ API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos)
 @property (copy, nullable) NSURL *HTTP2RelayURL;
 
 /*!
+ * @property dnsOverHTTPSURL
+ * @discussion The URL of a DNS-over-HTTPS (DoH) resolver accessible via the relay.
+ */
+@property (copy, nullable) NSURL *dnsOverHTTPSURL;
+
+/*!
+ * @property syntheticDNSAnswerIPv4Prefix
+ * @discussion An IPv4 address prefix (such as "192.0.2.0/24") that will be used to synthesize
+ *      DNS answers for apps that use `getaddrinfo()` to resolve domains included in `matchDomains`
+ */
+@property (copy, nullable) NSString *syntheticDNSAnswerIPv4Prefix;
+
+/*!
+ * @property syntheticDNSAnswerIPv6Prefix
+ * @discussion An IPv6 address prefix (such as "2001:DB8::/32") that will be used to synthesize
+ *      DNS answers for apps that use `getaddrinfo()` to resolve domains included in `matchDomains`
+ */
+@property (copy, nullable) NSString *syntheticDNSAnswerIPv6Prefix;
+
+/*!
  * @property additionalHTTPHeaderFields
  * @discussion Additional HTTP header field names and values to be added to all relay requests.
  */

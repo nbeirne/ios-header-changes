@@ -17,14 +17,14 @@ typedef NS_ENUM(NSInteger, UITabBarItemPositioning) {
     UITabBarItemPositioningAutomatic,
     UITabBarItemPositioningFill,
     UITabBarItemPositioningCentered,
-} API_AVAILABLE(ios(7.0));
+} API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(watchos);
 
 @class UITabBarItem;
 @class UIImageView;
 @class UITabBarAppearance;
 @protocol UITabBarDelegate;
 
-UIKIT_EXTERN API_AVAILABLE(ios(2.0)) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @interface UITabBar : UIView
 
 @property(nullable, nonatomic, weak) id<UITabBarDelegate> delegate;     // weak reference. default is nil
@@ -35,10 +35,10 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) NS_SWIFT_UI_ACTOR
 
 // Reorder items. This will display a sheet with all the items listed, allow the user to change/reorder items and shows a 'Done' button at the top
 
-- (void)beginCustomizingItems:(NSArray<UITabBarItem *> *)items API_UNAVAILABLE(tvos, xros);   // list all items that can be reordered. always animates a sheet up. visible items not listed are fixed in place
-- (BOOL)endCustomizingAnimated:(BOOL)animated API_UNAVAILABLE(tvos, xros);    // hide customization sheet. normally you should let the user do it. check list of items to see new layout. returns YES if layout changed
+- (void)beginCustomizingItems:(NSArray<UITabBarItem *> *)items API_UNAVAILABLE(tvos, visionos);   // list all items that can be reordered. always animates a sheet up. visible items not listed are fixed in place
+- (BOOL)endCustomizingAnimated:(BOOL)animated API_UNAVAILABLE(tvos, visionos);    // hide customization sheet. normally you should let the user do it. check list of items to see new layout. returns YES if layout changed
 
-@property(nonatomic, readonly, getter=isCustomizing) BOOL customizing API_UNAVAILABLE(tvos, xros);
+@property(nonatomic, readonly, getter=isCustomizing) BOOL customizing API_UNAVAILABLE(tvos, visionos, watchos);
 
 /*
  The behavior of tintColor for bars has changed on iOS 7.0. It no longer affects the bar's background
@@ -48,7 +48,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) NS_SWIFT_UI_ACTOR
 @property(null_resettable, nonatomic, strong) UIColor *tintColor API_AVAILABLE(ios(5.0));
 @property(nullable, nonatomic, strong) UIColor *barTintColor API_AVAILABLE(ios(7.0)) UI_APPEARANCE_SELECTOR;  // default is nil
 /// Unselected items in this tab bar will be tinted with this color. Setting this value to nil indicates that UITabBar should use its default value instead.
-@property (nonatomic, readwrite, copy, nullable) UIColor *unselectedItemTintColor API_AVAILABLE(ios(10.0)) UI_APPEARANCE_SELECTOR;
+@property (nonatomic, readwrite, copy, nullable) UIColor *unselectedItemTintColor API_AVAILABLE(ios(10.0)) UI_APPEARANCE_SELECTOR API_UNAVAILABLE(watchos);
 
 /* selectedImageTintColor will be applied to the gradient image used when creating the
  selected image. Default is nil and will result in the system bright blue for selected
@@ -58,7 +58,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) NS_SWIFT_UI_ACTOR
  Deprecated in iOS 8.0. On iOS 7.0 and later the selected image takes its color from the
  inherited tintColor of the UITabBar, which may be set separately if necessary.
  */
-@property(nullable, nonatomic, strong) UIColor *selectedImageTintColor API_DEPRECATED_WITH_REPLACEMENT("tintColor", ios(5.0, 8.0)) UI_APPEARANCE_SELECTOR API_UNAVAILABLE(tvos) API_UNAVAILABLE(xros);
+@property(nullable, nonatomic, strong) UIColor *selectedImageTintColor API_DEPRECATED_WITH_REPLACEMENT("tintColor", ios(5.0, 8.0)) UI_APPEARANCE_SELECTOR API_UNAVAILABLE(tvos) API_UNAVAILABLE(visionos, watchos);
 
 /* The background image will be tiled to fit, even if it was not created via the UIImage resizableImage methods.
  */
@@ -114,26 +114,26 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) NS_SWIFT_UI_ACTOR
  the tab bar will provide an opaque background for the image using the bar's barTintColor if defined, or black
  for UIBarStyleBlack or white for UIBarStyleDefault if barTintColor is nil.
  */
-@property(nonatomic,getter=isTranslucent) BOOL translucent API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(xros);
+@property(nonatomic,getter=isTranslucent) BOOL translucent API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(visionos);
 
 /// Describes the appearance attributes for the tab bar to use.
-@property (nonatomic, readwrite, copy) UITabBarAppearance *standardAppearance UI_APPEARANCE_SELECTOR API_AVAILABLE(ios(13.0), tvos(13.0));
+@property (nonatomic, readwrite, copy) UITabBarAppearance *standardAppearance UI_APPEARANCE_SELECTOR API_AVAILABLE(ios(13.0), tvos(13.0)) API_UNAVAILABLE(watchos);
 /// Describes the appearance attributes for the tabBar to use when an observable scroll view is scrolled to the bottom. If not set, standardAppearance will be used instead.
-@property (nonatomic, readwrite, copy, nullable) UITabBarAppearance *scrollEdgeAppearance UI_APPEARANCE_SELECTOR API_AVAILABLE(ios(15.0));
+@property (nonatomic, readwrite, copy, nullable) UITabBarAppearance *scrollEdgeAppearance UI_APPEARANCE_SELECTOR API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos);
 
 // A small view (200pt by 68pt) in the leading gutter next to tab bar to add accessories, such as logos, time, so on. If auto layout is used, it will be respected when placing subviews. If not, subviews will be places in respect to top left corner--meaning, frames of subviews will not be updated in any way.
 // This view and its subviews will have userInteractionEnabled set to NO at all time.
-@property(nonatomic, readonly, strong) UIView *leadingAccessoryView API_AVAILABLE(tvos(13.0)) API_UNAVAILABLE(ios, watchos, xros);
+@property(nonatomic, readonly, strong) UIView *leadingAccessoryView API_AVAILABLE(tvos(13.0)) API_UNAVAILABLE(ios, watchos, visionos);
 
 // A small view (200pt by 68pt) in the trailing gutter next to tab bar to add accessories, such as logos, time, so on. If auto layout is used, it will be respected when placing subviews. If not, subviews will be places in respect to top left corner--meaning, frames of subviews will not be updated in any way.
 // This view and its subviews will have userInteractionEnabled set to NO at all time.
-@property(nonatomic, readonly, strong) UIView *trailingAccessoryView API_AVAILABLE(tvos(13.0)) API_UNAVAILABLE(ios, watchos, xros);
+@property(nonatomic, readonly, strong) UIView *trailingAccessoryView API_AVAILABLE(tvos(13.0)) API_UNAVAILABLE(ios, watchos, visionos);
 
 @end
 
 //___________________________________________________________________________________________________
 
-NS_SWIFT_UI_ACTOR
+API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @protocol UITabBarDelegate<NSObject>
 @optional
 
@@ -144,10 +144,10 @@ NS_SWIFT_UI_ACTOR
  it will be set to nil.
  */
 
-- (void)tabBar:(UITabBar *)tabBar willBeginCustomizingItems:(NSArray<UITabBarItem *> *)items API_UNAVAILABLE(tvos, xros);                     // called before customize sheet is shown. items is current item list
-- (void)tabBar:(UITabBar *)tabBar didBeginCustomizingItems:(NSArray<UITabBarItem *> *)items API_UNAVAILABLE(tvos, xros);                      // called after customize sheet is shown. items is current item list
-- (void)tabBar:(UITabBar *)tabBar willEndCustomizingItems:(NSArray<UITabBarItem *> *)items changed:(BOOL)changed API_UNAVAILABLE(tvos, xros); // called before customize sheet is hidden. items is new item list
-- (void)tabBar:(UITabBar *)tabBar didEndCustomizingItems:(NSArray<UITabBarItem *> *)items changed:(BOOL)changed API_UNAVAILABLE(tvos, xros);  // called after customize sheet is hidden. items is new item list
+- (void)tabBar:(UITabBar *)tabBar willBeginCustomizingItems:(NSArray<UITabBarItem *> *)items API_UNAVAILABLE(tvos, visionos);                     // called before customize sheet is shown. items is current item list
+- (void)tabBar:(UITabBar *)tabBar didBeginCustomizingItems:(NSArray<UITabBarItem *> *)items API_UNAVAILABLE(tvos, visionos);                      // called after customize sheet is shown. items is current item list
+- (void)tabBar:(UITabBar *)tabBar willEndCustomizingItems:(NSArray<UITabBarItem *> *)items changed:(BOOL)changed API_UNAVAILABLE(tvos, visionos); // called before customize sheet is hidden. items is new item list
+- (void)tabBar:(UITabBar *)tabBar didEndCustomizingItems:(NSArray<UITabBarItem *> *)items changed:(BOOL)changed API_UNAVAILABLE(tvos, visionos);  // called after customize sheet is hidden. items is new item list
 
 @end
 

@@ -124,7 +124,9 @@ nw_proxy_config_create_relay(nw_relay_hop_t first_hop,
  * @function nw_proxy_config_create_oblivious_http
  *
  * @abstract
- *		Creates a proxy configuration for an Oblivious HTTP relay and gateway.
+ *		Creates a proxy configuration for an Oblivious HTTP relay and gateway. Note that
+ *		Oblivious HTTP proxy configurations must also have specific match domains specified
+ *		using `nw_proxy_config_add_match_domain`.
  *
  * @param relay
  *		The Oblivious HTTP relay hop.
@@ -133,7 +135,8 @@ nw_proxy_config_create_relay(nw_relay_hop_t first_hop,
  *		The HTTP path to use for requests to the Oblivious HTTP relay that will forward requests to the gateway.
  *
  * @param gateway_key_config
- *		The key configuration bytes for the Oblivious HTTP gateway.
+ *		The key configuration for the Oblivious HTTP gateway, or a list of key configurations where each configuration
+ *		is prefixed with a two-byte length in network byte order.
  *
  * @param gateway_key_config_length
  *		The length of the buffer in `gateway_key_config`.
@@ -246,6 +249,106 @@ nw_proxy_config_set_failover_allowed(nw_proxy_config_t proxy_config,
 API_AVAILABLE(macos(14.0), ios(17.0), watchos(10.0), tvos(17.0))
 bool
 nw_proxy_config_get_failover_allowed(nw_proxy_config_t proxy_config);
+
+/*!
+ * @function nw_proxy_config_add_match_domain
+ *
+ * @abstract
+ *		Adds a domain to define which hosts should use the proxy.
+ *
+ * @param config
+ *		The proxy configuration object.
+ *
+ * @param match_domain
+ *		The domain suffix to match hostnames against, as a string.
+ */
+API_AVAILABLE(macos(14.0), ios(17.0), watchos(10.0), tvos(17.0))
+void
+nw_proxy_config_add_match_domain(nw_proxy_config_t config,
+								 const char *match_domain);
+
+/*!
+ * @function nw_proxy_config_clear_match_domains
+ *
+ * @abstract
+ *		Clears all match domains defined for the proxy.
+ *
+ * @param config
+ *		The proxy configuration object.
+ */
+API_AVAILABLE(macos(14.0), ios(17.0), watchos(10.0), tvos(17.0))
+void
+nw_proxy_config_clear_match_domains(nw_proxy_config_t config);
+
+/*!
+ * @function nw_proxy_config_add_excluded_domain
+ *
+ * @abstract
+ *		Adds a domain to define which hosts should not use the proxy.
+ *
+ * @param config
+ *		The proxy configuration object.
+ *
+ * @param excluded_domain
+ *		The domain suffix to match hostnames against, as a string.
+ */
+API_AVAILABLE(macos(14.0), ios(17.0), watchos(10.0), tvos(17.0))
+void
+nw_proxy_config_add_excluded_domain(nw_proxy_config_t config,
+									const char *excluded_domain);
+
+/*!
+ * @function nw_proxy_config_clear_excluded_domains
+ *
+ * @abstract
+ *		Clears all excluded domains defined for the proxy.
+ *
+ * @param config
+ *		The proxy configuration object.
+ */
+API_AVAILABLE(macos(14.0), ios(17.0), watchos(10.0), tvos(17.0))
+void
+nw_proxy_config_clear_excluded_domains(nw_proxy_config_t config);
+
+#ifdef __BLOCKS__
+
+typedef void (^nw_proxy_domain_enumerator_t)(const char *);
+
+/*!
+ * @function nw_proxy_config_enumerate_match_domains
+ *
+ * @abstract
+ *		Enumerate all match domains set on the proxy configuration.
+ *
+ * @param config
+ *		The proxy configuration object.
+ *
+ * @param enumerator
+ *		A block that will get invoked for every domain that was added to the proxy configuration.
+ */
+API_AVAILABLE(macos(14.0), ios(17.0), watchos(10.0), tvos(17.0))
+void
+nw_proxy_config_enumerate_match_domains(nw_proxy_config_t config,
+										NW_NOESCAPE nw_proxy_domain_enumerator_t enumerator);
+
+/*!
+ * @function nw_proxy_config_enumerate_excluded_domains
+ *
+ * @abstract
+ *		Enumerate all excluded domains set on the proxy configuration.
+ *
+ * @param config
+ *		The proxy configuration object.
+ *
+ * @param enumerator
+ *		A block that will get invoked for every domain that was added to the proxy configuration.
+ */
+API_AVAILABLE(macos(14.0), ios(17.0), watchos(10.0), tvos(17.0))
+void
+nw_proxy_config_enumerate_excluded_domains(nw_proxy_config_t config,
+										   NW_NOESCAPE nw_proxy_domain_enumerator_t enumerator);
+
+#endif // __BLOCKS__
 
 __END_DECLS
 

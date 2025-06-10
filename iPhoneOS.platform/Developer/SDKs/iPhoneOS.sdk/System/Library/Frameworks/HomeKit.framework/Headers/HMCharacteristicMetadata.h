@@ -8,15 +8,20 @@
 #import <Foundation/Foundation.h>
 #import <HomeKit/HMDefines.h>
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 /*!
  * @brief This class defines the metadata for a characteristic. Metadata provides
  *		  further information about a characteristic’s value, which can be used
  * 		  for presentation purposes.
  */
-HM_EXTERN API_AVAILABLE(ios(8.0), watchos(2.0), tvos(10.0), macCatalyst(14.0)) API_UNAVAILABLE(macos)
-    @interface HMCharacteristicMetadata : NSObject
+HM_EXTERN
+NS_SWIFT_SENDABLE
+API_AVAILABLE(ios(8.0), watchos(2.0), tvos(10.0), macCatalyst(14.0))
+API_UNAVAILABLE(macos)
+@interface HMCharacteristicMetadata : NSObject
+
+- (instancetype)init;
 
 /*!
  * @brief The minimum value for the characteristic if it has a format of "int" or "float".
@@ -194,4 +199,4 @@ HM_EXTERN NSString *const HMCharacteristicMetadataUnitsPartsPerMillion API_AVAIL
 HM_EXTERN NSString *const HMCharacteristicMetadataUnitsMicrogramsPerCubicMeter API_AVAILABLE(ios(10.0), watchos(3.0), tvos(10.0), macCatalyst(14.0)) API_UNAVAILABLE(macos);
 
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)

@@ -43,7 +43,7 @@ struct lconv {
     char    int_n_sign_posn;
 };
 
-struct lconv* localeconv();
+inline struct lconv* localeconv() { return nullptr; }
 
 #define	LC_ALL		0
 #define	LC_COLLATE	1
@@ -54,7 +54,8 @@ struct lconv* localeconv();
 #define	LC_MESSAGES	6
 
 inline char* setlocale(int, const char *) {
-    return "C";
+    static char __c_locale[] = "C";
+    return __c_locale;
 }
 
 #endif // _LIBCPP___SUPPORT_SEPOS_LOCALE_SHIMS_H

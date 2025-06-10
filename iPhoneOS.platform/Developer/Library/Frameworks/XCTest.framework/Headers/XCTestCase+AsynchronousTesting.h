@@ -263,6 +263,9 @@ XCT_TO_BE_DEPRECATED_WITH_SWIFT_REPLACEMENT("expectation(that:on:options:willSat
  * Creates an expectation that is fulfilled if the predicate returns true when evaluated with the given
  * object. The expectation periodically evaluates the predicate and also may use notifications or other
  * events to optimistically re-evaluate.
+ *
+ * When the resulting expectation is used from Swift and is awaited using @c fulfillment(of:) rather
+ * than @c wait(for:), XCTest evaluates @a predicate on the main actor.
  */
 - (XCTestExpectation *)expectationForPredicate:(NSPredicate *)predicate evaluatedWithObject:(nullable id)object handler:(nullable XCPredicateExpectationHandler)handler;
 

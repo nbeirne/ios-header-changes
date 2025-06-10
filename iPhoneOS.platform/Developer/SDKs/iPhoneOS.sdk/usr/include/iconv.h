@@ -37,10 +37,15 @@
 #include <sys/cdefs.h>
 #include <sys/types.h>
 
+#if defined(__APPLE__) && \
+    (!defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE))
 #include <wchar.h>
+#endif
 
+#ifndef __APPLE__
 #include <sys/cdefs.h>
 #include <sys/types.h>
+#endif
 
 #ifdef __cplusplus
 typedef	bool	__iconv_bool;
@@ -67,6 +72,9 @@ size_t	iconv(iconv_t, char ** __restrict,
 	      size_t * __restrict, char ** __restrict,
 	      size_t * __restrict);
 int	iconv_close(iconv_t);
+
+#if defined(__APPLE__) && \
+    (!defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE))
 /*
  * non-portable interfaces for iconv
  */
@@ -142,6 +150,7 @@ void		 iconvlist(int (*do_one) (unsigned int, const char * const *,
 		    void *), void *);
 const char	*iconv_canonicalize(const char *);
 int		 iconvctl(iconv_t, int, void *);
+#endif	/* __APPLE__ && (!_POSIX_C_SOURCE || _DARWIN_C_SOURCE) */
 __END_DECLS
 
 #endif /* !_ICONV_H_ */

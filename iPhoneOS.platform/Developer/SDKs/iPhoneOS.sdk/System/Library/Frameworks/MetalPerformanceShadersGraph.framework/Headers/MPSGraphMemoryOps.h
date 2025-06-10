@@ -13,13 +13,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// The class that defines the parameters for a variable.
 MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
 @interface MPSGraphVariableOp : MPSGraphOperation
 
-/// shape of the variable
+/// The shape of the variable.
 @property (readonly, nonnull, nonatomic) MPSShape *shape;
 
-/// dataType of the variable
+/// The data type of the variable.
 @property (readonly, nonatomic) MPSDataType dataType;
 
 @end
@@ -27,82 +28,81 @@ MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
 MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
 @interface MPSGraph(MemoryOps)
 
-/// Create a placeholder op and return the result tensor
+/// Creates a placeholder operation and returns the result tensor.
 ///
 /// - Parameters:
-///   - shape: shape of the output tensor, nil shape will result in an unranked tensor
-///   - dataType: dataType of the placeholder tensor
-///   - name: name for the placeholder operation
+///   - shape: The shape of the output tensor. A nil shape will result in an unranked tensor.
+///   - dataType: The dataType of the placeholder tensor.
+///   - name: The name for the placeholder operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) placeholderWithShape:(MPSShape * _Nullable) shape
                                 dataType:(MPSDataType) dataType
                                     name:(NSString * _Nullable) name
 MPS_SWIFT_NAME( placeholder(shape:dataType:name:) );
 
-/// Create a placeholder op and return the result tensor 
-/// dataType of the placeholder tensor set to MPSDataTypeFloat32
+/// Creates a placeholder operation and returns the result tensor with the dataType of the placeholder tensor set to 32 bit float.
 ///
 /// - Parameters:
-///   - shape: shape of the output tensor, nil shape will result in an unranked tensor
-///   - name: name for the operation
+///   - shape: The shape of the output tensor. A nil shape will result in an unranked tensor.
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) placeholderWithShape:(MPSShape * _Nullable) shape
                                     name:(NSString * _Nullable) name
 MPS_SWIFT_NAME( placeholder(shape:name:) );
 
 
-/// Create a constant op and return the result tensor
+/// Creates a constant op with a given shape and data, and returns the result tensor.
 ///
 /// - Parameters:
-///   - data: data for the tensor, number of bytes should be sizeof(dataType)numberOfElements
-///   - shape: shape of the output tensor, has to be statically shaped
-///   - dataType: dataType of theconstant tensor
+///   - data: The data for the tensor. The number of bytes should be sizeof(dataType)numberOfElements.
+///   - shape: The shape of the output tensor. This has to be statically shaped.
+///   - dataType: The dataType of theconstant tensor.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) constantWithData:(NSData *) data
                                shape:(MPSShape *) shape
                             dataType:(MPSDataType) dataType
 MPS_SWIFT_NAME( constant(_:shape:dataType:) );
 
-/// Create a constant op and return the result tensor
+/// Creates a constant operation and returns the result tensor.
 ///
 /// - Parameters:
-///   - scalar: scalar to fill the entire tensor values with
-///   - dataType: dataType of the constant tensor
+///   - scalar: The scalar value to fill the entire tensor values with.
+///   - dataType: The dataType of the constant tensor.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) constantWithScalar:(double) scalar
                               dataType:(MPSDataType) dataType
 MPS_SWIFT_NAME( constant(_:dataType:) );
 
-/// Create a constant op and return the result tensor
+/// Creates a constant op with a given shape and returns the result tensor.
 ///
 /// - Parameters:
-///   - scalar: scalar to fill the entire tensor values with
-///   - shape: shape of the output tensor.
-///   - dataType: dataType of the constant tensor
+///   - scalar: The scalar value to fill the entire tensor values with.
+///   - shape: The shape of the output tensor.
+///   - dataType: The dataType of the constant tensor.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) constantWithScalar:(double) scalar
                                  shape:(MPSShape *) shape
                               dataType:(MPSDataType) dataType
 MPS_SWIFT_NAME( constant(_:shape:dataType:) );
 
-/// Create a complex constant op with MPSDataTypeComplexFloat32 data type and return the result tensor.
+/// Creates a complex constant op with the MPSDataTypeComplexFloat32 data type and returns the result tensor.
 ///
 /// - Parameters:
-///   - realPart: the real part of the complex scalar to fill the entire tensor values with.
-///   - imaginaryPart: the imaginary part of the complex scalar to fill the entire tensor values with.
-///   - dataType: dataType of the constant tensor.
+///   - realPart: The real part of the complex scalar to fill the entire tensor values with.
+///   - imaginaryPart: The imaginary part of the complex scalar to fill the entire tensor values with.
+///   - dataType: The dataType of the constant tensor.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) constantWithRealPart:(double) realPart
                            imaginaryPart:(double) imaginaryPart
 MPS_AVAILABLE_STARTING(macos(14.0), ios(17.0), tvos(17.0))
 MPS_SWIFT_NAME( complexConstant(realPart:imaginaryPart:) );
 
-/// Create a complex constant op and return the result tensor.
+/// Creates a complex constant operation and returns the result tensor.
 ///
 /// - Parameters:
-///   - realPart: the real part of the complex scalar to fill the entire tensor values with.
-///   - imaginaryPart: the imaginary part of the complex scalar to fill the entire tensor values with.
-///   - dataType: dataType of the constant tensor.
+///   - realPart: The real part of the complex scalar to fill the entire tensor values with.
+///   - imaginaryPart: The imaginary part of the complex scalar to fill the entire tensor values with.
+///   - dataType: The dataType of the constant tensor.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) constantWithRealPart:(double) realPart
                            imaginaryPart:(double) imaginaryPart
@@ -110,13 +110,13 @@ MPS_SWIFT_NAME( complexConstant(realPart:imaginaryPart:) );
 MPS_AVAILABLE_STARTING(macos(14.0), ios(17.0), tvos(17.0))
 MPS_SWIFT_NAME( complexConstant(realPart:imaginaryPart:dataType:) );
 
-/// Create a complex constant op and return the result tensor.
+/// Creates a complex constant op with a given shape and returns the result tensor.
 ///
 /// - Parameters:
-///   - realPart: the real part of the complex scalar to fill the entire tensor values with.
-///   - imaginaryPart: the imaginary part of the complex scalar to fill the entire tensor values with.
-///   - shape: shape of the output tensor, has to be statically shaped.
-///   - dataType: dataType of the constant tensor.
+///   - realPart: The real part of the complex scalar to fill the entire tensor values with.
+///   - imaginaryPart: The imaginary part of the complex scalar to fill the entire tensor values with.
+///   - shape: The shape of the output tensor. This has to be statically shaped.
+///   - dataType: The dataType of the constant tensor.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) constantWithRealPart:(double) realPart
                            imaginaryPart:(double) imaginaryPart
@@ -125,35 +125,46 @@ MPS_SWIFT_NAME( complexConstant(realPart:imaginaryPart:dataType:) );
 MPS_AVAILABLE_STARTING(macos(14.0), ios(17.0), tvos(17.0))
 MPS_SWIFT_NAME( complexConstant(realPart:imaginaryPart:shape:dataType:) );
 
-/// Create a variable op and return the result tensor
+/// Creates a variable operation and returns the result tensor.
 ///
 /// - Parameters:
-///   - data: data for the tensor, number of bytes should be sizeof(dataType)numberOfElements
-///   - shape: shape of the output tensor, has to be statically shaped
-///   - dataType: dataType of theconstant tensor
-///   - name: name for the operation
+///   - data: The data for the tensor. The number of bytes should be sizeof(dataType)numberOfElements.
+///   - shape: The shape of the output tensor. This has to be statically shaped.
+///   - dataType: The dataType of the constant tensor.
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) variableWithData:(NSData *) data
                                shape:(MPSShape *) shape
                             dataType:(MPSDataType) dataType
                                 name:(NSString * _Nullable) name;
 
-/// Create a read op which reads at this point of execution of the graph and return the result tensor
+/// Creates a variable from an input tensor.
 ///
 /// - Parameters:
-///   - variable: variable resource tensor to read from
-///   - name: name for the operation
+///   - tensor: The tensor from which to form the variable.
+///   - name: The name for the operation.
+/// - Returns: A valid MPSGraphTensor object.
+    -(MPSGraphTensor *) variableFromTensorWithTensor:(MPSGraphTensor * _Nonnull) tensor
+                                                name:(NSString * _Nullable) name
+MPS_SWIFT_NAME( variableFromTensor(_:name:) )
+MPS_AVAILABLE_STARTING(macos(15.0), ios(18.0), macCatalyst(18.0), tvos(18.0));
+
+/// Creates a read op which reads at this point of execution of the graph and returns the result tensor.
+///
+/// - Parameters:
+///   - variable: The variable resource tensor to read from.
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) readVariable:(MPSGraphTensor *) variable
                             name:(NSString * _Nullable) name
 MPS_SWIFT_NAME( read(_:name:) );
 
-/// Create a read op which reads at this point of execution of the graph and return the result tensor
+/// Creates an assign operation which writes at this point of execution of the graph.
 ///
 /// - Parameters:
-///   - variable: variable resource tensor to read from
-///   - tensor: tensor to assign to variable
-///   - name: name for the operation
+///   - variable: The variable resource tensor to assign to.
+///   - tensor: The tensor to assign to the variable.
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphOperation *) assignVariable:(MPSGraphTensor *) variable
                     withValueOfTensor:(MPSGraphTensor *) tensor

@@ -152,7 +152,7 @@ API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0))
  * has been issued. 
  *
  * -finishTasksAndInvalidate and -invalidateAndCancel do not
- * have any effect on the shared session singleton.
+ * have any effect on the shared session instance.
  *
  * When invalidating a background session, it is not safe to create another background
  * session with the same identifier until URLSession:didBecomeInvalidWithError: has
@@ -716,8 +716,8 @@ typedef NS_ENUM(NSInteger, NSURLSessionMultipathServiceType)
  * created, a copy of the configuration object is made - you cannot
  * modify the configuration of a session after it has been created.
  *
- * The shared session uses the global singleton credential, cache
- * and cookie storage objects.
+ * The shared session uses the global credential, cache and cookie
+ * storage objects.
  *
  * An ephemeral session has no persistent disk storage for cookies,
  * cache or credentials.
@@ -1096,9 +1096,8 @@ API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0))
                                 didBecomeStreamTask:(NSURLSessionStreamTask *)streamTask
     API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0));
 
-/* Sent when data is available for the delegate to consume.  It is
- * assumed that the delegate will retain and not copy the data.  As
- * the data may be discontiguous, you should use 
+/* Sent when data is available for the delegate to consume.  As the
+ * data may be discontiguous, you should use
  * [NSData enumerateByteRangesUsingBlock:] to access it.
  */
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask

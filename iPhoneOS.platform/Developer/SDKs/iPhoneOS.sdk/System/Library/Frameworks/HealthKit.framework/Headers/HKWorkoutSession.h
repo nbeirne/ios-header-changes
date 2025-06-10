@@ -252,7 +252,7 @@ HK_EXTERN API_AVAILABLE(ios(17.0), watchos(2.0))
                 This method will fail if called for a session that is ended.
                 The completion handler will be executed on an arbitrary background queue.
  */
-- (void)startMirroringToCompanionDeviceWithCompletion:(void (^)(BOOL success, NSError * _Nullable error))completion API_AVAILABLE(watchos(10.0)) API_UNAVAILABLE(ios) API_UNAVAILABLE(macos, macCatalyst, tvos);
+- (void)startMirroringToCompanionDeviceWithCompletion:(void (^)(BOOL success, NSError * _Nullable error))completion API_AVAILABLE(watchos(10.0)) API_UNAVAILABLE(ios) API_UNAVAILABLE(macos, macCatalyst, tvos) NS_SWIFT_ASYNC_THROWS_ON_FALSE(1);
 
 /*!
  @method        stopMirroringToCompanionDeviceWithCompletion:
@@ -262,7 +262,7 @@ HK_EXTERN API_AVAILABLE(ios(17.0), watchos(2.0))
                 When a workout session is ended, mirroring is automatically stopped.
                 The completion handler will be executed on an arbitrary background queue.
  */
-- (void)stopMirroringToCompanionDeviceWithCompletion:(void (^)(BOOL success, NSError * _Nullable error))completion API_AVAILABLE(watchos(10.0)) API_UNAVAILABLE(ios) API_UNAVAILABLE(macos, macCatalyst, tvos);
+- (void)stopMirroringToCompanionDeviceWithCompletion:(void (^)(BOOL success, NSError * _Nullable error))completion API_AVAILABLE(watchos(10.0)) API_UNAVAILABLE(ios) API_UNAVAILABLE(macos, macCatalyst, tvos) NS_SWIFT_ASYNC_THROWS_ON_FALSE(1);
 
 /*!
  @method        sendDataToRemoteWorkoutSession:completion:
@@ -276,7 +276,7 @@ HK_EXTERN API_AVAILABLE(ios(17.0), watchos(2.0))
                 The completion handler will be executed on an arbitrary background queue.
  */
 - (void)sendDataToRemoteWorkoutSession:(NSData *)data
-                            completion:(void (^)(BOOL success, NSError * _Nullable error))completion API_AVAILABLE(ios(17.0), watchos(10.0));
+                            completion:(void (^)(BOOL success, NSError * _Nullable error))completion API_AVAILABLE(ios(17.0), watchos(10.0)) API_UNAVAILABLE(macos, macCatalyst, tvos) NS_SWIFT_NAME(sendToRemoteWorkoutSession(data:completion:)) NS_SWIFT_ASYNC_THROWS_ON_FALSE(1);
 
 @end
 
@@ -342,10 +342,10 @@ didEndActivityWithConfiguration:(HKWorkoutConfiguration *)workoutConfiguration
                   date:(NSDate *)date API_AVAILABLE(ios(17.0), watchos(9.0));
 
 /*!
- @method        workoutSession:didReceiveDataFromRemoteDevice:
+ @method        workoutSession:didReceiveDataFromRemoteWorkoutSession:
  @abstract      This method is called when the session receives data from its remote counterpart.
  */
-- (void)workoutSession:(HKWorkoutSession *)workoutSession didReceiveDataFromRemoteDevice:(NSData *)data API_AVAILABLE(ios(17.0), watchos(10.0));
+- (void)workoutSession:(HKWorkoutSession *)workoutSession didReceiveDataFromRemoteWorkoutSession:(NSArray<NSData *> *)data API_AVAILABLE(ios(17.0), watchos(10.0));
 
 /*!
  @method        workoutSession:didDisconnectFromRemoteDeviceWithError:

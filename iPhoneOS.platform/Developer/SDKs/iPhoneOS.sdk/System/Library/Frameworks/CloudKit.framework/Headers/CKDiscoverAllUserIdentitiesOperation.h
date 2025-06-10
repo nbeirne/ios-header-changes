@@ -31,7 +31,7 @@ API_UNAVAILABLE(tvos)
  *  This block may share mutable state with other blocks assigned to this operation, but any such mutable state
  *  should not be concurrently used outside of blocks assigned to this operation.
  */
-@property (nonatomic, copy, nullable) void (^userIdentityDiscoveredBlock)(CKUserIdentity *identity);
+@property (nullable, copy, nonatomic) void (^userIdentityDiscoveredBlock)(CKUserIdentity *identity);
 
 /*! @abstract This block is called when the operation completes.
  *
@@ -40,8 +40,8 @@ API_UNAVAILABLE(tvos)
  *  This block may share mutable state with other blocks assigned to this operation, but any such mutable state
  *  should not be concurrently used outside of blocks assigned to this operation.
  */
-@property (nonatomic, copy, nullable) void (^discoverAllUserIdentitiesCompletionBlock)(NSError * _Nullable operationError)
-CK_SWIFT_DEPRECATED("Use discoverAllUserIdentitiesResultBlock instead", macos(10.12, 12.0), ios(10.0, 15.0), watchos(3.0, 8.0), xros(1.0, 1.0));
+@property (nullable, copy, nonatomic) void (^discoverAllUserIdentitiesCompletionBlock)(NSError * _Nullable operationError)
+CK_SWIFT_DEPRECATED("Use discoverAllUserIdentitiesResultBlock instead", macos(10.12, 12.0), ios(10.0, 15.0), watchos(3.0, 8.0));
 
 @end
 

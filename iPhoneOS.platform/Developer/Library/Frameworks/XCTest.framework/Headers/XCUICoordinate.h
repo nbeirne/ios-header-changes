@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class XCUIElement;
 
 /*! A coordinate represents a location on screen, relative to some element. Coordinates are dynamic, just like the elements to which they refer, and may compute different screen locations at different times, or be invalid if the referenced element does not exist. */
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUICoordinate : NSObject <NSCopying>
 
 + (instancetype)new XCT_UNAVAILABLE("Coordinates are never instantiated directly. Instead, they are created by elements or by other coordinates.");
@@ -82,6 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #if TARGET_OS_OSX || TARGET_OS_MACCATALYST || TARGET_OS_IOS
 
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUICoordinate (XCUICoordinateMouseEvents)
 
 - (void)hover API_AVAILABLE(ios(15.0), macCatalyst(13.0));

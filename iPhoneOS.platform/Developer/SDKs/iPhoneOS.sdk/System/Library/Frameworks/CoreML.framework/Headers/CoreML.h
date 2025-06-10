@@ -17,11 +17,13 @@
 #import <CoreML/MLArrayBatchProvider.h>
 #import <CoreML/MLMultiArray.h>
 #import <CoreML/MLSequence.h>
+#import <CoreML/MLState.h>
 
 #import <CoreML/MLMultiArrayConstraint.h>
 #import <CoreML/MLImageConstraint.h>
 #import <CoreML/MLDictionaryConstraint.h>
 #import <CoreML/MLSequenceConstraint.h>
+#import <CoreML/MLStateConstraint.h>
 
 #import <CoreML/MLImageSize.h>
 #import <CoreML/MLImageSizeConstraint.h>
@@ -38,6 +40,7 @@
 
 #import <CoreML/MLModel+MLModelCompilation.h>
 #import <CoreML/MLModel+MLComputeDevice.h>
+#import <CoreML/MLModel+MLState.h>
 
 #import <CoreML/MLModelError.h>
 
@@ -67,3 +70,21 @@
 #import <CoreML/MLCPUComputeDevice.h>
 #import <CoreML/MLGPUComputeDevice.h>
 #import <CoreML/MLNeuralEngineComputeDevice.h>
+
+#import <CoreML/MLModelStructure.h>
+#import <CoreML/MLModelStructureNeuralNetwork.h>
+#import <CoreML/MLModelStructureNeuralNetworkLayer.h>
+#import <CoreML/MLModelStructurePipeline.h>
+#import <CoreML/MLModelStructureProgram.h>
+#import <CoreML/MLModelStructureProgramArgument.h>
+#import <CoreML/MLModelStructureProgramBinding.h>
+#import <CoreML/MLModelStructureProgramBlock.h>
+#import <CoreML/MLModelStructureProgramFunction.h>
+#import <CoreML/MLModelStructureProgramNamedValueType.h>
+#import <CoreML/MLModelStructureProgramOperation.h>
+#import <CoreML/MLModelStructureProgramValue.h>
+#import <CoreML/MLModelStructureProgramValueType.h>
+
+#import <CoreML/MLComputePlan.h>
+#import <CoreML/MLComputePlanCost.h>
+#import <CoreML/MLComputePlanDeviceUsage.h>

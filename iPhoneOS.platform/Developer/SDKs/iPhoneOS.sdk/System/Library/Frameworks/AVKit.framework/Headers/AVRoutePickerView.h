@@ -59,7 +59,7 @@ typedef NS_ENUM(NSInteger, AVRoutePickerViewButtonState) {
 	AVRoutePickerViewButtonStateNormalHighlighted = 1,
 	AVRoutePickerViewButtonStateActive = 2,
 	AVRoutePickerViewButtonStateActiveHighlighted = 3
-} NS_SWIFT_NAME(AVRoutePickerView.ButtonState) API_AVAILABLE(macos(10.15)) API_UNAVAILABLE(ios, tvos, watchos, xros);
+} NS_SWIFT_NAME(AVRoutePickerView.ButtonState) API_AVAILABLE(macos(10.15)) API_UNAVAILABLE(ios, tvos, watchos, visionos);
 
 
 
@@ -73,7 +73,7 @@ typedef NS_ENUM(NSInteger, AVRoutePickerViewButtonState) {
  @discussion	Media from an AVPlayer, or from an AVSampleBufferAudioRenderer on iOS and tvOS, can be routed to compatible AirPlay destinations.
  */
 #if !TARGET_IS_AVKITMACHELPER
-API_AVAILABLE(macos(10.15), ios(11.0), tvos(11.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.15), ios(11.0), tvos(11.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
 #endif // !TARGET_IS_AVKITMACHELPER
 @interface AVRoutePickerView : AVKitPlatformViewClass
 
@@ -88,7 +88,7 @@ API_AVAILABLE(macos(10.15), ios(11.0), tvos(11.0)) API_UNAVAILABLE(xros) API_UNA
  @property 		player
  @abstract		The player for which to perform routing operations.
  */
-@property (nonatomic, strong, nullable) AVPlayer *player API_AVAILABLE(macos(10.15)) API_UNAVAILABLE(ios, tvos, watchos, xros);
+@property (nonatomic, strong, nullable) AVPlayer *player API_AVAILABLE(macos(10.15)) API_UNAVAILABLE(ios, tvos, watchos, visionos);
 
 /**
  @method		routePickerButtonColorForState:
@@ -96,7 +96,7 @@ API_AVAILABLE(macos(10.15), ios(11.0), tvos(11.0)) API_UNAVAILABLE(xros) API_UNA
 				The state for which to get the picker button color.
  @abstract		Returns the color of the picker button for a given state.
  */
-- (AVKitPlatformColorClass *)routePickerButtonColorForState:(AVRoutePickerViewButtonState)state API_AVAILABLE(macos(10.15)) API_UNAVAILABLE(ios, tvos, watchos, xros);
+- (AVKitPlatformColorClass *)routePickerButtonColorForState:(AVRoutePickerViewButtonState)state API_AVAILABLE(macos(10.15)) API_UNAVAILABLE(ios, tvos, watchos, visionos);
 
 /**
  @method		setRoutePickerButtonColor:forState:
@@ -107,19 +107,19 @@ API_AVAILABLE(macos(10.15), ios(11.0), tvos(11.0)) API_UNAVAILABLE(xros) API_UNA
  @abstract		Sets the color of the picker button for a given state.
  @discussion	If set to nil, the default color will be used for the given state.
  */
-- (void)setRoutePickerButtonColor:(nullable AVKitPlatformColorClass *)color forState:(AVRoutePickerViewButtonState)state API_AVAILABLE(macos(10.15)) API_UNAVAILABLE(ios, tvos, watchos, xros);
+- (void)setRoutePickerButtonColor:(nullable AVKitPlatformColorClass *)color forState:(AVRoutePickerViewButtonState)state API_AVAILABLE(macos(10.15)) API_UNAVAILABLE(ios, tvos, watchos, visionos);
 
 /**
  @property		routePickerButtonBordered
  @abstract		Whether or not the picker button has a border. Default is YES.
  */
-@property (nonatomic, getter = isRoutePickerButtonBordered) BOOL routePickerButtonBordered API_AVAILABLE(macos(10.15)) API_UNAVAILABLE(ios, tvos, watchos, xros);
+@property (nonatomic, getter = isRoutePickerButtonBordered) BOOL routePickerButtonBordered API_AVAILABLE(macos(10.15)) API_UNAVAILABLE(ios, tvos, watchos, visionos);
 
 /**
  @property		activeTintColor
  @abstract		The view's tint color when AirPlay is active.
  */
-@property (nonatomic, strong, null_resettable) AVKitPlatformColorClass *activeTintColor API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(macos, watchos);
+@property (nonatomic, strong, null_resettable) AVKitPlatformColorClass *activeTintColor API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(macos, watchos);
 
 /**
  @constant		AVRoutePickerViewButtonStyleSystem
@@ -133,25 +133,25 @@ typedef NS_ENUM(NSInteger, AVRoutePickerViewButtonStyle) {
 	AVRoutePickerViewButtonStyleSystem,
 	AVRoutePickerViewButtonStylePlain,
 	AVRoutePickerViewButtonStyleCustom
-} API_AVAILABLE(tvos(11.0)) API_UNAVAILABLE(macos, ios, watchos, xros);
+} API_AVAILABLE(tvos(11.0)) API_UNAVAILABLE(macos, ios, watchos, visionos);
 
 /**
  @property		routePickerButtonStyle
  @abstract		The route picker button style.
  */
-@property (nonatomic) AVRoutePickerViewButtonStyle routePickerButtonStyle API_AVAILABLE(tvos(11.0)) API_UNAVAILABLE(macos, ios, watchos, xros);
+@property (nonatomic) AVRoutePickerViewButtonStyle routePickerButtonStyle API_AVAILABLE(tvos(11.0)) API_UNAVAILABLE(macos, ios, watchos, visionos);
 
 /**
  @property		prioritizesVideoDevices
  @abstract		Whether or not the route picker should sort video capable output devices to the top of the list. Setting this to YES will cause the route picker view to show a videocentric icon.
  */
-@property (nonatomic) BOOL prioritizesVideoDevices API_AVAILABLE(ios(13.0), tvos(13.0)) API_UNAVAILABLE(macos, xros) API_UNAVAILABLE(watchos);
+@property (nonatomic) BOOL prioritizesVideoDevices API_AVAILABLE(ios(13.0), tvos(13.0)) API_UNAVAILABLE(macos, visionos) API_UNAVAILABLE(watchos);
 
 /**
  @property		customRoutingController
  @abstract		A controller which enables connection to 3rd party devices (non-airplay) via the picker.
  */
-@property (nonatomic, retain, nullable) AVCustomRoutingController *customRoutingController API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, tvos, watchos, xros);
+@property (nonatomic, retain, nullable) AVCustomRoutingController *customRoutingController API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(macos, tvos, watchos, visionos);
 
 @end
 
@@ -160,7 +160,7 @@ typedef NS_ENUM(NSInteger, AVRoutePickerViewButtonStyle) {
  @protocol		AVRoutePickerViewDelegate
  @abstract		Defines an interface for delegates of AVRoutePickerView.
  */
-API_AVAILABLE(macos(10.15), ios(11.0), tvos(11.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.15), ios(11.0), tvos(11.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
 @protocol AVRoutePickerViewDelegate <NSObject>
 @optional
 

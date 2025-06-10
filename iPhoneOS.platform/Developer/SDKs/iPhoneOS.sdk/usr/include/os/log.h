@@ -219,6 +219,7 @@ os_log_create(const char *subsystem, const char *category);
 #define os_log(log, format, ...) \
         os_log_with_type(log, OS_LOG_TYPE_DEFAULT, format, ##__VA_ARGS__)
 
+
 /*!
  * @function os_log_info
  *
@@ -367,6 +368,14 @@ os_log_create(const char *subsystem, const char *category);
  * i.e., %s and %@, that can be written to the persistence store.  As such,
  * all content exceeding the limit will be truncated before written to disk.
  * Live streams will continue to show the full content.
+ *
+ * When composing user provided strings libtrace will cap the size in total of
+ * format specifiers. See libtrace/libtrace/format_internal.h for details.
+ * Libtrace will also truncate the total composed message to a length of
+ * EXIT_REASON_PAYLOAD_MAX_LEN bytes, which is the kernel's maximum limit
+ * for fault message length. See xnu/osfmk/kern/kcdata.h for details.
+ * Libtrace will truncate all fault payloads regardless of oversize messages
+ * being enabled before calling into the kernel.
  *
  * Note, in a debugger, it is possible to set a breakpoint on _os_log_fault_impl
  * to break on any fault being emitted.

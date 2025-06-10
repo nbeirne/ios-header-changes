@@ -69,7 +69,7 @@ XCT_EXPORT void XCTExpectFailureWithOptionsInBlock(NSString *_Nullable failureRe
  * Describes the rules for matching issues to expected failures and other behaviors related to
  * expected failure handling.
  */
-@interface XCTExpectedFailureOptions : NSObject <NSCopying>
+@interface XCTExpectedFailureOptions : NSObject <NSCopying, NSSecureCoding>
 
 /*!
  * @property issueMatcher

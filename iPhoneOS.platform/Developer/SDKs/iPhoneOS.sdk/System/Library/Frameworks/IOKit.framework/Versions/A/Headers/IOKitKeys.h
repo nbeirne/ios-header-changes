@@ -263,6 +263,7 @@
 #define kIONVRAMSyncNowPropertyKey      "IONVRAM-SYNCNOW-PROPERTY"
 #define kIONVRAMActivateCSRConfigPropertyKey    "IONVRAM-ARMCSR-PROPERTY"
 #define kIODTNVRAMPanicInfoKey          "aapl,panic-info"
+#define kIONVRAMDeletePropertyKeyWRet   "IONVRAM-DELETEWRET-PROPERTY"
 
 // keys for complex boot information
 #define kIOBootDeviceKey          "IOBootDevice"                // dict | array of dicts
@@ -288,8 +289,17 @@
 #define kIOSystemStateSleepDescriptionReasonKey                 "com.apple.iokit.pm.sleepreason"
 #define kIOSystemStateSleepDescriptionHibernateStateKey      "com.apple.iokit.pm.hibernatestate"
 
+// Must match IOHibernatePrivate.h!
+enum {
+	kIOSystemStateSleepDescriptionHibernateStateInactive            = 0,
+	kIOSystemStateSleepDescriptionHibernateStateHibernating         = 1,/* writing image */
+	kIOSystemStateSleepDescriptionHibernateStateWakingFromHibernate = 2 /* booted and restored image */
+};
+
 #define kIOSystemStateWakeDescriptionKey                               "com.apple.iokit.pm.wakedescription"
 #define kIOSystemStateWakeDescriptionWakeReasonKey      "com.apple.iokit.pm.wakereason"
+#define kIOSystemStateWakeDescriptionContinuousTimeOffsetKey      "com.apple.iokit.pm.wakedescription.continuous-time-offset"
+
 
 #define kIOSystemStateHaltDescriptionKey                               "com.apple.iokit.pm.haltdescription"
 #define kIOSystemStateHaltDescriptionHaltStateKey      "com.apple.iokit.pm.haltstate"

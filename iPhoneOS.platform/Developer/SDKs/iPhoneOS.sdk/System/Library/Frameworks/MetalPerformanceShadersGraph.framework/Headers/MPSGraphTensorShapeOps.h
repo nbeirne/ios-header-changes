@@ -19,12 +19,12 @@ MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
 
 /// Creates a reshape operation and returns the result tensor.
 ///
-/// Reshapes the input tensor to the target shape.
-/// The shape must be compatible with the input tensor shape, specifically the volume of the input tensor has to match the volume define by the shape.
+/// This operation reshapes the input tensor to the target shape.
+/// The shape must be compatible with the input tensor shape, specifically the volume of the input tensor has to match the volume defined by the shape.
 /// The shape is allowed to contain dynamic dimensions (-1) when the result type can be inferred unambiguously.
 ///
 /// - Parameters:
-///   - tensor: Tensor to be reshaped.
+///   - tensor: The tensor to be reshaped.
 ///   - shape: The result tensor shape.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
@@ -35,13 +35,13 @@ MPS_SWIFT_NAME( reshape(_:shape:name:) );
 
 /// Creates a reshape operation and returns the result tensor.
 ///
-/// Reshapes the input tensor to the target shape.
-/// The shape tensor must be compatible with the input tensor shape, specifically the volume of the input tensor has to match the volume define by the shape tensor.
+/// This operation reshapes the input tensor to the target shape.
+/// The shape tensor must be compatible with the input tensor shape, specifically the volume of the input tensor has to match the volume defined by the shape tensor.
 /// The shape tensor is allowed to contain dynamic dimensions (-1) when the result type can be inferred unambiguously.
 ///
 /// - Parameters:
-///   - tensor: Tensor to be reshaped.
-///   - shapeTensor: 1D Int32 or Int64 tensor. The result tensor shape.
+///   - tensor: The tensor to be reshaped.
+///   - shapeTensor: A 1D tensor of type `MPSDataTypeInt32` or `MPSDataTypeInt64`, that contains the target shape values.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) reshapeTensor:(MPSGraphTensor *) tensor
@@ -52,10 +52,10 @@ MPS_SWIFT_NAME( reshape(_:shapeTensor:name:) );
 
 /// Creates a transpose operation and returns the result tensor.
 ///
-/// Transposes the dimensions ``dimensionIndex`` and ``dimensionIndex2`` of the input tensor.
+/// Transposes the dimensions `dimensionIndex` and `dimensionIndex2` of the input tensor.
 ///
 /// - Parameters:
-///   - tensor: Tensor to be transposed.
+///   - tensor: The tensor to be transposed.
 ///   - dimensionIndex: The first dimension index to be transposed.
 ///   - dimensionIndex2: The second dimension index to be transposed.
 ///   - name: The name for the operation.
@@ -67,11 +67,11 @@ MPS_SWIFT_NAME( reshape(_:shapeTensor:name:) );
 
 /// Creates a permutation operation and returns the result tensor.
 ///
-/// Permutes the dimensions of the input tensor according to values in ``permutation``.
+/// Permutes the dimensions of the input tensor according to values in `permutation`.
 ///
 /// - Parameters:
-///   - tensor: Tensor to be transposed.
-///   - permutation: Array of numbers defining the permutation, must be of length `rank(tensor)`.
+///   - tensor: The tensor to be permuted.
+///   - permutation: An array of numbers defining the permutation, must be of length `rank(tensor)` and define a valid permutation.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) transposeTensor:(MPSGraphTensor *) tensor
@@ -83,30 +83,29 @@ MPS_SWIFT_NAME( transpose(_:permutation:name:) );
 /// Creates a slice operation and returns the result tensor.
 ///
 /// - Parameters:
-///   - tensor: Tensor to be sliced.
-///   - dimensionIndex: Which dimension to slice.
-///   - start: Starting index of the slice, can be negative to count from the end of the tensor dimension.
-///   - length: Length of the slice.
+///   - tensor: The tensor to be sliced.
+///   - dimensionIndex: The dimension to slice.
+///   - start: The starting index of the slice, can be negative to count from the end of the tensor dimension.
+///   - length: The length of the slice.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
-
 -(MPSGraphTensor *) sliceTensor:(MPSGraphTensor *) tensor
                       dimension:(NSUInteger) dimensionIndex
                           start:(NSInteger) start
                          length:(NSInteger) length
                            name:(NSString * _Nullable) name;
 
-/// Creates a strided slice operation and returns the result tensor.
+/// Creates a strided-slice operation and returns the result tensor.
 ///
-/// Slices a tensor starting from ``starts``, stopping short before ``ends`` stepping
-/// ``strides`` paces between each value. Semantics based on
+/// Slices a tensor starting from `starts`, stopping short before `ends` stepping
+/// `strides` paces between each value. Semantics based on
 /// [TensorFlow Strided Slice Op](https://www.tensorflow.org/api_docs/python/tf/strided_slice).
 ///
 /// - Parameters:
-///   - tensor: Tensor to be sliced.
-///   - starts: Array of numbers specifying starting point per dimension.
-///   - ends: Array of numbers specifying ending point per dimension.
-///   - strides: Array of numbers specifying strides per dimension.
+///   - tensor: The tensor to be sliced.
+///   - starts: An array of numbers that specify the starting points for each dimension.
+///   - ends: An array of numbers that specify the ending points for each dimension.
+///   - strides: An array of numbers that specify the strides for each dimension.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) sliceTensor:(MPSGraphTensor *) tensor
@@ -115,20 +114,20 @@ MPS_SWIFT_NAME( transpose(_:permutation:name:) );
                         strides:(NSArray<NSNumber *> *) strides
                            name:(NSString * _Nullable) name;
 
-/// Creates strided slice operation and returns the result tensor.
+/// Creates a strided-slice operation and returns the result tensor.
 ///
-/// Slices a tensor starting from ``starts``, stopping short before ``ends`` stepping
-/// ``strides`` paces between each value. Semantics based on
+/// Slices a tensor starting from `starts`, stopping short before `ends` stepping
+/// `strides` paces between each value. Semantics based on
 /// [TensorFlow Strided Slice Op](https://www.tensorflow.org/api_docs/python/tf/strided_slice).
 ///
 /// - Parameters:
-///   - tensor: Tensor to be sliced.
-///   - starts: Array of numbers specifying starting point per dimension.
-///   - ends: Array of numbers specifying ending point per dimension.
-///   - strides: Array of numbers specifying strides per dimension.
-///   - startMask: Bitmask indicating dimensions whose ``starts`` values should be ignored.
-///   - endMask: Bitmask indicating dimensions whose ``ends`` values should be ignored.
-///   - squeezeMask: Bitmask indicating dimensions that should be squeezed out from the result.
+///   - tensor: The Tensor to be sliced.
+///   - starts: An array of numbers that specify the starting points for each dimension.
+///   - ends: An array of numbers that specify the ending points for each dimension.
+///   - strides: An array of numbers that specify the strides for each dimension.
+///   - startMask: A bitmask that indicates dimensions whose `starts` values the operation should ignore.
+///   - endMask: A bitmask that indicates dimensions whose `ends` values the operation should ignore.
+///   - squeezeMask: A bitmask that indicates dimensions the operation will squeeze out from the result.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) sliceTensor:(MPSGraphTensor *) tensor
@@ -140,14 +139,14 @@ MPS_SWIFT_NAME( transpose(_:permutation:name:) );
                     squeezeMask:(uint32_t) squeezeMask
                            name:(NSString * _Nullable) name;
 
-/// Creates strided slice gradient operation and returns the result tensor.
+/// Creates a strided-slice gradient operation and returns the result tensor.
 ///
 /// - Parameters:
-///   - inputGradientTensor: Input gradient.
-///   - fwdInShapeTensor: Shape of the forward pass input = shape of gradient output.
-///   - starts: Array of numbers specifying starting point per dimension.
-///   - ends: Array of numbers specifying ending point per dimension.
-///   - strides: Array of numbers specifying strides per dimension.
+///   - inputGradientTensor: The input gradient.
+///   - fwdInShapeTensor: The shape of the forward pass input, that is the shape of the gradient output.
+///   - starts: An array of numbers that specify the starting points for each dimension.
+///   - ends: An array of numbers that specify the ending points for each dimension.
+///   - strides: An array of numbers that specify the strides for each dimension.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(MPSGraphTensor *) sliceGradientTensor:(MPSGraphTensor *) inputGradientTensor
@@ -157,18 +156,18 @@ MPS_SWIFT_NAME( transpose(_:permutation:name:) );
                                 strides:(NSArray<NSNumber *> *) strides
                                    name:(NSString * _Nullable) name;
 
-/// Creates strided slice gradient operation and returns the result tensor.
+/// Creates a strided-slice gradient operation and returns the result tensor.
 ///
 /// - Parameters:
-///   - inputGradientTensor: Input gradient.
-///   - fwdInShapeTensor: Shape of the forward pass input = shape of gradient output.
-///   - starts: Array of numbers specifying starting point per dimension.
-///   - ends: Array of numbers specifying ending point per dimension.
-///   - strides: Array of numbers specifying strides per dimension.
-///   - startMask: Bitmask indicating dimensions whose `starts` values should be ignored.
-///   - endMask: Bitmask indicating dimensions whose `ends` values should be ignored.
-///   - squeezeMask: Bitmask indicating dimensions that should be squeezed out from the result.
-///   - name: The name for the operation
+///   - inputGradientTensor: The input gradient.
+///   - fwdInShapeTensor: The shape of the forward pass input, that is the shape of the gradient output.
+///   - starts: An array of numbers that specify the starting points for each dimension.
+///   - ends: An array of numbers that specify the ending points for each dimension.
+///   - strides: An array of numbers that specify the strides for each dimension.
+///   - startMask: A bitmask that indicates dimensions whose `starts` values the operation should ignore.
+///   - endMask: A bitmask that indicates dimensions whose `ends` values the operation should ignore.
+///   - squeezeMask: A bitmask that indicates dimensions the operation will squeeze out from the result.
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(MPSGraphTensor *) sliceGradientTensor:(MPSGraphTensor *) inputGradientTensor
                        fwdInShapeTensor:(MPSGraphTensor *) fwdInShapeTensor
@@ -180,15 +179,101 @@ MPS_SWIFT_NAME( transpose(_:permutation:name:) );
                             squeezeMask:(uint32_t) squeezeMask
                                    name:(NSString * _Nullable) name;
 
-/// Creates concatenation operation and returns the result tensor.
-///
-/// Concatenates two input tensors along the specified dimension. Tensors must be broadcast
-/// compatible along all other dimensions, and have the same type.
+/// Creates a strided-slice update operation and returns the result tensor.
 ///
 /// - Parameters:
-///   - tensor: First tensor to concatenate.
-///   - tensor2: Second tensor to concatenate.
-///   - dimensionIndex: The dimension to concatenate across, must be in range `- rank <= dimension < rank`.
+///   - dataTensor: The large tensor that will receive the update.
+///   - updateTensor: The tensor with the new values that will replace values in the dataTensor.
+///   - startsTensor: A Tensor that contains an array of numbers that specify the starting points for each dimension.
+///   - endsTensor: A Tensor that contains an array of numbers that specify the ending points for each dimension.
+///   - stridesTensor: A Tensor that contains an array of numbers that specify the strides for each dimension.
+///   - startMask: A bitmask that indicates dimensions whose `starts` values the operation should ignore.
+///   - endMask: A bitmask that indicates dimensions whose `ends` values the operation should ignore.
+///   - squeezeMask: A bitmask that indicates dimensions the operation will squeeze out from the result.
+///   - name: The name for the operation.
+/// - Returns: A valid MPSGraphTensor object
+-(MPSGraphTensor *) sliceUpdateDataTensor:(MPSGraphTensor *) dataTensor
+                             updateTensor:(MPSGraphTensor *) updateTensor
+                             startsTensor:(MPSGraphTensor *) startsTensor
+                               endsTensor:(MPSGraphTensor *) endsTensor
+                            stridesTensor:(MPSGraphTensor *) stridesTensor
+                                startMask:(uint32_t) startMask
+                                  endMask:(uint32_t) endMask
+                              squeezeMask:(uint32_t) squeezeMask
+                                     name:(NSString * _Nullable) name
+MPS_AVAILABLE_STARTING(macos(14.4), ios(17.4), tvos(17.4));
+
+/// Creates a strided-slice update operation and returns the result tensor.
+///
+/// - Parameters:
+///   - dataTensor: The large tensor that will receive the update.
+///   - updateTensor: The tensor with the new values that will replace values in the dataTensor.
+///   - starts: An array of numbers that specify the starting points for each dimension.
+///   - ends: An array of numbers that specify the ending points for each dimension.
+///   - strides: An array of numbers that specify the strides for each dimension.
+///   - startMask: A bitmask that indicates dimensions whose `starts` values the operation should ignore.
+///   - endMask: A bitmask that indicates dimensions whose `ends` values the operation should ignore.
+///   - squeezeMask: A bitmask that indicates dimensions the operation will squeeze out from the result.
+///   - name: The name for the operation.
+/// - Returns: A valid MPSGraphTensor object
+-(MPSGraphTensor *) sliceUpdateDataTensor:(MPSGraphTensor *) dataTensor
+                             updateTensor:(MPSGraphTensor *) updateTensor
+                                   starts:(NSArray<NSNumber *> *) starts
+                                     ends:(NSArray<NSNumber *> *) ends
+                                  strides:(NSArray<NSNumber *> *) strides
+                                startMask:(uint32_t) startMask
+                                  endMask:(uint32_t) endMask
+                              squeezeMask:(uint32_t) squeezeMask
+                                     name:(NSString * _Nullable) name
+MPS_AVAILABLE_STARTING(macos(14.4), ios(17.4), tvos(17.4));
+
+/// Creates a strided-slice update operation with zero masks and returns the result tensor.
+///
+/// - Parameters:
+///   - dataTensor: The large tensor that will receive the update.
+///   - updateTensor: The tensor with the new values that will replace values in the dataTensor.
+///   - startsTensor: A Tensor that contains an array of numbers that specify the starting points for each dimension.
+///   - endsTensor: A Tensor that contains an array of numbers that specify the ending points for each dimension.
+///   - stridesTensor: A Tensor that contains an array of numbers that specify the strides for each dimension.
+///   - name: The name for the operation.
+/// - Returns: A valid MPSGraphTensor object
+-(MPSGraphTensor *) sliceUpdateDataTensor:(MPSGraphTensor *) dataTensor
+                             updateTensor:(MPSGraphTensor *) updateTensor
+                             startsTensor:(MPSGraphTensor *) startsTensor
+                               endsTensor:(MPSGraphTensor *) endsTensor
+                            stridesTensor:(MPSGraphTensor *) stridesTensor
+                                     name:(NSString * _Nullable) name
+MPS_AVAILABLE_STARTING(macos(15.0), ios(18.0), macCatalyst(18.0), tvos(18.0), xros(2.0));
+
+/// Creates a strided-slice update operation with zero masks and returns the result tensor.
+///
+/// - Parameters:
+///   - dataTensor: The large tensor that will receive the update.
+///   - updateTensor: The tensor with the new values that will replace values in the dataTensor.
+///   - starts: An array of numbers that specify the starting points for each dimension.
+///   - ends: An array of numbers that specify the ending points for each dimension.
+///   - strides: An array of numbers that specify the strides for each dimension.
+///   - name: The name for the operation.
+/// - Returns: A valid MPSGraphTensor object
+-(MPSGraphTensor *) sliceUpdateDataTensor:(MPSGraphTensor *) dataTensor
+                             updateTensor:(MPSGraphTensor *) updateTensor
+                                   starts:(NSArray<NSNumber *> *) starts
+                                     ends:(NSArray<NSNumber *> *) ends
+                                  strides:(NSArray<NSNumber *> *) strides
+                                     name:(NSString * _Nullable) name
+MPS_AVAILABLE_STARTING(macos(15.0), ios(18.0), macCatalyst(18.0), tvos(18.0), xros(2.0));
+
+
+
+/// Creates a concatenation operation and returns the result tensor.
+///
+/// Concatenates two input tensors along the specified dimension. Tensors must be broadcast
+/// compatible along all other dimensions, and have the same datatype.
+///
+/// - Parameters:
+///   - tensor: The first tensor to concatenate.
+///   - tensor2: The second tensor to concatenate.
+///   - dimensionIndex: The dimension to concatenate across, must be in range: `-rank <= dimension < rank`.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) concatTensor:(MPSGraphTensor *) tensor
@@ -196,21 +281,21 @@ MPS_SWIFT_NAME( transpose(_:permutation:name:) );
                        dimension:(NSInteger) dimensionIndex
                             name:(NSString * _Nullable) name;
 
-/// Creates concatenation operation and returns the result tensor.
+/// Creates a concatenation operation and returns the result tensor.
 ///
 /// Concatenates all input tensors along the specified dimension. All inputs must be broadcast
-/// compatible along all other dimensions, and have the same type.
+/// compatible along all other dimensions, and have the same datatype.
 ///
 /// - Parameters:
-///   - tensors: Tensors to concatenate.
-///   - dimensionIndex: The dimension to concatenate across, must be in range `- rank <= dimension < rank`.
+///   - tensors: The tensors to concatenate.
+///   - dimensionIndex: The dimension to concatenate across, must be in range: `-rank <= dimension < rank`.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(MPSGraphTensor *) concatTensors:(NSArray<MPSGraphTensor *> *) tensors
                         dimension:(NSInteger) dimensionIndex
                              name:(NSString * _Nullable) name;
 
-/// Creates concatenation operation and returns the result tensor.
+/// Creates a concatenation operation and returns the result tensor.
 ///
 /// Concatenates all input tensors along specified dimension. All inputs must be broadcast
 /// compatible along all other dimensions, and have the same type. 
@@ -224,9 +309,9 @@ MPS_SWIFT_NAME( transpose(_:permutation:name:) );
 /// ```
 ///
 /// - Parameters:
-///   - tensors: Tensors to concatenate.
-///   - dimensionIndex: The dimension to concatenate across, must be in range `- rank <= dimension < rank`.
-///   - interleave: Interleave input tensors,
+///   - tensors: The tensors to concatenate.
+///   - dimensionIndex: The dimension to concatenate across, must be in range: `-rank <= dimension < rank`.
+///   - interleave: A boolean value that specifies whether the operation interleaves input tensors.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) concatTensors:(NSArray<MPSGraphTensor *> *) tensors
@@ -234,25 +319,25 @@ MPS_SWIFT_NAME( transpose(_:permutation:name:) );
                        interleave:(BOOL) interleave
                              name:(NSString * _Nullable) name;
 
-/// Creates tile operation and returns the result tensor.
+/// Creates a tile operation and returns the result tensor.
 ///
 /// Creates a tensor which contains multiple copies of the input tensor along each dimension of the tensor.
 ///
 /// - Parameters:
 ///   - tensor: The input tensor
-///   - multiplier: How many copies per dimension MPSGraph produces.
+///   - multiplier: An array of numbers that specifies how many copies per dimension MPSGraph produces.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) tileTensor:(MPSGraphTensor *) tensor
                 withMultiplier:(MPSShape *) multiplier
                           name:(NSString * _Nullable) name;
 
-/// Creates tile gradient operation and returns the result tensor.
+/// Creates a tile gradient operation and returns the result tensor.
 ///
 /// - Parameters:
 ///   - incomingGradientTensor: The input gradient tensor.
 ///   - sourceTensor: The input tensor of the forward pass.
-///   - multiplier: How many copies per dimension were done in the forward pass (see ``tileTensor:withMultiplier:name:``).
+///   - multiplier: An array of numbers that specifies how many copies per dimension MPSGraph produced in the forward pass.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) tileGradientWithIncomingGradientTensor:(MPSGraphTensor *) incomingGradientTensor
@@ -260,14 +345,14 @@ MPS_SWIFT_NAME( transpose(_:permutation:name:) );
                                             withMultiplier:(MPSShape *) multiplier
                                                       name:(NSString * _Nullable) name;
 
-/// Creates padding operation and returns the result tensor.
+/// Creates a padding operation and returns the result tensor.
 ///
 /// - Parameters:
-///   - tensor: The input tensor
-///   - paddingMode: What kind of padding to apply.
-///   - leftPadding: How much padding to apply to the input tensor before each dimension - must be of size `rank(tensor)`.
-///   - rightPadding: How much padding to apply to the input tensor after each dimension - must be of size `rank(tensor)`.
-///   - constantValue: Constant value to be used when ``paddingMode`` = ``MPSGraphPaddingModeConstant``.
+///   - tensor: The input tensor.
+///   - paddingMode: The parameter that defines the padding mode.
+///   - leftPadding: The parameter that defines how much padding the operation applies to the input tensor before each dimension - must be of size `rank(tensor)`.
+///   - rightPadding: The parameter that defines how much padding the operation applies to the input tensor after each dimension - must be of size `rank(tensor)`.
+///   - constantValue: The constant value the operation uses when `paddingMode = MPSGraphPaddingModeConstant`.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *)padTensor:(MPSGraphTensor *) tensor
@@ -277,14 +362,14 @@ MPS_SWIFT_NAME( transpose(_:permutation:name:) );
                constantValue:(double)constantValue
                         name:(NSString * _Nullable) name;
 
-/// Creates padding gradient operation and returns the result tensor.
+/// Creates a padding gradient operation and returns the result tensor.
 ///
 /// - Parameters:
 ///   - incomingGradientTensor: The input gradient tensor.
 ///   - sourceTensor: The input tensor of the forward pass.
-///   - paddingMode: What kind of padding to apply.
-///   - leftPadding: How much padding to apply to the input tensor before each dimension - must be of size `rank(tensor)`.
-///   - rightPadding: How much padding to apply to the input tensor after each dimension - must be of size `rank(tensor)`.
+///   - paddingMode: The parameter that defines the padding mode.
+///   - leftPadding: The parameter that defines how much padding the operation applies to the input tensor before each dimension - must be of size `rank(tensor)`.
+///   - rightPadding: The parameter that defines how much padding the operation applies to the input tensor after each dimension - must be of size `rank(tensor)`.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *)padGradientWithIncomingGradientTensor:(MPSGraphTensor *) incomingGradientTensor
@@ -294,24 +379,23 @@ MPS_SWIFT_NAME( transpose(_:permutation:name:) );
                                             rightPadding:(MPSShape *) rightPadding
                                                     name:(NSString * _Nullable) name;
 
-/// Creates space-to-depth2d operation and returns the result tensor.
+/// Creates a space-to-depth2D operation and returns the result tensor.
 ///
-/// This operation outputs a copy of the ``input`` tensor, where values from the
-/// ``widthAxis`` and ``heightAxis`` dimensions are moved in spatial blocks of size
-/// ``blockSize`` to the ``depthAxis`` dimension. Use ``usePixelShuffleOrder``
+/// This operation outputs a copy of the `input` tensor, where values from the
+/// `widthAxis` and `heightAxis` dimensions are moved in spatial blocks of size
+/// `blockSize` to the `depthAxis` dimension. Use the `usePixelShuffleOrder` parameter
 /// to control how the data within spatial blocks is ordered in the
-/// ``depthAxis`` dimension: with ``usePixelShuffleOrder=YES`` MPSGraph stores the
-/// values of the spatial blocks  contiguosly within the ``depthAxis`` dimension, whereas
-/// otherwise they are stored interleaved with existing values in the ``depthAxis`` dimension.
-/// This operation is the inverse of ``depthToSpace2DTensor:widthAxis:heightAxis:depthAxis:blockSize:usePixelShuffleOrder:name:``.
-///
+/// `depthAxis` dimension: with `usePixelShuffleOrder=YES` MPSGraph stores the
+/// values of the spatial blocks  contiguosly within the `depthAxis` dimension, whereas
+/// otherwise they are stored interleaved with existing values in the `depthAxis` dimension.
+/// This operation is the inverse of `MPSGraph/depthToSpace2DTensor:widthAxis:heightAxis:depthAxis:blockSize:usePixelShuffleOrder:name:`.
 /// - Parameters:
 ///   - tensor: The input tensor.
-///   - widthAxis: Axis that defines the fastest running dimension within the block.
-///   - heightAxis: Axis that defines the 2nd fastest running dimension within the block.
-///   - depthAxis: Axis that defines the destination dimension, where to copy the blocks.
-///   - blockSize: Size of the square spatial sub-block.
-///   - usePixelShuffleOrder: Controls layout of the sub-blocks within the depth dimension.
+///   - widthAxis: The axis that defines the fastest running dimension within the block.
+///   - heightAxis: The axis that defines the 2nd fastest running dimension within the block.
+///   - depthAxis: The axis that defines the destination dimension, where to copy the blocks.
+///   - blockSize: The size of the square spatial sub-block.
+///   - usePixelShuffleOrder: A parameter that controls the layout of the sub-blocks within the depth dimension.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(MPSGraphTensor *)spaceToDepth2DTensor:(MPSGraphTensor *) tensor
@@ -323,24 +407,24 @@ MPS_SWIFT_NAME( transpose(_:permutation:name:) );
                                    name:(NSString * _Nullable) name
 MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
 
-/// Creates space-to-depth2d operation and returns the result tensor.
+/// Creates a space-to-depth2D operation and returns the result tensor.
 ///
-/// This operation outputs a copy of the ``input`` tensor, where values from the
-/// ``widthAxisTensor`` and ``heightAxisTensor`` dimensions are moved in spatial blocks of size
-/// ``blockSize`` to the ``depthAxisTensor`` dimension. Use ``usePixelShuffleOrder``
+/// This operation outputs a copy of the `input` tensor, where values from the
+/// `widthAxisTensor` and `heightAxisTensor` dimensions are moved in spatial blocks of size
+/// `blockSize` to the `depthAxisTensor` dimension. Use the `usePixelShuffleOrder` parameter
 /// to control how the data within spatial blocks is ordered in the
-/// ``depthAxisTensor`` dimension: with ``usePixelShuffleOrder=YES`` MPSGraph stores the
-/// values of the spatial blocks  contiguosly within the ``depthAxisTensor`` dimension, whereas
-/// otherwise they are stored interleaved with existing values in the ``depthAxisTensor`` dimension.
-/// This operation is the inverse of ``depthToSpace2DTensor:widthAxisTensor:heightAxisTensor:depthAxisTensor:blockSize:usePixelShuffleOrder:name:``.
+/// `depthAxisTensor` dimension: with `usePixelShuffleOrder=YES` MPSGraph stores the
+/// values of the spatial blocks  contiguosly within the `depthAxisTensor` dimension, whereas
+/// otherwise they are stored interleaved with existing values in the `depthAxisTensor` dimension.
+/// This operation is the inverse of ``MPSGraph/depthToSpace2DTensor:widthAxisTensor:heightAxisTensor:depthAxisTensor:blockSize:usePixelShuffleOrder:name:``.
 ///
 /// - Parameters:
 ///   - tensor: The input tensor.
-///   - widthAxisTensor: Axis that defines the fastest running dimension within the block.
-///   - heightAxisTensor: Axis that defines the 2nd fastest running dimension within the block.
-///   - depthAxisTensor: Axis that defines the destination dimension, where to copy the blocks.
-///   - blockSize: Size of the square spatial sub-block.
-///   - usePixelShuffleOrder: Controls layout of the sub-blocks within the depth dimension.
+///   - widthAxisTensor: A scalar tensor that contains the axis that defines the fastest running dimension within the block.
+///   - heightAxisTensor: A scalar tensor that contains the axis that defines the 2nd fastest running dimension within the block.
+///   - depthAxisTensor: A scalar tensor that contains the axis that defines the destination dimension, where to copy the blocks.
+///   - blockSize: The size of the square spatial sub-block.
+///   - usePixelShuffleOrder: A parameter that controls the layout of the sub-blocks within the depth dimension.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(MPSGraphTensor *)spaceToDepth2DTensor:(MPSGraphTensor *) tensor
@@ -352,24 +436,25 @@ MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
                                    name:(NSString * _Nullable) name
 MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
 
-/// Creates depth-to-space2d operation and returns the result tensor.
+/// Creates a depth-to-space2D operation and returns the result tensor.
 ///
 /// This operation outputs a copy of the input tensor, where values from the 
-/// ``depthAxis`` dimension are moved in spatial blocks of size ``blockSize`` to the
-/// ``heightAxis`` and ``widthAxis`` dimensions.  Use ``usePixelShuffleOrder``
+/// `depthAxis` dimension are moved in spatial blocks of size `blockSize` to the
+/// `heightAxis` and `widthAxis` dimensions.  Use the `usePixelShuffleOrder` parameter
 /// to control how the data within spatial blocks is ordered in the
-/// ``depthAxis`` dimension: with ``usePixelShuffleOrder = YES`` MPSGraph stores the values
-/// of the spatial block contiguosly within the ``depthAxis`` dimension, whereas
-/// without it they are stored interleaved with existing values in the ``depthAxisTensor`` dimension.
-/// This operation is the inverse of ``spaceToDepth2DTensor:widthAxis:heightAxis:depthAxis:blockSize:usePixelShuffleOrder:name:``.
+/// `depthAxis` dimension: with `usePixelShuffleOrder = YES` MPSGraph stores the values
+/// of the spatial block contiguosly within the `depthAxis` dimension, whereas
+/// without it they are stored interleaved with existing values in the `depthAxisTensor` dimension.
+/// This operation is the inverse of
+/// ``MPSGraph/spaceToDepth2DTensor:widthAxis:heightAxis:depthAxis:blockSize:usePixelShuffleOrder:name:``.
 ///
 /// - Parameters:
 ///   - tensor: The input tensor.
-///   - widthAxis: Axis that defines the fastest running dimension within the block.
-///   - heightAxis: Axis that defines the 2nd fastest running dimension within the block.
-///   - depthAxis: Axis that defines the source dimension, from which to copy the blocks.
-///   - blockSize: Size of the square spatial sub-block.
-///   - usePixelShuffleOrder: Controls layout of the sub-blocks within the depth dimension.
+///   - widthAxis: The axis that defines the fastest running dimension within the block.
+///   - heightAxis: The axis that defines the 2nd fastest running dimension within the block.
+///   - depthAxis: The axis that defines the destination dimension, where to copy the blocks.
+///   - blockSize: The size of the square spatial sub-block.
+///   - usePixelShuffleOrder: A parameter that controls the layout of the sub-blocks within the depth dimension.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *)depthToSpace2DTensor:(MPSGraphTensor *) tensor
@@ -381,24 +466,24 @@ MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
                                    name:(NSString * _Nullable) name
 MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
 
-/// Creates depth-to-space2d operation and returns the result tensor.
+/// Creates a depth-to-space2D operation and returns the result tensor.
 ///
 /// This operation outputs a copy of the input tensor, where values from the
-/// ``depthAxisTensor`` dimension are moved in spatial blocks of size ``blockSize`` to the
-/// ``heightAxisTensor`` and ``widthAxisTensor`` dimensions.  Use ``usePixelShuffleOrder``
+/// `depthAxisTensor` dimension are moved in spatial blocks of size `blockSize` to the
+/// `heightAxisTensor` and `widthAxisTensor` dimensions.  Use the `usePixelShuffleOrder` parameter
 /// to control how the data within spatial blocks is ordered in the
-/// ``depthAxisTensor`` dimension: with ``usePixelShuffleOrder = YES`` MPSGraph stores the values
-/// of the spatial block contiguosly within the ``depthAxisTensor`` dimension, whereas
-/// without it they are stored interleaved with existing values in the ``depthAxisTensor`` dimension.
-/// This operation is the inverse of ``spaceToDepth2DTensor:widthAxisTensor:heightAxisTensor:depthAxisTensor:blockSize:usePixelShuffleOrder:name:``.
+/// `depthAxisTensor` dimension: with `usePixelShuffleOrder = YES` MPSGraph stores the values
+/// of the spatial block contiguosly within the `depthAxisTensor` dimension, whereas
+/// without it they are stored interleaved with existing values in the `depthAxisTensor` dimension.
+/// This operation is the inverse of ``MPSGraph/spaceToDepth2DTensor:widthAxisTensor:heightAxisTensor:depthAxisTensor:blockSize:usePixelShuffleOrder:name:``.
 ///
 /// - Parameters:
 ///   - tensor: The input tensor.
-///   - widthAxisTensor: Axis that defines the fastest running dimension within the block.
-///   - heightAxisTensor: Axis that defines the 2nd fastest running dimension within the block.
-///   - depthAxisTensor: Axis that defines the source dimension, from which to copy the blocks.
-///   - blockSize: Size of the square spatial sub-block.
-///   - usePixelShuffleOrder: Controls layout of the sub-blocks within the depth dimension.
+///   - widthAxisTensor: A scalar tensor that contains the axis that defines the fastest running dimension within the block.
+///   - heightAxisTensor: A scalar tensor that contains the axis that defines the 2nd fastest running dimension within the block.
+///   - depthAxisTensor: A scalar tensor that contains the axis that defines the destination dimension, where to copy the blocks.
+///   - blockSize: The size of the square spatial sub-block.
+///   - usePixelShuffleOrder: A parameter that controls the layout of the sub-blocks within the depth dimension.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *)depthToSpace2DTensor:(MPSGraphTensor *) tensor
@@ -412,23 +497,25 @@ MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
 
 /// Creates a space-to-batch operation and returns the result tensor.
 ///
-/// This operation outputs a copy of the ``input`` tensor, where values from the
-/// ``spatialAxes`` (for ``usePixelShuffleOrder=YES`` 1,2 or 3 axes supported, otherwise
-/// limited only by ``MPSNDArray`` rank limitations) dimensions are moved in spatial blocks with
-/// rectangular size defined by ``blockDimensions`` to the ``batchAxis`` dimension.
-/// Use ``usePixelShuffleOrder``  to control how the data within spatial blocks is ordered
-/// in the ``batchAxis`` dimension: with ``usePixelShuffleOrder=YES`` MPSGraph stores
-/// the values of the spatial blocks contiguosly within the ``batchAxis`` dimension, whereas
-/// otherwise they are stored interleaved with existing values in the ``batchAxis`` dimension.
-/// Note: This operation is the inverse of ``batchToSpaceTensor:spatialAxes:batchAxis:blockDimensions:usePixelShuffleOrder:name:``.
-/// Note: This operation is a generalization of ``spaceToDepth2DTensor:widthAxis:heightAxis:depthAxis:blockSize:usePixelShuffleOrder:name:``.
+/// This operation outputs a copy of the `input` tensor, where values from the
+/// `spatialAxes` (for `usePixelShuffleOrder=YES` 1,2 or 3 axes supported, otherwise
+/// limited only by `MPSNDArray` rank limitations) dimensions are moved in spatial blocks with
+/// rectangular size defined by `blockDimensions` to the `batchAxis` dimension.
+/// Use the `usePixelShuffleOrder` parameter  to control how the data within spatial blocks is ordered
+/// in the `batchAxis` dimension: with `usePixelShuffleOrder=YES` MPSGraph stores
+/// the values of the spatial blocks contiguosly within the `batchAxis` dimension, whereas
+/// otherwise they are stored interleaved with existing values in the `batchAxis` dimension.
+/// Note: This operation is the inverse of
+///     ``MPSGraph/batchToSpaceTensor:spatialAxes:batchAxis:blockDimensions:usePixelShuffleOrder:name:``.
+/// Note: This operation is a generalization of
+///     ``MPSGraph/spaceToDepth2DTensor:widthAxis:heightAxis:depthAxis:blockSize:usePixelShuffleOrder:name:``.
 ///
 /// - Parameters:
 ///   - tensor: The input tensor.
-///   - spatialAxes: Axes that define the dimensions containing the spatial blocks.
-///   - batchAxis: Axis that defines the destination dimension, where to copy the blocks.
-///   - blockDimensions: Defines the size of the rectangular spatial sub-block.
-///   - usePixelShuffleOrder: Controls layout of the sub-blocks within the batch dimension.
+///   - spatialAxes: The axes that define the dimensions containing the spatial blocks.
+///   - batchAxis: The axis that defines the destination dimension, where to copy the blocks.
+///   - blockDimensions: An array of numbers that defines the size of the rectangular spatial sub-block.
+///   - usePixelShuffleOrder: A parameter that controls layout of the sub-blocks within the batch dimension.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *)spaceToBatchTensor:(MPSGraphTensor *) tensor
@@ -442,23 +529,25 @@ MPS_SWIFT_NAME( spaceToBatch(_:spatialAxes:batchAxis:blockDimensions:usePixelShu
 
 /// Creates a space-to-batch operation and returns the result tensor.
 ///
-/// This operation outputs a copy of the ``input`` tensor, where values from the
-/// ``spatialAxesTensor`` (for ``usePixelShuffleOrder=YES`` 1,2 or 3 axes supported, otherwise
-/// limited only by ``MPSNDArray`` rank limitations) dimensions are moved in spatial blocks with
-/// rectangular size defined by ``blockDimensionsTensor`` to the ``batchAxisTensor`` dimension.
-/// Use ``usePixelShuffleOrder``  to control how the data within spatial blocks is ordered
-/// in the ``batchAxisTensor`` dimension: with ``usePixelShuffleOrder=YES`` MPSGraph stores
-/// the values of the spatial blocks contiguosly within the ``batchAxisTensor`` dimension, whereas
-/// otherwise they are stored interleaved with existing values in the ``batchAxisTensor`` dimension.
-/// Note: This operation is the inverse of ``batchToSpaceTensor:spatialAxesTensor:batchAxisTensor:blockDimensionsTensor:usePixelShuffleOrder:name:``.
-/// Note: This operation is a generalization of ``spaceToDepth2DTensor:widthAxisTensor:heightAxisTensor:depthAxisTensor:blockSize:usePixelShuffleOrder:name:``.
+/// This operation outputs a copy of the `input` tensor, where values from the
+/// `spatialAxesTensor` (for `usePixelShuffleOrder=YES` 1,2 or 3 axes supported, otherwise
+/// limited only by `MPSNDArray` rank limitations) dimensions are moved in spatial blocks with
+/// rectangular size defined by `blockDimensionsTensor` to the `batchAxisTensor` dimension.
+/// Use the `usePixelShuffleOrder` parameter  to control how the data within spatial blocks is ordered
+/// in the `batchAxisTensor` dimension: with `usePixelShuffleOrder=YES` MPSGraph stores
+/// the values of the spatial blocks contiguosly within the `batchAxisTensor` dimension, whereas
+/// otherwise they are stored interleaved with existing values in the `batchAxisTensor` dimension.
+/// Note: This operation is the inverse of
+///     ``MPSGraph/batchToSpaceTensor:spatialAxesTensor:batchAxisTensor:blockDimensionsTensor:usePixelShuffleOrder:name:``.
+/// Note: This operation is a generalization of
+///     ``MPSGraph/spaceToDepth2DTensor:widthAxisTensor:heightAxisTensor:depthAxisTensor:blockSize:usePixelShuffleOrder:name:``.
 ///
 /// - Parameters:
 ///   - tensor: The input tensor.
-///   - spatialAxesTensor: Axes that define the dimensions containing the spatial blocks.
-///   - batchAxisTensor: Axis that defines the destination dimension, where to copy the blocks.
-///   - blockDimensionsTensor: Defines the size of the rectangular spatial sub-block.
-///   - usePixelShuffleOrder: Controls layout of the sub-blocks within the batch dimension.
+///   - spatialAxesTensor: A tensor that contains the axes that define the dimensions containing the spatial blocks.
+///   - batchAxisTensor: A tensor that contains the axis that defines the destination dimension, where to copy the blocks.
+///   - blockDimensionsTensor: A tensor that defines the size of the rectangular spatial sub-block.
+///   - usePixelShuffleOrder: A parameter that controls layout of the sub-blocks within the batch dimension.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *)spaceToBatchTensor:(MPSGraphTensor *) tensor
@@ -473,22 +562,24 @@ MPS_SWIFT_NAME( spaceToBatch(_:spatialAxesTensor:batchAxisTensor:blockDimensions
 /// Creates a batch-to-space operation and returns the result tensor.
 ///
 /// This operation outputs a copy of the input tensor, where values from the 
-/// ``batchAxis`` dimension are moved in spatial blocks of size ``blockDimensions`` to the
-/// ``spatialAxes`` dimensions (for ``usePixelShuffleOrder=YES`` 1,2 or 3 axes supported,
-/// otherwise limited only by ``MPSNDArray`` rank limitations).  Use ``usePixelShuffleOrder``
+/// `batchAxis` dimension are moved in spatial blocks of size `blockDimensions` to the
+/// `spatialAxes` dimensions (for `usePixelShuffleOrder=YES` 1,2 or 3 axes supported,
+/// otherwise limited only by `MPSNDArray` rank limitations).  Use the `usePixelShuffleOrder` parameter
 /// to control how the data within spatial blocks is ordered in the
-/// ``batchAxis`` dimension: with ``usePixelShuffleOrder = YES`` MPSGraph stores
-/// the values of the spatial block contiguosly within the ``batchAxis`` dimension whereas
-/// without it they are stored interleaved with existing values in the ``batchAxis`` dimension.
-/// Note: This operation is the inverse of ``spaceToBatchTensor:spatialAxes:batchAxis:blockDimensions:usePixelShuffleOrder:name:``.
-/// Note: This operation is a generalization of ``depthToSpace2DTensor:widthAxis:heightAxis:depthAxis:blockSize:usePixelShuffleOrder:name:``.
+/// `batchAxis` dimension: with `usePixelShuffleOrder = YES` MPSGraph stores
+/// the values of the spatial block contiguosly within the `batchAxis` dimension whereas
+/// without it they are stored interleaved with existing values in the `batchAxis` dimension.
+/// Note: This operation is the inverse of
+///     ``MPSGraph/spaceToBatchTensor:spatialAxes:batchAxis:blockDimensions:usePixelShuffleOrder:name:``.
+/// Note: This operation is a generalization of
+///     ``MPSGraph/depthToSpace2DTensor:widthAxis:heightAxis:depthAxis:blockSize:usePixelShuffleOrder:name:``.
 ///
 /// - Parameters:
 ///   - tensor: The input tensor.
-///   - spatialAxes: Axes that define the dimensions containing the spatial blocks.
-///   - batchAxis: Axis that defines the source dimension, from which to copy the blocks.
-///   - blockDimensions: Defines the size of the rectangular spatial sub-block.
-///   - usePixelShuffleOrder: Controls layout of the sub-blocks within the batch dimension.
+///   - spatialAxes: The axes that define the dimensions containing the spatial blocks.
+///   - batchAxis: The axis that defines the destination dimension, where to copy the blocks.
+///   - blockDimensions: An array of numbers that defines the size of the rectangular spatial sub-block.
+///   - usePixelShuffleOrder: A parameter that controls layout of the sub-blocks within the batch dimension.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *)batchToSpaceTensor:(MPSGraphTensor *) tensor
@@ -503,22 +594,24 @@ MPS_SWIFT_NAME( batchToSpace(_:spatialAxes:batchAxis:blockDimensions:usePixelShu
 /// Creates a batch-to-space operation and returns the result tensor.
 ///
 /// This operation outputs a copy of the input tensor, where values from the
-/// ``batchAxisTensor`` dimension are moved in spatial blocks of size ``blockDimensionsTensor`` to the
-/// ``spatialAxesTensor`` dimensions (for ``usePixelShuffleOrder=YES`` 1,2 or 3 axes supported,
-/// otherwise limited only by ``MPSNDArray`` rank limitations).  Use ``usePixelShuffleOrder``
+/// `batchAxisTensor` dimension are moved in spatial blocks of size `blockDimensionsTensor` to the
+/// `spatialAxesTensor` dimensions (for `usePixelShuffleOrder=YES` 1,2 or 3 axes supported,
+/// otherwise limited only by `MPSNDArray` rank limitations).  Use the `usePixelShuffleOrder` parameter
 /// to control how the data within spatial blocks is ordered in the
-/// ``batchAxisTensor`` dimension: with ``usePixelShuffleOrder = YES`` MPSGraph stores
-/// the values of the spatial block contiguosly within the ``batchAxisTensor`` dimension whereas
-/// without it they are stored interleaved with existing values in the ``batchAxisTensor`` dimension.
-/// Note: This operation is the inverse of ``spaceToBatchTensor:spatialAxesTensor:batchAxisTensor:blockDimensionsTensor:usePixelShuffleOrder:name:``.
-/// Note: This operation is a generalization of ``depthToSpace2DTensor:widthAxisTensor:heightAxisTensor:depthAxisTensor:blockSize:usePixelShuffleOrder:name:``.
+/// `batchAxisTensor` dimension: with `usePixelShuffleOrder = YES` MPSGraph stores
+/// the values of the spatial block contiguosly within the `batchAxisTensor` dimension whereas
+/// without it they are stored interleaved with existing values in the `batchAxisTensor` dimension.
+/// Note: This operation is the inverse of
+/// ``MPSGraph/spaceToBatchTensor:spatialAxesTensor:batchAxisTensor:blockDimensionsTensor:usePixelShuffleOrder:name:``.
+/// Note: This operation is a generalization of
+/// ``MPSGraph/depthToSpace2DTensor:widthAxisTensor:heightAxisTensor:depthAxisTensor:blockSize:usePixelShuffleOrder:name:``.
 ///
 /// - Parameters:
 ///   - tensor: The input tensor.
-///   - spatialAxesTensor: Axes that define the dimensions containing the spatial blocks.
-///   - batchAxisTensor: Axis that defines the source dimension, from which to copy the blocks.
-///   - blockDimensionsTensor: Defines the size of the rectangular spatial sub-block.
-///   - usePixelShuffleOrder: Controls layout of the sub-blocks within the batch dimension.
+///   - spatialAxesTensor: A tensor that contains the axes that define the dimensions containing the spatial blocks.
+///   - batchAxisTensor: A tensor that contains the axis that defines the destination dimension, where to copy the blocks.
+///   - blockDimensionsTensor: A tensor that defines the size of the rectangular spatial sub-block.
+///   - usePixelShuffleOrder: A parameter that controls layout of the sub-blocks within the batch dimension.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 
@@ -531,14 +624,14 @@ MPS_SWIFT_NAME( batchToSpace(_:spatialAxes:batchAxis:blockDimensions:usePixelShu
 MPS_AVAILABLE_STARTING(macos(13.0), ios(16.1), tvos(16.1))
 MPS_SWIFT_NAME( batchToSpace(_:spatialAxesTensor:batchAxisTensor:blockDimensionsTensor:usePixelShuffleOrder:name:));
 
-/// Creates a reverse operation and return the result tensor.
+/// Creates a reverse operation and returns the result tensor.
 ///
 /// Reverses a tensor on given axes.
 /// Semantics based on [TensorFlow reverse op](https://www.tensorflow.org/api_docs/python/tf/reverse).
 ///
 /// - Parameters:
-///   - tensor: Tensor to be reversed.
-///   - axesTensor: Tensor that specifies axes to be reversed (Axes must be unique and within normal axis range).
+///   - tensor: The tensor to be reversed.
+///   - axesTensor: A tensor that specifies axes to be reversed (Axes must be unique and within normal axis range).
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) reverseTensor:(MPSGraphTensor *) tensor
@@ -546,29 +639,28 @@ MPS_SWIFT_NAME( batchToSpace(_:spatialAxesTensor:batchAxisTensor:blockDimensions
                              name:(NSString * _Nullable) name
 MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
 
-/// Creates a reverse operation and return the result tensor.
+/// Creates a reverse operation and returns the result tensor.
 ///
 /// Reverses a tensor on given axes.
 /// Semantics based on [TensorFlow reverse op](https://www.tensorflow.org/api_docs/python/tf/reverse).
 ///
 /// - Parameters:
-///   - tensor: Tensor to be reversed.
-///   - axes: Axes to be reversed (Axes must be unique and within normal axis range).
+///   - tensor: The tensor to be reversed.
+///   - axes: A tensor that specifies axes to be reversed (Axes must be unique and within normal axis range).
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
-
 -(MPSGraphTensor *) reverseTensor:(MPSGraphTensor *) tensor
                              axes:(NSArray<NSNumber *> *) axes
                              name:(NSString * _Nullable) name
 MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
 
-/// Creates a reverse operation and return the result tensor.
+/// Creates a reverse operation and returns the result tensor.
 ///
 /// Reverses a tensor on all axes.
 /// Semantics based on [TensorFlow reverse op](https://www.tensorflow.org/api_docs/python/tf/reverse).
 ///
 /// - Parameters:
-///   - tensor: Tensor to be reversed.
+///   - tensor: The tensor to be reversed.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 
@@ -577,14 +669,14 @@ MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
 MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
 
 
-/// Creates a flatten2d operation and returns the result tensor.
+/// Creates a flatten2D operation and returns the result tensor.
 ///
-/// Flattens dimensions before ``axis`` to ``result[0]`` and dimensions starting
-/// from ``axis`` to ``result[1]`` and returns a rank-2 tensor as result.
+/// Flattens dimensions before `axis` to `result[0]` and dimensions starting
+/// from `axis` to `result[1]` and returns a rank-2 tensor as result.
 ///
 /// - Parameters:
-///   - tensor: Tensor to be flattened.
-///   - axis: Axis around which to flatten.
+///   - tensor: The tensor to be flattened.
+///   - axis: The axis around which to flatten.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) flatten2DTensor:(MPSGraphTensor *) tensor
@@ -593,14 +685,14 @@ MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
 MPS_SWIFT_NAME( flatten2D(_:axis:name:) )
 MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
 
-/// Creates a flatten2d operation and returns the result tensor.
+/// Creates a flatten2D operation and returns the result tensor.
 ///
-/// Flattens dimensions before ``axis`` to ``result[0]`` and dimensions starting
-/// from ``axis`` to ``result[1]`` and returns a rank-2 tensor as result.
+/// Flattens dimensions before `axis` to `result[0]` and dimensions starting
+/// from `axis` to `result[1]` and returns a rank-2 tensor as result.
 ///
 /// - Parameters:
-///   - tensor: Tensor to be flattened.
-///   - axisTensor: Axis around which to flatten.
+///   - tensor: The tensor to be flattened.
+///   - axisTensor: A scalar tensor that contains the axis around which to flatten.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) flatten2DTensor:(MPSGraphTensor *) tensor
@@ -615,9 +707,9 @@ MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
 /// This is equivalent to the broadcasting for arithmetic operations when operands have different shapes.
 ///
 /// - Parameters:
-///   - tensor: Tensor to be broadcasted
-///   - shape: Shape of the result tensor
-///   - name: The name for the operation
+///   - tensor: The tensor to be broadcasted
+///   - shape: The shape of the result tensor.
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(MPSGraphTensor *) broadcastTensor:(MPSGraphTensor *) tensor
                             toShape:(MPSShape *) shape
@@ -631,8 +723,8 @@ MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
 /// This is equivalent to the broadcasting for arithmetic operations when operands have different shapes.
 ///
 /// - Parameters:
-///   - tensor: Tensor to be broadcasted.
-///   - shapeTensor: 1D Int32 or Int64 tensor. Shape of the result tensor.
+///   - tensor: The Tensor to be broadcasted.
+///   - shapeTensor: A rank-1 tensor of type `MPSDataTypeInt32` or `MPSDataTypeInt64` that defines the shape of the result tensor.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) broadcastTensor:(MPSGraphTensor *) tensor
@@ -641,12 +733,12 @@ MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
 MPS_SWIFT_NAME( broadcast(_:shapeTensor:name:) )
 MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
 
-/// Creates shapeOf operation and returns the result tensor.
+/// Creates a shape-of operation and returns the result tensor.
 ///
-/// Returns a 1D Int32 tensor with value the static shape of the input tensor.
+/// Returns a rank-1 tensor of type `MPSDataTypeInt32` with the values of the static shape of the input tensor.
 ///
 /// - Parameters:
-///   - tensor: Input tensor.
+///   - tensor: The input tensor.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) shapeOfTensor:(MPSGraphTensor *) tensor
@@ -656,11 +748,11 @@ MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
 
 /// Creates a cast operation and returns the result tensor.
 ///
-/// Returns input tensor casted to the dataType passed in.
+/// Returns the input tensor casted to the specied data type.
 ///
 /// - Parameters:
-///   - tensor: Input tensor.
-///   - type: Input tensor.
+///   - tensor: The input tensor.
+///   - type: The datatype to which MPSGraph casts the input.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *)castTensor:(MPSGraphTensor *)tensor
@@ -670,13 +762,13 @@ MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
 
 /// Creates a reinterpret cast operation and returns the result tensor.
 ///
-/// Returns input tensor (with element type `tensor_type`) reinterpreted to element type ``type``
+/// Returns input tensor (with element type `tensor_type`) reinterpreted to element type
 /// passed in with the last dimension scaled by `sizeof(tensor_type) / sizeof(type)`. 
-/// This operation is endianness agnostic and data will be reinterpreted with the endianness of the 
+/// This operation is endianness agnostic and MPSGraph reinterprets the data with the endianness of the
 /// system.
 ///
 /// - Parameters:
-///   - tensor: Input tensor.
+///   - tensor: The input tensor.
 ///   - type: The element type of the returned tensor.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
@@ -685,14 +777,14 @@ MPS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0));
                                      name:(NSString *_Nullable)name
 MPS_AVAILABLE_STARTING(macos(13.2), ios(16.3), tvos(16.3));
 
-/// Creates a stack operation and returns the result.
+/// Creates a stack operation and returns the result tensor.
 ///
-/// Stacks all input tensors along ``axis`` into a result tensor of rank + 1. Tensors must be broadcast
-/// compatible along all dimensions, and have the same type.
+/// Stacks all input tensors along `axis` into a result tensor of `rank + 1`. Tensors must be broadcast
+/// compatible along all dimensions except `axis`, and have the same type.
 ///
 /// - Parameters:
-///   - inputTensors: Input tensors.
-///   - axis: The dimension to stack tensors into result. Must be in range `- rank + 1 <= dimension < rank + 1`.
+///   - inputTensors: The input tensors.
+///   - axis: The dimension to stack tensors into result. Must be in range: `-rank + 1 <= dimension < rank + 1`.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) stackTensors:(NSArray<MPSGraphTensor *> *) inputTensors
@@ -701,15 +793,15 @@ MPS_AVAILABLE_STARTING(macos(13.2), ios(16.3), tvos(16.3));
 MPS_SWIFT_NAME( stack(_:axis:name:) )
 MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 
-/// Creates a split operation and returns the result.
+/// Creates a split operation and returns the result tensor.
 ///
-/// Splits the input tensor along ``axis`` into multiple result tensors of size determined by ``splitSizes``.
-/// Requires that the sum of ``splitSizes`` is equal to the lenth of the input along ``axis``.
+/// Splits the input tensor along `axis` into multiple result tensors of size determined by `splitSizes`.
+/// Requires that the sum of `splitSizes` is equal to the lenth of the input along `axis`.
 ///
 /// - Parameters:
-///   - tensor: Input tensor.
-///   - splitSizes: The length of the result tensors along the split axis.
-///   - axis: The dimension to split the input along.
+///   - tensor: The input tensor.
+///   - splitSizes: The lengths of the result tensors along the split axis.
+///   - axis: The dimension along which MPSGraph splits the input tensor.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(NSArray<MPSGraphTensor *> *) splitTensor:(MPSGraphTensor *) tensor
@@ -719,16 +811,16 @@ MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 MPS_SWIFT_NAME( split(_:splitSizes:axis:name:) )
 MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 
-/// Creates a split operation and returns the result.
+/// Creates a split operation and returns the result tensor.
 ///
-/// Splits the input tensor along ``axis`` into multiple result tensors of size determined by ``splitSizesTensor``.
-/// Requires that the sum of ``splitSizesTensor`` is equal to the lenth of the input along ``axis``.
+/// Splits the input tensor along `axis` into multiple result tensors of size determined by `splitSizesTensor`.
+/// Requires that the sum of the elements of `splitSizesTensor` is equal to the lenth of the input along `axis`.
 ///
 /// - Parameters:
-///   - tensor: Input tensor
-///   - splitSizesTensor: The length of the result tensors along the split axis
-///   - axis: The dimension to split the input along
-///   - name: The name for the operation
+///   - tensor: The input tensor
+///   - splitSizesTensor: The lengths of the result tensors along the split axis.
+///   - axis: The dimension along which MPSGraph splits the input tensor.
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(NSArray<MPSGraphTensor *> *) splitTensor:(MPSGraphTensor *) tensor
                           splitSizesTensor:(MPSGraphTensor *) splitSizesTensor
@@ -737,15 +829,15 @@ MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 MPS_SWIFT_NAME( split(_:splitSizesTensor:axis:name:) )
 MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 
-/// Creates a split operation and returns the result.
+/// Creates a split operation and returns the result tensor.
 ///
-/// Splits the input tensor along ``axis`` into ``numsplits`` result tensors of equal size.
-/// Requires that the lenth of the input along ``axis`` is divisible by ``numSplits``.
+/// Splits the input tensor along `axis` into `numsplits` result tensors of equal size.
+/// Requires that the lenth of the input along `axis` is divisible by `numSplits`.
 ///
 /// - Parameters:
-///   - tensor: Input tensor.
+///   - tensor: The input tensor.
 ///   - numSplits: The number of result tensors to split to.
-///   - axis: The dimension to split the input along.
+///   - axis: The dimension along which MPSGraph splits the input tensor.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(NSArray<MPSGraphTensor *> *) splitTensor:(MPSGraphTensor *) tensor
@@ -755,12 +847,12 @@ MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 MPS_SWIFT_NAME( split(_:numSplits:axis:name:) )
 MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 
-/// Creates squeeze operation and returns the result.
+/// Creates a squeeze operation and returns the result tensor.
 ///
-/// Squeezes the tensor, removing any dimensions with size 1.
+/// Squeezes the tensor, removing all dimensions with size 1.
 ///
 /// - Parameters:
-///   - tensor: Input tensor.
+///   - tensor: The input tensor.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) squeezeTensor:(MPSGraphTensor *) tensor
@@ -768,13 +860,13 @@ MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 MPS_SWIFT_NAME( squeeze(_:name:) )
 MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 
-/// Creates squeeze operation and returns the result.
+/// Creates a squeeze operation and returns the result tensor.
 ///
 /// Squeezes the tensor, removing a dimension with size 1 at the specified axis.
-/// Size must be 1 at specified axis.
+/// The size of the input tensor must be 1 at the specified axis.
 ///
 /// - Parameters:
-///   - tensor: Input tensor.
+///   - tensor: The input tensor.
 ///   - axis: The axis to squeeze.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
@@ -784,13 +876,13 @@ MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 MPS_SWIFT_NAME( squeeze(_:axis:name:) )
 MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 
-/// Creates squeeze operation and returns the result.
+/// Creates a squeeze operation and returns the result tensor.
 ///
 /// Squeezes the tensor, removing dimensions with size 1 at specified axes. 
-/// Size must be 1 at all specified axes.
+/// The size of the input tensor must be 1 at all specified axes.
 ///
 /// - Parameters:
-///   - tensor: Input tensor.
+///   - tensor: The input tensor.
 ///   - axes: The axes to squeeze.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
@@ -800,13 +892,13 @@ MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 MPS_SWIFT_NAME( squeeze(_:axes:name:) )
 MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 
-/// Creates squeeze operation and returns the result.
+/// Creates a squeeze operation and returns the result tensor.
 ///
 /// Squeezes the tensor, removing dimensions with size 1 at specified axes.
-/// Size must be 1 at all specified axes.
+/// The size of the input tensor must be 1 at all specified axes.
 ///
 /// - Parameters:
-///   - tensor: Input tensor.
+///   - tensor: The input tensor.
 ///   - axesTensor: The tensor containing the axes to squeeze.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
@@ -816,12 +908,12 @@ MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 MPS_SWIFT_NAME( squeeze(_:axesTensor:name:) )
 MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 
-/// Creates expand dimensions operation and returns the result.
+/// Creates an expand-dimensions operation and returns the result tensor.
 ///
 /// Expands the tensor, inserting a dimension with size 1 at the specified axis.
 ///
 /// - Parameters:
-///   - tensor: Input tensor.
+///   - tensor: The input tensor.
 ///   - axis: The axis to expand.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
@@ -831,12 +923,12 @@ MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 MPS_SWIFT_NAME( expandDims(_:axis:name:) )
 MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 
-/// Creates expand dimensions operation and returns the result.
+/// Creates an expand-dimensions operation and returns the result tensor.
 ///
 /// Expands the tensor, inserting dimensions with size 1 at specified axes.
 ///
 /// - Parameters:
-///   - tensor: Input tensor.
+///   - tensor: The input tensor.
 ///   - axes: The axes to expand.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
@@ -846,12 +938,12 @@ MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 MPS_SWIFT_NAME( expandDims(_:axes:name:) )
 MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 
-/// Creates expand dimensions operation and returns the result.
+/// Creates an expand-dimensions operation and returns the result tensor.
 ///
 /// Expands the tensor, inserting dimensions with size 1 at specified axes.
 ///
 /// - Parameters:
-///   - tensor: Input tensor.
+///   - tensor: The input tensor.
 ///   - axesTensor: The tensor containing the axes to expand.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
@@ -862,9 +954,9 @@ MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 MPS_SWIFT_NAME( expandDims(_:axesTensor:name:) )
 MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 
-/// Creates get coordindate operation and returns the result.
+/// Creates a get-coordindate operation and returns the result tensor.
 ///
-/// Creates a tensor of specified shape with value at index ```md [i_0, i_1, ... , i_N] = i_axis ``` 
+/// Creates a tensor of specified shape with value at index `[i_0, i_1, ... , i_N] = i_axis`
 /// For example, 
 /// ```md 
 /// coordinateAlongAxis(0, withShape=[5]) = [0, 1, 2, 3, 4] 
@@ -883,12 +975,12 @@ MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
                                    name:(NSString * _Nullable) name
 MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 
-/// Creates get coordindate operation and returns the result.
+/// Creates a get-coordindate operation and returns the result tensor.
 ///
-/// See ``coordinateAlongAxis:withShape:name:``.
+/// See ``MPSGraph/coordinateAlongAxis:withShape:name:``.
 ///
 /// - Parameters:
-///   - axisTensor: Scalar Int32 tensor. The coordinate axis an element's value is set to. Negative values wrap around.
+///   - axisTensor: A Scalar tensor of type `MPSDataTypeInt32`, that specifies the coordinate axis an element's value is set to. Negative values wrap around.
 ///   - shape: The shape of the result tensor.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
@@ -897,13 +989,13 @@ MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
                                          name:(NSString * _Nullable) name
 MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 
-/// Creates get coordindate operation and returns the result.
+/// Creates a get-coordindate operation and returns the result tensor.
 ///
 /// See ``coordinateAlongAxis:withShape:name:``.
 ///
 /// - Parameters:
 ///   - axis: The coordinate axis an element's value is set to. Negative values wrap around.
-///   - shapeTensor: 1D Int32 or Int64 tensor. The shape of the result tensor.
+///   - shapeTensor: A rank-1 tensor of type `MPSDataTypeInt32` or `MPSDataTypeInt64` that defines the shape of the result tensor.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) coordinateAlongAxis:(NSInteger) axis
@@ -911,13 +1003,13 @@ MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
                                    name:(NSString * _Nullable) name
 MPS_AVAILABLE_STARTING(macos(12.3), ios(15.4), tvos(15.4));
 
-/// Creates get coordindate operation and returns the result.
+/// Creates a get-coordindate operation and returns the result tensor.
 ///
 /// See ``coordinateAlongAxis:withShape:name:``.
 ///
 /// - Parameters:
-///   - axisTensor: Scalar Int32 tensor. The coordinate axis an element's value is set to. Negative values wrap around
-///   - shapeTensor: 1D Int32 or Int64 tensor. The shape of the result tensor.
+///   - axisTensor: A Scalar tensor of type `MPSDataTypeInt32`, that specifies the coordinate axis an element's value is set to. Negative values wrap around.
+///   - shapeTensor: A rank-1 tensor of type `MPSDataTypeInt32` or `MPSDataTypeInt64` that defines the shape of the result tensor.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) coordinateAlongAxisTensor:(MPSGraphTensor *) axisTensor

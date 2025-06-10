@@ -38,7 +38,9 @@
 #endif // TARGET_OS_OSX
 
 
-#if TARGET_OS_IOS && !TARGET_OS_XR
+#if TARGET_OS_IOS && !TARGET_OS_VISION
+#import <AVKit/AVCaptureEventInteraction.h>
+#import <AVKit/AVCaptureEvent.h>
 #import <AVKit/AVError.h>
 #import <AVKit/AVPictureInPictureController.h>
 #import <AVKit/AVPictureInPictureController_AVSampleBufferDisplayLayerSupport.h>
@@ -55,7 +57,7 @@
 #import <AVKit/AVPlaybackSpeed.h>
 #endif
 
-#endif // TARGET_OS_IOS && !TARGET_OS_XR
+#endif // TARGET_OS_IOS && !TARGET_OS_VISION
 
 
 #if TARGET_OS_TV
@@ -77,8 +79,10 @@
 #endif // TARGET_OS_TV
 
 
-#if TARGET_OS_XR
+#if TARGET_OS_VISION
 #import <AVKit/AVDisplayManager.h>
+#import <AVKit/AVCaptureEventInteraction.h>
+#import <AVKit/AVCaptureEvent.h>
 #import <AVKit/AVError.h>
 #import <AVKit/AVInterstitialTimeRange.h>
 #import <AVKit/AVPictureInPictureController.h>
@@ -91,4 +95,4 @@
 #import <AVKit/AVRoutePickerView.h>
 #import <AVKit/UIWindow_AVAdditions.h>
 
-#endif // TARGET_OS_XR
+#endif // TARGET_OS_VISION

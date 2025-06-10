@@ -25,7 +25,12 @@ typedef NS_ENUM(NSUInteger, XCUIRemoteButton) {
     XCUIRemoteButtonMenu        = 5,
     XCUIRemoteButtonPlayPause   = 6,
     
-    XCUIRemoteButtonHome        = 7
+    XCUIRemoteButtonHome        = 7,
+
+    XCUIRemoteButtonPageUp API_AVAILABLE(tvos(14.3))   = 9,
+    XCUIRemoteButtonPageDown API_AVAILABLE(tvos(14.3)) = 10,
+
+    XCUIRemoteButtonGuide API_AVAILABLE(tvos(14.3))    = 11
 };
 
 #if TARGET_OS_TV
@@ -35,6 +40,7 @@ typedef NS_ENUM(NSUInteger, XCUIRemoteButton) {
  *
  * Simulates interaction with a physical remote control.
  */
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUIRemote : NSObject
 
 /*!

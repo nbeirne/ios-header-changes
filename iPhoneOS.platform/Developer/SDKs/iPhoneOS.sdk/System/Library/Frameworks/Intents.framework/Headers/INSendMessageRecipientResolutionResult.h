@@ -2,7 +2,7 @@
 //  INSendMessageRecipientResolutionResult.h
 //  Intents
 //
-//  Copyright (c) 2016-2023 Apple Inc. All rights reserved.
+//  Copyright (c) 2016-2024 Apple Inc. All rights reserved.
 //
 
 #import <Intents/INPersonResolutionResult.h>
@@ -14,6 +14,7 @@ typedef NS_ENUM(NSInteger, INSendMessageRecipientUnsupportedReason) {
     INSendMessageRecipientUnsupportedReasonNoValidHandle API_AVAILABLE(ios(12.0), watchos(5.0)),
     INSendMessageRecipientUnsupportedReasonRequestedHandleInvalid API_AVAILABLE(ios(12.0), watchos(5.0)),
     INSendMessageRecipientUnsupportedReasonNoHandleForLabel API_AVAILABLE(ios(12.0), watchos(5.0)),
+    INSendMessageRecipientUnsupportedReasonRequiringInAppAuthentication API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0)) API_UNAVAILABLE(tvos),
 } API_AVAILABLE(ios(11.0), macos(12.0), watchos(4.0)) API_UNAVAILABLE(tvos);
 
 NS_ASSUME_NONNULL_BEGIN

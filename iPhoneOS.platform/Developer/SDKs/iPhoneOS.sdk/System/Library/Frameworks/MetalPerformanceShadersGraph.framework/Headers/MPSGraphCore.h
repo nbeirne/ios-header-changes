@@ -15,36 +15,38 @@
 NS_ASSUME_NONNULL_BEGIN
 
 MPS_CLASS_AVAILABLE_STARTING(macos(14.0), ios(17.0), tvos(17.0))
-/// Common base class for all MPSGraph objects. You should use one of the child classes.
+/// The common base class for all Metal Performance Shaders Graph objects.
+///
+/// Only the child classes should be used.
 @interface MPSGraphObject: NSObject
 @end
 
-/// Base type class for types on MPSGraph tensors
+/// The base type class for types on tensors.
 MPS_CLASS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0))
 @interface MPSGraphType: MPSGraphObject<NSCopying>
 
 @end
 
-/// Shaped type class for types on MPSGraph tensors has a shape and a dataType
+/// The shaped type class for types on tensors with a shape and data type.
 MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
 @interface MPSGraphShapedType: MPSGraphType
 
-/// shape of the shapedType
+/// The Shape of the shaped type.
 @property (readwrite, nullable, copy, atomic) MPSShape *shape;
 
-/// dataType of the shapedType
+/// The data type of the shaped type.
 @property (readwrite, atomic) MPSDataType dataType;
 
-/// Initialize an MPSGraphShapedType
+/// Initializes a shaped type.
 ///
 /// - Parameters:
-///   - shape: The MPSShape
-///   - dataType: The dataType of the shaped type
+///   - shape: The shape of the shaped type.
+///   - dataType: The dataType of the shaped type.
 /// - Returns: A valid MPSGraphShapedType, or nil if allocation failure.
 -(instancetype) initWithShape:(MPSShape * _Nullable) shape
                      dataType:(MPSDataType) dataType;
 
-/// checks if shapes and elementDataType are the same as the input shapedType
+/// Checks if shapes and element data type are the same as the input shaped type.
 ///
 /// - Parameters:
 ///   - object: shapedType to compare to
@@ -53,7 +55,7 @@ MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
 
 @end
 
-/// Tensor Layout
+/// The tensor layout.
 typedef NS_ENUM(NSUInteger, MPSGraphTensorNamedDataLayout)
 {
     /// LayoutNCHW
@@ -80,7 +82,7 @@ typedef NS_ENUM(NSUInteger, MPSGraphTensorNamedDataLayout)
     MPSGraphTensorNamedDataLayoutDHWIO      MPS_ENUM_AVAILABLE_STARTING(macos(13.2), ios(16.3), tvos(16.3))                        =  10L,
 };
 
-/// Tensor Layout
+/// The tensor padding style.
 typedef NS_ENUM(NSUInteger, MPSGraphPaddingStyle)
 {
     /// Explicit
@@ -95,7 +97,7 @@ typedef NS_ENUM(NSUInteger, MPSGraphPaddingStyle)
     MPSGraphPaddingStyleONNX_SAME_LOWER     MPS_ENUM_AVAILABLE_STARTING(macos(13.0), ios(16.0), tvos(16.0))                            =  4L,
 };
 
-/// Tensor Padding mode
+/// The tensor padding mode.
 typedef NS_ENUM(NSInteger, MPSGraphPaddingMode)
 {
     /// Constant
@@ -114,7 +116,7 @@ typedef NS_ENUM(NSInteger, MPSGraphPaddingMode)
     MPSGraphPaddingModeAntiPeriodic      MPS_ENUM_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0))                          =  6L,
 };
 
-/// Reduction Mode
+/// The reduction mode.
 typedef NS_ENUM(NSUInteger, MPSGraphReductionMode)
 {
     /// Min

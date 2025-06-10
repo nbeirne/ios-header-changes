@@ -9,15 +9,16 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CLAvailability.h>
 
-#if (((defined(__MAC_OS_X_VERSION_MIN_REQUIRED) && \
+#if ((defined(__MAC_OS_X_VERSION_MIN_REQUIRED) && \
 			 __MAC_OS_X_VERSION_MIN_REQUIRED  >=    __MAC_14_0) || \
 	(defined(__IPHONE_OS_VERSION_MIN_REQUIRED) && \
 			 __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_17_0) || \
 	(defined(__TV_OS_VERSION_MIN_REQUIRED) && \
 			 __TV_OS_VERSION_MIN_REQUIRED     >=   __TVOS_17_0) || \
 	(defined(__WATCH_OS_VERSION_MIN_REQUIRED) && \
-			 __WATCH_OS_VERSION_MIN_REQUIRED  >= __WATCHOS_10_0)) && \
-	!TARGET_OS_XR)
+			 __WATCH_OS_VERSION_MIN_REQUIRED  >= __WATCHOS_10_0) || \
+	(defined(__VISION_OS_VERSION_MIN_REQUIRED) && \
+			 __VISION_OS_VERSION_MIN_REQUIRED  >= __VISIONOS_2_0)) //To prevent iPadOS apps from crashing in visionOS
 #define CL_TARGET_SUPPORTS_CONDITIONS 1
 #else
 #define CL_TARGET_SUPPORTS_CONDITIONS 0
@@ -36,9 +37,9 @@ CL_EXTERN
  *
  */
 NS_REFINED_FOR_SWIFT NS_SWIFT_SENDABLE
-API_AVAILABLE(macos(14.0), ios(17.0), watchos(10.0)) API_UNAVAILABLE(tvos)
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros)
+API_AVAILABLE(macos(14.0), ios(17.0)) API_UNAVAILABLE(watchos, tvos)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(visionos)
 #endif
 @interface CLCondition : NSObject<NSSecureCoding, NSCopying>
 

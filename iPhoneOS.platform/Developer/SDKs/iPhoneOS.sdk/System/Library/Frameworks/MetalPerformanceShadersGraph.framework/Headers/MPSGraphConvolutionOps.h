@@ -13,43 +13,67 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// Descriptor for properties of convolution.
-/// It is used to create 2D convolution operation.
+/// A class that describes the properties of a 2D-convolution operator.
+///
+/// Use an instance of this class is to add a 2D-convolution operator with the desired properties to the graph.
 MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
 @interface MPSGraphConvolution2DOpDescriptor : MPSGraphObject<NSCopying>
 
-/// stride in `x` or width dimension.
+/// The scale that maps `x`-coordinate of the destination to `x`-coordinate of the source.
+///
+/// Source `x`-coordinate, `sx` is computed from destination `x`-coordinate, `dx` as `sx = strideInX*dx`.
+/// Default value is 1.
 @property (readwrite, nonatomic) NSUInteger strideInX;
-/// stride in `y` or height dimension.
+/// The scale that maps `y`-coordinate of the destination to `y`-coordinate of the source.
+///
+/// Source `y`-coordinate, `sy` is computed from destination `y`-coordinate, `dy` as `sy = strideInY*dy`.
+/// Default value is 1.
 @property (readwrite, nonatomic) NSUInteger strideInY;
-/// dilation in `x` or width dimension.
+/// The amount by which the weights tensor expands in the `x`-direction.
+///
+/// The weights tensor is dilated by inserting `dilationRateInX-1` zeros between consecutive values in `x`-dimension.
+/// Dilated weights tensor width is `(dilationRateInX-1)*kernelWidth+1`.
+/// Default value is 1.
 @property (readwrite, nonatomic) NSUInteger dilationRateInX;
-/// dilation in `y` or height dimension.
+/// The amount by which the weights tensor expands in the `y`-direction.
+///
+/// The weights tensor is dilated by inserting `dilationRateInY-1` zeros between consecutive values in `y`-dimension.
+/// Dilated weights tensor width is `(dilationRateInY-1)*kernelHeight+1`.
+/// Default value is 1.
 @property (readwrite, nonatomic) NSUInteger dilationRateInY;
-/// padding in `x` or width dimension on left side.
+/// The number of zeros added on the left side of the source tensor.
 @property (readwrite, nonatomic) NSUInteger paddingLeft;
-/// padding in `x` or width dimension on right side.
+/// The number of zeros added on the right side of the source tensor.
 @property (readwrite, nonatomic) NSUInteger paddingRight;
-/// padding in `y` or height dimension at top.
+/// The number of zeros added at the top of the source tensor.
 @property (readwrite, nonatomic) NSUInteger paddingTop;
-/// padding in `y` or height dimension at bottom.
+/// The number of zeros added at the bottom of the source tensor.
 @property (readwrite, nonatomic) NSUInteger paddingBottom;
-/// padding style applied on source tensor. If paddingStyle is `MPSGraphPaddingStyleExplicit`, paddingLeft, laddingRight, paddingTop,
-/// paddingBottom must to be specified. This is symbolic padding on input tensor. For all other padding styles,
-/// paddings on left, right, top and bottom are computed internally and need not be specified.
+/// The type of padding applied to the source tensor.
+///
+/// If paddingStyle is `MPSGraphPaddingStyleExplicit`, `paddingLeft`, `laddingRight`, `paddingTop`,
+/// and `paddingBottom` must to be specified. For all other padding styles, framework compute these values so you dont need to provide these values.
 @property (readwrite, nonatomic) MPSGraphPaddingStyle paddingStyle;
-/// layout of source tensor. Convolution operation uses this to interpret data in source tensor i.e. order of named dimensions
-/// e.g. `batch x channels x width x height` for `NCHW` layout
+/// The named layout of data in the source tensor.
+///
+/// It defines the order of named dimensions (Batch, Channel, Height, Width). The convolution operation uses this to interpret data in the source tensor.
+/// For example, if `dataLayout` is `MPSGraphTensorNamedDataLayoutNCHW`, frameork interprets data in source tensor as `batch x channels x height x width`
+/// with `width` as fastest moving dimension.
 @property (readwrite, nonatomic) MPSGraphTensorNamedDataLayout dataLayout;
-/// layout of weights tensor. Convolution operation uses this to interpret data in weights tensor i.e. order of named dimensions
-/// e.g. `outputChannels x inputChannels x kernelHeight x kernelWidth` for `OIHW`.
+/// The named layout of data in the weights tensor.
+///
+/// It defines the order of named dimensions (Output channels, Input channels, Kernel height, Kernel width). The convolution operation uses this to interpret data in the weights tensor.
+/// For example, if `weightsLayout` is `MPSGraphTensorNamedDataLayoutOIHW`, frameork interprets data in weights tensor as `outputChannels x inputChannels x kernelHeight x kernelWidth`
+/// with `kernelWidth` as fastest moving dimension.
 @property (readwrite, nonatomic) MPSGraphTensorNamedDataLayout weightsLayout;
-/// number of groups in convolution. Input and output feature channels are divided into groups and
-/// input channels in a group are only connected to output channels in corresponding group.
-/// Number of weights are `outputFeatureChannels x inputFeatureChannels/groups x kernelWidth x kernelHeight`
+/// The number of partitions of the input and output channels.
+///
+/// The convolution operation divides input and output channels in `groups` partitions.
+/// input channels in a group or partition are only connected to output channels in corresponding group.
+/// Number of weights the convolution needs is `outputFeatureChannels x inputFeatureChannels/groups x kernelWidth x kernelHeight`
 @property (readwrite, nonatomic) NSUInteger groups;
 
-/// creates convolution descriptor with given values for parameters.
+/// Creates a convolution descriptor with given values for parameters.
 /// - Parameters:
 ///   - strideInX: See ``strideInX`` property.
 ///   - strideInY: See ``strideInY`` property.
@@ -63,7 +87,7 @@ MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
 ///   - paddingStyle: See ``paddingStyle`` property.
 ///   - dataLayout: See ``dataLayout`` property.
 ///   - weightsLayout: See ``weightsLayout`` property.
-/// - Returns: The descriptor on autoreleasepool.
+/// - Returns: The `MPSGraphConvolution2DOpDescriptor` on autoreleasepool.
 +(nullable instancetype) descriptorWithStrideInX:(NSUInteger) strideInX
                                        strideInY:(NSUInteger) strideInY
                                  dilationRateInX:(NSUInteger) dilationRateInX
@@ -77,7 +101,7 @@ MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
                                       dataLayout:(MPSGraphTensorNamedDataLayout) dataLayout
                                    weightsLayout:(MPSGraphTensorNamedDataLayout) weightsLayout;
 
-/// creates convolution descriptor with given values for parameters.
+/// Creates a convolution descriptor with given values for parameters.
 /// - Parameters:
 ///   - strideInX: See ``strideInX`` property.
 ///   - strideInY: See ``strideInY`` property.
@@ -87,7 +111,7 @@ MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
 ///   - paddingStyle: See ``paddingStyle`` property.
 ///   - dataLayout: See ``dataLayout`` property.
 ///   - weightsLayout: See ``weightsLayout`` property.
-/// - Returns: The descriptor on autoreleasepool.
+/// - Returns: The `MPSGraphConvolution2DOpDescriptor` on autoreleasepool.
 +(nullable instancetype) descriptorWithStrideInX:(NSUInteger) strideInX
                                        strideInY:(NSUInteger) strideInY
                                  dilationRateInX:(NSUInteger) dilationRateInX
@@ -97,7 +121,7 @@ MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
                                       dataLayout:(MPSGraphTensorNamedDataLayout) dataLayout
                                    weightsLayout:(MPSGraphTensorNamedDataLayout) weightsLayout;
 
-/// sets values of padding to given values.
+/// Sets the left, right, top, and bottom padding values.
 /// - Parameters:
 ///   - paddingLeft: See ``paddingLeft`` property.
 ///   - paddingRight: See ``paddingRight`` property.
@@ -111,51 +135,82 @@ MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
 
 @end
 
-/// Descriptor for properties of convolution.
-/// It is used to create 3D convolution operation.
+/// A class that describes the properties of a 3D-convolution operator.
+///
+/// Use an instance of this class is to add a 3D-convolution operator with desired properties to the graph.
 MPS_CLASS_AVAILABLE_STARTING(macos(13.2), ios(16.3), tvos(16.3))
 @interface MPSGraphConvolution3DOpDescriptor : MPSGraphObject<NSCopying>
 
-/// stride in `x` or width dimension.
+/// The scale that maps`x`-coordinate of destination to `x`-coordinate of source.
+///
+/// Source `x`-coordinate, `sx` is computed from destination `x`-coordinate, `dx` as `sx = strideInX*dx`.
+/// Default value is 1.
 @property (readwrite, nonatomic) NSUInteger strideInX;
-/// stride in `y` or height dimension.
+/// The scale that maps`y`-coordinate of destination to `y`-coordinate of source.
+///
+/// Source `y`-coordinate, `sy` is computed from destination `y`-coordinate, `dy` as `sy = strideInY*dy`.
+/// Default value is 1.
 @property (readwrite, nonatomic) NSUInteger strideInY;
-/// stride in `z` or depth dimension.
+/// The scale that maps`z`-coordinate of destination to `z`-coordinate of source.
+///
+/// Source `z`-coordinate, `sz` is computed from destination `z`-coordinate, `dz` as `sz = strideInZ*dz`.
+/// Default value is 1.
 @property (readwrite, nonatomic) NSUInteger strideInZ;
-/// dilation in `x` or width dimension.
+/// The amount by which weights tensor expands in the `x`-direction.
+///
+/// The weights tensor is dilated by inserting `dilationRateInX-1` zeros between consecutive values in `x`-dimension.
+/// Dilated weights tensor width is `(dilationRateInX-1)*kernelWidth+1`.
+/// Default value is 1.
 @property (readwrite, nonatomic) NSUInteger dilationRateInX;
-/// dilation in `y` or height dimension.
+/// The amount by which weights tensor expands in the `y`-direction.
+///
+/// The weights tensor is dilated by inserting `dilationRateInY-1` zeros between consecutive values in `y`-dimension.
+/// Dilated weights tensor width is `(dilationRateInY-1)*kernelHeight+1`.
+/// Default value is 1.
 @property (readwrite, nonatomic) NSUInteger dilationRateInY;
-/// dilation in `z` or depth dimension.
+/// The amount by which weights tensor expands in the `z`-direction.
+///
+/// The weights tensor is dilated by inserting `dilationRateInZ-1` zeros between consecutive values in `z`-dimension.
+/// Dilated weights tensor depth is `(dilationRateInZ-1)*kernelDepth+1`.
+/// Default value is 1.
 @property (readwrite, nonatomic) NSUInteger dilationRateInZ;
-/// padding in `x` or width dimension on left side.
+/// The number of zeros added on the left side of the source tensor.
 @property (readwrite, nonatomic) NSUInteger paddingLeft;
-/// padding in `x` or width dimension on right side.
+/// The number of zeros added on the right side of the source tensor.
 @property (readwrite, nonatomic) NSUInteger paddingRight;
-/// padding in `y` or height dimension at top.
+/// The number of zeros added at the top of the source tensor.
 @property (readwrite, nonatomic) NSUInteger paddingTop;
-/// padding in `y` or height dimension at bottom.
+/// The number of zeros added at the bottom of the source tensor.
 @property (readwrite, nonatomic) NSUInteger paddingBottom;
-/// padding in `z` or depth dimension in front.
+/// The number of zeros added at the front of the source tensor.
 @property (readwrite, nonatomic) NSUInteger paddingFront;
-/// padding in `z` or depth dimension in back.
+/// The number of zeros added at the back of the source tensor.
 @property (readwrite, nonatomic) NSUInteger paddingBack;
-/// padding style applied on source tensor. If paddingStyle is `MPSGraphPaddingStyleExplicit`, paddingLeft, laddingRight, paddingTop,
-/// paddingBottom, paddingFront, paddingBack must to be specified. This is symbolic padding on input tensor. For all other padding styles,
-/// paddings on left, right, top, bottom, front and back are computed internally and need not be specified.
+/// The type of padding that is applied to the source tensor.
+///
+/// If paddingStyle is `MPSGraphPaddingStyleExplicit`, `paddingLeft`, `laddingRight`, `paddingTop`,
+/// `paddingBottom`,   `paddingFront` and `paddingBack` must to be specified. For all other padding styles, framework compute these values so you dont need to provide these values.
 @property (readwrite, nonatomic) MPSGraphPaddingStyle paddingStyle;
-/// layout of source tensor. Convolution operation uses this to interpret data in source tensor i.e. order of named dimensions
-/// e.g. `batch x channels x depth x width x height` for `NCDHW` layout
+/// The named layout of data in the source tensor.
+///
+/// It defines the order of named dimensions (Batch, Channel, Depth, Height, Width). The convolution operation uses this to interpret data in the source tensor.
+/// For example, if `dataLayout` is `MPSGraphTensorNamedDataLayoutNCDHW`, frameork interprets data in source tensor as `batch x channels x depth x height x width`
+/// with `width` as fastest moving dimension.
 @property (readwrite, nonatomic) MPSGraphTensorNamedDataLayout dataLayout;
-/// layout of weights tensor. Convolution operation uses this to interpret data in weights tensor i.e. order of named dimensions
-/// e.g. `outputChannels x inputChannels x kernelDepth x kernelHeight x kernelWidth` for `OIDHW`.
+/// The named layout of data in the weights tensor.
+///
+/// It defines the order of named dimensions (Output channels, Input channels, Kernel depth, Kernel height, Kernel width). The convolution operation uses this to interpret data in the weights tensor.
+/// For example, if `weightsLayout` is `MPSGraphTensorNamedDataLayoutOIDHW`, frameork interprets data in weights tensor as `outputChannels x inputChannels x kernelDepth x kernelHeight x kernelWidth`
+/// with `kernelWidth` as fastest moving dimension.
 @property (readwrite, nonatomic) MPSGraphTensorNamedDataLayout weightsLayout;
-/// number of groups in convolution. Input and output feature channels are divided into groups and
-/// input channels in a group are only connected to output channels in corresponding group.
-/// Number of weights are `outputFeatureChannels x inputFeatureChannels/groups x kernelDepth x kernelWidth x kernelHeight`
+/// The number of partitions of the input and output channels.
+///
+/// The convolution operation divides input and output channels in `groups` partitions.
+/// input channels in a group or partition are only connected to output channels in corresponding group.
+/// Number of weights the convolution needs is `outputFeatureChannels x inputFeatureChannels/groups x kernelDepth x kernelWidth x kernelHeight`
 @property (readwrite, nonatomic) NSUInteger groups;
 
-/// creates convolution descriptor with given values for parameters.
+/// Creates a convolution descriptor with given values for parameters.
 /// - Parameters:
 ///   - strideInX: See ``strideInX`` property.
 ///   - strideInY: See ``strideInY`` property.
@@ -173,7 +228,7 @@ MPS_CLASS_AVAILABLE_STARTING(macos(13.2), ios(16.3), tvos(16.3))
 ///   - paddingStyle: See ``paddingStyle`` property.
 ///   - dataLayout: See ``dataLayout`` property.
 ///   - weightsLayout: See ``weightsLayout`` property.
-/// - Returns: The descriptor on autoreleasepool.
+/// - Returns: The `MPSGraphConvolution3DOpDescriptor` on autoreleasepool.
 +(nullable instancetype) descriptorWithStrideInX:(NSUInteger) strideInX
                                        strideInY:(NSUInteger) strideInY
                                        strideInZ:(NSUInteger) strideInZ
@@ -191,7 +246,7 @@ MPS_CLASS_AVAILABLE_STARTING(macos(13.2), ios(16.3), tvos(16.3))
                                       dataLayout:(MPSGraphTensorNamedDataLayout) dataLayout
                                    weightsLayout:(MPSGraphTensorNamedDataLayout) weightsLayout;
 
-/// creates convolution descriptor with given values for parameters.
+/// Creates a convolution descriptor with given values for parameters.
 /// - Parameters:
 ///   - strideInX: See ``strideInX`` property.
 ///   - strideInY: See ``strideInY`` property.
@@ -203,7 +258,7 @@ MPS_CLASS_AVAILABLE_STARTING(macos(13.2), ios(16.3), tvos(16.3))
 ///   - paddingStyle: See ``paddingStyle`` property.
 ///   - dataLayout: See ``dataLayout`` property.
 ///   - weightsLayout: See ``weightsLayout`` property.
-/// - Returns: The descriptor on autoreleasepool.
+/// - Returns: The `MPSGraphConvolution3DOpDescriptor` on autoreleasepool.
 +(nullable instancetype) descriptorWithStrideInX:(NSUInteger) strideInX
                                        strideInY:(NSUInteger) strideInY
                                        strideInZ:(NSUInteger) strideInZ
@@ -215,7 +270,7 @@ MPS_CLASS_AVAILABLE_STARTING(macos(13.2), ios(16.3), tvos(16.3))
                                       dataLayout:(MPSGraphTensorNamedDataLayout) dataLayout
                                    weightsLayout:(MPSGraphTensorNamedDataLayout) weightsLayout;
 
-/// sets values of padding to given values.
+/// Sets the left, right, top, bottom, front, and back padding values.
 /// - Parameters:
 ///   - paddingLeft: See ``paddingLeft`` property.
 ///   - paddingRight: See ``paddingRight`` property.
@@ -231,13 +286,14 @@ MPS_CLASS_AVAILABLE_STARTING(macos(13.2), ios(16.3), tvos(16.3))
                               paddingBack:(NSUInteger) paddingBack;
 @end
 
+/// This is a category that defines the methods which can be used to add 2D-convolution operator to the graph with properties described by an instance of `MPSGraphConvolution2DOpDescriptor`.
 MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
 @interface MPSGraph(MPSGraphConvolutionOps)
 
-/// Creates a 2d (forward) convolution operation and returns the result tensor.
+/// Creates a 2D (forward) convolution operation and returns the result tensor.
 ///
 /// - Parameters:
-///   - source: source tensor - must be of rank 4. The layout is defined by ``descriptor.dataLayout``.
+///   - source: source tensor - must be a rank 4 tensor. The layout is defined by ``descriptor.dataLayout``.
 ///   - weights: weights tensor, must be rank 4. The layout is defined by ``descriptor.weightsLayout``.
 ///   - descriptor: Specifies strides, dilation rates, paddings and layouts.
 ///   - name: The name for the operation.
@@ -248,17 +304,18 @@ MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
                                              name:(NSString * _Nullable) name
 MPS_SWIFT_NAME( convolution2D(_:weights:descriptor:name:) );
 
-/// Create convolution 2d gradient operation with respect to forward convolution source tensor.
-/// If `S` is source tensor to forward convoluiton, `R` is the result/returned tensor of forward convolution,
-/// and `L` is the loss function, convolution2DDataGradientWithIncomingGradientTensor returns tensor `dL/dS = dL/dR * dR/dS`,
+/// Creates a 2D convolution gradient operation with respect to the source tensor of the forward convolution.
+///
+/// If `S` is source tensor to forward convolution, `R` is the result/returned tensor from forward convolution,
+/// and `L` is the loss function, `convolution2DDataGradientWithIncomingGradientTensor` returns tensor `dL/dS = dL/dR * dR/dS`,
 /// where `dL/dR` is the incomingGradient parameter.
 ///
 /// - Parameters:
 ///   - incomingGradient: Incoming loss gradient tensor
 ///   - weights: Forward pass weights tensor
 ///   - outputShape: Shape of the forward pass source tensor
-///   - forwardConvolutionDescriptor: Forward convolution 2d op ``descriptor``
-///   - name: The name for the operation
+///   - forwardConvolutionDescriptor: Forward convolution 2D op ``descriptor``
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(MPSGraphTensor *) convolution2DDataGradientWithIncomingGradientTensor:(MPSGraphTensor *) incomingGradient
                                                           weightsTensor:(MPSGraphTensor *) weights
@@ -267,8 +324,9 @@ MPS_SWIFT_NAME( convolution2D(_:weights:descriptor:name:) );
                                                                    name:(NSString * _Nullable) name
 MPS_SWIFT_NAME( convolution2DDataGradient(_:weights:outputShape:forwardConvolutionDescriptor:name:) );
 
-/// Create convolution 2d gradient operation with respect to forward convolution source tensor.
-/// If `S` is source tensor to forward convoluiton, `R` is the result/returned tensor of forward convolution,
+/// Creates a 2D convolution gradient operation with respect to the source tensor of the forward convolution.
+///
+/// If `S` is source tensor to forward convolution, `R` is the result/returned tensor of forward convolution,
 /// and `L` is the loss function, convolution2DDataGradientWithIncomingGradientTensor returns tensor `dL/dS = dL/dR * dR/dS`,
 /// where `dL/dR` is the incomingGradient parameter.
 ///
@@ -276,8 +334,8 @@ MPS_SWIFT_NAME( convolution2DDataGradient(_:weights:outputShape:forwardConvoluti
 ///   - incomingGradient: Incoming loss gradient tensor
 ///   - weights: Forward pass weights tensor
 ///   - outputShapeTensor: 4D Int32 or Int64 tensor. Shape of the forward pass source tensor
-///   - forwardConvolutionDescriptor: Forward convolution 2d op ``descriptor``
-///   - name: The name for the operation
+///   - forwardConvolutionDescriptor: Forward convolution 2D op ``descriptor``
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(MPSGraphTensor *) convolution2DDataGradientWithIncomingGradientTensor:(MPSGraphTensor *) gradient
                                                           weightsTensor:(MPSGraphTensor *) weights
@@ -287,8 +345,9 @@ MPS_SWIFT_NAME( convolution2DDataGradient(_:weights:outputShape:forwardConvoluti
 MPS_CLASS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0))
 MPS_SWIFT_NAME( convolution2DDataGradient(_:weights:outputShapeTensor:forwardConvolutionDescriptor:name:) );
 
-/// Create convolution 2d gradient operation with respect to forward convolution weights tensor.
-/// If `W` is weights tensor to forward convoluiton, `R` is the result/returned tensor of forward convolution,
+/// Creates a 2D convolution gradient operation with respect to the weights tensor of the forward convolution.
+///
+/// If `W` is weights tensor to forward convolution, `R` is the result/returned tensor of forward convolution,
 /// and `L` is the loss function, convolution2DWeightsGradientWithIncomingGradientTensor returns tensor `dL/dW = dL/dR * dR/dW`,
 /// where `dL/dR` is the incomingGradient parameter.
 ///
@@ -296,8 +355,8 @@ MPS_SWIFT_NAME( convolution2DDataGradient(_:weights:outputShapeTensor:forwardCon
 ///   - incomingGradient: Incoming loss gradient tensor
 ///   - weights: Forward pass weights tensor
 ///   - outputShape: Shape of the forward pass source tensor
-///   - forwardConvolutionDescriptor: Forward convolution 2d op ``descriptor``
-///   - name: The name for the operation
+///   - forwardConvolutionDescriptor: Forward convolution 2D op ``descriptor``
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(MPSGraphTensor *) convolution2DWeightsGradientWithIncomingGradientTensor:(MPSGraphTensor *) incomingGradient
                                                               sourceTensor:(MPSGraphTensor *) source
@@ -307,8 +366,9 @@ MPS_SWIFT_NAME( convolution2DDataGradient(_:weights:outputShapeTensor:forwardCon
 MPS_SWIFT_NAME( convolution2DWeightsGradient(_:source:outputShape:forwardConvolutionDescriptor:name:) );
 
 
-/// Create convolution 2d gradient operation with respect to forward convolution weights tensor.
-/// If `W` is weights tensor to forward convoluiton, `R` is the result/returned tensor of forward convolution,
+/// Creates a 2D convolution gradient operation with respect to weights tensor of forward convolution.
+///
+/// If `W` is weights tensor to forward convolution, `R` is the result/returned tensor of forward convolution,
 /// and `L` is the loss function, convolution2DWeightsGradientWithIncomingGradientTensor returns tensor `dL/dW = dL/dR * dR/dW`,
 /// where `dL/dR` is the incomingGradient parameter.
 ///
@@ -316,8 +376,8 @@ MPS_SWIFT_NAME( convolution2DWeightsGradient(_:source:outputShape:forwardConvolu
 ///   - incomingGradient: Incoming loss gradient tensor
 ///   - weights: Forward pass weights tensor
 ///   - outputShapeTensor: 4D int32 or Int64 Tensor. Shape of the forward pass source tensor
-///   - forwardConvolutionDescriptor: Forward convolution 2d op ``descriptor``
-///   - name: The name for the operation
+///   - forwardConvolutionDescriptor: Forward convolution 2D op ``descriptor``
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(MPSGraphTensor *) convolution2DWeightsGradientWithIncomingGradientTensor:(MPSGraphTensor *) gradient
                                                               sourceTensor:(MPSGraphTensor *) source
@@ -328,7 +388,7 @@ MPS_CLASS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0))
 MPS_SWIFT_NAME( convolution2DWeightsGradient(_:source:outputShapeTensor:forwardConvolutionDescriptor:name:) );
 
 
-/// Creates a 3d (forward) convolution operation and returns the result tensor.
+/// Creates a 3D forward convolution operation and returns the result tensor.
 ///
 /// - Parameters:
 ///   - source: source tensor - must be of rank 5. The layout is defined by ``descriptor.dataLayout``.
@@ -343,8 +403,9 @@ MPS_SWIFT_NAME( convolution2DWeightsGradient(_:source:outputShapeTensor:forwardC
 MPS_CLASS_AVAILABLE_STARTING(macos(13.2), ios(16.3), tvos(16.3))
 MPS_SWIFT_NAME( convolution3D(_:weights:descriptor:name:) );
 
-/// Create convolution 3d gradient operation with respect to forward convolution source tensor.
-/// If `S` is source tensor to forward convoluiton, `R` is the result/returned tensor of forward convolution,
+/// Creates a 3D convolution gradient operation with respect to the source tensor of the forward convolution.
+///
+/// If `S` is source tensor to forward convolution, `R` is the result/returned tensor of forward convolution,
 /// and `L` is the loss function, convolution3DDataGradientWithIncomingGradientTensor returns tensor `dL/dS = dL/dR * dR/dS`,
 /// where `dL/dR` is the incomingGradient parameter.
 ///
@@ -352,8 +413,8 @@ MPS_SWIFT_NAME( convolution3D(_:weights:descriptor:name:) );
 ///   - incomingGradient: Incoming loss gradient tensor
 ///   - weights: Forward pass weights tensor
 ///   - outputShape: Shape of the forward pass source tensor
-///   - forwardConvolutionDescriptor: Forward convolution 2d op ``descriptor``
-///   - name: The name for the operation
+///   - forwardConvolutionDescriptor: Forward convolution 2D op ``descriptor``
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(MPSGraphTensor *) convolution3DDataGradientWithIncomingGradientTensor:(MPSGraphTensor *) incomingGradient
                                                           weightsTensor:(MPSGraphTensor *) weights
@@ -363,8 +424,9 @@ MPS_SWIFT_NAME( convolution3D(_:weights:descriptor:name:) );
 MPS_CLASS_AVAILABLE_STARTING(macos(13.2), ios(16.3), tvos(16.3))
 MPS_SWIFT_NAME( convolution3DDataGradient(_:weights:outputShape:forwardConvolutionDescriptor:name:) );
 
-/// Create convolution 3d gradient operation with respect to forward convolution source tensor.
-/// If `S` is source tensor to forward convoluiton, `R` is the result/returned tensor of forward convolution,
+/// Creates a 3D convolution gradient operation with respect to the source tensor of the forward convolution.
+///
+/// If `S` is source tensor to forward convolution, `R` is the result/returned tensor of forward convolution,
 /// and `L` is the loss function, convolution3DDataGradientWithIncomingGradientTensor returns tensor `dL/dS = dL/dR * dR/dS`,
 /// where `dL/dR` is the incomingGradient parameter.
 ///
@@ -372,8 +434,8 @@ MPS_SWIFT_NAME( convolution3DDataGradient(_:weights:outputShape:forwardConvoluti
 ///   - incomingGradient: Incoming loss gradient tensor
 ///   - weights: Forward pass weights tensor
 ///   - outputShapeTensor: 4D Int32 or Int64 tensor. Shape of the forward pass source tensor
-///   - forwardConvolutionDescriptor: Forward convolution 2d op ``descriptor``
-///   - name: The name for the operation
+///   - forwardConvolutionDescriptor: Forward convolution 2D op ``descriptor``
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(MPSGraphTensor *) convolution3DDataGradientWithIncomingGradientTensor:(MPSGraphTensor *) gradient
                                                           weightsTensor:(MPSGraphTensor *) weights
@@ -383,8 +445,9 @@ MPS_SWIFT_NAME( convolution3DDataGradient(_:weights:outputShape:forwardConvoluti
 MPS_CLASS_AVAILABLE_STARTING(macos(13.2), ios(16.3), tvos(16.3))
 MPS_SWIFT_NAME( convolution3DDataGradient(_:weights:outputShapeTensor:forwardConvolutionDescriptor:name:) );
 
-/// Create convolution 3d gradient operation with respect to forward convolution weights tensor.
-/// If `W` is weights tensor to forward convoluiton, `R` is the result/returned tensor of forward convolution,
+/// Creates a 3D convolution gradient operation with respect to the weights tensor of the forward convolution.
+///
+/// If `W` is weights tensor to forward convolution, `R` is the result/returned tensor of forward convolution,
 /// and `L` is the loss function, convolution3DWeightsGradientWithIncomingGradientTensor returns tensor `dL/dW = dL/dR * dR/dW`,
 /// where `dL/dR` is the incomingGradient parameter.
 ///
@@ -392,8 +455,8 @@ MPS_SWIFT_NAME( convolution3DDataGradient(_:weights:outputShapeTensor:forwardCon
 ///   - incomingGradient: Incoming loss gradient tensor
 ///   - weights: Forward pass weights tensor
 ///   - outputShape: Shape of the forward pass source tensor
-///   - forwardConvolutionDescriptor: Forward convolution 2d op ``descriptor``
-///   - name: The name for the operation
+///   - forwardConvolutionDescriptor: Forward convolution 2D op ``descriptor``
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(MPSGraphTensor *) convolution3DWeightsGradientWithIncomingGradientTensor:(MPSGraphTensor *) incomingGradient
                                                               sourceTensor:(MPSGraphTensor *) source
@@ -403,8 +466,9 @@ MPS_SWIFT_NAME( convolution3DDataGradient(_:weights:outputShapeTensor:forwardCon
 MPS_CLASS_AVAILABLE_STARTING(macos(13.2), ios(16.3), tvos(16.3))
 MPS_SWIFT_NAME( convolution3DWeightsGradient(_:source:outputShape:forwardConvolutionDescriptor:name:) );
 
-/// Create convolution 3d gradient operation with respect to forward convolution weights tensor.
-/// If `W` is weights tensor to forward convoluiton, `R` is the result/returned tensor of forward convolution,
+/// Creates a 3D convolution gradient operation with respect to the weights tensor of the forward convolution.
+/// 
+/// If `W` is weights tensor to forward convolution, `R` is the result/returned tensor of forward convolution,
 /// and `L` is the loss function, convolution3DWeightsGradientWithIncomingGradientTensor returns tensor `dL/dW = dL/dR * dR/dW`,
 /// where `dL/dR` is the incomingGradient parameter.
 ///
@@ -412,8 +476,8 @@ MPS_SWIFT_NAME( convolution3DWeightsGradient(_:source:outputShape:forwardConvolu
 ///   - incomingGradient: Incoming loss gradient tensor
 ///   - weights: Forward pass weights tensor
 ///   - outputShapeTensor: 4D int32 or Int64 Tensor. Shape of the forward pass source tensor
-///   - forwardConvolutionDescriptor: Forward convolution 2d op ``descriptor``
-///   - name: The name for the operation
+///   - forwardConvolutionDescriptor: Forward convolution 2D op ``descriptor``
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(MPSGraphTensor *) convolution3DWeightsGradientWithIncomingGradientTensor:(MPSGraphTensor *) gradient
                                                               sourceTensor:(MPSGraphTensor *) source

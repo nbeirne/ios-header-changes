@@ -164,7 +164,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.0), tvos(17.0)) API_UNAVAILABLE(watchos) NS_SW
  * @param interaction    The UIContextMenuInteraction requesting a highlighting preview.
  * @param configuration  The configuration of the menu about to be displayed by this interaction.
  */
-- (nullable UITargetedPreview *)contextMenuInteraction:(UIContextMenuInteraction *)interaction previewForHighlightingMenuWithConfiguration:(UIContextMenuConfiguration *)configuration API_DEPRECATED_WITH_REPLACEMENT("contextMenuInteraction:configuration:highlightPreviewForItemWithIdentifier:", ios(13.0, 16.0), xros(1.0, 1.0)) API_UNAVAILABLE(tvos);
+- (nullable UITargetedPreview *)contextMenuInteraction:(UIContextMenuInteraction *)interaction previewForHighlightingMenuWithConfiguration:(UIContextMenuConfiguration *)configuration API_DEPRECATED_WITH_REPLACEMENT("contextMenuInteraction:configuration:highlightPreviewForItemWithIdentifier:", ios(13.0, 16.0), visionos(1.0, 1.0)) API_UNAVAILABLE(tvos);
 
 /*!
  * @abstract Called when the interaction is about to dismiss. Return a UITargetedPreview describing the desired dismissal target.
@@ -176,7 +176,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.0), tvos(17.0)) API_UNAVAILABLE(watchos) NS_SW
  * @return Return a UITargetedPreview describing the desired dismissal target. Return nil to cause the menu to
  *         animate away without morphing into a specific view.
  */
-- (nullable UITargetedPreview *)contextMenuInteraction:(UIContextMenuInteraction *)interaction previewForDismissingMenuWithConfiguration:(UIContextMenuConfiguration *)configuration API_DEPRECATED_WITH_REPLACEMENT("contextMenuInteraction:configuration:dismissalPreviewForItemWithIdentifier:", ios(13.0, 16.0), xros(1.0, 1.0)) API_UNAVAILABLE(tvos);
+- (nullable UITargetedPreview *)contextMenuInteraction:(UIContextMenuInteraction *)interaction previewForDismissingMenuWithConfiguration:(UIContextMenuConfiguration *)configuration API_DEPRECATED_WITH_REPLACEMENT("contextMenuInteraction:configuration:dismissalPreviewForItemWithIdentifier:", ios(13.0, 16.0), visionos(1.0, 1.0)) API_UNAVAILABLE(tvos);
 
 @end
 

@@ -7,6 +7,7 @@
 
 #import <PassKit/PKConstants.h>
 #import <PassKit/PKObject.h>
+#import <PassKit/PKPass_Types.h>
 #import <PassKit/PKPass.h>
 #import <PassKit/PKSecureElementPass.h>
 #import <PassKit/PKPaymentPass.h>
@@ -122,6 +123,9 @@
 #if __has_include(<PassKit/PKAddShareablePassConfiguration.h>)
 #import <PassKit/PKAddShareablePassConfiguration.h>
 #endif
+#if __has_include(<PassKit/PKAddIdentityDocumentConfiguration.h>)
+#import <PassKit/PKAddIdentityDocumentConfiguration.h>
+#endif
 #if __has_include(<PassKit/PKIssuerProvisioningExtensionAuthorizationProviding.h>)
 #import <PassKit/PKIssuerProvisioningExtensionAuthorizationProviding.h>
 #endif
@@ -175,7 +179,7 @@
 #if __has_include(<PassKit/PKPayLaterView.h>)
 #import <PassKit/PKPayLaterView.h>
 #endif
-#if __has_include(<PassKit/PKPayLaterUtilities.h>)
-#import <PassKit/PKPayLaterUtilities.h>
+#if __has_include(<PassKit/PKPayLaterValidator.h>)
+#import <PassKit/PKPayLaterValidator.h>
 #endif
 #endif // TARGET_OS_IOS && !TARGET_OS_MACCATALYST

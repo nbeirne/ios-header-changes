@@ -12,6 +12,7 @@
 #import <XCTest/XCUICoordinate.h>
 #import <XCTest/XCUIDevice.h>
 #import <XCTest/XCUIDeviceButton.h>
+#import <XCTest/XCUIDeviceHandGesture.h>
 #import <XCTest/XCUIElement.h>
 #import <XCTest/XCUIElementAttributes.h>
 #import <XCTest/XCUIElementQuery.h>

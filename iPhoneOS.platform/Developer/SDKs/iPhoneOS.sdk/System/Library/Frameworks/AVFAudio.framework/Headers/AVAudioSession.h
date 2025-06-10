@@ -19,11 +19,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Forward declarations
 @class NSError, NSString, NSNumber;
-
+@class AVAudioChannelLayout;
 
 // =================================================================================================
 #pragma mark-- iOS/tvOS/watchOS AVAudioSession interface --
 
+NS_SWIFT_SENDABLE
 API_AVAILABLE(ios(3.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos) 
 @interface AVAudioSession : NSObject {
 @private
@@ -171,6 +172,10 @@ API_AVAILABLE(ios(3.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos)
  */
 - (BOOL)setPrefersNoInterruptionsFromSystemAlerts:(BOOL)inValue error:(NSError**)outError API_AVAILABLE(ios(14.5), watchos(7.3), tvos(14.5)) API_UNAVAILABLE(macos);
 @property (readonly, nonatomic) BOOL prefersNoInterruptionsFromSystemAlerts API_AVAILABLE(ios(14.5), watchos(7.3), tvos(14.5)) API_UNAVAILABLE(macos);
+
+/// Get the currently resolved rendering mode to badge content appropriately.
+/// Clients should use this property to determine what to badge content as.
+@property(readonly) AVAudioSessionRenderingMode renderingMode API_AVAILABLE(ios(17.2), tvos(17.2)) API_UNAVAILABLE(watchos, macos, visionos);
 
 @end
 
@@ -323,7 +328,7 @@ API_AVAILABLE(ios(3.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos)
 	an error.
 */
 
-/// The current hardware sample rate
+/// The current hardware sample rate. Is key-value observable (starting iOS 18.0).
 @property (readonly) double sampleRate API_AVAILABLE(ios(6.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos);
 
 /// The current number of hardware input channels. Is key-value observable.
@@ -340,6 +345,12 @@ API_AVAILABLE(ios(3.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos)
 
 /// The current hardware IO buffer duration in seconds.
 @property (readonly) NSTimeInterval IOBufferDuration API_AVAILABLE(ios(6.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos);
+
+/// Get an array of channel layouts that the current route supports.
+/// This property is only supported when the output is routed to ports of type AVAudioSessionPortCarAudio or AVAudioSessionPortAirPlay
+/// Otherwise, an empty array will be returned. Note that this will return an empty array if session is inactive.
+/// Clients should listen to AVAudioSessionRenderingCapabilitiesChangeNotification to be notified when this changes.
+@property(readonly) NSArray<AVAudioChannelLayout*>* supportedOutputChannelLayouts API_AVAILABLE(ios(17.2), tvos(17.2)) API_UNAVAILABLE(watchos, macos, visionos);
 
 @end
 
@@ -436,7 +447,7 @@ API_AVAILABLE(ios(3.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos)
 
 @end // interface for AVAudioSession (RoutingConfiguration)
 
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
+#if TARGET_OS_VISION
 /*!
  The perceived "size" or "immersivity" of the sound. Use Small for least
  immersive and Large for most immersive.
@@ -494,20 +505,20 @@ typedef NSString * const AVAudioSessionSpatialExperienceOption NS_TYPED_ENUM NS_
 /// SpatialExperience is HeadTracked or Fixed. If not provided for
 /// those SpatialExperiences, the default will be
 /// AVAudioSessionSoundStageSizeAutomatic.
-OS_EXPORT AVAudioSessionSpatialExperienceOption AVAudioSessionSpatialExperienceOptionSoundStageSize API_AVAILABLE(xros(1.0)) API_UNAVAILABLE(ios, watchos, tvos, macos);
+OS_EXPORT AVAudioSessionSpatialExperienceOption AVAudioSessionSpatialExperienceOptionSoundStageSize API_AVAILABLE(visionos(1.0)) API_UNAVAILABLE(ios, watchos, tvos, macos);
 
 /// Associated value is NSNumber with AVAudioSessionAnchoringStrategy. Only used if
 /// SpatialExperience is HeadTracked. If not provided for a head-tracked
 /// spatial experience, the default will be
 /// AVAudioSessionAnchoringStrategyAutomatic.
-OS_EXPORT AVAudioSessionSpatialExperienceOption AVAudioSessionSpatialExperienceOptionAnchoringStrategy API_AVAILABLE(xros(1.0)) API_UNAVAILABLE(ios, watchos, tvos, macos);
+OS_EXPORT AVAudioSessionSpatialExperienceOption AVAudioSessionSpatialExperienceOptionAnchoringStrategy API_AVAILABLE(visionos(1.0)) API_UNAVAILABLE(ios, watchos, tvos, macos);
 
 /// Associated value is NSString from UIScene.session.persistentIdentifier. Only
 /// used if SpatialExperience is HeadTracked and AnchoringStrategy is
 /// Scene. If not provided for a scene-anchored spatial experience, the
 /// session will fail to set the intended spatial experience and
 /// return an error.
-OS_EXPORT AVAudioSessionSpatialExperienceOption AVAudioSessionSpatialExperienceOptionSceneIdentifier API_AVAILABLE(xros(1.0)) API_UNAVAILABLE(ios, watchos, tvos, macos);
+OS_EXPORT AVAudioSessionSpatialExperienceOption AVAudioSessionSpatialExperienceOptionSceneIdentifier API_AVAILABLE(visionos(1.0)) API_UNAVAILABLE(ios, watchos, tvos, macos);
 
 
 @interface AVAudioSession (SpatialPreference)
@@ -516,14 +527,14 @@ OS_EXPORT AVAudioSessionSpatialExperienceOption AVAudioSessionSpatialExperienceO
 ///Configure the developer's intended spatial experience for this audio session.
 - (BOOL)setIntendedSpatialExperience:(AVAudioSessionSpatialExperience)intendedSpatialExperience
                              options:(nullable NSDictionary<AVAudioSessionSpatialExperienceOption, id>*)options
-                               error:(NSError**)error NS_REFINED_FOR_SWIFT API_AVAILABLE(xros(1.0)) API_UNAVAILABLE(ios, watchos, tvos, macos);
+                               error:(NSError**)error NS_REFINED_FOR_SWIFT API_AVAILABLE(visionos(1.0)) API_UNAVAILABLE(ios, watchos, tvos, macos);
 
 /// Get the developer's intended spatial experience
-@property (readonly, nonatomic) AVAudioSessionSpatialExperience intendedSpatialExperience NS_REFINED_FOR_SWIFT API_AVAILABLE(xros(1.0)) API_UNAVAILABLE(ios, watchos, tvos, macos);
+@property (readonly, nonatomic) AVAudioSessionSpatialExperience intendedSpatialExperience NS_REFINED_FOR_SWIFT API_AVAILABLE(visionos(1.0)) API_UNAVAILABLE(ios, watchos, tvos, macos);
 
 /// Get the developer's intended spatial experience options. May be nil if the
 /// experience is NonSpatial.
-@property (readonly, nonatomic, nullable) NSDictionary<AVAudioSessionSpatialExperienceOption, id>* intendedSpatialExperienceOptions NS_REFINED_FOR_SWIFT API_AVAILABLE(xros(1.0)) API_UNAVAILABLE(ios, watchos, tvos, macos);
+@property (readonly, nonatomic, nullable) NSDictionary<AVAudioSessionSpatialExperienceOption, id>* intendedSpatialExperienceOptions NS_REFINED_FOR_SWIFT API_AVAILABLE(visionos(1.0)) API_UNAVAILABLE(ios, watchos, tvos, macos);
 
 @end // AVAudioSession (SpatialPreference)
 
@@ -533,12 +544,12 @@ OS_EXPORT AVAudioSessionSpatialExperienceOption AVAudioSessionSpatialExperienceO
 /// candidacy must be exclusive for an audio session to be eligible - that is,
 /// if multiple audio sessions from the same application are now-playing
 /// candidates, none of them are eligible.
-@property(readonly) BOOL isNowPlayingCandidate API_AVAILABLE(xros(1.0)) API_UNAVAILABLE(ios, watchos, tvos, macos);
-- (BOOL)setIsNowPlayingCandidate:(BOOL)inValue error:(NSError **)outError API_AVAILABLE(xros(1.0)) API_UNAVAILABLE(ios, watchos, tvos, macos);
+@property(readonly) BOOL isNowPlayingCandidate API_AVAILABLE(visionos(1.0)) API_UNAVAILABLE(ios, watchos, tvos, macos);
+- (BOOL)setIsNowPlayingCandidate:(BOOL)inValue error:(NSError **)outError API_AVAILABLE(visionos(1.0)) API_UNAVAILABLE(ios, watchos, tvos, macos);
 
 @end // AVAudioSession (NowPlayingCandidacy)
 
-#endif // TARGET_OS_XR
+#endif // TARGET_OS_VISION
 
 
 #pragma mark-- Names for NSNotifications --
@@ -604,6 +615,14 @@ OS_EXPORT NSNotificationName const  AVAudioSessionSilenceSecondaryAudioHintNotif
 */
 OS_EXPORT NSNotificationName const  AVAudioSessionSpatialPlaybackCapabilitiesChangedNotification API_AVAILABLE(ios(15.0), watchos(8.0), tvos(15.0)) API_UNAVAILABLE(macos) NS_SWIFT_NAME(AVAudioSession.spatialPlaybackCapabilitiesChangedNotification);
 
+/// Notification sent to registered listeners when the resolved rendering mode changes.
+OS_EXPORT NSNotificationName const  AVAudioSessionRenderingModeChangeNotification API_AVAILABLE(ios(17.2), tvos(17.2)) API_UNAVAILABLE(watchos, macos, visionos) NS_SWIFT_NAME(AVAudioSession.renderingModeChangeNotification);
+
+/*!
+	 @brief Notification sent to registered listeners when the rendering capabilities change.
+ */
+OS_EXPORT NSNotificationName const AVAudioSessionRenderingCapabilitiesChangeNotification API_AVAILABLE(ios(17.2), tvos(17.2)) API_UNAVAILABLE(watchos, macos, visionos) NS_SWIFT_NAME(AVAudioSession.renderingCapabilitiesChangeNotification);
+
 #pragma mark-- Keys for NSNotification userInfo dictionaries --
 
 /// keys for AVAudioSessionSpatialPlaybackCapabilitiesChangedNotification
@@ -644,6 +663,10 @@ OS_EXPORT NSString *const AVAudioSessionRouteChangePreviousRouteKey API_AVAILABL
 /// keys for AVAudioSessionSilenceSecondaryAudioHintNotification
 /// value is an NSNumber representing an AVAudioSessionSilenceSecondaryAudioHintType
 OS_EXPORT NSString *const AVAudioSessionSilenceSecondaryAudioHintTypeKey API_AVAILABLE(ios(8.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos);
+
+/// keys for AVAudioSessionRenderingModeChangeNotification
+/// Contains a payload of NSInteger representing the new resolved rendering mode
+OS_EXPORT NSString *const AVAudioSessionRenderingModeNewRenderingModeKey API_AVAILABLE(ios(17.2), tvos(17.2)) API_UNAVAILABLE(watchos, macos, visionos);
 
 NS_ASSUME_NONNULL_END
 

@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @class XCUILocation
  * Represents a device's simulated location by wrapping a CLLocation object from Core Location
  */
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUILocation : NSObject
 
 + (instancetype)new XCT_UNAVAILABLE("Initialize XCUILocation using a CLLocation object");

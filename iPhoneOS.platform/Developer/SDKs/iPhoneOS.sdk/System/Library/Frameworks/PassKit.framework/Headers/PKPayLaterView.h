@@ -14,7 +14,7 @@
 #if TARGET_OS_IOS && !TARGET_OS_MACCATALYST
 
 #import <UIKit/UIKit.h>
-#import <PassKit/PKPayLaterUtilities.h>
+#import <PassKit/PKPayLaterValidator.h>
 
 @class PKPayLaterView;
 
@@ -37,9 +37,9 @@ API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(macos, watchos, tvos)
 /// Constructs a view displaying Pay Later Merchandising information given a configuration
 /// - Parameters:
 ///   - amount: The users bag price or item pricing
-///   - locale: The localization data for the how the returned configuration will be
+///   - currencyCode: The ISO 4217 code for the country or region of the merchant’s principle place of business.
 - (instancetype)initWithAmount:(NSDecimalNumber *)amount
-                        locale:(NSLocale *)locale NS_REFINED_FOR_SWIFT;
+                  currencyCode:(NSString *)currencyCode NS_REFINED_FOR_SWIFT;
 
 /// Delegate used to receive callbacks about size changes
 @property (nonatomic, assign) id<PKPayLaterViewDelegate> delegate;
@@ -47,8 +47,8 @@ API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(macos, watchos, tvos)
 /// The users bag price or item pricing
 @property (nonatomic, copy) NSDecimalNumber *amount NS_REFINED_FOR_SWIFT;
 
-/// The currency, region, and langauge localization data for the how the pay later view will be displayed.
-@property (nonatomic, copy) NSLocale *locale;
+/// The ISO 4217 code for the country or region of the merchant’s principle place of business.
+@property (nonatomic, copy) NSString *currencyCode NS_REFINED_FOR_SWIFT;
 
 /// The kind of Pay Later Merchandising widget look, such as a standalone product item view. Can be badge, plain, price or checkout.
 @property (nonatomic, assign) PKPayLaterDisplayStyle displayStyle;

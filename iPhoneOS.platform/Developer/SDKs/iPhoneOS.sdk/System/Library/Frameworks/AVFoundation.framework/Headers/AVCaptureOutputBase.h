@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     Concrete AVCaptureOutput instances can be added to an AVCaptureSession using the -[AVCaptureSession addOutput:] and -[AVCaptureSession addOutputWithNoConnections:] methods.
  */
-API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0), visionos(1.0)) API_UNAVAILABLE(watchos)
 @interface AVCaptureOutput : NSObject
 {
 @private
@@ -48,7 +48,7 @@ AV_INIT_UNAVAILABLE
  @discussion
     The value of this property is an NSArray of AVCaptureConnection objects, each describing the mapping between the receiver and the AVCaptureInputPorts of one or more AVCaptureInputs.
  */
-@property(nonatomic, readonly) NSArray<AVCaptureConnection *> *connections;
+@property(nonatomic, readonly) NSArray<AVCaptureConnection *> *connections API_UNAVAILABLE(visionos);
 
 /*!
  @method connectionWithMediaType:
@@ -61,7 +61,7 @@ AV_INIT_UNAVAILABLE
  @discussion
     This convenience method returns the first AVCaptureConnection in the receiver's connections array that has an AVCaptureInputPort of the specified mediaType. If no connection with the specified mediaType is found, nil is returned.
  */
-- (nullable AVCaptureConnection *)connectionWithMediaType:(AVMediaType)mediaType API_AVAILABLE(ios(5.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros);
+- (nullable AVCaptureConnection *)connectionWithMediaType:(AVMediaType)mediaType API_AVAILABLE(ios(5.0), macCatalyst(14.0), tvos(17.0), visionos(1.0));
 
 /*!
  @method transformedMetadataObjectForMetadataObject:connection:
@@ -82,7 +82,7 @@ AV_INIT_UNAVAILABLE
  
     transformedMetadataObjectForMetadataObject:connection: alters the visual properties of the provided metadata object to match the physical rotation / mirroring of the sample buffers provided by the receiver through the indicated connection. I.e., for video data output, adjusted metadata object coordinates are rotated/mirrored. For still image and movie file output, they are not.
  */
-- (nullable AVMetadataObject *)transformedMetadataObjectForMetadataObject:(AVMetadataObject *)metadataObject connection:(AVCaptureConnection *)connection API_AVAILABLE(macos(10.15), ios(6.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros);
+- (nullable AVMetadataObject *)transformedMetadataObjectForMetadataObject:(AVMetadataObject *)metadataObject connection:(AVCaptureConnection *)connection API_AVAILABLE(macos(10.15), ios(6.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos);
 
 /*!
  @method metadataOutputRectOfInterestForRect:
@@ -97,7 +97,7 @@ AV_INIT_UNAVAILABLE
  @discussion
     AVCaptureMetadataOutput rectOfInterest is expressed as a CGRect where {0,0} represents the top left of the picture area, and {1,1} represents the bottom right on an unrotated picture. This convenience method converts a rectangle in the coordinate space of the receiver to a rectangle of interest in the coordinate space of an AVCaptureMetadataOutput whose AVCaptureDevice is providing input to the receiver. The conversion takes orientation, mirroring, and scaling into consideration. See -transformedMetadataObjectForMetadataObject:connection: for a full discussion of how orientation and mirroring are applied to sample buffers passing through the output.
  */
-- (CGRect)metadataOutputRectOfInterestForRect:(CGRect)rectInOutputCoordinates API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros);
+- (CGRect)metadataOutputRectOfInterestForRect:(CGRect)rectInOutputCoordinates API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos);
 
 /*!
  @method rectForMetadataOutputRectOfInterest:
@@ -112,7 +112,7 @@ AV_INIT_UNAVAILABLE
  @discussion
     AVCaptureMetadataOutput rectOfInterest is expressed as a CGRect where {0,0} represents the top left of the picture area, and {1,1} represents the bottom right on an unrotated picture. This convenience method converts a rectangle in the coordinate space of an AVCaptureMetadataOutput whose AVCaptureDevice is providing input to the coordinate space of the receiver. The conversion takes orientation, mirroring, and scaling into consideration. See -transformedMetadataObjectForMetadataObject:connection: for a full discussion of how orientation and mirroring are applied to sample buffers passing through the output.
  */
-- (CGRect)rectForMetadataOutputRectOfInterest:(CGRect)rectInMetadataOutputCoordinates API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros);
+- (CGRect)rectForMetadataOutputRectOfInterest:(CGRect)rectInMetadataOutputCoordinates API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos);
 
 @end
 
@@ -136,7 +136,7 @@ typedef NS_ENUM(NSInteger, AVCaptureOutputDataDroppedReason) {
     AVCaptureOutputDataDroppedReasonLateData      = 1,
     AVCaptureOutputDataDroppedReasonOutOfBuffers  = 2,
     AVCaptureOutputDataDroppedReasonDiscontinuity = 3,
-} API_AVAILABLE(macos(10.15), ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos);
+} API_AVAILABLE(macos(10.15), ios(11.0), macCatalyst(14.0), tvos(17.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 NS_ASSUME_NONNULL_END
 

@@ -30,9 +30,13 @@ typedef NS_ENUM(NSInteger, XCUIDeviceButton) {
     XCUIDeviceButtonHome = 1,
     XCUIDeviceButtonVolumeUp XCTEST_SIMULATOR_UNAVAILABLE("This API is not available in the Simulator, see the XCUIDeviceButton documentation for details.") = 2,
     XCUIDeviceButtonVolumeDown XCTEST_SIMULATOR_UNAVAILABLE("This API is not available in the Simulator, see the XCUIDeviceButton documentation for details.") = 3,
-#if TARGET_OS_WATCH
+#if TARGET_OS_WATCH || TARGET_OS_IOS
     XCUIDeviceButtonAction = 4,
+#endif // TARGET_OS_WATCH || TARGET_OS_IOS
+#if TARGET_OS_IOS && !TARGET_OS_VISION
+    XCUIDeviceButtonCamera,
 #endif
+
 };
 
 #endif

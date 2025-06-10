@@ -56,7 +56,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(10.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI
  After ensuring the share and record have been saved to the server, invoke the preparationCompletionHandler
  with either the resulting CKShare, or an NSError if saving failed.
  */
-- (instancetype)initWithPreparationHandler:(void (^)(UICloudSharingController *controller, void (^preparationCompletionHandler)(CKShare * _Nullable, CKContainer * _Nullable, NSError * _Nullable)))preparationHandler;
+- (instancetype)initWithPreparationHandler:(void (^)(UICloudSharingController *controller, void (^preparationCompletionHandler)(CKShare * _Nullable, CKContainer * _Nullable, NSError * _Nullable)))preparationHandler API_DEPRECATED("Use -[UIActivityViewController initWithActivityItemsConfiguration:] and pass it a UIActivityItemsConfigurationReading-conforming object with an NSItemProvider and registered preparation handler", ios(10.0, 17.0));
 
 /* Use this initializer when you already have an active CKShare that was set up previously.
  */

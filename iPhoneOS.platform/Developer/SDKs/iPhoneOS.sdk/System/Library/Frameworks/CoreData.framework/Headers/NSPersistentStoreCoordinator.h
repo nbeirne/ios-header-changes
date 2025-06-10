@@ -1,7 +1,7 @@
 /*
     NSPersistentStoreCoordinator.h
     Core Data
-    Copyright (c) 2004-2023, Apple Inc.
+    Copyright (c) 2004-2024, Apple Inc.
     All rights reserved.
 */
 
@@ -180,8 +180,14 @@ COREDATA_EXTERN NSString * const NSPersistentHistoryTokenKey API_AVAILABLE(macos
  */
 COREDATA_EXTERN NSString * const NSPersistentStoreDeferredLightweightMigrationOptionKey API_AVAILABLE(macosx(11.0),ios(14.0),tvos(14.0),watchos(7.0));
 
+/* Key to represent the version checksum for the model.
+   This key is in the metadata for a persistent store and can be used to quickly
+   determine if a store and a model are compatible.
+*/
+COREDATA_EXTERN NSString * const NSPersistentStoreModelVersionChecksumKey API_AVAILABLE(macosx(15.0),ios(18.0),tvos(18.0),watchos(11.0),visionos(2.0));
+
 API_AVAILABLE(macosx(10.4),ios(3.0)) NS_SWIFT_SENDABLE
-#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST)
+#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST || TARGET_OS_VISION)
 @interface NSPersistentStoreCoordinator : NSObject <NSLocking> {
 #else
 @interface NSPersistentStoreCoordinator : NSObject {
@@ -271,15 +277,17 @@ API_AVAILABLE(macosx(10.4),ios(3.0)) NS_SWIFT_SENDABLE
 
 // Finish deferred work from lightweight migration for a single table
 - (BOOL)finishDeferredLightweightMigrationTask:(NSError **)error API_AVAILABLE(macosx(11.0),ios(14.0),tvos(14.0),watchos(7.0));
+    
+- (NSManagedObjectID *)managedObjectIDFromUTF8String:(const char *)utf8string length:(NSUInteger)len API_AVAILABLE(macosx(10.8), ios(5.0)) API_UNAVAILABLE(watchos, tvos, visionos) NS_REFINED_FOR_SWIFT;
 
-#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST)
+#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST || TARGET_OS_VISION)
  /*
   *   DEPRECATED
   */
 #endif
     
     
-#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST)
+#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST || TARGET_OS_VISION)
 - (void)lock API_DEPRECATED( "Use -performBlockAndWait: instead", macosx(10.4,10.10), ios(3.0,8.0));
 - (void)unlock API_DEPRECATED( "Use -performBlockAndWait: instead", macosx(10.4,10.10), ios(3.0,8.0));
 - (BOOL)tryLock API_DEPRECATED( "Use -performBlock: instead", macosx(10.4,10.10), ios(3.0,8.0));
@@ -289,7 +297,7 @@ API_AVAILABLE(macosx(10.4),ios(3.0)) NS_SWIFT_SENDABLE
 
 + (BOOL)setMetadata:(nullable NSDictionary<NSString *, id> *)metadata forPersistentStoreOfType:(nullable NSString *)storeType URL:(NSURL*)url error:(NSError **)error API_DEPRECATED("Use  -setMetadata:forPersistentStoreOfType:URL:options:error: and pass in an options dictionary matching addPersistentStoreWithType", macosx(10.5,10.11), ios(3.0,9.0));
 
-#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST)
+#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST || TARGET_OS_VISION)
 /*
  Delete all ubiquitous content for all peers for the persistent store at the given URL and also delete the local store file. storeOptions should contain the options normally passed to addPersistentStoreWithType:URL:options:error. Errors may be returned as a result of file I/O, iCloud network or iCloud account issues.
  */
@@ -299,7 +307,7 @@ API_AVAILABLE(macosx(10.4),ios(3.0)) NS_SWIFT_SENDABLE
 
 @end
 
-#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST)
+#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST || TARGET_OS_VISION)
 /*
  NSPersistentStoreUbiquitousTransitionTypeAccountAdded
  This value indicates that a new iCloud account is available, and the persistent store in use will / did transition to the new account.
@@ -323,7 +331,7 @@ typedef NS_ENUM(NSUInteger, NSPersistentStoreUbiquitousTransitionType) {
 } API_DEPRECATED("Please see the release notes and Core Data documentation.", macosx(10.9,10.12), ios(7.0,10.0));
 #endif
 
-#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST)
+#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST || TARGET_OS_VISION)
 /* option indicating that a persistent store has a given name in ubiquity, this option is required for ubiquity to function  */
 COREDATA_EXTERN NSString * const NSPersistentStoreUbiquitousContentNameKey API_DEPRECATED("Please see the release notes and Core Data documentation.", macosx(10.7,10.12), ios(5.0,10.0));
 

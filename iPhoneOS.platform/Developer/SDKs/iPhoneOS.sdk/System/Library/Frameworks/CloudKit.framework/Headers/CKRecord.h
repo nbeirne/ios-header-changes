@@ -58,19 +58,19 @@ API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0))
 - (instancetype)initWithRecordType:(CKRecordType)recordType recordID:(CKRecordID *)recordID;
 - (instancetype)initWithRecordType:(CKRecordType)recordType zoneID:(CKRecordZoneID *)zoneID;
 
-@property (atomic, readonly, copy) CKRecordType recordType;
-@property (atomic, readonly, copy) CKRecordID *recordID;
+@property (readonly, copy) CKRecordType recordType;
+@property (readonly, copy) CKRecordID *recordID;
 
 /*! Change tags are updated by the server to a unique value every time a record is modified.  A different change tag necessarily means that the contents of the record are different. */
-@property (atomic, readonly, copy, nullable) NSString *recordChangeTag;
+@property (nullable, readonly, copy) NSString *recordChangeTag;
 
 /*! This is a User Record recordID, identifying the user that created this record. */
-@property (atomic, readonly, copy, nullable) CKRecordID *creatorUserRecordID;
-@property (atomic, readonly, copy, nullable) NSDate *creationDate;
+@property (nullable, readonly, copy) CKRecordID *creatorUserRecordID;
+@property (nullable, readonly, copy) NSDate *creationDate;
 
 /*! This is a User Record recordID, identifying the user that last modified this record. */
-@property (atomic, readonly, copy, nullable) CKRecordID *lastModifiedUserRecordID;
-@property (atomic, readonly, copy, nullable) NSDate *modificationDate;
+@property (nullable, readonly, copy) CKRecordID *lastModifiedUserRecordID;
+@property (nullable, readonly, copy) NSDate *modificationDate;
 
 /*! @discussion In addition to @c objectForKey: and @c setObject:forKey:, dictionary-style subscripting (@c record[key] and @code record[key] = value @endcode) can be used to get and set values.
  *  Acceptable value object classes are:
@@ -148,7 +148,7 @@ API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0))
  *
  *  Whenever possible, it is suggested that you construct your parent hierarchies such that you will only need to share the topmost record of that hierarchy.
  */
-@property (atomic, readonly, copy, nullable) CKReference *share API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
+@property (nullable, readonly, copy) CKReference *share API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
 
 /*! @abstract Use a parent reference to teach CloudKit about the hierarchy of your records.
  *
@@ -161,7 +161,7 @@ API_AVAILABLE(macos(10.10), ios(8.0), watchos(3.0))
  *  You are encouraged to set up the @c parent relationships as part of normal record saves, even if you're not planning on sharing records at this time.
  *  This allows you to share and unshare a hierarchy of records at a later date by only modifying the "top level" record, setting or clearing its @c share reference.
  */
-@property (atomic, copy, nullable) CKReference *parent API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
+@property (nullable, copy) CKReference *parent API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
 
 /*! Convenience wrappers around creating a @c CKReference to a parent record. The resulting @c CKReference will have @code referenceAction = CKReferenceActionNone @endcode */
 - (void)setParentReferenceFromRecord:(nullable CKRecord *)parentRecord API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
@@ -211,7 +211,7 @@ API_AVAILABLE(macos(10.11), ios(9.0), watchos(3.0))
  * Key material necessary for decryption are available to the owner of the record, as well as any users that can access this record via a CKShare.
  * All CKRecordValue types can be set here except CKAsset and CKReference.
  */
-@property (atomic, readonly, copy) NS_SWIFT_SENDABLE id<CKRecordKeyValueSetting> encryptedValues API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0));
+@property (readonly, copy) NS_SWIFT_SENDABLE id<CKRecordKeyValueSetting> encryptedValues API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0));
                                                                                                      
 @end
 

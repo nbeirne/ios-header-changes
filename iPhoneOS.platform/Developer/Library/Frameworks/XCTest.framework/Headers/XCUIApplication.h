@@ -24,6 +24,7 @@ typedef NS_ENUM(NSUInteger, XCUIApplicationState) {
 };
 
 /*! Proxy for an application that may or may not be running. */
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUIApplication : XCUIElement
 
 /*!

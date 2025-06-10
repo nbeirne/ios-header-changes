@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
  @discussion
     Constants indicating the type of an AVMetadataObject.
  */
-typedef NSString * AVMetadataObjectType NS_TYPED_ENUM API_AVAILABLE(macos(10.10), ios(6.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros);
+typedef NSString * AVMetadataObjectType NS_TYPED_ENUM API_AVAILABLE(macos(10.10), ios(6.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos);
 
 
 #pragma mark - AVMetadataObject
@@ -37,7 +37,7 @@ typedef NSString * AVMetadataObjectType NS_TYPED_ENUM API_AVAILABLE(macos(10.10)
  
     The concrete AVMetadataFaceObject is used by AVCaptureMetadataOutput for face detection.
  */
-API_AVAILABLE(macos(10.10), ios(6.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros)
+API_AVAILABLE(macos(10.10), ios(6.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos)
 @interface AVMetadataObject : NSObject
 {
 @private
@@ -100,7 +100,7 @@ AV_INIT_UNAVAILABLE
     AVMetadataBodyObject represents a single detected body in a picture. It is the base object used to represent bodies, for example AVMetadataHumanBodyObject, AVMetadataCatBodyObject, AVMetadataDogBodyObject.
 
  */
-API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
 @interface AVMetadataBodyObject : AVMetadataObject <NSCopying>
 
 /*!
@@ -126,7 +126,7 @@ API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAI
  @discussion
     AVMetadataHumanBodyObject objects return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeHumanBody API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeHumanBody API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
 
 /*!
  @class AVMetadataHumanBodyObject
@@ -138,7 +138,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeHumanBody API_AVAILABL
 
     On supported platforms, AVCaptureMetadataOutput outputs arrays of detected human body objects. See AVCaptureOutput.h.
  */
-API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
 @interface AVMetadataHumanBodyObject : AVMetadataBodyObject <NSCopying>
 
 @end
@@ -153,7 +153,7 @@ API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAI
  @discussion
     AVMetadataHumanFullBodyObject objects return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeHumanFullBody API_AVAILABLE(macos(14.0), ios(17.0), macCatalyst(17.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeHumanFullBody API_AVAILABLE(macos(14.0), ios(17.0), macCatalyst(17.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
 
 /*!
  @class AVMetadataHumanFullBodyObject
@@ -165,7 +165,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeHumanFullBody API_AVAI
 
     On supported platforms, AVCaptureMetadataOutput outputs arrays of detected human full body objects. See AVCaptureOutput.h.
  */
-API_AVAILABLE(macos(14.0), ios(17.0), macCatalyst(17.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(14.0), ios(17.0), macCatalyst(17.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
 @interface AVMetadataHumanFullBodyObject : AVMetadataBodyObject <NSCopying>
 
 @end
@@ -181,7 +181,7 @@ API_AVAILABLE(macos(14.0), ios(17.0), macCatalyst(17.0), tvos(17.0)) API_UNAVAIL
  @discussion
     AVMetadataCatBodyObject objects return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCatBody API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCatBody API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
 
 /*!
  @class AVMetadataCatBodyObject
@@ -193,7 +193,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCatBody API_AVAILABLE(
 
     On supported platforms, AVCaptureMetadataOutput outputs arrays of detected cat body objects. See AVCaptureOutput.h.
  */
-API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
 @interface AVMetadataCatBodyObject : AVMetadataBodyObject <NSCopying>
 
 @end
@@ -209,7 +209,7 @@ API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAI
  @discussion
     AVMetadataDogBodyObject objects return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeDogBody API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeDogBody API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
 
 /*!
  @class AVMetadataDogBodyObject
@@ -221,7 +221,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeDogBody API_AVAILABLE(
 
     On supported platforms, AVCaptureMetadataOutput outputs arrays of detected dog body objects. See AVCaptureOutput.h.
  */
-API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
 @interface AVMetadataDogBodyObject : AVMetadataBodyObject <NSCopying>
 
 @end
@@ -237,7 +237,7 @@ API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAI
  @discussion
     AVMetadataSalientObject objects return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeSalientObject API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeSalientObject API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
 
 /*!
  @class AVMetadataSalientObject
@@ -249,7 +249,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeSalientObject API_AVAI
 
     On supported platforms, AVCaptureMetadataOutput outputs arrays of detected salient objects. See AVCaptureOutput.h.
  */
-API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
 @interface AVMetadataSalientObject : AVMetadataObject <NSCopying>
 
 /*!
@@ -273,7 +273,7 @@ API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAI
  @discussion
     AVMetadataFaceObject objects return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeFace API_AVAILABLE(macos(10.10), ios(6.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeFace API_AVAILABLE(macos(10.10), ios(6.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos);
 
 
 #pragma mark - AVMetadataFaceObject
@@ -290,7 +290,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeFace API_AVAILABLE(mac
  
     On supported platforms, AVCaptureMetadataOutput outputs arrays of detected face objects. See AVCaptureOutput.h.
  */
-API_AVAILABLE(macos(10.10), ios(6.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros)
+API_AVAILABLE(macos(10.10), ios(6.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos)
 @interface AVMetadataFaceObject : AVMetadataObject <NSCopying>
 {
 @private
@@ -352,7 +352,7 @@ API_AVAILABLE(macos(10.10), ios(6.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILA
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from UPC-E codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeUPCECode API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeUPCECode API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos);
 
 /*!
  @constant AVMetadataObjectTypeCode39Code
@@ -362,7 +362,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeUPCECode API_AVAILABLE
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from Code 39 codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCode39Code API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCode39Code API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos);
 
 /*!
  @constant AVMetadataObjectTypeCode39Mod43Code
@@ -372,7 +372,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCode39Code API_AVAILAB
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from Code 39 mod 43 codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCode39Mod43Code API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCode39Mod43Code API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos);
 
 /*!
  @constant AVMetadataObjectTypeEAN13Code
@@ -382,7 +382,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCode39Mod43Code API_AV
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from EAN-13 (including UPC-A) codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeEAN13Code API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeEAN13Code API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos);
 
 /*!
  @constant AVMetadataObjectTypeEAN8Code
@@ -392,7 +392,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeEAN13Code API_AVAILABL
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from EAN-8 codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeEAN8Code API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeEAN8Code API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos);
 
 /*!
  @constant AVMetadataObjectTypeCode93Code
@@ -402,7 +402,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeEAN8Code API_AVAILABLE
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from Code 93 codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCode93Code API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCode93Code API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos);
 
 /*!
  @constant AVMetadataObjectTypeCode128Code
@@ -412,7 +412,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCode93Code API_AVAILAB
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from Code 128 codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCode128Code API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCode128Code API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos);
 
 /*!
  @constant AVMetadataObjectTypePDF417Code
@@ -422,7 +422,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCode128Code API_AVAILA
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from PDF417 codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypePDF417Code API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypePDF417Code API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos);
 
 /*!
  @constant AVMetadataObjectTypeQRCode
@@ -432,7 +432,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypePDF417Code API_AVAILAB
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from QR codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeQRCode API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeQRCode API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos);
 
 /*!
  @constant AVMetadataObjectTypeAztecCode
@@ -442,7 +442,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeQRCode API_AVAILABLE(m
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from Aztec codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeAztecCode API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeAztecCode API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos);
 
 /*!
  @constant AVMetadataObjectTypeInterleaved2of5Code
@@ -452,7 +452,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeAztecCode API_AVAILABL
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from Interleaved 2 of 5 codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeInterleaved2of5Code API_AVAILABLE(macos(10.15), ios(8.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeInterleaved2of5Code API_AVAILABLE(macos(10.15), ios(8.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos);
 
 /*!
  @constant AVMetadataObjectTypeITF14Code
@@ -462,7 +462,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeInterleaved2of5Code AP
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from ITF14 codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeITF14Code API_AVAILABLE(macos(10.15), ios(8.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeITF14Code API_AVAILABLE(macos(10.15), ios(8.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos);
 
 /*!
  @constant AVMetadataObjectTypeDataMatrixCode
@@ -472,7 +472,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeITF14Code API_AVAILABL
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from DataMatrix codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeDataMatrixCode API_AVAILABLE(macos(10.15), ios(8.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeDataMatrixCode API_AVAILABLE(macos(10.15), ios(8.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos);
 
 /*!
  @constant AVMetadataObjectTypeCodabarCode
@@ -482,7 +482,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeDataMatrixCode API_AVA
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from Codabar codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCodabarCode NS_SWIFT_NAME(codabar) API_AVAILABLE(macos(12.3), ios(15.4), macCatalyst(15.4), tvos(15.4)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCodabarCode NS_SWIFT_NAME(codabar) API_AVAILABLE(macos(12.3), ios(15.4), macCatalyst(15.4), tvos(15.4)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
 
 /*!
  @constant AVMetadataObjectTypeGS1DataBarCode
@@ -492,7 +492,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCodabarCode NS_SWIFT_N
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from GS1DataBar codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeGS1DataBarCode NS_SWIFT_NAME(gs1DataBar) API_AVAILABLE(macos(12.3), ios(15.4), macCatalyst(15.4), tvos(15.4)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeGS1DataBarCode NS_SWIFT_NAME(gs1DataBar) API_AVAILABLE(macos(12.3), ios(15.4), macCatalyst(15.4), tvos(15.4)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
 
 /*!
  @constant AVMetadataObjectTypeGS1DataBarExpandedCode
@@ -502,7 +502,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeGS1DataBarCode NS_SWIF
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from GS1DataBarExpanded codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeGS1DataBarExpandedCode NS_SWIFT_NAME(gs1DataBarExpanded) API_AVAILABLE(macos(12.3), ios(15.4), macCatalyst(15.4), tvos(15.4)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeGS1DataBarExpandedCode NS_SWIFT_NAME(gs1DataBarExpanded) API_AVAILABLE(macos(12.3), ios(15.4), macCatalyst(15.4), tvos(15.4)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
 
 /*!
  @constant AVMetadataObjectTypeGS1DataBarLimitedCode
@@ -512,7 +512,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeGS1DataBarExpandedCode
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from GS1DataBarLimited codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeGS1DataBarLimitedCode NS_SWIFT_NAME(gs1DataBarLimited) API_AVAILABLE(macos(12.3), ios(15.4), macCatalyst(15.4), tvos(15.4)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeGS1DataBarLimitedCode NS_SWIFT_NAME(gs1DataBarLimited) API_AVAILABLE(macos(12.3), ios(15.4), macCatalyst(15.4), tvos(15.4)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
 
 /*!
  @constant AVMetadataObjectTypeMicroQRCode
@@ -522,7 +522,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeGS1DataBarLimitedCode 
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from MicroQR codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeMicroQRCode NS_SWIFT_NAME(microQR) API_AVAILABLE(macos(12.3), ios(15.4), macCatalyst(15.4), tvos(15.4)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeMicroQRCode NS_SWIFT_NAME(microQR) API_AVAILABLE(macos(12.3), ios(15.4), macCatalyst(15.4), tvos(15.4)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
 
 /*!
  @constant AVMetadataObjectTypeMicroPDF417Code
@@ -532,7 +532,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeMicroQRCode NS_SWIFT_N
  @discussion
     AVMetadataMachineReadableCodeObject objects generated from MicroPDF417 codes return this constant as their type.
  */
-AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeMicroPDF417Code NS_SWIFT_NAME(microPDF417) API_AVAILABLE(macos(12.3), ios(15.4), macCatalyst(15.4), tvos(15.4)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos);
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeMicroPDF417Code NS_SWIFT_NAME(microPDF417) API_AVAILABLE(macos(12.3), ios(15.4), macCatalyst(15.4), tvos(15.4)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
 
 
 #pragma mark - AVMetadataMachineReadableCodeObject
@@ -549,7 +549,7 @@ AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeMicroPDF417Code NS_SWI
  
     On supported platforms, AVCaptureMetadataOutput outputs arrays of detected machine readable code objects. See AVCaptureMetadataOutput.h.
  */
-API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros)
+API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos)
 @interface AVMetadataMachineReadableCodeObject : AVMetadataObject
 {
 @private
@@ -581,7 +581,7 @@ API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILA
 
 @class CIBarcodeDescriptor;
 
-API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, xros)
+API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILABLE(watchos, visionos)
 @interface AVMetadataMachineReadableCodeObject (AVMetadataMachineReadableCodeDescriptor)
 
 /*!
@@ -592,7 +592,7 @@ API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(9.0)) API_UNAVAILA
  @discussion
     The value may be nil if an abstract representation of a machine readable code object is not defined for the code type or could not be detected.
  */
-@property(readonly, nullable) CIBarcodeDescriptor *descriptor API_AVAILABLE(macos(10.15), ios(11.0), macCatalyst(14.0), tvos(11.0)) API_UNAVAILABLE(watchos, xros);
+@property(readonly, nullable) CIBarcodeDescriptor *descriptor API_AVAILABLE(macos(10.15), ios(11.0), macCatalyst(14.0), tvos(11.0)) API_UNAVAILABLE(watchos, visionos);
 
 @end
 

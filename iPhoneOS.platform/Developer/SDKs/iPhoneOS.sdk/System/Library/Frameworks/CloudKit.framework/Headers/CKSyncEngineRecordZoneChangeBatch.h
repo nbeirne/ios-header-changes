@@ -30,7 +30,6 @@ NS_SWIFT_SENDABLE
 - (nullable instancetype)initWithPendingChanges:(NSArray<CKSyncEnginePendingRecordZoneChange *> *)pendingChanges
                                  recordProvider:(CKRecord * _Nullable (NS_SWIFT_SENDABLE NS_NOESCAPE ^)(CKRecordID *recordID))recordProvider;
 
-
 /// Creates a batch of record zone changes to send to the server with a specific set of changes.
 ///
 /// If you'd like to construct your own custom batches of changes to send to the server, you can do so with this initializer.
@@ -50,17 +49,17 @@ NS_SWIFT_SENDABLE
 + (instancetype)new NS_UNAVAILABLE;
 
 /// The records to save to the server.
-@property (atomic, readonly) NSArray<CKRecord *> *recordsToSave;
+@property (readonly, copy) NSArray<CKRecord *> *recordsToSave;
 
 /// The IDs of the records to delete from the server.
-@property (atomic, readonly) NSArray<CKRecordID *> *recordIDsToDelete;
+@property (readonly, copy) NSArray<CKRecordID *> *recordIDsToDelete;
 
 /// If set to true, the sync engine will modify these records atomically by zone.
 ///
 /// If this is true, and if any record change fails, then any other changes from that zone in this batch will also fail with ``CKErrorBatchRequestFailed``.
 ///
 /// Records that exist in different zones will not be modified together atomically.
-@property (atomic, assign) BOOL atomicByZone;
+@property (assign) BOOL atomicByZone;
 
 @end
 

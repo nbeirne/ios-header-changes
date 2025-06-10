@@ -15,7 +15,7 @@
  * A type of data stream stored in the SensorKit data store.
  *
  */
-typedef NSString * SRSensor NS_TYPED_ENUM API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+typedef NSString * SRSensor NS_TYPED_ENUM API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
  * This data stream stores ambient light sensor data from devices when the screen is on.
  * Fetches from this stream return objects of type SRAmbientLightSample.
  */
-SR_EXTERN SRSensor const SRSensorAmbientLightSensor API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorAmbientLightSensor API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 /*!
  * @const SRSensorAccelerometer
@@ -41,7 +41,7 @@ SR_EXTERN SRSensor const SRSensorAmbientLightSensor API_AVAILABLE(ios(14.0)) API
  * This data stream stores acceleration measured by the device's accelerometer.
  * Fetches from this stream return objects of type NSArray<CMRecordedAccelerometerData *> * as defined in the CoreMotion framework.
  */
-SR_EXTERN SRSensor const SRSensorAccelerometer API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorAccelerometer API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 /*!
  * @const SRSensorRotationRate
@@ -53,7 +53,7 @@ SR_EXTERN SRSensor const SRSensorAccelerometer API_AVAILABLE(ios(14.0)) API_UNAV
  * This data stream stores rotation rate measured by the device's gyroscope.
  * Fetches from this stream return objects of type NSArray<CMRecordedRotationRateData *> * as defined in the CoreMotion framework.
  */
-SR_EXTERN SRSensor const SRSensorRotationRate API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorRotationRate API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 /*!
  * @const SRSensorVisits
@@ -71,7 +71,7 @@ SR_EXTERN SRSensor const SRSensorRotationRate API_AVAILABLE(ios(14.0)) API_UNAVA
  *
  * Fetches from this stream return objects of type SRVisit.
  */
-SR_EXTERN SRSensor const SRSensorVisits API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorVisits API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 /*!
  * @const SRSensorPedometerData
@@ -83,7 +83,7 @@ SR_EXTERN SRSensor const SRSensorVisits API_AVAILABLE(ios(14.0)) API_UNAVAILABLE
  * This stream stores information about your step count.
  * Fetches from this stream return objects of type CMPedometerData as defined in the CoreMotion framework.
  */
-SR_EXTERN SRSensor const SRSensorPedometerData API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorPedometerData API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 /*!
  * @const SRSensorDeviceUsageReport
@@ -103,7 +103,7 @@ SR_EXTERN SRSensor const SRSensorPedometerData API_AVAILABLE(ios(14.0)) API_UNAV
  *
  * Fetches from this stream return objects of type SRDeviceUsageReport.
  */
-SR_EXTERN SRSensor const SRSensorDeviceUsageReport API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorDeviceUsageReport API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 /*!
  * @const SRSensorMessagesUsageReport
@@ -120,7 +120,7 @@ SR_EXTERN SRSensor const SRSensorDeviceUsageReport API_AVAILABLE(ios(14.0)) API_
  *
  * Fetches from this stream return objects of type SRMessagesUsageReport.
  */
-SR_EXTERN SRSensor const SRSensorMessagesUsageReport API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorMessagesUsageReport API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 /*!
  * @const SRSensorPhoneUsageReport
@@ -137,7 +137,7 @@ SR_EXTERN SRSensor const SRSensorMessagesUsageReport API_AVAILABLE(ios(14.0)) AP
  *
  * Fetches from this stream return objects of type SRPhoneUsageReport.
  */
-SR_EXTERN SRSensor const SRSensorPhoneUsageReport API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorPhoneUsageReport API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 /*!
  * @const SRSensorOnWristState
@@ -154,7 +154,7 @@ SR_EXTERN SRSensor const SRSensorPhoneUsageReport API_AVAILABLE(ios(14.0)) API_U
  *
  * Fetches from this stream return objects of type SRWristDetection.
  */
-SR_EXTERN SRSensor const SRSensorOnWristState API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorOnWristState API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 /*!
  * @const SRSensorKeyboardMetrics
@@ -173,7 +173,7 @@ SR_EXTERN SRSensor const SRSensorOnWristState API_AVAILABLE(ios(14.0)) API_UNAVA
  *
  * Fetches from this stream return objects of type SRKeyboardMetrics.
  */
-SR_EXTERN SRSensor const SRSensorKeyboardMetrics API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorKeyboardMetrics API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 /*!
  * @const SRSensorSiriSpeechMetrics
@@ -189,9 +189,9 @@ SR_EXTERN SRSensor const SRSensorKeyboardMetrics API_AVAILABLE(ios(14.0)) API_UN
  * @/textblock
  * This steam does not store any raw audio nor any audio or data from other parties.
  *
- * Fetches from this stream return objects of type SFSpeechRecognitionResult as defined in the Speech framework.
+ * Fetches from this stream return objects of type \c SRSpeechMetrics
  */
-SR_EXTERN SRSensor const SRSensorSiriSpeechMetrics API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorSiriSpeechMetrics API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 /*!
  * @const SRSensorTelephonySpeechMetrics
@@ -208,9 +208,9 @@ SR_EXTERN SRSensor const SRSensorSiriSpeechMetrics API_AVAILABLE(ios(15.0)) API_
  *
  * This steam does not store any raw audio nor any audio or data from other parties.
  *
- * Fetches from this stream return objects of type SFSpeechRecognitionResult as defined in the Speech framework.
+ * Fetches from this stream return objects of type \c SRSpeechMetrics
  */
-SR_EXTERN SRSensor const SRSensorTelephonySpeechMetrics API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorTelephonySpeechMetrics API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 /*!
  * @const SRSensorAmbientPressure
@@ -227,7 +227,7 @@ SR_EXTERN SRSensor const SRSensorTelephonySpeechMetrics API_AVAILABLE(ios(15.0))
  *
  * Fetches from this stream return objects of type NSArray<CMRecordedPressureData *> * as defined in the CoreMotion framework.
  */
-SR_EXTERN SRSensor const SRSensorAmbientPressure API_AVAILABLE(ios(15.4)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorAmbientPressure API_AVAILABLE(ios(15.4)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 /*!
  * @const SRSensorMediaEvents
@@ -243,7 +243,7 @@ SR_EXTERN SRSensor const SRSensorAmbientPressure API_AVAILABLE(ios(15.4)) API_UN
  * @/textblock
  * Fetches from this stream return objects of type SRMediaEvent.
  */
-SR_EXTERN SRSensor const SRSensorMediaEvents API_AVAILABLE(ios(16.4)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorMediaEvents API_AVAILABLE(ios(16.4)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 /*!
  * @const SRSensorWristTemperature
@@ -262,7 +262,7 @@ SR_EXTERN SRSensor const SRSensorMediaEvents API_AVAILABLE(ios(16.4)) API_UNAVAI
  *
  * Fetches from this stream return objects of type SRWristTemperatureSession.
  */
-SR_EXTERN SRSensor const SRSensorWristTemperature API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorWristTemperature API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 /*!
  * @const SRSensorHeartRate
@@ -273,7 +273,7 @@ SR_EXTERN SRSensor const SRSensorWristTemperature API_AVAILABLE(ios(17.0)) API_U
  * @discussion
  * Fetches from this stream return objects of type \c CMHighFrequencyHeartRateData
  */
-SR_EXTERN SRSensor const SRSensorHeartRate API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorHeartRate API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 
 /*!
@@ -292,7 +292,7 @@ SR_EXTERN SRSensor const SRSensorHeartRate API_AVAILABLE(ios(17.0)) API_UNAVAILA
  *
  * Fetches from this stream return objects of type SRFaceMetrics.
  */
-SR_EXTERN SRSensor const SRSensorFaceMetrics API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorFaceMetrics API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 /*!
  * @const SRSensorOdometer
@@ -304,6 +304,31 @@ SR_EXTERN SRSensor const SRSensorFaceMetrics API_AVAILABLE(ios(17.0)) API_UNAVAI
  * This stream stores measurements of your distance and speed
  * Fetches from this stream return objects of type \c CMOdometerData as defined in the CoreMotion framework.
  */
-SR_EXTERN SRSensor const SRSensorOdometer API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);
+SR_EXTERN SRSensor const SRSensorOdometer API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
+
+
+/*!
+ * @const SRSensorElectrocardiogram
+ *
+ * @brief
+ * ECG sensor stream
+ *
+ * @discussion
+ * This stream stores samples of the ECG sensor
+ * Fetches from this stream return objects of type \c NSArray<SRElectrocardiogramSample *> *  
+ */
+SR_EXTERN SRSensor const SRSensorElectrocardiogram API_AVAILABLE(ios(17.4)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
+
+/*!
+ * @const SRSensorPhotoplethysmogram
+ *
+ * @brief
+ * PPG sensor stream
+ *
+ * @discussion
+ * This stream stores samples of the PPG sensor
+ * Fetches from this stream return objects of type \c NSArray<SRPhotoplethysmogramSample *> *
+ */
+SR_EXTERN SRSensor const SRSensorPhotoplethysmogram API_AVAILABLE(ios(17.4)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);
 
 NS_ASSUME_NONNULL_END

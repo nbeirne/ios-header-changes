@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * A screen can be asked for a screenshot using the methods declared in XCUIScreenshotProviding.
  */
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUIScreen : NSObject <XCUIScreenshotProviding>
 
 + (instancetype)new XCT_UNAVAILABLE("Use XCUIScreen.screens or XCUIScreen.mainScreen to acquire particular screen objects.");

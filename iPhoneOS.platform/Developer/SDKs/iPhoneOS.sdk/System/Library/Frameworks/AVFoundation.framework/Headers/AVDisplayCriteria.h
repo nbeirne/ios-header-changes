@@ -24,10 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 				Subclasses of this type that are used from Swift must fulfill the requirements of a Sendable type.
  */
 NS_SWIFT_SENDABLE
-API_AVAILABLE(tvos(11.2)) API_UNAVAILABLE(ios) API_UNAVAILABLE(macos, watchos)
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_AVAILABLE(xros(1.0))
-#endif // defined(TARGET_OS_XR) && TARGET_OS_XR
+API_AVAILABLE(tvos(11.2), visionos(1.0)) API_UNAVAILABLE(ios) API_UNAVAILABLE(macos, watchos)
 @interface AVDisplayCriteria : NSObject <NSCopying>
 {
 @private
@@ -42,11 +39,7 @@ AV_INIT_UNAVAILABLE
 	@param			formatDescription - Format description describing the video format.
 	@result			An instance of AVDisplayCriteria.
 */
-- (instancetype)initWithRefreshRate:(float)refreshRate formatDescription:(CMFormatDescriptionRef)formatDescription
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_AVAILABLE(xros(1.0))
-#endif // defined(TARGET_OS_XR) && TARGET_OS_XR
-API_AVAILABLE(tvos(17.0)) API_UNAVAILABLE(ios) API_UNAVAILABLE(macos, watchos);
+- (instancetype)initWithRefreshRate:(float)refreshRate formatDescription:(CMFormatDescriptionRef)formatDescription API_AVAILABLE(tvos(17.0), visionos(1.0)) API_UNAVAILABLE(ios) API_UNAVAILABLE(macos, watchos);
 
 @end
 

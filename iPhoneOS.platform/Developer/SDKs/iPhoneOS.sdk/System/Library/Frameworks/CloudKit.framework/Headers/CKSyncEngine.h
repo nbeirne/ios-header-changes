@@ -8,7 +8,7 @@
 #import <CloudKit/CKDefines.h>
 #import <CloudKit/CKSyncEngineRecordZoneChangeBatch.h>
 
-@class CKDatabase, CKOperationGroup, CKRecord, CKRecordID, CKRecordZone, CKRecordZoneID, CKSyncEngineConfiguration, CKSyncEngineEvent, CKSyncEngineFetchChangesOptions, CKSyncEngineSendChangesOptions, CKSyncEngineSendChangesContext, CKSyncEngineState, CKSyncEngineStateSerialization;
+@class CKDatabase, CKOperationGroup, CKRecord, CKRecordID, CKRecordZone, CKRecordZoneID, CKSyncEngineConfiguration, CKSyncEngineEvent, CKSyncEngineFetchChangesContext, CKSyncEngineFetchChangesOptions, CKSyncEngineFetchChangesScope, CKSyncEnginePendingRecordZoneChange, CKSyncEngineSendChangesContext, CKSyncEngineSendChangesOptions, CKSyncEngineSendChangesScope, CKSyncEngineState, CKSyncEngineStateSerialization;
 @protocol CKSyncEngineDelegate;
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
@@ -139,11 +139,11 @@ NS_SWIFT_SENDABLE
 + (instancetype)new NS_UNAVAILABLE;
 
 /// The database this sync engine will sync with.
-@property (atomic, readonly, strong) CKDatabase *database;
+@property (readonly, strong) CKDatabase *database;
 
 /// A collection of state properties used to efficiently manage sync engine operation.
 /// See ``CKSyncEngineState`` for more details.
-@property (atomic, readonly, strong) CKSyncEngineState *state;
+@property (readonly, strong) CKSyncEngineState *state;
 
 #pragma mark - Fetching and Sending
 
@@ -221,17 +221,13 @@ NS_REFINED_FOR_SWIFT
 ///
 /// ```objc
 /// - (CKSyncEngineRecordZoneChangeBatch *)syncEngine:(CKSyncEngine *)syncEngine nextRecordZoneChangeBatchForContext:(CKSyncEngineSendChangesContext *)context {
-///     NSArray<CKRecordZoneID *> *zoneIDs = context.options.zoneIDs;
+///     CKSyncEngineSendChangesScope *scope = context.options.scope;
 ///
-///     NSArray<CKSyncEnginePendingRecordZoneChange *> *pendingChangesToSave = syncEngine.state.pendingRecordZoneChanges;
-///     if (zoneIDs != nil) {
-///         NSMutableArray<CKSyncEnginePendingRecordZoneChange *> *filteredChanges = [NSMutableArray new];
-///         for (CKSyncEnginePendingRecordZoneChange *pendingChange in pendingChangesToSave) {
-///             if ([zoneIDs containsObject:pendingChange.recordID.zoneID]) {
-///                 [filteredChanges addObject:pendingChange];
-///             }
+///     NSMutableArray<CKSyncEnginePendingRecordZoneChange *> *pendingChanges = [NSMutableArray new];
+///     for (CKSyncEnginePendingRecordZoneChange *pendingChange in syncEngine.state.pendingRecordZoneChanges) {
+///         if ([scope containsPendingRecordZoneChange:pendingChange]) {
+///             [filteredChanges addObject:pendingChange];
 ///         }
-///         pendingChangesToSave = filteredChanges;
 ///     }
 ///
 ///     CKSyncEngineRecordZoneChangeBatch *batch = [[CKSyncEngineRecordZoneChangeBatch alloc] initWithPendingChanges:pendingChangesToSave recordProvider:^CKRecord * _Nullable(CKRecordID *recordID) {
@@ -245,13 +241,50 @@ NS_REFINED_FOR_SWIFT
 
 @optional
 
-/// Called to determine whether the sync engine should fetch changes for a particular zone.
+/// Returns a custom set of options for `CKSyncEngine` to use while fetching changes.
 ///
-/// The default implementation always returns true, so the sync engine will fetch changes for all zones by default.
-/// If you don't want it to fetch changes for a particular zone, you can return false for that zone.
+/// While `CKSyncEngine` fetches changes from the server, it calls this function to determine priority and other options for fetching changes.
+/// This allows you to configure your fetches dynamically while the state changes in your app.
 ///
-/// This function will be called any time the sync engine is about to fetch changes.
-- (BOOL)syncEngine:(CKSyncEngine *)syncEngine shouldFetchChangesForZoneID:(CKRecordZoneID *)zoneID NS_SWIFT_NAME(syncEngine(_:shouldFetchChanges:));
+/// For example, you can use this to prioritize fetching the object currently showing in the UI.
+/// You can also use this to prioritize specific zones during initial sync.
+///
+/// By default, `CKSyncEngine` will use whatever options are in the context.
+/// You can return `context.options` if you don't want to perform any customization.
+///
+/// This callback will be called in between each server request while fetching changes.
+/// This allows the fetching mechanism to react dynamically while your app state changes.
+///
+/// An example implementation might look something like this:
+/// ```objc
+/// - (CKSyncEngineFetchChangesOptions *)syncEngine:(CKSyncEngine *)syncEngine nextFetchChangesOptionsForContext:(CKSyncEngineFetchChangesContext *)context {
+///
+///      // Start with the options from the context.
+///     CKSyncEngineFetchChangesOptions *options = context.options;
+///
+///     // By default, the sync engine will automatically fetch changes for all zones.
+///     // If you know that you only want to sync a specific set of zones, you can override that here.
+///     options.scope = [[CKSyncEngineFetchChangesScope alloc] initWithZoneIDs:@[...]];
+///
+///     // You can prioritize specific zones to be fetched first by putting them in order.
+///     NSMutableArray<CKRecordZoneID *> *prioritizedZoneIDs = [[NSMutableArray alloc] init];
+///
+///     // If you're showing some data in the UI, you might want to prioritize that zone first.
+///     CKRecordZoneID *onScreenZoneID = uiController.currentlyViewedItem.zoneID;
+///     if (onScreenZoneID != nil) {
+///         [prioritizedZoneIDs addObject:onScreenZoneID];
+///     }
+///
+///     // You could also prioritize special, well-known zones if that makes sense for your app.
+///     // For example, if you have a top-level metadata zone that you'd like to sync first, you can prioritize that here.
+///     CKRecordZoneID *topLevelZoneID = [[CKRecordZoneID alloc] initWithZoneName:@"MyImportantMetadata"];
+///     [prioritizedZoneIDs addObject:topLevelZoneID];
+///
+///     options.prioritizedZoneIDs = prioritizedZoneIDs;
+///     return options
+/// }
+/// ```
+- (CKSyncEngineFetchChangesOptions *)syncEngine:(CKSyncEngine *)syncEngine nextFetchChangesOptionsForContext:(CKSyncEngineFetchChangesContext *)context NS_SWIFT_NAME(syncEngine(_:fetchChangesOptions:));
 
 @end
 
@@ -262,23 +295,57 @@ API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0), watchos(10.0))
 NS_REFINED_FOR_SWIFT
 CK_SUBCLASSING_RESTRICTED
 NS_SWIFT_SENDABLE
-@interface CKSyncEngineFetchChangesOptions : NSObject
+@interface CKSyncEngineFetchChangesOptions : NSObject <NSCopying>
 
-/// The scope of zone IDs in which to fetch changes.
-/// For example, if you only want to fetch changes for a particular zone, you can set the zone ID here.
-/// If this is `nil`, then the request will include all zones.
-@property (nullable, nonatomic, copy) NSArray<CKRecordZoneID *> *zoneIDs;
+/// The scope in which to fetch changes from the server.
+@property (copy) CKSyncEngineFetchChangesScope *scope;
 
 /// The operation group to use for the underlying operations when fetching changes.
 ///
 /// You might set an operation group with a particular name in order to help you analyze telemetry in the CloudKit Console.
-@property (nonatomic, strong) CKOperationGroup *operationGroup;
+/// If you don't provide an operation group, a default one will be created for you.
+@property (strong) CKOperationGroup *operationGroup;
 
-/// Initializes a new set of request options with the given zone IDs and operation group.
-/// 
-/// If no operation group is specified, a default one will be used.
-- (instancetype)initWithZoneIDs:(nullable NSArray<CKRecordZoneID *> *)zoneIDs
-                 operationGroup:(nullable CKOperationGroup *)operationGroup;
+/// A list of zones that should be prioritized over others while fetching changes.
+///
+/// `CKSyncEngine` will fetch changes for the zones in this list first before any other zones.
+/// You might use this to prioritize a specific set of zones for initial sync.
+/// You could also prioritize the object currently showing in the UI by putting it first in this list.
+///
+/// Any zones not included in this list will be prioritized in a default manner.
+/// If a zone in this list has no changes to fetch, then that zone will be ignored.
+@property (copy) NSArray<CKRecordZoneID *> *prioritizedZoneIDs;
+
+/// Initializes a set of options with the specific scope.
+/// If no scope is provided, the default scope will include everything.
+- (instancetype)initWithScope:(nullable CKSyncEngineFetchChangesScope *)scope;
+
+@end
+
+/// A scope in which the sync engine will fetch changes from the server.
+API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0), watchos(10.0))
+NS_REFINED_FOR_SWIFT
+CK_SUBCLASSING_RESTRICTED
+NS_SWIFT_SENDABLE
+@interface CKSyncEngineFetchChangesScope : NSObject <NSCopying>
+
+/// A specific set of zone IDs to include in the scope.
+/// For example, if you want to fetch changes for a specific set of zones, you can specify them here.
+/// If `nil`, this scope includes all zones except those in `excludedZoneIDs`.
+@property (nullable, readonly, copy) NSSet<CKRecordZoneID *> *zoneIDs;
+
+/// A specific set of zone IDs to exclude from this scope.
+/// If you know that you don't want to fetch changes for a particular set of zones, you can set those zones here.
+@property (readonly, copy) NSSet<CKRecordZoneID *> *excludedZoneIDs;
+
+/// Creates a scope that includes only the specified set of zones.
+- (instancetype)initWithZoneIDs:(nullable NSSet<CKRecordZoneID *> *)zoneIDs;
+
+/// Creates a scope that includes all zones except the specified excluded zones.
+- (instancetype)initWithExcludedZoneIDs:(NSSet<CKRecordZoneID *> *)zoneIDs;
+
+/// Returns true if the specified zone ID is included in this scope.
+- (BOOL)containsZoneID:(CKRecordZoneID *)zoneID API_AVAILABLE(macos(14.2), macCatalyst(17.2), ios(17.2), tvos(17.2), watchos(10.2));
 
 @end
 
@@ -287,24 +354,66 @@ API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0), watchos(10.0))
 NS_REFINED_FOR_SWIFT
 CK_SUBCLASSING_RESTRICTED
 NS_SWIFT_SENDABLE
-@interface CKSyncEngineSendChangesOptions : NSObject
+@interface CKSyncEngineSendChangesOptions : NSObject <NSCopying>
 
-/// The scope of zone IDs in which to send changes.
-/// 
-/// For example, if you only want to send changes for a particular zone, you can set the zone ID here.
-/// If this is `nil`, then this will send changes for all zones.
-@property (nullable, nonatomic, copy) NSArray<CKRecordZoneID *> *zoneIDs;
+/// The scope in which to send changes to the server.
+@property (copy) CKSyncEngineSendChangesScope *scope;
 
 /// The operation group to use for the underlying operations when sending changes.
 ///
 /// You might set an operation group with a particular name in order to help you analyze telemetry in the CloudKit Console.
-@property (nonatomic, strong) CKOperationGroup *operationGroup;
+/// If you don't provide an operation group, a default one will be created for you.
+@property (strong) CKOperationGroup *operationGroup;
 
-/// Initializes a new set of request options with the given zone IDs and operation group.
-/// 
-/// If no operation group is specified, a default one will be used.
-- (instancetype)initWithZoneIDs:(nullable NSArray<CKRecordZoneID *> *)zoneIDs
-                 operationGroup:(nullable CKOperationGroup *)operationGroup;
+/// Initializes a set of options with the specific scope.
+/// If no scope is provided, the default scope will include everything.
+- (instancetype)initWithScope:(nullable CKSyncEngineSendChangesScope *)scope;
+
+@end
+
+/// A scope in which the sync engine will send changes to  the server.
+API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0), watchos(10.0))
+NS_REFINED_FOR_SWIFT
+CK_SUBCLASSING_RESTRICTED
+NS_SWIFT_SENDABLE
+@interface CKSyncEngineSendChangesScope : NSObject <NSCopying>
+
+/// The scope of zone IDs in which to send changes.
+///
+/// If you only want to send changes for a particular set of zones, you can initialize your scope with those zone IDs.
+/// When creating the next batch of changes to send to the server, consult this and only send changes within these zones.
+/// If this and `recordIDs` are `nil`, then you should send all changes.
+@property (nullable, readonly, copy) NSSet<CKRecordZoneID *> *zoneIDs;
+
+/// A specific set of zone IDs to exclude from this scope.
+/// If you know that you don't want to send changes for a particular set of zones, you can set those zones here.
+///
+/// Note that if `zoneIDs` is set, then  `excludedZoneIDs` will always be empty.
+@property (readonly, copy) NSSet<CKRecordZoneID *> *excludedZoneIDs;
+
+/// The scope of record IDs in which to send changes.
+///
+/// If you only want to send changes for a particular set of records, you can initialize your scope with those records IDs.
+/// When creating the next batch of changes to send to the server, consult this property and only send changes for these record IDs.
+/// If this and `zoneIDs` are `nil`, then you should send all changes.
+@property (nullable, readonly, copy) NSSet<CKRecordID *> *recordIDs;
+
+/// Creates a scope that contains only the given zone IDs.
+/// If `zoneIDs` is nil, then this scope contains all zones.
+- (instancetype)initWithZoneIDs:(nullable NSSet<CKRecordZoneID *> *)zoneIDs;
+
+/// Creates a scope that contains all zones except for the given zone IDs.
+- (instancetype)initWithExcludedZoneIDs:(NSSet<CKRecordZoneID *> *)excludedZoneIDs;
+
+/// Creates a scope that includes only the given record IDs.
+/// If `recordIDs` is nil, this scope contains all records.
+- (instancetype)initWithRecordIDs:(nullable NSSet<CKRecordID *> *)recordIDs;
+
+/// Returns true if this scope includes the given record ID.
+- (BOOL)containsRecordID:(CKRecordID *)recordID;
+
+/// Returns true if this scope includes the given pending change.
+- (BOOL)containsPendingRecordZoneChange:(CKSyncEnginePendingRecordZoneChange *)pendingRecordZoneChange;
 
 @end
 
@@ -318,6 +427,29 @@ typedef NS_ENUM(NSInteger, CKSyncEngineSyncReason) {
     /// This sync was requested manually by calling `fetchChanges` or `sendChanges`.
     CKSyncEngineSyncReasonManual,
 };
+
+/// The context of an attempt to fetch changes from the server.
+///
+/// The sync engine might attempt to fetch changes to the server for many reasons.
+/// For example, if you call `fetchChanges`, it'll try to fetch changes immediately.
+/// Or if it receives a push notification, it'll schedule a sync and fetch changes when the scheduler task runs.
+/// This object represents one of those attempts to fetch changes.
+API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0), watchos(10.0))
+NS_REFINED_FOR_SWIFT
+CK_SUBCLASSING_RESTRICTED
+NS_SWIFT_SENDABLE
+@interface CKSyncEngineFetchChangesContext : NSObject
+
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
+
+/// The reason why the sync engine is attempting to fetch changes.
+@property (readonly, assign) CKSyncEngineSyncReason reason;
+
+/// The options being used for this attempt to fetch changes.
+@property (readonly, copy) CKSyncEngineFetchChangesOptions *options;
+
+@end
 
 /// The context of an attempt to send changes to the server.
 ///
@@ -335,10 +467,10 @@ NS_SWIFT_SENDABLE
 + (instancetype)new NS_UNAVAILABLE;
 
 /// The reason why the sync engine is attempting to send changes.
-@property (nonatomic, readonly) CKSyncEngineSyncReason reason;
+@property (readonly, assign) CKSyncEngineSyncReason reason;
 
 /// The options being used for this attempt to send changes.
-@property (nonatomic, readonly) CKSyncEngineSendChangesOptions *options;
+@property (readonly, copy) CKSyncEngineSendChangesOptions *options;
 
 @end
 

@@ -25,11 +25,14 @@
 #if TARGET_OS_IPHONE || TARGET_OS_WIN32
 #include <CoreGraphics/CoreGraphics.h>
 #else
+#if __has_include(<ApplicationServices/ApplicationServices.h>)
 #include <ApplicationServices/ApplicationServices.h>
 #endif
-
+#endif
+#if __has_include(<CoreGraphics/CGColorSpace.h>)
 #include <CoreGraphics/CGColorSpace.h>
 #include <CoreGraphics/CGGeometry.h>
+#endif
 
 #include <CoreVideo/CVBuffer.h>
 
@@ -120,7 +123,13 @@ CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferAlphaChannelIsOpaque __OSX_
 
 CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferAlphaChannelModeKey API_AVAILABLE(macosx(10.15), ios(13.0), tvos(13.0)) API_UNAVAILABLE(watchos);
 CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferAlphaChannelMode_StraightAlpha API_AVAILABLE(macosx(10.15), ios(13.0), tvos(13.0)) API_UNAVAILABLE(watchos);
-CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferAlphaChannelMode_PremultipliedAlpha API_AVAILABLE(macosx(10.15), ios(13.0), tvos(13.0)) API_UNAVAILABLE(watchos);	
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferAlphaChannelMode_PremultipliedAlpha API_AVAILABLE(macosx(10.15), ios(13.0), tvos(13.0)) API_UNAVAILABLE(watchos);
+
+// Used to attach processing metadata to buffers transferred between video decoders and RAW processors.
+// Sequence metadata is expected to be invariant over the entire movie, while frame metadata can vary with each frame.
+CV_EXPORT const CFStringRef kCVImageBufferPostDecodeProcessingSequenceMetadataKey API_AVAILABLE(macos(15.0)) API_UNAVAILABLE(ios, watchos, tvos, visionos);	// CFDictionary
+CV_EXPORT const CFStringRef kCVImageBufferPostDecodeProcessingFrameMetadataKey API_AVAILABLE(macos(15.0)) API_UNAVAILABLE(ios, watchos, tvos, visionos);	// CFDictionary
+
 
 // Returns the standard integer code point corresponding to a given CoreVideo YCbCrMatrix constant string (in the kCVImageBufferYCbCrMatrix_... family).  Returns 2 (the code point for "unknown") if the string is NULL or not recognized.
 CV_EXPORT int CVYCbCrMatrixGetIntegerCodePointForString( CV_NULLABLE CFStringRef yCbCrMatrixString ) API_AVAILABLE(macosx(10.13), ios(11.0), tvos(11.0), watchos(4.0));
@@ -180,7 +189,7 @@ CV_EXPORT CGRect CVImageBufferGetCleanRect( CVImageBufferRef CV_NONNULL imageBuf
 /*!
     @function   CVImageBufferIsFlipped
     @abstract   Returns whether the image is flipped vertically or not.
-    @param      CVImageBuffer target
+    @param      imageBuffer target
     @result     True if 0,0 in the texture is upper left, false if 0,0 is lower left.
 */
 CV_EXPORT Boolean CVImageBufferIsFlipped( CVImageBufferRef CV_NONNULL imageBuffer ) __OSX_AVAILABLE_STARTING(__MAC_10_4,__IPHONE_4_0);
@@ -198,6 +207,7 @@ CV_EXPORT CGColorSpaceRef CV_NULLABLE CVImageBufferGetColorSpace( CVImageBufferR
 	
 #endif
 
+#if ! 0
 /*!
    @function   CVImageBufferCreateColorSpaceFromAttachments
    @abstract   Attempts to synthesize a CGColorSpace from an image buffer's attachments.
@@ -212,7 +222,8 @@ CV_EXPORT CGColorSpaceRef CV_NULLABLE CVImageBufferGetColorSpace( CVImageBufferR
 		
 */
 CV_EXPORT CGColorSpaceRef CV_NULLABLE CVImageBufferCreateColorSpaceFromAttachments( CFDictionaryRef CV_NONNULL attachments ) __OSX_AVAILABLE_STARTING(__MAC_10_8,__IPHONE_10_0);
-	
+#endif
+
 // CFData (24 bytes) containing big-endian data matching payload of ISO/IEC 23008-2:2015(E), D.2.28 Mastering display colour volume SEI message
 CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferMasteringDisplayColorVolumeKey __OSX_AVAILABLE_STARTING(__MAC_10_13,__IPHONE_11_0);
 
@@ -222,14 +233,32 @@ CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferContentLightLevelInfoKey __
 // CFData (8 bytes) containing big-endian data matching payload of Ambient Viewing Environment SEI message
 CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferAmbientViewingEnvironmentKey API_AVAILABLE(macosx(12.0), ios(15.0), tvos(15.0), watchos(8.0));
 
+// CFNumberRef integer value in millilux
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferSceneIlluminationKey API_AVAILABLE(macos(15.0), ios(18.0), tvos(18.0), watchos(11.0), visionos(2.0));
+
 /*!
 	@constant    kCVImageBufferRegionOfInterestKey
 	@abstract
-		Specifies region of interest that image statistics cover. This value should be a CGRect dictionary created by CGRectCreateDictionaryRepresentation(). The origin in the CGRect represents the x,y coordinate within the CVPixelBuffer where region of interest is located.
+		Specifies region of interest that image statistics cover.
 	@discussion
-		
+		This value should be a CGRect dictionary created by CGRectCreateDictionaryRepresentation(). The origin in the CGRect represents the x,y coordinate within the CVPixelBuffer where region of interest is located.
 */
 CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferRegionOfInterestKey           API_AVAILABLE(macosx(12.0), ios(15.0), tvos(15.0), watchos(8.0));
+
+/*!
+  @constant    kCVImageBufferLogTransferFunctionKey
+	Indicates that the transfer function or gamma of the content is a log format and identifies the specific log curve.
+  @discussion
+	The value is a CFString holding fully specified reverse DNS identifier.
+	Content captured in Apple Log will have this key set to kCVImageBufferLogTransferFunction_AppleLog.
+  @constant    kCVImageBufferLogTransferFunction_AppleLog
+	Indicates the Apple Log identifier.
+  @discussion
+	You can download the Apple Log Profile White Paper from the Apple Developer Downloads website.
+*/
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferLogTransferFunctionKey API_AVAILABLE(macosx(14.2), ios(17.2), tvos(17.2), watchos(10.2), visionos(1.1));
+
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferLogTransferFunction_AppleLog API_AVAILABLE(macosx(14.2), ios(17.2), tvos(17.2), watchos(10.2), visionos(1.1));
 
 
 #if defined(__cplusplus)

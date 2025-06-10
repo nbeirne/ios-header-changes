@@ -25,8 +25,8 @@ NS_SWIFT_NAME(SFSafariViewController.Configuration)
     when the user scrolls web content.
     @discussion The default value is YES.
  */
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-@property (nonatomic) BOOL barCollapsingEnabled API_UNAVAILABLE(xros);
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+@property (nonatomic) BOOL barCollapsingEnabled API_UNAVAILABLE(visionos);
 #else
 @property (nonatomic) BOOL barCollapsingEnabled;
 #endif
@@ -34,8 +34,8 @@ NS_SWIFT_NAME(SFSafariViewController.Configuration)
 /*! @abstract An additional button to be shown in SFSafariViewController's toolbar. See @link SFSafariViewControllerActivityButton @/link for more details.
  @discussion This allows the user to access powerful functionality from your extension without needing to first show the UIActivityViewController.
  */
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-@property (nonatomic, nullable, copy) SFSafariViewControllerActivityButton *activityButton API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(xros);
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+@property (nonatomic, nullable, copy) SFSafariViewControllerActivityButton *activityButton API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(visionos);
 #else
 @property (nonatomic, nullable, copy) SFSafariViewControllerActivityButton *activityButton API_AVAILABLE(ios(15.0));
 #endif

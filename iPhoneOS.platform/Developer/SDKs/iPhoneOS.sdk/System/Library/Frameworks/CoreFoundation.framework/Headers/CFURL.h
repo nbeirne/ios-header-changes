@@ -489,7 +489,8 @@ Boolean CFURLGetFSRef(CFURLRef url, struct FSRef *fsRef) API_DEPRECATED("Not sup
 #endif
 #endif
 
-#if TARGET_OS_MAC || CF_BUILDING_CF || NSBUILDINGFOUNDATION || DEPLOYMENT_TARGET_SWIFT
+#if TARGET_OS_MAC || CF_BUILDING_CF || NSBUILDINGFOUNDATION
+#if !0
 CF_IMPLICIT_BRIDGING_DISABLED
 
 /* Resource access
@@ -950,6 +951,11 @@ const CFStringRef kCFURLFileProtectionCompleteUntilFirstUserAuthentication API_A
 CF_EXPORT
 const CFStringRef kCFURLFileProtectionCompleteWhenUserInactive API_AVAILABLE(ios(17.0), watchos(10.0), tvos(17.0)) API_UNAVAILABLE(macos); // The file is stored in an encrypted format on disk and cannot be read from or written to while the device is locked or booting. Transient data files with this protection type should be excluded from backups using kCFURLIsExcludedFromBackupKey.
 
+/* Directory Properties */
+
+CF_EXPORT
+const CFStringRef kCFURLDirectoryEntryCountKey API_AVAILABLE(macos(14.0), ios(17.0), watchos(10.0), tvos(17.0)); // Returns the count of file system objects contained in the directory. This is a count of objects actually stored in the file system, so excludes virtual items like "." and "..". The property is useful for quickly identifying an empty directory for backup and syncing. If the URL is not a directory or the file system cannot cheaply compute the value, `nil` is returned. (Read-only, value type CFNumber)
+
 /* Volume Properties */
 
 /* As a convenience, volume properties can be requested from any file system URL. The value returned will reflect the property value for the volume on which the resource is located. */
@@ -1204,8 +1210,6 @@ CF_EXPORT
 const CFStringRef kCFURLUbiquitousItemDownloadingStatusCurrent API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0));
     /* there is a local version of this item and it is the most up-to-date version known to this device. */
 
-#if !DEPLOYMENT_TARGET_SWIFT
-
 typedef CF_OPTIONS(CFOptionFlags, CFURLBookmarkCreationOptions) {
     kCFURLBookmarkCreationMinimalBookmarkMask = ( 1UL << 9 ), // creates bookmark data with "less" information, which may be smaller but still be able to resolve in certain ways
     kCFURLBookmarkCreationSuitableForBookmarkFile = ( 1UL << 10 ), // include the properties required by CFURLWriteBookmarkDataToFile() in the bookmark data created
@@ -1269,17 +1273,17 @@ CFDataRef CFURLCreateBookmarkDataFromAliasRecord ( CFAllocatorRef allocatorRef, 
 
 CF_IMPLICIT_BRIDGING_ENABLED
 
-/* Given a CFURLRef created by resolving a bookmark data created with security scope, make the resource referenced by the url accessible to the process. When access to this resource is no longer needed the client must call CFURLStopAccessingSecurityScopedResource(). Each call to CFURLStartAccessingSecurityScopedResource() must be balanced with a call to CFURLStopAccessingSecurityScopedResource() (Note: this is not reference counted).
+/* Given a CFURLRef created by resolving a bookmark data created with security scope, make the resource referenced by the url accessible to the process. Each call to CFURLStartAccessingSecurityScopedResource that returns true must be balanced with a call to CFURLStopAccessingSecurityScopedResource when access to this resource is no longer needed by the client. Calls to start and stop accessing the resource are reference counted and may be nested, which allows the pair of calls to be logically scoped.
  */
 CF_EXPORT
 Boolean CFURLStartAccessingSecurityScopedResource(CFURLRef url) API_AVAILABLE(macos(10.7), ios(8.0), watchos(2.0), tvos(9.0)); // On OSX, available in MacOS X 10.7.3 and later
 
-/* Revokes the access granted to the url by a prior successful call to CFURLStartAccessingSecurityScopedResource().
+/* Removes one "accessing" reference to the security scope. When all references are removed, it revokes the access granted to the url by the initial prior successful call to CFURLStartAccessingSecurityScopedResource().
  */
 CF_EXPORT
 void CFURLStopAccessingSecurityScopedResource(CFURLRef url) API_AVAILABLE(macos(10.7), ios(8.0), watchos(2.0), tvos(9.0)); // On OSX, available in MacOS X 10.7.3 and later
 
-#endif /* !DEPLOYMENT_TARGET_SWIFT */
+#endif 
 #endif /* TARGET_OS_MAC || CF_BUILDING_CF || NSBUILDINGFOUNDATION || DEPLOYMENT_TARGET_SWIFT */
 
 CF_EXTERN_C_END

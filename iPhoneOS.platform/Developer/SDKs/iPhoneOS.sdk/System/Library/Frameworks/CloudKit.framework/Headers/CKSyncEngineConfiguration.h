@@ -35,15 +35,15 @@ NS_SWIFT_SENDABLE
 /// It's also technically possible to have multiple instances of `CKSyncEngine` for the same `CKDatabase`.
 /// This isn't recommended for production code, but it can be helpful for testing your `CKSyncEngine` integration.
 /// For example, you might make multiple `CKSyncEngine` instances to simulate multiple devices syncing back and forth.
-@property (atomic, strong) CKDatabase *database;
+@property (strong) CKDatabase *database;
 
 /// The state serialization you last received in a `CKSyncEngineStateUpdateEvent`.
 ///
 /// If this is the first time ever initializing your `CKSyncEngine`, you can provide `nil`.
-@property (nullable, atomic, copy) CKSyncEngineStateSerialization *stateSerialization;
+@property (nullable, copy) CKSyncEngineStateSerialization *stateSerialization;
 
 /// Your implementation of `CKSyncEngineDelegate`.
-@property (atomic, weak) id<CKSyncEngineDelegate> delegate;
+@property (weak) id<CKSyncEngineDelegate> delegate;
 
 /// Whether or not the sync engine should automatically sync on your behalf.
 ///
@@ -61,7 +61,7 @@ NS_SWIFT_SENDABLE
 /// You might also disable automatic sync when writing automated tests for your integration with `CKSyncEngine`.
 /// This way, you can have fine grained control over exactly when the sync engine fetches or sends changes.
 /// This allows you to simulate edge cases and deterministically test your logic around scenarios like conflict resolution and error handling.
-@property (atomic, assign) BOOL automaticallySync;
+@property (assign) BOOL automaticallySync;
 
 /// An optional override for the sync engine's default database subscription ID.
 /// Use this for backward compatibility with a previous CloudKit sync implementation.
@@ -72,7 +72,7 @@ NS_SWIFT_SENDABLE
 ///
 /// >Note: `CKSyncEngine` will automatically attempt to discover any previous database subscriptions,
 /// but you can be more explicit by giving the subscription ID through this configuration option.
-@property (nullable, atomic, copy) CKSubscriptionID subscriptionID;
+@property (nullable, copy) CKSubscriptionID subscriptionID;
 
 @end
 

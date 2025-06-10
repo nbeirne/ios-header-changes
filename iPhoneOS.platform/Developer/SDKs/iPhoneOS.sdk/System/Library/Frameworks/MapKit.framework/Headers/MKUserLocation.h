@@ -24,8 +24,8 @@ NS_CLASS_AVAILABLE(10_9, 3_0) __TVOS_AVAILABLE(9_2) API_UNAVAILABLE(watchos)
 
 // Returns nil if not in MKUserTrackingModeFollowWithHeading
 @property (readonly, nonatomic, nullable) CLHeading *heading
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros);
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(visionos);
 #else
 NS_AVAILABLE(10_9, 5_0) API_UNAVAILABLE(tvos);
 #endif

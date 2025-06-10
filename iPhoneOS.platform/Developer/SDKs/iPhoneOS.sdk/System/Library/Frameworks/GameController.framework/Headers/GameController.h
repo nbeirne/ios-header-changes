@@ -9,6 +9,7 @@
 #import <TargetConditionals.h>
 
 #import <GameController/GCExtern.h>
+#import <GameController/GCTypes.h>
 #import <GameController/GCColor.h>
 
 #import <GameController/GCDevice.h>
@@ -18,6 +19,7 @@
 #import <GameController/GCPhysicalInputSource.h>
 #import <GameController/GCLinearInput.h>
 #import <GameController/GCAxisInput.h>
+#import <GameController/GCAxis2DInput.h>
 #import <GameController/GCRelativeInput.h>
 #import <GameController/GCPressedStateInput.h>
 #import <GameController/GCTouchedStateInput.h>
@@ -66,7 +68,6 @@
 #import <GameController/GCController.h>
 #import <GameController/GCKeyboard.h>
 #import <GameController/GCMouse.h>
-#import <GameController/GCEventViewController.h>
 
 #import <GameController/GCRacingWheel.h>
 #import <GameController/GCRacingWheelInput.h>
@@ -75,6 +76,15 @@
 
 #import <GameController/GCDeviceHaptics.h>
 
+
+#import <GameController/GCEventViewController.h>
+#if __has_include(<UIKit/UIKit.h>)
+#import <GameController/GCEventInteraction.h>
+#import <GameController/GCGameControllerActivationContext.h>
+#import <GameController/GCGameControllerSceneDelegate.h>
+#endif
+#if __has_include(<GameController/GCVirtualController.h>)
 #import <GameController/GCVirtualController.h>
+#endif
 
 #import <GameController/GCSyntheticDeviceKeys.h>

@@ -26,7 +26,7 @@ NS_SWIFT_SENDABLE
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 - (void)addOperation:(CKDatabaseOperation *)operation;
-@property (nonatomic, readonly, assign) CKDatabaseScope databaseScope API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
+@property (readonly, assign, nonatomic) CKDatabaseScope databaseScope API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
 @end
 
 /*! @abstract Convenience APIs
@@ -51,7 +51,7 @@ NS_SWIFT_SENDABLE
  *  Queries that do not specify a @c zoneID will perform a query across all zones in the database.
  */
 - (void)performQuery:(CKQuery *)query inZoneWithID:(nullable CKRecordZoneID *)zoneID completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSArray<CKRecord *> * _Nullable results, NSError * _Nullable error))completionHandler
-CK_SWIFT_DEPRECATED("renamed to fetch(withQuery:inZoneWith:desiredKeys:resultsLimit:completionHandler:)", macos(10.10, 12.0), ios(8.0, 15.0), tvos(9.0, 15.0), watchos(3.0, 8.0), xros(1.0, 1.0));
+CK_SWIFT_DEPRECATED("renamed to fetch(withQuery:inZoneWith:desiredKeys:resultsLimit:completionHandler:)", macos(10.10, 12.0), ios(8.0, 15.0), tvos(9.0, 15.0), watchos(3.0, 8.0));
 
 #pragma mark Record Zone Convenience Methods
 /*! @c CKFetchRecordZonesOperation and @c CKModifyRecordZonesOperation are the more configurable, @c CKOperation -based alternatives to these methods */

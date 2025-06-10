@@ -10,8 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos, tvos, macos, macCatalyst) API_UNAVAILABLE(xros)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos, tvos, macos, macCatalyst) API_UNAVAILABLE(visionos)
 #else
 API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos, tvos, macos, macCatalyst)
 #endif

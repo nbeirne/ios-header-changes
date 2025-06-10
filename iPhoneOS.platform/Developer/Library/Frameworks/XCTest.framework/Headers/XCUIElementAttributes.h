@@ -32,6 +32,7 @@ typedef NS_ENUM(NSInteger, XCUIUserInterfaceSizeClass) {
 NS_ASSUME_NONNULL_BEGIN
 
 /*! Protocol describing the attributes exposed on user interface elements and available during query matching. These attributes represent data exposed to the Accessibility system. */
+XCT_SWIFT_MAIN_ACTOR
 @protocol XCUIElementAttributes
 
 /*! The accessibility identifier. */

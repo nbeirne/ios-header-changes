@@ -1,7 +1,7 @@
 /*
     CoreData.h
     Core Data
-    Copyright (c) 2004-2023, Apple Inc.
+    Copyright (c) 2004-2024, Apple Inc.
     All rights reserved.
 */
 
@@ -71,6 +71,4 @@
 #import <CoreData/NSLightweightMigrationStage.h>
 #import <CoreData/NSManagedObjectModelReference.h>
 
-#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST)
 #import <CoreData/NSCoreDataCoreSpotlightDelegate.h>
-#endif

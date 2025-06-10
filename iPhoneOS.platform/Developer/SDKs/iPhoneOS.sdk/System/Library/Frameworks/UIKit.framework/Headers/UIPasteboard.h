@@ -11,38 +11,38 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-typedef NSString * UIPasteboardName NS_TYPED_EXTENSIBLE_ENUM;
+typedef NSString * UIPasteboardName NS_TYPED_EXTENSIBLE_ENUM API_UNAVAILABLE(watchos);
 
 UIKIT_EXTERN UIPasteboardName const UIPasteboardNameGeneral API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIPasteboardNameFind API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) API_UNAVAILABLE(xros) API_DEPRECATED("The Find pasteboard is no longer available.", ios(3.0, 10.0));
+UIKIT_EXTERN NSString *const UIPasteboardNameFind API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) API_UNAVAILABLE(visionos) API_DEPRECATED("The Find pasteboard is no longer available.", ios(3.0, 10.0));
 
-typedef NSString * UIPasteboardDetectionPattern NS_TYPED_ENUM API_AVAILABLE(ios(14.0));
+typedef NSString * UIPasteboardDetectionPattern NS_TYPED_ENUM API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(tvos, watchos);
 
 /// NSString value, suitable for implementing "Paste and Go"
-UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternProbableWebURL API_AVAILABLE(ios(14.0));
+UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternProbableWebURL API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(tvos, watchos);
 
 /// NSString value, suitable for implementing "Paste and Search"
-UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternProbableWebSearch API_AVAILABLE(ios(14.0));
+UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternProbableWebSearch API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(tvos, watchos);
 
 /// NSNumber value
-UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternNumber API_AVAILABLE(ios(14.0));
+UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternNumber API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(tvos, watchos);
 
 /// Array of DDMatchLink values
-UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternLink NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(15.0));
+UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternLink NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(tvos, watchos);
 /// Array of DDMatchPhoneNumber values
-UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternPhoneNumber NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(15.0));
+UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternPhoneNumber NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(tvos, watchos);
 /// Array of DDMatchEmailAddress values
-UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternEmailAddress NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(15.0));
+UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternEmailAddress NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(tvos, watchos);
 /// Array of DDMatchAddress values
-UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternPostalAddress NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(15.0));
+UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternPostalAddress NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(tvos, watchos);
 /// Array of DDMatchCalendarEvent values
-UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternCalendarEvent NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(15.0));
+UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternCalendarEvent NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(tvos, watchos);
 /// Array of DDMatchShipmentTrackingNumber values
-UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternShipmentTrackingNumber NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(15.0));
+UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternShipmentTrackingNumber NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(tvos, watchos);
 /// Array of DDMatchFlightNumber values
-UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternFlightNumber NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(15.0));
+UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternFlightNumber NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(tvos, watchos);
 /// Array of DDMatchMoneyAmount values
-UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternMoneyAmount  NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(15.0));
+UIKIT_EXTERN UIPasteboardDetectionPattern const UIPasteboardDetectionPatternMoneyAmount  NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(tvos, watchos);
 
 @class UIColor, UIImage;
 
@@ -59,7 +59,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(3.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watch
 + (void)removePasteboardWithName:(UIPasteboardName)pasteboardName;
 
 @property(readonly,getter=isPersistent,nonatomic) BOOL persistent;
-- (void)setPersistent:(BOOL)persistent API_DEPRECATED("Do not set persistence on pasteboards. This property is set automatically.", ios(3.0, 10.0)) API_UNAVAILABLE(xros);
+- (void)setPersistent:(BOOL)persistent API_DEPRECATED("Do not set persistence on pasteboards. This property is set automatically.", ios(3.0, 10.0)) API_UNAVAILABLE(visionos);
 @property(readonly,nonatomic) NSInteger changeCount;
 
 // Item provider interface
@@ -98,7 +98,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(3.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watch
 @property(nonatomic,copy) NSArray<NSDictionary<NSString *, id> *> *items;
 - (void)addItems:(NSArray<NSDictionary<NSString *, id> *> *)items;
 
-typedef NSString * UIPasteboardOption NS_TYPED_ENUM API_AVAILABLE(ios(10.0));
+typedef NSString * UIPasteboardOption NS_TYPED_ENUM API_AVAILABLE(ios(10.0)) API_UNAVAILABLE(watchos);
 
 UIKIT_EXTERN UIPasteboardOption const UIPasteboardOptionExpirationDate API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) API_AVAILABLE(ios(10.0)) NS_SWIFT_NAME(UIPasteboardOption.expirationDate); // Value: NSDate.
 UIKIT_EXTERN UIPasteboardOption const UIPasteboardOptionLocalOnly API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) API_AVAILABLE(ios(10.0)) NS_SWIFT_NAME(UIPasteboardOption.localOnly); // Value: NSNumber, boolean.
@@ -168,11 +168,11 @@ UIKIT_EXTERN UIPasteboardOption const UIPasteboardOptionLocalOnly API_UNAVAILABL
 
 // Notification
 
-UIKIT_EXTERN NSNotificationName const UIPasteboardChangedNotification API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIPasteboardChangedTypesAddedKey API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIPasteboardChangedTypesRemovedKey API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
+UIKIT_EXTERN NSNotificationName const UIPasteboardChangedNotification API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIPasteboardChangedTypesAddedKey API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIPasteboardChangedTypesRemovedKey API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
 
-UIKIT_EXTERN NSNotificationName const UIPasteboardRemovedNotification API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
+UIKIT_EXTERN NSNotificationName const UIPasteboardRemovedNotification API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
 
 // Types
 

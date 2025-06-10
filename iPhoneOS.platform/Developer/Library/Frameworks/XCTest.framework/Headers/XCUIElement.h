@@ -48,6 +48,7 @@ XCT_EXPORT XCUIGestureVelocity const XCUIGestureVelocityFast;
  * Elements are objects encapsulating the information needed to dynamically locate a user interface
  * element in an application. Elements are described in terms of queries /seealso XCUIElementQuery.
  */
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUIElement : NSObject <XCUIElementAttributes, XCUIElementTypeQueryProvider>
 
 + (instancetype)new XCT_UNAVAILABLE("Use XCUIElementQuery to create XCUIElement instances.");
@@ -58,6 +59,9 @@ XCT_EXPORT XCUIGestureVelocity const XCUIGestureVelocityFast;
 
 /*! Waits the specified amount of time for the element's exist property to be true and returns false if the timeout expires without the element coming into existence. */
 - (BOOL)waitForExistenceWithTimeout:(NSTimeInterval)timeout XCT_WARN_UNUSED;
+
+/*! Waits the specified amount of time for the element's exist property to be false and returns false if the timeout expires without the element disappearing. */
+- (BOOL)waitForNonExistenceWithTimeout:(NSTimeInterval)timeout;
 
 /*! Whether or not a hit point can be computed for the element for the purpose of synthesizing events. */
 @property (readonly, getter = isHittable) BOOL hittable;
@@ -86,6 +90,7 @@ XCT_EXPORT XCUIGestureVelocity const XCUIGestureVelocityFast;
 
 @end
 
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUIElement (XCUIScreenshotProviding) <XCUIScreenshotProviding>
 @end
 
@@ -96,6 +101,7 @@ XCT_EXPORT XCUIGestureVelocity const XCUIGestureVelocityFast;
  * Events that can be synthesized relative to an XCUIElement object. When an event API is called, the element
  * will be resolved. If zero or multiple matches are found, an error will be raised.
  */
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUIElement (XCUIElementKeyboardEvents)
 
 /*!
@@ -128,6 +134,7 @@ XCT_EXPORT XCUIGestureVelocity const XCUIGestureVelocityFast;
 
 @end
 
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUIElement (XCUIElementTouchEvents)
 
 /*!
@@ -256,6 +263,7 @@ XCT_EXPORT XCUIGestureVelocity const XCUIGestureVelocityFast;
 
 #if TARGET_OS_OSX || TARGET_OS_MACCATALYST || TARGET_OS_IOS
 
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUIElement (XCUIElementMouseEvents)
 
 /*!
@@ -307,6 +315,7 @@ XCT_EXPORT XCUIGestureVelocity const XCUIGestureVelocityFast;
 #endif // TARGET_OS_OSX || TARGET_OS_MACCATALYST || TARGET_OS_IOS
 
 /*! This category on XCUIElement provides functionality for automating UISlider and NSSlider. */
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUIElement (XCUIElementTypeSlider)
 
 /*! Manipulates the UI to change the displayed value of the slider to one based on a normalized position. 0 corresponds to the minimum value of the slider, 1 corresponds to its maximum value. The adjustment is a "best effort" to move the indicator to the desired position; absolute fidelity is not guaranteed. */
@@ -320,6 +329,7 @@ XCT_EXPORT XCUIGestureVelocity const XCUIGestureVelocityFast;
 #if TARGET_OS_IOS
 
 /*! This category on XCUIElement provides functionality for automating the picker wheels of UIPickerViews and UIDatePickers. */
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUIElement (XCUIElementTypePickerWheel)
 
 /*! Changes the displayed value for the picker wheel. Will generate a test failure if the specified value is not available. */
@@ -329,6 +339,7 @@ XCT_EXPORT XCUIGestureVelocity const XCUIGestureVelocityFast;
 
 #endif // TARGET_OS_IOS
 
+XCT_SWIFT_MAIN_ACTOR
 @protocol XCUIElementSnapshot <XCUIElementAttributes>
 
 @property (readonly) NSArray<id<XCUIElementSnapshot>> *children;
@@ -342,6 +353,7 @@ XCT_EXPORT XCUIGestureVelocity const XCUIGestureVelocityFast;
 
 @end
 
+XCT_SWIFT_MAIN_ACTOR
 @protocol XCUIElementSnapshotProviding <NSObject>
 
 /*!
@@ -351,6 +363,7 @@ XCT_EXPORT XCUIGestureVelocity const XCUIGestureVelocityFast;
 
 @end
 
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUIElement (XCUIElementSnapshotProviding) <XCUIElementSnapshotProviding>
 @end
 

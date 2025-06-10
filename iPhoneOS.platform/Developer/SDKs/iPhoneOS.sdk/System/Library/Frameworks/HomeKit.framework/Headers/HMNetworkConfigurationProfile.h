@@ -10,12 +10,15 @@
 #import <HomeKit/HMAccessoryProfile.h>
 #import <HomeKit/HMDefines.h>
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @protocol HMNetworkConfigurationProfileDelegate;
 
-HM_EXTERN API_AVAILABLE(ios(13.0), watchos(6.0), tvos(13.0), macCatalyst(14.0)) API_UNAVAILABLE(macos)
-    @interface HMNetworkConfigurationProfile : HMAccessoryProfile
+HM_EXTERN
+NS_SWIFT_SENDABLE
+API_AVAILABLE(ios(13.0), watchos(6.0), tvos(13.0), macCatalyst(14.0))
+API_UNAVAILABLE(macos)
+@interface HMNetworkConfigurationProfile : HMAccessoryProfile
 
 /*!
  *  @abstract   The delegate of the receiver.
@@ -26,6 +29,8 @@ HM_EXTERN API_AVAILABLE(ios(13.0), watchos(6.0), tvos(13.0), macCatalyst(14.0)) 
  *  @abstract   Indicates if the associated accessory's access to the network is restricted.
  */
 @property (nonatomic, readonly, assign, getter=isNetworkAccessRestricted) BOOL networkAccessRestricted;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 @end
 
@@ -44,4 +49,4 @@ API_UNAVAILABLE(macos)
 
 @end
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)

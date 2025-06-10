@@ -22,6 +22,9 @@ typedef BOOL (^ XCT_SWIFT_SENDABLE XCPredicateExpectationHandler)(void);
 /*!
  * @class XCTNSPredicateExpectation
  * Expectation subclass for waiting on a condition defined by an NSPredicate and an object.
+ *
+ * When an instance of this class is used from Swift and is awaited using @c fulfillment(of:) rather than
+ * @c wait(for:), XCTest evaluates the associated predicate on the main actor.
  */
 @interface XCTNSPredicateExpectation : XCTestExpectation
 
@@ -32,6 +35,9 @@ typedef BOOL (^ XCT_SWIFT_SENDABLE XCPredicateExpectationHandler)(void);
 /*!
  * @method -initWithPredicate:object:
  * Initializes an expectation that waits for a predicate to evaluate as true with the provided object.
+ *
+ * When an instance of this class is used from Swift and is awaited using @c fulfillment(of:) rather than
+ * @c wait(for:), XCTest evaluates @a predicate on the main actor.
  */
 - (instancetype)initWithPredicate:(NSPredicate *)predicate object:(nullable id)object NS_DESIGNATED_INITIALIZER;
 

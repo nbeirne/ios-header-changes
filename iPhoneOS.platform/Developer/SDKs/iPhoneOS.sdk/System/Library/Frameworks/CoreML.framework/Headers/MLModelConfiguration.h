@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreML/MLExport.h>
+#import <CoreML/MLOptimizationHints.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -40,6 +41,9 @@ ML_EXPORT
 
 @property (readwrite) MLComputeUnits computeUnits;
 
+/// A group of hints for CoreML to optimize
+@property (readwrite, copy, nonatomic) MLOptimizationHints *optimizationHints API_AVAILABLE(macos(14.4), ios(17.4), watchos(10.4), tvos(17.4)) NS_REFINED_FOR_SWIFT;
+
 @end
 
 /*!
@@ -66,6 +70,24 @@ ML_EXPORT
 
 // Optional dictionary with any requested changes to model or update parameters
 @property (readwrite, nonatomic, nullable) NSDictionary<MLParameterKey *, id> *parameters;
+
+@end
+
+API_AVAILABLE(macos(15.0), ios(18.0), watchos(11.0), tvos(18.0))
+ML_EXPORT
+@interface MLModelConfiguration (MultiFunctions)
+
+/// Function name that `MLModel` will use.
+///
+/// Some model types (e.g. ML Program) supports multiple functions in a model asset, where each `MLModel` instance is associated with a particular function.
+///
+/// Use `MLModelAsset` to get the list of available functions. Use `nil` to use a default function.
+///
+/// ```swift
+/// let configuration = MLModelConfiguration()
+/// configuration.functionName = "my_function"
+/// ```
+@property (readwrite, nullable, copy, nonatomic) NSString *functionName API_AVAILABLE(macos(15.0), ios(18.0), watchos(11.0), tvos(18.0));
 
 @end
 

@@ -59,6 +59,10 @@
 #import <AuthenticationServices/ASAuthorizationPublicKeyCredentialAssertionRequest.h>
 #import <AuthenticationServices/ASAuthorizationPublicKeyCredentialConstants.h>
 #import <AuthenticationServices/ASAuthorizationPublicKeyCredentialDescriptor.h>
+#import <AuthenticationServices/ASAuthorizationPublicKeyCredentialLargeBlobAssertionInput.h>
+#import <AuthenticationServices/ASAuthorizationPublicKeyCredentialLargeBlobAssertionOutput.h>
+#import <AuthenticationServices/ASAuthorizationPublicKeyCredentialLargeBlobRegistrationInput.h>
+#import <AuthenticationServices/ASAuthorizationPublicKeyCredentialLargeBlobRegistrationOutput.h>
 #import <AuthenticationServices/ASAuthorizationPublicKeyCredentialParameters.h>
 #import <AuthenticationServices/ASAuthorizationPublicKeyCredentialRegistration.h>
 #import <AuthenticationServices/ASAuthorizationPublicKeyCredentialRegistrationRequest.h>
@@ -68,28 +72,46 @@
 #import <AuthenticationServices/ASAuthorizationSecurityKeyPublicKeyCredentialProvider.h>
 #import <AuthenticationServices/ASAuthorizationSecurityKeyPublicKeyCredentialRegistration.h>
 #import <AuthenticationServices/ASAuthorizationSecurityKeyPublicKeyCredentialRegistrationRequest.h>
+#import <AuthenticationServices/ASAuthorizationWebBrowserExternallyAuthenticatableRequest.h>
+#import <AuthenticationServices/ASAuthorizationWebBrowserPlatformPublicKeyCredential.h>
+#import <AuthenticationServices/ASAuthorizationWebBrowserPublicKeyCredentialManager.h>
 #import <AuthenticationServices/ASCOSEConstants.h>
 #import <AuthenticationServices/ASPublicKeyCredential.h>
 
 
+#import <AuthenticationServices/ASOneTimeCodeCredential.h>
+#import <AuthenticationServices/ASOneTimeCodeCredentialIdentity.h>
+#import <AuthenticationServices/ASOneTimeCodeCredentialRequest.h>
 
 
-
-#import <AuthenticationServices/ASAuthorizationWebBrowserExternallyAuthenticatableRequest.h>
-#import <AuthenticationServices/ASAuthorizationWebBrowserPlatformPublicKeyCredential.h>
-#import <AuthenticationServices/ASAuthorizationWebBrowserPublicKeyCredentialManager.h>
 
 #import <AuthenticationServices/ASCredentialIdentity.h>
 #import <AuthenticationServices/ASCredentialRequest.h>
 #import <AuthenticationServices/ASPasskeyAssertionCredential.h>
 #import <AuthenticationServices/ASPasskeyCredentialIdentity.h>
 #import <AuthenticationServices/ASPasskeyCredentialRequest.h>
+#import <AuthenticationServices/ASPasskeyCredentialRequestParameters.h>
 #import <AuthenticationServices/ASPasskeyRegistrationCredential.h>
 #import <AuthenticationServices/ASPasswordCredentialRequest.h>
 
 #import <AuthenticationServices/ASAuthorizationWebBrowserPlatformPublicKeyCredentialAssertionRequest.h>
 #import <AuthenticationServices/ASAuthorizationWebBrowserPlatformPublicKeyCredentialProvider.h>
 #import <AuthenticationServices/ASAuthorizationWebBrowserPlatformPublicKeyCredentialRegistrationRequest.h>
+#import <AuthenticationServices/ASAuthorizationWebBrowserSecurityKeyPublicKeyCredentialAssertionRequest.h>
+#import <AuthenticationServices/ASAuthorizationWebBrowserSecurityKeyPublicKeyCredentialProvider.h>
+#import <AuthenticationServices/ASAuthorizationWebBrowserSecurityKeyPublicKeyCredentialRegistrationRequest.h>
 #import <AuthenticationServices/ASPublicKeyCredentialClientData.h>
 
 #import <AuthenticationServices/ASSettingsHelper.h>
+
+#import <AuthenticationServices/ASWebAuthenticationSessionCallback.h>
+
+#import <AuthenticationServices/ASPasskeyAssertionCredentialExtensionOutput.h>
+#import <AuthenticationServices/ASPasskeyAssertionCredentialExtensionInput.h>
+#import <AuthenticationServices/ASPasskeyRegistrationCredentialExtensionInput.h>
+#import <AuthenticationServices/ASPasskeyRegistrationCredentialExtensionOutput.h>
+
+#import <AuthenticationServices/ASAuthorizationPublicKeyCredentialPRFAssertionInput.h>
+#import <AuthenticationServices/ASAuthorizationPublicKeyCredentialPRFAssertionOutput.h>
+#import <AuthenticationServices/ASAuthorizationPublicKeyCredentialPRFRegistrationInput.h>
+#import <AuthenticationServices/ASAuthorizationPublicKeyCredentialPRFRegistrationOutput.h>

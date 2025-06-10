@@ -10,7 +10,7 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-/// The attribute name for adding a text item with a specified custom tag.
+/// The attribute name for adding a text item with a specified custom tag. The value of the attribute must be an `NSString`.
 UIKIT_EXTERN NSAttributedStringKey const UITextItemTagAttributeName API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(tvos, watchos);
 
 #pragma mark - UITextItem

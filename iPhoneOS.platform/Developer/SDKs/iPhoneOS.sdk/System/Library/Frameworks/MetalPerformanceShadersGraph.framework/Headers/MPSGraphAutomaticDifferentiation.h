@@ -16,13 +16,13 @@ NS_ASSUME_NONNULL_BEGIN
 MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
 @interface MPSGraph(MPSGraphGradientOps)
 
-/// Calculates partial derviative of primaryTensor wrt secondaryTensor
+/// Calculates a partial derivative of primaryTensor with respect to the tensors.
 ///
 /// - Parameters:
-///   - primaryTensor: tensor to be differentiated (numerator)
-///   - tensors: tensors to do the differentiation with (denominator)
-///   - name: name for the gradient operation
-/// - Returns: A valid MPSGraphTensor dictionary object containing partial derivative d(primaryTensor)/d(secondaryTensor) for each tensor as key
+///   - primaryTensor: Tensor to be differentiated (numerator).
+///   - tensors: Tensors to do the differentiation with (denominator).
+///   - name: Name for the gradient operation.
+/// - Returns: A valid MPSGraphTensor dictionary object containing partial derivative d(primaryTensor)/d(secondaryTensor) for each tensor as key.
 -(NSDictionary<MPSGraphTensor *, MPSGraphTensor *> *) gradientForPrimaryTensor:(MPSGraphTensor *) primaryTensor
                                                                    withTensors:(NSArray<MPSGraphTensor *> *) tensors
                                                                           name:(NSString * _Nullable) name

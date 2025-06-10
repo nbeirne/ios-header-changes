@@ -134,6 +134,11 @@ NS_ASSUME_NONNULL_BEGIN
   @property (nonatomic) float scale;
   @property (nonatomic) float aspectRatio;
 @end
+@protocol CIMaximumScaleTransform <CIFilter>
+  @property (nonatomic, retain, nullable) CIImage *inputImage;
+  @property (nonatomic) float scale;
+  @property (nonatomic) float aspectRatio;
+@end
 @protocol CIPerspectiveCorrection <CIFourCoordinateGeometryFilter>
   @property (nonatomic) bool crop;
 @end
@@ -312,6 +317,11 @@ NS_ASSUME_NONNULL_BEGIN
   @property (nonatomic) CGPoint point3;
   @property (nonatomic) CGPoint point4;
 @end
+@protocol CIToneMapHeadroom <CIFilter>
+  @property (nonatomic, retain, nullable) CIImage *inputImage;
+  @property (nonatomic) float sourceHeadroom;
+  @property (nonatomic) float targetHeadroom;
+@end
 @protocol CIVibrance <CIFilter>
   @property (nonatomic, retain, nullable) CIImage *inputImage;
   @property (nonatomic) float amount;
@@ -414,6 +424,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 @protocol CIPhotoEffect <CIFilter>
   @property (nonatomic, retain, nullable) CIImage *inputImage;
+  @property (nonatomic) bool extrapolate NS_AVAILABLE(14_0, 17_0);
 @end
 @protocol CISepiaTone <CIFilter>
   @property (nonatomic, retain, nullable) CIImage *inputImage;
@@ -660,6 +671,11 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 @protocol CIBarcodeGenerator <CIFilter>
   @property (nonatomic, retain) CIBarcodeDescriptor *barcodeDescriptor;
+@end
+@protocol CIBlurredRectangleGenerator <CIFilter>
+  @property (nonatomic) CGRect extent;
+  @property (nonatomic) float sigma;
+  @property (nonatomic, retain) CIColor *color;
 @end
 @protocol CICheckerboardGenerator <CIFilter>
   @property (nonatomic) CGPoint center;
@@ -966,6 +982,8 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 @protocol CIAreaAverage <CIAreaReductionFilter>
 @end
+@protocol CIAreaBoundsRed <CIAreaReductionFilter>
+@end
 @protocol CIAreaHistogram <CIAreaReductionFilter>
   @property (nonatomic) float scale;
   @property (nonatomic) NSInteger count;
@@ -1034,6 +1052,7 @@ NS_CLASS_AVAILABLE(10_15, 13_0)
 + (CIFilter<CIKeystoneCorrectionHorizontal>*) keystoneCorrectionHorizontalFilter;
 + (CIFilter<CIKeystoneCorrectionVertical>*) keystoneCorrectionVerticalFilter;
 + (CIFilter<CILanczosScaleTransform>*) lanczosScaleTransformFilter;
++ (CIFilter<CIMaximumScaleTransform>*) maximumScaleTransformFilter NS_AVAILABLE(15_0, 18_0);
 + (CIFilter<CIPerspectiveCorrection>*) perspectiveCorrectionFilter;
 + (CIFilter<CIPerspectiveRotate>*) perspectiveRotateFilter;
 + (CIFilter<CIPerspectiveTransform>*) perspectiveTransformFilter;
@@ -1102,6 +1121,7 @@ NS_CLASS_AVAILABLE(10_15, 13_0)
 + (CIFilter<CISRGBToneCurveToLinear>*) sRGBToneCurveToLinearFilter;
 + (CIFilter<CITemperatureAndTint>*) temperatureAndTintFilter;
 + (CIFilter<CIToneCurve>*) toneCurveFilter;
++ (CIFilter<CIToneMapHeadroom>*) toneMapHeadroomFilter NS_AVAILABLE(15_0, 18_0);
 + (CIFilter<CIVibrance>*) vibranceFilter;
 + (CIFilter<CIWhitePointAdjust>*) whitePointAdjustFilter;
 
@@ -1181,6 +1201,7 @@ NS_CLASS_AVAILABLE(10_15, 13_0)
 + (CIFilter<CIAttributedTextImageGenerator>*) attributedTextImageGeneratorFilter;
 + (CIFilter<CIAztecCodeGenerator>*) aztecCodeGeneratorFilter;
 + (CIFilter<CIBarcodeGenerator>*) barcodeGeneratorFilter;
++ (CIFilter<CIBlurredRectangleGenerator>*) blurredRectangleGeneratorFilter NS_AVAILABLE(14_0, 17_0);
 + (CIFilter<CICheckerboardGenerator>*) checkerboardGeneratorFilter;
 + (CIFilter<CICode128BarcodeGenerator>*) code128BarcodeGeneratorFilter;
 + (CIFilter<CILenticularHaloGenerator>*) lenticularHaloGeneratorFilter;
@@ -1251,7 +1272,9 @@ NS_CLASS_AVAILABLE(10_15, 13_0)
 + (CIFilter<CIZoomBlur>*) zoomBlurFilter;
 
 // CICategoryReduction
++ (CIFilter<CIAreaHistogram>*) areaAlphaWeightedHistogramFilter NS_AVAILABLE(15_0, 18_0);
 + (CIFilter<CIAreaAverage>*) areaAverageFilter NS_AVAILABLE(11_0, 14_0);
++ (CIFilter<CIAreaBoundsRed>*) areaBoundsRedFilter NS_AVAILABLE(15_0, 18_0);
 + (CIFilter<CIAreaHistogram>*) areaHistogramFilter NS_AVAILABLE(11_0, 14_0);
 + (CIFilter<CIAreaLogarithmicHistogram>*) areaLogarithmicHistogramFilter NS_AVAILABLE(13_0, 16_0);
 + (CIFilter<CIAreaMaximum>*) areaMaximumFilter NS_AVAILABLE(11_0, 14_0);

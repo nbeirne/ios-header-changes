@@ -16,8 +16,8 @@ typedef NS_ENUM(NSUInteger, MKPinAnnotationColor) {
     MKPinAnnotationColorGreen,
     MKPinAnnotationColorPurple
 } NS_ENUM_DEPRECATED(10_9, 10_11, 3_0, 9_0, "Use MKPinAnnotationView's pinTintColor instead")
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros);
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(visionos);
 #else
 API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
 #endif
@@ -47,8 +47,8 @@ API_UNAVAILABLE(watchos)
 @property (nonatomic) BOOL animatesDrop;
 
 @property (nonatomic) MKPinAnnotationColor pinColor
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros);
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(visionos);
 #else
 NS_DEPRECATED(10_9, 10_11, 3_0, 9_0, "Use pinTintColor instead") API_UNAVAILABLE(tvos);
 #endif

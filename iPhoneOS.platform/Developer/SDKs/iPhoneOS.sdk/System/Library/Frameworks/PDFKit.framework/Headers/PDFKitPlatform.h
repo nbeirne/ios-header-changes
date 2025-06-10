@@ -79,6 +79,9 @@
 #define PDFEdgeInsetsZero                                       NSEdgeInsetsZero
 #define PDFTrackingRunLoopMode                                  NSEventTrackingRunLoopMode
 
+// Font Weights
+#define PDFKitPlatformFontWeightRegular                         NSFontWeightRegular
+
 #elif (TARGET_OS_SIMULATOR || TARGET_OS_IPHONE || TARGET_OS_MACCATALYST)
 
 // iOS Headers
@@ -127,6 +130,9 @@
 #define PDFRectZero                                             CGRectZero
 #define PDFEdgeInsetsZero                                       UIEdgeInsetsZero
 #define PDFTrackingRunLoopMode                             UITrackingRunLoopMode
+
+// Font Weights
+#define PDFKitPlatformFontWeightRegular                         UIFontWeightRegular
 
 #else
 

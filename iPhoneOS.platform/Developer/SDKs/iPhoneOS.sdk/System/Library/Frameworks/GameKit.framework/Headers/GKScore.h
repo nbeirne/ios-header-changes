@@ -9,7 +9,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// GKScore represents a score in the leaderboards.
-API_DEPRECATED_WITH_REPLACEMENT("GKLeaderboardScore", ios(4.1, 14.0), tvos(9.0, 14.0), macosx(10.8, 11.0), watchos(3.0, 7.0))
+API_DEPRECATED_WITH_REPLACEMENT("GKLeaderboardScore", ios(4.1, 14.0), tvos(9.0, 14.0), macos(10.8, 11.0), watchos(3.0, 7.0))
 @interface GKScore : NSObject <NSCoding, NSSecureCoding>
 
 /// Initialize the score with the local player and current date.
@@ -63,7 +63,7 @@ API_DEPRECATED_WITH_REPLACEMENT("GKLeaderboardScore", ios(4.1, 14.0), tvos(9.0, 
 
 @interface GKScore (Obsoleted)
 /*** This method is obsolete. Calling this initialiser does nothing and will return nil ***/
-- (nullable instancetype)initWithLeaderboardIdentifier:(NSString *)identifier forPlayer:(NSString *)playerID API_DEPRECATED_WITH_REPLACEMENT("-initWithLeaderboardIdentifier:player:", ios(7.0,8.0)) __TVOS_UNAVAILABLE;
+- (nullable instancetype)initWithLeaderboardIdentifier:(NSString *)identifier forPlayer:(NSString *)playerID API_DEPRECATED_WITH_REPLACEMENT("-initWithLeaderboardIdentifier:player:", ios(7.0,8.0), macos(10.9,10.10)) __TVOS_UNAVAILABLE;
 
 /*** This property is obsolete. ***/
 @property(readonly, nullable, retain, NS_NONATOMIC_IOSONLY)   NSString    *playerID API_DEPRECATED_WITH_REPLACEMENT("-player:", ios(4.1,8.0), macos(10.8,10.10)) __TVOS_UNAVAILABLE;          // The identifier of the player that recorded the score.

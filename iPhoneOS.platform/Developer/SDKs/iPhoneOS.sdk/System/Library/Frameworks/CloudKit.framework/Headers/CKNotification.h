@@ -72,43 +72,43 @@ NS_SWIFT_SENDABLE
 
 /// When you instantiate a `CKNotification` from a remote notification dictionary, you will get back a concrete
 /// subclass defined below.  Use `notificationType` to avoid `as?` or `-isKindOfClass:` checks.
-@property (nonatomic, readonly, assign) CKNotificationType notificationType;
+@property (readonly, assign, nonatomic) CKNotificationType notificationType;
 
-@property (nonatomic, readonly, copy, nullable) CKNotificationID *notificationID;
+@property (nullable, readonly, copy, nonatomic) CKNotificationID *notificationID;
 
-@property (nonatomic, readonly, copy, nullable) NSString *containerIdentifier;
+@property (nullable, readonly, copy, nonatomic) NSString *containerIdentifier;
 
 /// The user `recordID` of the owner of the subscription for which this notification was generated
-@property (nonatomic, readonly, copy, nullable) CKRecordID *subscriptionOwnerUserRecordID API_AVAILABLE(macos(10.15), ios(13.0), tvos(13.0), watchos(6.0));
+@property (nullable, readonly, copy, nonatomic) CKRecordID *subscriptionOwnerUserRecordID API_AVAILABLE(macos(10.15), ios(13.0), tvos(13.0), watchos(6.0));
 
 /// Whether or not the notification fully represents what the server wanted to send.
 ///
 /// Push notifications have a limited size.  In some cases, CloudKit servers may not be able to send you a full `CKNotification`'s worth of info in one push.
 /// In those cases, `isPruned` returns `true`.
 /// The order in which properties are dropped from a push notification is defined in each `CKNotification` subclass below.
-@property (nonatomic, readonly, assign) BOOL isPruned;
+@property (readonly, assign, nonatomic) BOOL isPruned;
 
 /// The ID of the subscription that caused this notification to fire.
-@property (nonatomic, readonly, copy, nullable) CKSubscriptionID subscriptionID API_AVAILABLE(macos(10.11), ios(9.0), watchos(3.0));
+@property (nullable, readonly, copy, nonatomic) CKSubscriptionID subscriptionID API_AVAILABLE(macos(10.11), ios(9.0), watchos(3.0));
 
 @end
 
 API_DEPRECATED_BEGIN("Interact with UI elements of a CloudKit-server-generated push message via UserNotifications.framework", macos(10.10, 14.0), ios(8.0, 17.0), tvos(9.0, 17.0), watchos(3.0, 10.0))
 @interface CKNotification (DeprecatedAPSProperties)
-@property (nonatomic, readonly, copy, nullable) NSString *alertBody __TVOS_PROHIBITED;
-@property (nonatomic, readonly, copy, nullable) NSString *alertLocalizationKey __TVOS_PROHIBITED;
-@property (nonatomic, readonly, copy, nullable) NSArray<NSString *> *alertLocalizationArgs __TVOS_PROHIBITED;
-@property (nonatomic, readonly, copy, nullable) NSString *title __TVOS_PROHIBITED API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0));
-@property (nonatomic, readonly, copy, nullable) NSString *titleLocalizationKey __TVOS_PROHIBITED API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0));
-@property (nonatomic, readonly, copy, nullable) NSArray<NSString *> *titleLocalizationArgs __TVOS_PROHIBITED API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0));
-@property (nonatomic, readonly, copy, nullable) NSString *subtitle __TVOS_PROHIBITED API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0));
-@property (nonatomic, readonly, copy, nullable) NSString *subtitleLocalizationKey __TVOS_PROHIBITED API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0));
-@property (nonatomic, readonly, copy, nullable) NSArray<NSString *> *subtitleLocalizationArgs __TVOS_PROHIBITED API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0));
-@property (nonatomic, readonly, copy, nullable) NSString *alertActionLocalizationKey __TVOS_PROHIBITED;
-@property (nonatomic, readonly, copy, nullable) NSString *alertLaunchImage __TVOS_PROHIBITED;
-@property (nonatomic, readonly, copy, nullable) NSNumber *badge API_AVAILABLE(tvos(10.0));
-@property (nonatomic, readonly, copy, nullable) NSString *soundName __TVOS_PROHIBITED;
-@property (nonatomic, readonly, copy, nullable) NSString *category __TVOS_PROHIBITED API_AVAILABLE(macos(10.11), ios(9.0), watchos(3.0));
+@property (nullable, readonly, copy, nonatomic) NSString *alertBody __TVOS_PROHIBITED;
+@property (nullable, readonly, copy, nonatomic) NSString *alertLocalizationKey __TVOS_PROHIBITED;
+@property (nullable, readonly, copy, nonatomic) NSArray<NSString *> *alertLocalizationArgs __TVOS_PROHIBITED;
+@property (nullable, readonly, copy, nonatomic) NSString *title __TVOS_PROHIBITED API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0));
+@property (nullable, readonly, copy, nonatomic) NSString *titleLocalizationKey __TVOS_PROHIBITED API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0));
+@property (nullable, readonly, copy, nonatomic) NSArray<NSString *> *titleLocalizationArgs __TVOS_PROHIBITED API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0));
+@property (nullable, readonly, copy, nonatomic) NSString *subtitle __TVOS_PROHIBITED API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0));
+@property (nullable, readonly, copy, nonatomic) NSString *subtitleLocalizationKey __TVOS_PROHIBITED API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0));
+@property (nullable, readonly, copy, nonatomic) NSArray<NSString *> *subtitleLocalizationArgs __TVOS_PROHIBITED API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0));
+@property (nullable, readonly, copy, nonatomic) NSString *alertActionLocalizationKey __TVOS_PROHIBITED;
+@property (nullable, readonly, copy, nonatomic) NSString *alertLaunchImage __TVOS_PROHIBITED;
+@property (nullable, readonly, copy, nonatomic) NSNumber *badge API_AVAILABLE(tvos(10.0));
+@property (nullable, readonly, copy, nonatomic) NSString *soundName __TVOS_PROHIBITED;
+@property (nullable, readonly, copy, nonatomic) NSString *category __TVOS_PROHIBITED API_AVAILABLE(macos(10.11), ios(9.0), watchos(3.0));
 @end
 API_DEPRECATED_END // macos(10.10, 14.0), ios(8.0, 17.0), tvos(9.0, 17.0), watchos(3.0, 10.0))
 
@@ -147,16 +147,16 @@ CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer
 NS_SWIFT_SENDABLE
 @interface CKQueryNotification : CKNotification
 
-@property (nonatomic, readonly, assign) CKQueryNotificationReason queryNotificationReason;
+@property (readonly, assign, nonatomic) CKQueryNotificationReason queryNotificationReason;
 
 /// A set of key->value pairs for creates and updates.
 ///
 /// You request the server fill out this property via the `desiredKeys` property of `CKSubscription.NotificationInfo`
-@property (nonatomic, readonly, copy, nullable) NSDictionary<NSString *, NS_SWIFT_SENDABLE id> *recordFields;
+@property (nullable, readonly, copy, nonatomic) NSDictionary<NSString *, id> *recordFields;
 
-@property (nonatomic, readonly, copy, nullable) CKRecordID *recordID;
+@property (nullable, readonly, copy, nonatomic) CKRecordID *recordID;
 
-@property (nonatomic, readonly, assign) CKDatabaseScope databaseScope API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
+@property (readonly, assign, nonatomic) CKDatabaseScope databaseScope API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
 
 @end
 
@@ -188,9 +188,9 @@ CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer
 NS_SWIFT_SENDABLE
 @interface CKRecordZoneNotification : CKNotification
 
-@property (nonatomic, readonly, copy, nullable) CKRecordZoneID *recordZoneID;
+@property (nullable, readonly, copy, nonatomic) CKRecordZoneID *recordZoneID;
 
-@property (nonatomic, readonly, assign) CKDatabaseScope databaseScope API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
+@property (readonly, assign, nonatomic) CKDatabaseScope databaseScope API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
 
 @end
 
@@ -221,7 +221,7 @@ CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer
 NS_SWIFT_SENDABLE
 @interface CKDatabaseNotification : CKNotification
 
-@property (nonatomic, readonly, assign) CKDatabaseScope databaseScope;
+@property (readonly, assign, nonatomic) CKDatabaseScope databaseScope;
 
 @end
 

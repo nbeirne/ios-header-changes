@@ -20,7 +20,8 @@ typedef NS_OPTIONS(NSUInteger, ARPlaneDetection) {
     ARPlaneDetectionHorizontal                        = (1 << 0),
 
     /** Plane detection determines vertical planes in the scene. */
-    ARPlaneDetectionVertical API_AVAILABLE(ios(11.3)) = (1 << 1)
+    ARPlaneDetectionVertical API_AVAILABLE(ios(11.3)) = (1 << 1),
+    
 } NS_SWIFT_NAME(ARWorldTrackingConfiguration.PlaneDetection);
 #else
 #import <ARKitCore/ARPlaneDetectionTypes.h> 

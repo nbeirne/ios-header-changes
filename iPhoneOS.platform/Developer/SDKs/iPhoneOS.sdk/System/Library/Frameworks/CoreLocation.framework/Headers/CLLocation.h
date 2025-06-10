@@ -424,8 +424,8 @@ NS_SWIFT_SENDABLE API_AVAILABLE(macos(10.6), ios(2.0))
  *  Discussion:
  *    Deprecated. Use -distanceFromLocation: instead.
  */
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-- (CLLocationDistance)getDistanceFrom:(const CLLocation *)location API_DEPRECATED_WITH_REPLACEMENT("-distanceFromLocation:", ios(2.0, 3.2), macos(10.15, 10.15)) API_UNAVAILABLE(watchos, tvos, xros);
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+- (CLLocationDistance)getDistanceFrom:(const CLLocation *)location API_DEPRECATED_WITH_REPLACEMENT("-distanceFromLocation:", ios(2.0, 3.2), macos(10.15, 10.15)) API_UNAVAILABLE(watchos, tvos, visionos);
 #else
 - (CLLocationDistance)getDistanceFrom:(const CLLocation *)location API_DEPRECATED_WITH_REPLACEMENT("-distanceFromLocation:", ios(2.0, 3.2), macos(10.15, 10.15)) API_UNAVAILABLE(watchos, tvos);
 #endif

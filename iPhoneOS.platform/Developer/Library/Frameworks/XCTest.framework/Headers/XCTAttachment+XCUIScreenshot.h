@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class XCUIScreenshot;
 
+XCT_SWIFT_MAIN_ACTOR
 @interface XCTAttachment (XCUIScreenshot_ConvenienceInitializers)
 
 /*!

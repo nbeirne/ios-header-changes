@@ -20,4 +20,7 @@ __attribute__((objc_subclassing_restricted))
 
 + (instancetype)new NS_UNAVAILABLE;
 
+/// The total number of cores in the NeuralEngine.
+@property (readonly, assign, nonatomic) NSInteger totalCoreCount;
+
 @end

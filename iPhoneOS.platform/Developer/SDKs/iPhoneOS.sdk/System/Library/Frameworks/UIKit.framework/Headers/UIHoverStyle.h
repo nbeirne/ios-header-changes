@@ -17,7 +17,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 /// The hover style to apply to a view, including an effect and a shape to use
 /// for displaying that effect.
-UIKIT_EXTERN API_AVAILABLE(ios(13.0), xros(1.0)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(17.0), visionos(1.0)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR
 @interface UIHoverStyle : NSObject <NSCopying>
 
 /// The effect to apply to the view with this style. Use `UIHoverAutomaticEffect`
@@ -28,24 +28,32 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.0), xros(1.0)) API_UNAVAILABLE(watchos, tvos) 
 /// system-default shape will be chosen based on the view.
 @property (nonatomic, strong, nullable) UIShape *shape NS_REFINED_FOR_SWIFT;
 
+/// Whether the effect to apply to the view with this style is enabled.
+/// Use this property to temporarily disable a view's hover effect without
+/// removing it from the view entirely.
+@property (nonatomic, getter=isEnabled) BOOL enabled;
+
 /// Creates a hover style with the provided effect and shape.
 + (instancetype)styleWithEffect:(id<UIHoverEffect>)effect shape:(nullable UIShape *)shape NS_REFINED_FOR_SWIFT;
 
 /// Creates a hover style with the provided shape and a `UIHoverAutomaticEffect`.
-+ (instancetype)styleWithShape:(nullable UIShape *)shape;
++ (instancetype)styleWithShape:(nullable UIShape *)shape NS_REFINED_FOR_SWIFT;
+
+/// Creates a hover style with the default shape and a `UIHoverAutomaticEffect`.
++ (instancetype)automaticStyle NS_REFINED_FOR_SWIFT;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
 @end
 
-UIKIT_EXTERN API_AVAILABLE(ios(17.0), xros(1.0)) API_UNAVAILABLE(watchos, tvos)
+UIKIT_EXTERN API_AVAILABLE(ios(17.0), visionos(1.0)) API_UNAVAILABLE(watchos, tvos)
 @interface UIView (UIHoverStyle)
 
 /// The hover style associated with this view. Defaults to `nil`,
 /// indicating that this view should not have any hover effect.
 /// Subclasses may configure this style to use a different default value.
-@property (nonatomic, strong, nullable) UIHoverStyle *hoverStyle;
+@property (nonatomic, copy, nullable) UIHoverStyle *hoverStyle API_UNAVAILABLE(watchos);
 
 @end
 

@@ -37,11 +37,11 @@ CF_EXPORT CFTypeID CFNotificationCenterGetTypeID(void);
 
 CF_EXPORT CFNotificationCenterRef CFNotificationCenterGetLocalCenter(void);
 
-#if (TARGET_OS_OSX || TARGET_OS_WIN32) && (!0 || !0)
+#if (TARGET_OS_OSX || TARGET_OS_WIN32) && !0
 CF_EXPORT CFNotificationCenterRef CFNotificationCenterGetDistributedCenter(void);
 #endif
 
-#if !0 || !0
+#if !0
 CF_EXPORT CFNotificationCenterRef CFNotificationCenterGetDarwinNotifyCenter(void);
 // The Darwin Notify Center is based on the <notify.h> API.
 // For this center, there are limitations in the API. There are no notification "objects",

@@ -124,12 +124,14 @@ NS_REFINED_FOR_SWIFT
 API_DEPRECATED("Use NSTermOfAddress instead", macos(12.0,14.0), ios(15.0,17.0), tvos(15.0,17.0), watchos(8.0,10.0))
 @interface NSMorphology (NSCustomPronouns)
 
-- (nullable NSMorphologyCustomPronoun *)customPronounForLanguage:(NSString *)language;
-- (BOOL)setCustomPronoun:(nullable NSMorphologyCustomPronoun *)features forLanguage:(NSString *)language error:(NSError **)error;
+- (nullable NSMorphologyCustomPronoun *)customPronounForLanguage:(NSString *)language
+API_DEPRECATED("Use NSTermOfAddress instead", macos(12.0,14.0), ios(15.0,17.0), tvos(15.0,17.0), watchos(8.0,10.0));
+- (BOOL)setCustomPronoun:(nullable NSMorphologyCustomPronoun *)features forLanguage:(NSString *)language error:(NSError **)error
+API_DEPRECATED("Use NSTermOfAddress instead", macos(12.0,14.0), ios(15.0,17.0), tvos(15.0,17.0), watchos(8.0,10.0));
 
 @end
 
-API_AVAILABLE(macos(12.0), ios(15.0), watchos(8.0), tvos(15.0))
+API_DEPRECATED("Use NSTermOfAddress instead", macos(12.0,14.0), ios(15.0,17.0), tvos(15.0,17.0), watchos(8.0,10.0))
 NS_REFINED_FOR_SWIFT
 @interface NSMorphologyCustomPronoun: NSObject <NSCopying, NSSecureCoding>
 

@@ -16,8 +16,8 @@
 // MKReverseGeocoder is now deprecated.
 // Use CLGeocoder in CoreLocation instead.
 NS_CLASS_DEPRECATED(NA, NA, 3_0, 5_0) API_UNAVAILABLE(tvos, watchos)
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(visionos)
 #endif
 @interface MKReverseGeocoder : NSObject
 
@@ -36,8 +36,8 @@ API_UNAVAILABLE(xros)
 @end
 
 NS_CLASS_DEPRECATED(NA, NA, 3_0, 5_0) API_UNAVAILABLE(tvos, watchos)
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(visionos)
 #endif
 @protocol MKReverseGeocoderDelegate <NSObject>
 @required

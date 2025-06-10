@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
  * and producing element queries for UI shown by Siri.
  */
 NS_CLASS_AVAILABLE_IOS(10_3)
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUISiriService : NSObject
 
 + (instancetype)new XCT_UNAVAILABLE("Access XCUISiriService through the siriService property on XCUIDevice.");
@@ -39,6 +40,7 @@ NS_CLASS_AVAILABLE_IOS(10_3)
 
 @end
 
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUISiriService (XCUIElementTypeQueryProvider) <XCUIElementTypeQueryProvider>
 @end
 

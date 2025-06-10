@@ -60,7 +60,7 @@ typedef const struct CF_BRIDGED_TYPE(NSTimeZone) __CFTimeZone * CFTimeZoneRef;
 #endif
 #endif
 
-#if (!0 || !0)
+#if !0
 
 typedef struct {
     SInt32 year;

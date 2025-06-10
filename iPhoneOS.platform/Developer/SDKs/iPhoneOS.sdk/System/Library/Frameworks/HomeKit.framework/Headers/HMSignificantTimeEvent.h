@@ -7,12 +7,12 @@
 #import <HomeKit/HMSignificantEvents.h>
 #import <HomeKit/HMTimeEvent.h>
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 /*!
  * @brief This class is used to represent a significant time event.
  */
-HM_EXTERN API_AVAILABLE(ios(11.0), watchos(4.0), tvos(11.0), macCatalyst(14.0)) API_UNAVAILABLE(macos)
+HM_EXTERN NS_SWIFT_SENDABLE API_AVAILABLE(ios(11.0), watchos(4.0), tvos(11.0), macCatalyst(14.0)) API_UNAVAILABLE(macos)
     @interface HMSignificantTimeEvent : HMTimeEvent<NSCopying, NSMutableCopying>
 
 - (instancetype)init NS_UNAVAILABLE;
@@ -22,7 +22,7 @@ HM_EXTERN API_AVAILABLE(ios(11.0), watchos(4.0), tvos(11.0), macCatalyst(14.0)) 
  *
  * @param significantEvent The significant event for the trigger.
  *
- * @param offset An offset from the time of the signficant event. To specify an offset before the significant event, the
+ * @param offset An offset from the time of the significant event. To specify an offset before the significant event, the
  *               properties of the NSDateComponents must be negative value. e.g. To specify 30 mins before sunset, the
  *               'minute' property must be set to -30.
  *
@@ -49,7 +49,7 @@ HM_EXTERN API_AVAILABLE(ios(11.0), watchos(4.0), tvos(11.0), macCatalyst(14.0)) 
 /*!
  * @brief This class is used to represent a significant time event.
  */
-HM_EXTERN API_AVAILABLE(ios(11.0), watchos(4.0), tvos(11.0), macCatalyst(14.0)) API_UNAVAILABLE(macos)
+HM_EXTERN NS_SWIFT_SENDABLE API_AVAILABLE(ios(11.0), watchos(4.0), tvos(11.0), macCatalyst(14.0)) API_UNAVAILABLE(macos)
     @interface HMMutableSignificantTimeEvent : HMSignificantTimeEvent
 
 /*!
@@ -58,7 +58,7 @@ HM_EXTERN API_AVAILABLE(ios(11.0), watchos(4.0), tvos(11.0), macCatalyst(14.0)) 
 @property (readwrite, strong, nonatomic) HMSignificantEvent significantEvent;
 
 /*!
- * @brief offset An offset from the time of the signficant event. To specify an offset before the significant event, the
+ * @brief offset An offset from the time of the significant event. To specify an offset before the significant event, the
  *               properties of the NSDateComponents must be negative value. e.g. To specify 30 mins before sunset, the
  *               'minute' property must be set to -30.
  */
@@ -66,4 +66,4 @@ HM_EXTERN API_AVAILABLE(ios(11.0), watchos(4.0), tvos(11.0), macCatalyst(14.0)) 
 
 @end
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)

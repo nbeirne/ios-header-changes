@@ -30,13 +30,13 @@ CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer
  *  Following a save failure due to a per-item error (@c CKErrorServerRecordChanged, for example), this callback will be invoked with a nonnull @c recordID, a nil @c share, and a nonnull @c error
  *  Each @c CKSystemSharingUIObserver instance has a private serial queue. This queue is used for all callback block invocations.
  */
-@property (atomic, copy, nullable) NS_SWIFT_SENDABLE void (^systemSharingUIDidSaveShareBlock)(CKRecordID *recordID, CKShare * _Nullable share, NSError * _Nullable error) NS_REFINED_FOR_SWIFT;
+@property (nullable, copy) NS_SWIFT_SENDABLE void (^systemSharingUIDidSaveShareBlock)(CKRecordID *recordID, CKShare * _Nullable share, NSError * _Nullable error) NS_REFINED_FOR_SWIFT;
 
 /*! @abstract Called on success or failure of a @c CKShare delete when the user decides to stop sharing via the system sharing UI
  *
  *  @discussion Each @c CKSystemSharingUIObserver instance has a private serial queue. This queue is used for all callback block invocations.
  */
-@property (atomic, copy, nullable) NS_SWIFT_SENDABLE void (^systemSharingUIDidStopSharingBlock)(CKRecordID *recordID, NSError * _Nullable error) NS_REFINED_FOR_SWIFT;
+@property (nullable, copy) NS_SWIFT_SENDABLE void (^systemSharingUIDidStopSharingBlock)(CKRecordID *recordID, NSError * _Nullable error) NS_REFINED_FOR_SWIFT;
 
 @end
 

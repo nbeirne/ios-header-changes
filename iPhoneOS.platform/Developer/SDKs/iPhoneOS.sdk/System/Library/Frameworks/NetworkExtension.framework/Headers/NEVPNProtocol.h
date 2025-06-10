@@ -75,7 +75,7 @@ API_AVAILABLE(macos(10.11), ios(8.0), tvos(17.0)) API_UNAVAILABLE(watchos)
 /*!
  * @property includeAllNetworks
  * @discussion If this property is set to YES then all network traffic is routed through the tunnel, with some exclusions. Several of the exclusions
- * can be controlled with the excludeLocalNetworks, excludeCellularServices, and excludeAPNs properties. See the documentation for those properties.
+ * can be controlled with the excludeLocalNetworks, excludeCellularServices, excludeAPNs and excludeDeviceCommunication properties. See the documentation for those properties.
  * The following traffic is always excluded from the tunnel:
  * - Traffic necessary for connecting and maintaining the device's network connection, such as DHCP.
  * - Traffic necessary for connecting to captive networks.
@@ -109,10 +109,25 @@ API_AVAILABLE(macos(10.11), ios(8.0), tvos(17.0)) API_UNAVAILABLE(watchos)
 @property BOOL excludeAPNs API_AVAILABLE(macos(13.3), ios(16.4)) API_UNAVAILABLE(tvos, watchos) __WATCHOS_PROHIBITED;
 
 /*!
+ * @property excludeDeviceCommunication
+ * @discussion If includeAllNetworks is set to YES and this property is set to YES, then network traffic used for communicating with devices connected via USB or Wi-Fi is excluded
+ * from the tunnel. For example, Xcode uses a network tunnel to communicate with connected development devices like iPhone, iPad and TV. The default value of this
+ * property is YES.
+ */
+@property BOOL excludeDeviceCommunication API_AVAILABLE(macos(14.4), ios(17.4)) API_UNAVAILABLE(tvos, watchos) __WATCHOS_PROHIBITED;
+
+/*!
  * @property enforceRoutes
  * @discussion If YES, route rules for this tunnel will take precendence over any locally-defined routes. The default is NO.
  */
 @property BOOL enforceRoutes API_AVAILABLE(macos(11.0), ios(14.2), tvos(17.0)) API_UNAVAILABLE(watchos);
+
+/*!
+ * @property sliceUUID
+ * @discussion Identification string of the associated Cellular slice.  If present, VPN tunnel will be scoped to the associated Cellular slice whenever slice is active.
+ * Otherwise, VPN tunnel will fallback onto the primary interface.
+ */
+@property (copy, nullable) NSString *sliceUUID API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(macos, watchos, tvos);
 
 @end
 

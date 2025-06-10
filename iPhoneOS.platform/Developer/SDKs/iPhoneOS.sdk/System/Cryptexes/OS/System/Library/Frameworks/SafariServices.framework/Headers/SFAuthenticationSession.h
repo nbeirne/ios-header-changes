@@ -11,8 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 SF_EXTERN NSString * const SFAuthenticationErrorDomain
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(visionos)
 #endif
 API_DEPRECATED_WITH_REPLACEMENT("ASWebAuthenticationSessionErrorDomain", ios(11.0, 12.0));
 
@@ -23,13 +23,13 @@ API_DEPRECATED_WITH_REPLACEMENT("ASWebAuthenticationSessionErrorDomain", ios(11.
 typedef NS_ENUM(NSInteger, SFAuthenticationError) {
     SFAuthenticationErrorCanceledLogin = 1,
 }
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(visionos)
 #endif
 API_DEPRECATED("Use ASWebAuthenticationSessionErrorCode instead", ios(11.0, 12.0));
 
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-typedef void (^SFAuthenticationCompletionHandler)(NSURL *_Nullable callbackURL, NSError *_Nullable error) API_UNAVAILABLE(xros) NS_SWIFT_NAME(SFAuthenticationSession.CompletionHandler);
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+typedef void (^SFAuthenticationCompletionHandler)(NSURL *_Nullable callbackURL, NSError *_Nullable error) API_UNAVAILABLE(visionos) NS_SWIFT_NAME(SFAuthenticationSession.CompletionHandler);
 #else
 typedef void (^SFAuthenticationCompletionHandler)(NSURL *_Nullable callbackURL, NSError *_Nullable error) NS_SWIFT_NAME(SFAuthenticationSession.CompletionHandler);
 #endif
@@ -57,8 +57,8 @@ typedef void (^SFAuthenticationCompletionHandler)(NSURL *_Nullable callbackURL, 
  is showing the web service's login page.
  */
 SF_EXTERN API_DEPRECATED_WITH_REPLACEMENT("ASWebAuthenticationSession", ios(11.0, 12.0))
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(visionos)
 #endif
 @interface SFAuthenticationSession : NSObject
 

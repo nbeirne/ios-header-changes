@@ -35,7 +35,7 @@ typedef unsigned short unichar;
 #import <limits.h>
 #import <Foundation/NSObject.h>
 #import <Foundation/NSRange.h>
-#if (!0 || !0)
+#if !0
 #import <Foundation/NSItemProvider.h>
 #endif
 #import <stdarg.h>
@@ -55,7 +55,7 @@ typedef NS_OPTIONS(NSUInteger, NSStringCompareOptions) {
     NSDiacriticInsensitiveSearch API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0)) = 128, /* If specified, ignores diacritics (o-umlaut == o) */
     NSWidthInsensitiveSearch API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0)) = 256, /* If specified, ignores width differences ('a' == UFF41) */
     NSForcedOrderingSearch API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0)) = 512, /* If specified, comparisons are forced to return either NSOrderedAscending or NSOrderedDescending if the strings are equivalent but not strictly equal, for stability when sorting (e.g. "aaa" > "AAA" with NSCaseInsensitiveSearch specified) */
-#if !0 || !0
+#if !0
     NSRegularExpressionSearch API_AVAILABLE(macos(10.7), ios(3.2), watchos(2.0), tvos(9.0)) = 1024    /* Applies to rangeOfString:..., stringByReplacingOccurrencesOfString:..., and replaceOccurrencesOfString:... methods only; the search string is treated as an ICU-compatible regular expression; if set, no other options can apply except NSCaseInsensitiveSearch and NSAnchoredSearch */
 #endif
 };
@@ -140,14 +140,12 @@ typedef NS_OPTIONS(NSUInteger, NSStringEncodingConversionOptions) {
 - (NSComparisonResult)compare:(NSString *)string options:(NSStringCompareOptions)mask range:(NSRange)rangeOfReceiverToCompare;
 - (NSComparisonResult)compare:(NSString *)string options:(NSStringCompareOptions)mask range:(NSRange)rangeOfReceiverToCompare locale:(nullable id)locale; // locale arg used to be a dictionary pre-Leopard. We now accept NSLocale. Assumes the current locale if non-nil and non-NSLocale. nil continues to mean canonical compare, which doesn't depend on user's locale choice.
 - (NSComparisonResult)caseInsensitiveCompare:(NSString *)string;
-#if !0 || !0
 - (NSComparisonResult)localizedCompare:(NSString *)string;
 - (NSComparisonResult)localizedCaseInsensitiveCompare:(NSString *)string;
 
 /* localizedStandardCompare:, added in 10.6, should be used whenever file names or other strings are presented in lists and tables where Finder-like sorting is appropriate.  The exact behavior of this method may be tweaked in future releases, and will be different under different localizations, so clients should not depend on the exact sorting order of the strings.
 */
 - (NSComparisonResult)localizedStandardCompare:(NSString *)string API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0));
-#endif
 
 - (BOOL)isEqualToString:(NSString *)aString;
 
@@ -332,7 +330,7 @@ typedef NS_OPTIONS(NSUInteger, NSStringEnumerationOptions) {
 */
 - (NSString *)stringByReplacingCharactersInRange:(NSRange)range withString:(NSString *)replacement API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0));
 
-#if !0 || !0
+#if !0
 typedef NSString *NSStringTransform NS_TYPED_EXTENSIBLE_ENUM;
 
 /* Perform string transliteration.  The transformation represented by transform is applied to the receiver. reverse indicates that the inverse transform should be used instead, if it exists. Attempting to use an invalid transform identifier or reverse an irreversible transform will return nil; otherwise the transformed string value is returned (even if no characters are actually transformed). You can pass one of the predefined transforms below (NSStringTransformLatinToKatakana, etc), or any valid ICU transform ID as defined in the ICU User Guide. Arbitrary ICU transform rules are not supported.
@@ -418,7 +416,7 @@ FOUNDATION_EXPORT NSStringTransform const NSStringTransformStripDiacritics      
 
 @end
 
-#if !0 || !0
+#if !0
 typedef NSString * NSStringEncodingDetectionOptionsKey NS_TYPED_ENUM;
 
 @interface NSString (NSStringEncodingDetection)
@@ -487,7 +485,7 @@ FOUNDATION_EXPORT NSStringEncodingDetectionOptionsKey const NSStringEncodingDete
 */
 - (NSUInteger)replaceOccurrencesOfString:(NSString *)target withString:(NSString *)replacement options:(NSStringCompareOptions)options range:(NSRange)searchRange;
 
-#if !0 || !0
+#if !0
 /* Perform string transliteration.  The transformation represented by transform is applied to the given range of string in place. Only the specified range will be modified, but the transform may look at portions of the string outside that range for context. If supplied, resultingRange is modified to reflect the new range corresponding to the original range. reverse indicates that the inverse transform should be used instead, if it exists. Attempting to use an invalid transform identifier or reverse an irreversible transform will return NO; otherwise YES is returned, even if no characters are actually transformed. You can pass one of the predefined transforms listed above (NSStringTransformLatinToKatakana, etc), or any valid ICU transform ID as defined in the ICU User Guide. Arbitrary ICU transform rules are not supported.
 */
 - (BOOL)applyTransform:(NSStringTransform)transform reverse:(BOOL)reverse range:(NSRange)range updatedRange:(nullable NSRangePointer)resultingRange API_AVAILABLE(macos(10.11), ios(9.0), watchos(2.0), tvos(9.0));
@@ -502,9 +500,7 @@ FOUNDATION_EXPORT NSStringEncodingDetectionOptionsKey const NSStringEncodingDete
 
 
 FOUNDATION_EXPORT NSExceptionName const NSCharacterConversionException;
-#if !0 || !0
 FOUNDATION_EXPORT NSExceptionName const NSParseErrorException; // raised by -propertyList
-#endif
 #define NSMaximumStringLength	(INT_MAX-1)
 
 #pragma mark *** Deprecated/discouraged APIs ***

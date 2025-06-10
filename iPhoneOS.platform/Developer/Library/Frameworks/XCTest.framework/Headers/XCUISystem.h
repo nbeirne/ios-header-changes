@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @class XCUISystem
  * Represents a device's base system, providing an interface for performing OS-specific actions like opening universal links.
  */
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUISystem : NSObject
 
 + (instancetype)new XCT_UNAVAILABLE("Access XCUISystem through the system property on XCUIDevice.");

@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class XCUIElement;
 @class XCUIElementQuery;
 
+XCT_SWIFT_MAIN_ACTOR
 @protocol XCUIElementTypeQueryProvider
 
 @property (readonly, copy) XCUIElementQuery *touchBars;

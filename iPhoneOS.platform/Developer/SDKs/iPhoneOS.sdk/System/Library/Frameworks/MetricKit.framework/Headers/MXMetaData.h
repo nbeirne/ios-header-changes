@@ -63,7 +63,8 @@ API_AVAILABLE(ios(13.0), macos(12.0)) API_UNAVAILABLE(tvos, watchos)
 
 /*!
  @property      pid
- @abstract      pid of the process for which this diagnostic  was generated
+ @abstract      pid of the process
+ @note          A value of -1 indicates that the PID was unavailable for the containing payload.
  */
 
 @property (readonly) pid_t pid API_AVAILABLE(macos(14.0), ios(17.0)) API_UNAVAILABLE(tvos, watchos);

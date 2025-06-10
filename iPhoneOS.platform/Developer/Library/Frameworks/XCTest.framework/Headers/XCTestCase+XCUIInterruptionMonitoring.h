@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class XCUIElement;
 
+XCT_SWIFT_MAIN_ACTOR
 @interface XCTestCase (XCUIInterruptionMonitoring)
 
 /*!

@@ -11,6 +11,7 @@
 #import <XCTest/XCUISiriService.h>
 #import <XCTest/XCUIElement.h>
 #import <XCTest/XCUIDeviceButton.h>
+#import <XCTest/XCUIDeviceHandGesture.h>
 #import <XCTest/XCUILocation.h>
 
 @class XCUISiriService;
@@ -37,6 +38,7 @@ typedef NS_ENUM(NSInteger, XCUIDeviceAppearance) {
 };
 
 /*! Represents a device, providing an interface for simulating events involving physical buttons and device state. */
+XCT_SWIFT_MAIN_ACTOR
 @interface XCUIDevice : NSObject
 
 /*! The current device. */
@@ -72,7 +74,7 @@ typedef NS_ENUM(NSInteger, XCUIDeviceAppearance) {
 - (void)pressButton:(XCUIDeviceButton)button;
 #endif
 
-#if TARGET_OS_WATCH || TARGET_OS_XR
+#if TARGET_OS_WATCH || TARGET_OS_VISION
 /*!
  * Rotate the digital crown by a specified amount.
  *
@@ -97,7 +99,22 @@ typedef NS_ENUM(NSInteger, XCUIDeviceAppearance) {
  *
  */
 - (void)rotateDigitalCrownByDelta:(CGFloat)rotationalDelta withVelocity:(XCUIGestureVelocity)velocity;
-#endif // TARGET_OS_WATCHOS || TARGET_OS_XR
+#endif // TARGET_OS_WATCH || TARGET_OS_VISION
+
+
+#if TARGET_OS_WATCH
+/*! Returns whether the device supports hand gestures. */
+@property (readonly) BOOL supportsHandGestures;
+
+/*!
+ * Perform a specified hand gesture.
+ *
+ * @param gesture
+ * The hand gesture to perform.
+ *
+ */
+- (void)performHandGesture:(XCUIDeviceHandGesture)gesture NS_SWIFT_NAME(perform(handGesture:)) API_AVAILABLE(watchos(10.0));
+#endif // TARGET_OS_WATCH
 
 /*!
  * Get or set the UI style of the device. Uses the `XCUIDeviceAppearance` enum to describe the UI style.

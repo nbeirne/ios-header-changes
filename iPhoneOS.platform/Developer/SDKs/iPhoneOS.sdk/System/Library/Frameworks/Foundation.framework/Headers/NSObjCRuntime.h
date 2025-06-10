@@ -269,6 +269,12 @@
 #define __NS_HEADER_AUDIT_BEGIN_nullability _Pragma("clang assume_nonnull begin")
 #define __NS_HEADER_AUDIT_END_nullability   _Pragma("clang assume_nonnull end")
 
+#if __has_attribute(__swift_attr__) && __SWIFT_ATTR_SUPPORTS_SENDING
+#  define NS_SWIFT_SENDING __attribute__((swift_attr("sending")))
+#else
+#  define NS_SWIFT_SENDING
+#endif
+
 #if __SWIFT_ATTR_SUPPORTS_SENDABLE_DECLS
    // Indicates that the thing it is applied to should be imported as 'Sendable' in Swift:
    // * Type declarations are imported into Swift with a 'Sendable' conformance.
@@ -283,7 +289,12 @@
    // Indicates that a specific member of an 'NS_SWIFT_UI_ACTOR'-isolated type is "threadsafe" and should be callable from outside the main actor.
 #  define NS_SWIFT_NONISOLATED __attribute__((swift_attr("nonisolated")))
 
-#  define __NS_HEADER_AUDIT_BEGIN_sendability _Pragma("clang attribute NS_HEADER_AUDIT_sendability.push (__attribute__((swift_attr(\"@_nonSendable(_assumed)\"))), apply_to = any(objc_interface, record, enum))")
+#  define __NS_HEADER_AUDIT_BEGIN_sendability \
+    _Pragma("clang diagnostic push") \
+    _Pragma("clang diagnostic ignored \"-Wpragma-clang-attribute\"") \
+    _Pragma("clang attribute NS_HEADER_AUDIT_sendability.push (__attribute__((swift_attr(\"@_nonSendable(_assumed)\"))), apply_to = any(objc_interface, record, enum))") \
+    _Pragma("clang diagnostic pop")
+
 #  define __NS_HEADER_AUDIT_END_sendability   _Pragma("clang attribute NS_HEADER_AUDIT_sendability.pop")
 #else
 #  define NS_SWIFT_SENDABLE
@@ -614,10 +625,8 @@ FOUNDATION_EXPORT Protocol * _Nullable NSProtocolFromString(NSString *namestr) A
 
 FOUNDATION_EXPORT const char *NSGetSizeAndAlignment(const char *typePtr, NSUInteger * _Nullable sizep, NSUInteger * _Nullable alignp);
 
-
 FOUNDATION_EXPORT void NSLog(NSString *format, ...) NS_FORMAT_FUNCTION(1,2) NS_NO_TAIL_CALL;
 FOUNDATION_EXPORT void NSLogv(NSString *format, va_list args) NS_FORMAT_FUNCTION(1,0) NS_NO_TAIL_CALL;
-
 
 /*
  These constants are used to indicate how items in a request are ordered, from the first one given in a method invocation or function call to the last (that is, left to right in code).

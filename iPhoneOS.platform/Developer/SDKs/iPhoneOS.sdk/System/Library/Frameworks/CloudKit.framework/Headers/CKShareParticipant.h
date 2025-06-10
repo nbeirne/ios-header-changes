@@ -56,18 +56,21 @@ API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0))
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-@property (atomic, readonly, copy) CKUserIdentity *userIdentity;
+@property (readonly, copy) CKUserIdentity *userIdentity;
 
 /*! The default participant role is @c CKShareParticipantRolePrivateUser. */
-@property (atomic, assign) CKShareParticipantRole role API_AVAILABLE(macos(10.14), ios(12.0), tvos(12.0), watchos(5.0));
+@property (assign) CKShareParticipantRole role API_AVAILABLE(macos(10.14), ios(12.0), tvos(12.0), watchos(5.0));
 
 /*! The default participant type is @c CKShareParticipantTypePrivateUser. */
-@property (atomic, assign) CKShareParticipantType type API_DEPRECATED_WITH_REPLACEMENT("role", macos(10.12, 10.14), ios(10.0, 12.0), tvos(10.0, 12.0), watchos(3.0, 5.0));
+@property (assign) CKShareParticipantType type API_DEPRECATED_WITH_REPLACEMENT("role", macos(10.12, 10.14), ios(10.0, 12.0), tvos(10.0, 12.0), watchos(3.0, 5.0));
 
-@property (atomic, readonly, assign) CKShareParticipantAcceptanceStatus acceptanceStatus;
+@property (readonly, assign) CKShareParticipantAcceptanceStatus acceptanceStatus;
 
 /*! The default permission for a new participant is @c CKShareParticipantPermissionReadOnly. */
-@property (atomic, assign) CKShareParticipantPermission permission;
+@property (assign) CKShareParticipantPermission permission;
+
+/*! A unique identifier for this participant. */
+@property (readonly, copy) NSString *participantID API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0)) NS_REFINED_FOR_SWIFT;
 
 @end
 

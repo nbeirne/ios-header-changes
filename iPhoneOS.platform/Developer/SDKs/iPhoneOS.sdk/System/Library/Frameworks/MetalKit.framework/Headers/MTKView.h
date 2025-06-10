@@ -20,9 +20,7 @@
  @abstract View for rendering metal content
  */
 API_AVAILABLE(macos(10.11), ios(9.0))
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros)
-#endif
+NS_SWIFT_UI_ACTOR
 @interface MTKView : UIView <NSCoding,CALayerDelegate>
 
 /*!
@@ -234,9 +232,6 @@ API_UNAVAILABLE(xros)
  @abstract Allows an object to render into the view and respond to resize events
  */
 API_AVAILABLE(macos(10.11), ios(9.0))
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros)
-#endif
 @protocol MTKViewDelegate <NSObject>
 
 /*!
@@ -246,13 +241,13 @@ API_UNAVAILABLE(xros)
  @param view MTKView which called this method
  @param size New drawable size in pixels
  */
-- (void)mtkView:(nonnull MTKView *)view drawableSizeWillChange:(CGSize)size;
+- (void)mtkView:(nonnull MTKView *)view drawableSizeWillChange:(CGSize)size NS_SWIFT_UI_ACTOR;
 
 /*!
  @method drawInMTKView:
  @abstract Called on the delegate when it is asked to render into the view
  @discussion Called on the delegate when it is asked to render into the view
  */
-- (void)drawInMTKView:(nonnull MTKView *)view;
+- (void)drawInMTKView:(nonnull MTKView *)view NS_SWIFT_UI_ACTOR;
 
 @end

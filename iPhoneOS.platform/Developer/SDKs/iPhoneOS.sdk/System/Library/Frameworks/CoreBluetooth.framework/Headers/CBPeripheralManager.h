@@ -143,8 +143,8 @@ CB_EXTERN_CLASS @interface CBPeripheralManager : CBManager
 
 - (instancetype)initWithDelegate:(nullable id<CBPeripheralManagerDelegate>)delegate
 						   queue:(nullable dispatch_queue_t)queue API_AVAILABLE(ios(6.0), macos(10.9)) API_UNAVAILABLE(watchos, tvos)
-#if TARGET_OS_XR
-API_UNAVAILABLE(xros)
+#if TARGET_OS_VISION
+API_UNAVAILABLE(visionos)
 #endif
 ;
 /*!
@@ -165,8 +165,8 @@ API_UNAVAILABLE(xros)
 - (instancetype)initWithDelegate:(nullable id<CBPeripheralManagerDelegate>)delegate
                            queue:(nullable dispatch_queue_t)queue
                          options:(nullable NSDictionary<NSString *, id> *)options API_AVAILABLE(ios(7.0), macos(10.9)) API_UNAVAILABLE(watchos, tvos) NS_DESIGNATED_INITIALIZER
-#if TARGET_OS_XR
-API_UNAVAILABLE(xros)
+#if TARGET_OS_VISION
+API_UNAVAILABLE(visionos)
 #endif
 ;
 

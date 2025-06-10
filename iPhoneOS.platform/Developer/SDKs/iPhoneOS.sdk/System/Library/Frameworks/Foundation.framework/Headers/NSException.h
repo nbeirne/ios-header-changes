@@ -5,7 +5,7 @@
 #import <Foundation/NSObject.h>
 #import <Foundation/NSString.h>
 #import <stdarg.h>
-#if !0 || !0
+#if !0
 #import <setjmp.h>
 #endif
 

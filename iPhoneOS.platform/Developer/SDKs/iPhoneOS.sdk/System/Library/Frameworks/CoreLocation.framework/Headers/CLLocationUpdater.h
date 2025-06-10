@@ -41,29 +41,118 @@ API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0)) NS_REFINED_FOR_
 @interface CLUpdate : NSObject
 
 /*
- *	isStationary
+ *  authorizationDenied
  *
  *  Discussion:
- *		YES if the user is stationary, otherwise NO. Updates may be
- *		suspended until the user next moves, or their location becomes
- *		unknown.
+ *      True if updates will be suspended while the app has been denied
+ *      location authorization.
  *
  */
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-@property (readonly) BOOL isStationary API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0), xros(1.0));
-#else
-@property (readonly) BOOL isStationary API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0));
-#endif
+@property (nonatomic, readonly) BOOL authorizationDenied API_AVAILABLE(ios(18.0), watchos(11.0), tvos(18.0), macos(15.0));
 
 /*
- *	location
+ *  authorizationDeniedGlobally
  *
  *  Discussion:
- *		Return the user's location if available, otherwise returns nil.
+ *      True if updates will be suspended while the user has disabled Location
+ *      Services system-wide.
  *
  */
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-@property (nonatomic, readonly) CLLocation * _Nullable location API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0), xros(1.0));
+@property (nonatomic, readonly) BOOL authorizationDeniedGlobally API_AVAILABLE(ios(18.0), watchos(11.0), tvos(18.0), macos(15.0));
+
+/*
+ *  authorizationRestricted
+ *
+ *  Discussion:
+ *      True if updates will be suspended while the app lacks authorization,
+ *      and authorization changes are prevented by parental restrictions,
+ *      MDM configuration, or other factors.
+ */
+@property (nonatomic, readonly) BOOL authorizationRestricted API_AVAILABLE(ios(18.0), watchos(11.0), tvos(18.0), macos(15.0));
+
+/*
+ *  isStationary
+ *
+ *  Discussion:
+ *      Deprecated. See -stationary.
+ *
+ */
+@property (readonly) BOOL isStationary API_DEPRECATED_WITH_REPLACEMENT("-stationary", ios(17.0, 17.0), macos(14.0, 14.0), tvos(17.0, 17.0));
+
+/*
+ *  stationary
+ *
+ *  Discussion:
+ *      Updates may stop flowing temporarily for many reasons such as
+ *      the app is no longer authorized for locations or if its
+ *      location becomes unknown.  If CoreLocation stops
+ *      delivering updates because the device is stationary, then
+ *      stationary will be set to YES.  Otherwise it will be NO.
+ *
+ *      If stationary is YES, then updates may be suspended until
+ *      the user next moves, or their location becomes unknown.
+ *
+ */
+@property (readonly) BOOL stationary API_AVAILABLE(ios(18.0), watchos(11.0), tvos(18.0), macos(15.0));
+
+/*
+ *  insufficientlyInUse
+ *
+ *  Discussion:
+ *      True if updates will be suspended while the app is not sufficiently
+ *      in-use.
+ *
+ */
+@property (nonatomic, readonly) BOOL insufficientlyInUse API_AVAILABLE(ios(18.0), watchos(11.0), tvos(18.0), macos(15.0));
+
+/*
+ *  locationUnavailable
+ *
+ *  Discussion:
+ *      True if updates will be suspended while the device's location can no
+ *      longer be determined.
+ *
+ */
+@property (nonatomic, readonly) BOOL locationUnavailable API_AVAILABLE(ios(18.0), watchos(11.0), tvos(18.0), macos(15.0));
+
+/*
+ *  accuracyLimited
+ *
+ *  Discussion:
+ *      True if further updates will be suspended for some time while the app is
+ *      subject to accuracy limitation.
+ *
+ */
+@property (nonatomic, readonly) BOOL accuracyLimited API_AVAILABLE(ios(18.0), watchos(11.0), tvos(18.0), macos(15.0));
+
+/*
+ *  serviceSessionRequired
+ *
+ *  Discussion:
+ *      True if LocationServices are disabled because the app has adopted CLRequireExplicitServiceSession
+ *      info.plist key but no CLServiceSession requiring authorization is outstanding yet.
+ *
+ */
+@property (nonatomic, readonly) BOOL serviceSessionRequired API_AVAILABLE(macos(15.0), ios(18.0)) API_UNAVAILABLE(watchos, tvos);
+
+/*
+ *  authorizationRequestInProgress
+ *
+ *  Discussion:
+ *      True if the system is requesting authorization from the user on behalf of the app, but no response has been received yet.
+ *
+ */
+@property (nonatomic, readonly) BOOL authorizationRequestInProgress API_AVAILABLE(macos(15.0), ios(18.0)) API_UNAVAILABLE(watchos, tvos);
+
+/*
+ *  location
+ *
+ *  Discussion:
+ *      Return the user's location if available, otherwise returns nil.
+ *
+ */
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+@property (nonatomic, readonly) CLLocation * _Nullable location API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0), visionos(1.0));
 #else
 @property (nonatomic, readonly) CLLocation * _Nullable location API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0));
 #endif
@@ -88,9 +177,9 @@ API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0)) NS_REFINED_FOR_
  *          available update.
  *      handler: Specifies the block that will be invoked with each update.
  *
- *      CoreLocation will ensure the app has a few seconds of runtime each
- *      location update it is authorized to receive. If the app is suspended,
- *      crashes, or exits for any reason while updates are flowing,
+ *      CoreLocation will ensure the app has a few seconds of runtime to process
+ *      each location update it is authorized to receive. If the app crashes,
+ *      or exits for any reason while updates are flowing,
  *      it will be launched for the next update, which it may receive by
  *      calling this method again to express resumed interest.
  *      If this method is not called again, or the resulting updater
@@ -100,8 +189,8 @@ API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0)) NS_REFINED_FOR_
  */
 + (nullable instancetype)liveUpdaterWithQueue:(dispatch_queue_t)queue
 									  handler:(void(^)(CLUpdate *_Nullable update))handler API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0)
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-, xros(1.0)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+, visionos(1.0)
 #endif
 ) NS_REFINED_FOR_SWIFT;
 
@@ -118,8 +207,8 @@ API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0)) NS_REFINED_FOR_
  *          available update.
  *      handler: Specifies the block that will be invoked with each update.
  *
- *      CoreLocation will ensure the app has a few seconds of runtime each
- *      location update it is authorized to receive. If the app is suspended,
+ *      CoreLocation will ensure the app has a few seconds of runtime to process
+ *      each location update it is authorized to receive. If the app crashes,
  *      crashes, or exits for any reason while updates are flowing,
  *      it will be launched for the next update, which it may receive by
  *      calling this method again to express resumed interest.
@@ -131,107 +220,11 @@ API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0)) NS_REFINED_FOR_
 + (nullable instancetype)liveUpdaterWithConfiguration:(CLLiveUpdateConfiguration)configuration
 												queue:(dispatch_queue_t)queue
 											  handler:(void(^)(CLUpdate * _Nullable update))handler API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0)
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-, xros(1.0)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+, visionos(1.0)
 #endif
 ) NS_REFINED_FOR_SWIFT;
-																										
-/*
- *  historicalUpdaterWithDateInterval:sampleCount:queue:handler:
- *
- *  Discussion:
- *      Returns a new CLLocationUpdater with the requested query configuration,
- *      queue, and handler.
- *
- *      interestInterval:
- *          Specifies the date interval of interest to retrieve
- *          updates. Date interval should be non-nil. Start date should
- *          be before end date, and end date should be before or equal to
- *          +[NSDate now].
- *      sampleCount:
- *          Specifies the maximum number of locations to return,
- *          downsampling if necessary. Sample count must be greater than 0.
- *          Set sampleCount to a large number to retrieve all available locations
- *          without downsampling.
- *      queue: Specifies the queue to which the handler is submitted with each
- *          available update.
- *      handler: Specifies the block that will be invoked with each update.
- *
- *      CoreLocation will ensure the app has a few seconds of runtime each
- *      location update it is authorized to receive. If the app is suspended,
- *      crashes, or exits for any reason while updates are flowing,
- *      it will be launched for the next update, which it may receive by
- *      calling this method again to express resumed interest.
- *      If this method is not called again, or the resulting updater
- *      is not resumed again, then CoreLocation will automatically stop the flow
- *      of updates.
- *
- *
- *      Care should be taken to change dateInterval and sampleCount to avoid
- *      re-delivery of updates, or re-delivery should be handled, if a query
- *      is started again after such an interruption.
- *
- *      Once all the historical updates are delivered to the completion block it will
- *      finally be invoked by passing a nil to signify end of operation.
- *
- */
-+ (nullable instancetype)historicalUpdaterWithDateInterval:(NSDateInterval *)interestInterval
-											   sampleCount:(int)maxCount
-													 queue:(dispatch_queue_t)queue
-												   handler:(void(^)(CLUpdate * _Nullable update))handler API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0)
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-, xros(1.0)
-#endif
-) NS_REFINED_FOR_SWIFT;
-
-/*
- *  historicalUpdaterWithCenter:radius:dateInterval:sampleCount:queue:handler:
- *
- *  Discussion:
- *      Returns a new CLLocationUpdater with the requested query configuration,
- *      queue, and handler.
- *
- *      center: Specifies the coordinate of the center point of location.
- *      radius: Specifies the radius in meters.
- *      interestInterval: Specifies the date interval of interest to retrieve
- *          updates. Date interval should be valid: start date should be before end
- *          date, and end date should be before or equal to +[NSDate now]. Set
- *          interestInterval to nil to receive all locations.
- *      sampleCount: Specifies the maximum number of locations to return,
- *          downsampling if necessary. Sample count must be greater than 0.
- *          Set sampleCount to a large number to retrieve all available locations
- *          without downsampling.
- *      queue: Specifies the queue to which the handler is submitted with each
- *          available update.
- *      handler: Specifies the block that will be invoked with each update.
- *
- *      CoreLocation will ensure the app has a few seconds of runtime each
- *      location update it is authorized to receive. If the app is suspended,
- *      crashes, or exits for any reason while updates are flowing,
- *      it will be launched for the next update, which it may receive by
- *      calling this method again to express resumed interest.
- *      If this method is not called again, or the resulting updater
- *      is not resumed again, then CoreLocation will automatically stop the flow
- *      of updates.
- *
- *          Care should be taken to change dateInterval and sampleCount to avoid
- *          re-delivery of updates, or re-delivery should be handled, if a query
- *          is started again after such an interruption.
- *
- *          Once all the historical updates are delivered to the completion block it will
- *          finally be invoked by passing a nil to signify end of operation.
- */
-+ (nullable instancetype)historicalUpdaterWithCenter:(CLLocationCoordinate2D)center
-											  radius:(double)radius
-										dateInterval:(NSDateInterval * _Nullable)interestInterval
-										 sampleCount:(int)maxCount
-											   queue:(dispatch_queue_t)queue
-											 handler:(void(^)(CLUpdate * _Nullable update))handler API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0))
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros)
-#endif
-NS_REFINED_FOR_SWIFT;
-
+																									
 /*
 *  resume
 *
@@ -240,8 +233,8 @@ NS_REFINED_FOR_SWIFT;
 *	  	was called. -resume must be called to start the flow of updates when
 *		a CLLocationUpdater is first obtained.
 */
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-- (void)resume API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0), tvos(17.0), xros(1.0));
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+- (void)resume API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0), tvos(17.0), visionos(1.0));
 #else
 - (void)resume API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0));
 #endif
@@ -256,8 +249,8 @@ NS_REFINED_FOR_SWIFT;
 *		updates where they were left off.
 *
 */
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-- (void)pause API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0), xros(1.0));
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+- (void)pause API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0), visionos(1.0));
 #else
 - (void)pause API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0));
 #endif
@@ -270,8 +263,8 @@ NS_REFINED_FOR_SWIFT;
 *      	instance after invalidation results in no-op.
 *
 */
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-- (void)invalidate API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), xros(1.0));
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+- (void)invalidate API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), visionos(1.0));
 #else
 - (void)invalidate API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0), tvos(17.0));
 #endif

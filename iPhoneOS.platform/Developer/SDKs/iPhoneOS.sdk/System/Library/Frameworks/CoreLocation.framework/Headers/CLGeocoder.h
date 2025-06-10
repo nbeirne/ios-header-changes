@@ -37,11 +37,11 @@ API_AVAILABLE(macos(10.8), ios(5.0))
 // geocodeAddressDictionary:completionHandler: takes an address dictionary as defined by the AddressBook framework.
 // You can obtain an address dictionary from an ABPerson by retrieving the kABPersonAddressProperty property.
 // Alternately, one can be constructed using the kABPersonAddress* keys defined in <AddressBook/ABPerson.h>.
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-- (void)geocodeAddressDictionary:(NSDictionary *)addressDictionary completionHandler:(CLGeocodeCompletionHandler)completionHandler API_DEPRECATED("Use -geocodePostalAddress:completionHandler:", macos(10.8, 10.13), ios(5.0, 11.0), watchos(1.0, 4.0)) API_UNAVAILABLE(xros);
-- (void)geocodeAddressString:(NSString *)addressString inRegion:(nullable CLRegion *)region completionHandler:(CLGeocodeCompletionHandler)completionHandler API_UNAVAILABLE(xros);
-- (void)geocodeAddressString:(NSString *)addressString inRegion:(nullable CLRegion *)region preferredLocale:(nullable NSLocale *)locale completionHandler:(CLGeocodeCompletionHandler)completionHandler API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0), tvos(11.0)) API_UNAVAILABLE(xros);
-- (void)geocodeAddressString:(NSString *)addressString inRegionCenteredAt:(CLLocationCoordinate2D)centroid inRegionRadius:(CLLocationDistance)radius preferredLocale:(nullable NSLocale *)locale completionHandler:(CLGeocodeCompletionHandler)completionHandler API_AVAILABLE(xros(1.0));
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+- (void)geocodeAddressDictionary:(NSDictionary *)addressDictionary completionHandler:(CLGeocodeCompletionHandler)completionHandler API_DEPRECATED("Use -geocodePostalAddress:completionHandler:", macos(10.8, 10.13), ios(5.0, 11.0), watchos(1.0, 4.0)) API_UNAVAILABLE(visionos);
+- (void)geocodeAddressString:(NSString *)addressString inRegion:(nullable CLRegion *)region completionHandler:(CLGeocodeCompletionHandler)completionHandler API_UNAVAILABLE(visionos);
+- (void)geocodeAddressString:(NSString *)addressString inRegion:(nullable CLRegion *)region preferredLocale:(nullable NSLocale *)locale completionHandler:(CLGeocodeCompletionHandler)completionHandler API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0), tvos(11.0)) API_UNAVAILABLE(visionos);
+- (void)geocodeAddressString:(NSString *)addressString inRegionCenteredAt:(CLLocationCoordinate2D)centroid inRegionRadius:(CLLocationDistance)radius preferredLocale:(nullable NSLocale *)locale completionHandler:(CLGeocodeCompletionHandler)completionHandler API_AVAILABLE(visionos(1.0));
 #else
 - (void)geocodeAddressDictionary:(NSDictionary *)addressDictionary completionHandler:(CLGeocodeCompletionHandler)completionHandler API_DEPRECATED("Use -geocodePostalAddress:completionHandler:", macos(10.8, 10.13), ios(5.0, 11.0), watchos(1.0, 4.0));
 - (void)geocodeAddressString:(NSString *)addressString inRegion:(nullable CLRegion *)region completionHandler:(CLGeocodeCompletionHandler)completionHandler;

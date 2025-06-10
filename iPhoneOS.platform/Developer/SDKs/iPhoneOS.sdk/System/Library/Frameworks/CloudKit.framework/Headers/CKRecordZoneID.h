@@ -22,8 +22,8 @@ CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)initWithZoneName:(NSString *)zoneName ownerName:(NSString *)ownerName NS_DESIGNATED_INITIALIZER;
 
-@property (nonatomic, readonly, copy) NSString *zoneName;
-@property (nonatomic, readonly, copy) NSString *ownerName;
+@property (readonly, copy, nonatomic) NSString *zoneName;
+@property (readonly, copy, nonatomic) NSString *ownerName;
 
 @end
 

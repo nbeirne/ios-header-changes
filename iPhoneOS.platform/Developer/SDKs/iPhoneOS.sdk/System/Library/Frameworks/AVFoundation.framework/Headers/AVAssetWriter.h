@@ -4,7 +4,7 @@
 
 	Framework:  AVFoundation
  
-	Copyright 2010-2020 Apple Inc. All rights reserved.
+	Copyright 2010-2023 Apple Inc. All rights reserved.
 
 */
 
@@ -61,7 +61,7 @@ typedef NS_ENUM(NSInteger, AVAssetWriterStatus) {
  
 	A single instance of AVAssetWriter can be used once to write to a single file. Clients that wish to write to files multiple times must use a new instance of AVAssetWriter each time.
  */
-API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos)
 @interface AVAssetWriter : NSObject
 {
 @private
@@ -128,7 +128,7 @@ AV_INIT_UNAVAILABLE
 
 	This method throws an exception if the output content type UTI for container format is not declared in AVMediaFormat.h.
  */
-- (instancetype)initWithContentType:(UTType *)outputContentType NS_DESIGNATED_INITIALIZER API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0)) API_UNAVAILABLE(watchos);
+- (instancetype)initWithContentType:(UTType *)outputContentType NS_DESIGNATED_INITIALIZER API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 /*!
  @property outputURL
@@ -212,7 +212,7 @@ AV_INIT_UNAVAILABLE
 	
 	This property cannot be set after writing has started.  The asset writer will fail if a file cannot be created in this directory (for example, due to insufficient permissions).
  */
-@property (nonatomic, copy, nullable) NSURL *directoryForTemporaryFiles API_AVAILABLE(macos(10.10), ios(8.0), tvos(9.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic, copy, nullable) NSURL *directoryForTemporaryFiles API_AVAILABLE(macos(10.10), ios(8.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 /*!
  @property inputs
@@ -372,7 +372,7 @@ AV_INIT_UNAVAILABLE
 	
 	This method should not be called concurrently with -[AVAssetWriterInput appendSampleBuffer:] or -[AVAssetWriterInputPixelBufferAdaptor appendPixelBuffer:withPresentationTime:].
 */
-- (BOOL)finishWriting API_DEPRECATED_WITH_REPLACEMENT("finishWritingWithCompletionHandler:", macos(10.7, 10.9), ios(4.1, 6.0), tvos(9.0, 9.0)) API_UNAVAILABLE(watchos, xros);
+- (BOOL)finishWriting API_DEPRECATED_WITH_REPLACEMENT("finishWritingWithCompletionHandler:", macos(10.7, 10.9), ios(4.1, 6.0), tvos(9.0, 9.0)) API_UNAVAILABLE(watchos, visionos);
 
 /*!
  @method finishWritingWithCompletionHandler:
@@ -386,11 +386,11 @@ AV_INIT_UNAVAILABLE
 	
 	To guarantee that all sample buffers are successfully written, ensure all calls to -[AVAssetWriterInput appendSampleBuffer:] or -[AVAssetWriterInputPixelBufferAdaptor appendPixelBuffer:withPresentationTime:] have returned before invoking this method.
 */
-- (void)finishWritingWithCompletionHandler:(void (^)(void))handler API_AVAILABLE(macos(10.9), ios(6.0), tvos(9.0)) API_UNAVAILABLE(watchos);
+- (void)finishWritingWithCompletionHandler:(void (^ NS_SWIFT_SENDABLE)(void))handler API_AVAILABLE(macos(10.9), ios(6.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 @end
 
-API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos)
 @interface AVAssetWriter (AVAssetWriterFileTypeSpecificProperties)
 
 /*!
@@ -401,9 +401,23 @@ API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
  @discussion
 	When movie fragments are used, a partially written asset whose writing is unexpectedly interrupted can be successfully opened and played up to multiples of the specified time interval. The default value of this property is kCMTimeInvalid, which indicates that movie fragments should not be used.
 
+	When using movie fragments, for best writing performance to external storage devices, set the movieFragmentInterval to 10 seconds or greater.
+
 	This property cannot be set after writing has started.
  */
 @property (nonatomic) CMTime movieFragmentInterval;
+
+/*!
+ @property initialMovieFragmentInterval
+ @abstract
+	For file types that support movie fragments, specifies the interval at which initial movie fragment should be written.
+
+ @discussion
+	This property is irrelevant if the movieFragmentInterval property is not set. The default value is kCMTimeInvalid, which indicates that the interval for initial movie fragment is same as the one specified by movieFragmentInterval property.
+
+	This property cannot be set after writing has started.
+ */
+@property (nonatomic) CMTime initialMovieFragmentInterval API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 /*!
  @property initialMovieFragmentSequenceNumber
@@ -419,7 +433,7 @@ API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
 
 	This property cannot be set after writing has started.
  */
-@property (nonatomic) NSInteger initialMovieFragmentSequenceNumber API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic) NSInteger initialMovieFragmentSequenceNumber API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 /*!
  @property producesCombinableFragments
@@ -433,7 +447,7 @@ API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
 
 	This property cannot be set after writing has started.
  */
-@property (nonatomic) BOOL producesCombinableFragments API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic) BOOL producesCombinableFragments API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 /*!
  @property overallDurationHint
@@ -459,14 +473,14 @@ API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
  
 	This property cannot be set after writing has started.
  */
-@property (nonatomic) CMTimeScale movieTimeScale API_AVAILABLE(macos(10.7), ios(4.3), tvos(9.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic) CMTimeScale movieTimeScale API_AVAILABLE(macos(10.7), ios(4.3), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 @end
 
 
 @class AVAssetWriterInputGroup;
 
-API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos)
 @interface AVAssetWriter (AVAssetWriterInputGroups)
 
 /*!
@@ -483,10 +497,10 @@ API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
 	If outputFileType specifies a container format that does not support mutually exclusive relationships among tracks, or if the specified instance of AVAssetWriterInputGroup contains inputs with media types that cannot be related, the group cannot be added to the AVAssetWriter.
 
 	This method throws an exception if any of the following conditions are satisfied:
-		- this writer's output file type does not support mutually exclusive relationships among tracks (allowed types are AVFileTypeQuickTimeMovie, AVFileTypeAppleM4A, AVFileTypeAppleM4V, AVFileType3GPP [iPhone only], AVFileTypeMPEG4)
+		- this writer's output file type does not support mutually exclusive relationships among tracks (allowed types are AVFileTypeQuickTimeMovie, AVFileTypeAppleM4A, AVFileTypeAppleM4V, AVFileType3GPP, AVFileTypeMPEG4)
 		- any AVAssetWriterInput in the input group is also present in an input group already added
  */
-- (BOOL)canAddInputGroup:(AVAssetWriterInputGroup *)inputGroup API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0)) API_UNAVAILABLE(watchos);
+- (BOOL)canAddInputGroup:(AVAssetWriterInputGroup *)inputGroup API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 /*
  @method addInputGroup:
@@ -501,7 +515,7 @@ API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
 
 	Input groups cannot be added after writing has started.
  */
-- (void)addInputGroup:(AVAssetWriterInputGroup *)inputGroup API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0)) API_UNAVAILABLE(watchos);
+- (void)addInputGroup:(AVAssetWriterInputGroup *)inputGroup API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 /*!
  @property inputGroups
@@ -511,7 +525,7 @@ API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
  @discussion
 	The value of this property is an NSArray containing concrete instances of AVAssetWriterInputGroup.  Input groups can be added to the receiver using the addInputGroup: method.
  */
-@property (nonatomic, readonly) NSArray<AVAssetWriterInputGroup *> *inputGroups API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic, readonly) NSArray<AVAssetWriterInputGroup *> *inputGroups API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 @end
 
@@ -528,7 +542,7 @@ API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
 	Note that because AVAssetWriterInputGroup is a subclass of AVMediaSelectionGroup, clients can examine the media selection options that will be available on the output asset before the asset is written.  Best results for examining the options of the AVAssetWriterInputGroup will be obtained after associating the AVAssetWriterInputs of the AVAsset as appropriate via -[AVAssetWriterInput addTrackAssociationWithTrackOfInput:type:] and by initializing each AVAssetWriterInput with a source format hint, where appropriate.
  */
 
-API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0)) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.9), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos)
 @interface AVAssetWriterInputGroup : AVMediaSelectionGroup
 {
 @private
@@ -589,7 +603,7 @@ AV_INIT_UNAVAILABLE
 
 @protocol AVAssetWriterDelegate;
 
-API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos)
 @interface AVAssetWriter (AVAssetWriterSegmentation)
 
 /*!
@@ -603,7 +617,7 @@ API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
 
 	This property cannot be set after writing has started.
  */
-@property (nonatomic) CMTime preferredOutputSegmentInterval API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic) CMTime preferredOutputSegmentInterval API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 /*!
  @property initialSegmentStartTime
@@ -615,7 +629,7 @@ API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
 
 	This property cannot be set after writing has started.
  */
-@property (nonatomic) CMTime initialSegmentStartTime API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic) CMTime initialSegmentStartTime API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 /*!
  @property outputFileTypeProfile
@@ -632,7 +646,7 @@ API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
 	This property cannot be set after writing has started.
  */
 
-@property (nonatomic, copy, nullable) AVFileTypeProfile outputFileTypeProfile API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic, copy, nullable) AVFileTypeProfile outputFileTypeProfile API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 /*!
  @property delegate
@@ -642,7 +656,7 @@ API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
  @discussion
 	This property cannot be set after writing has started.
  */
-@property (weak, nullable) id <AVAssetWriterDelegate> delegate API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0)) API_UNAVAILABLE(watchos);
+@property (weak, nullable) id <AVAssetWriterDelegate> delegate API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 /*!
  @method flushSegment
@@ -652,11 +666,12 @@ API_AVAILABLE(macos(10.7), ios(4.1), tvos(9.0)) API_UNAVAILABLE(watchos)
  @discussion
 	This method throws an exception if the delegate method to output segment data is not implemented, or if the value of the preferredOutputSegmentInterval property is not kCMTimeIndefinite.
   */
-- (void)flushSegment API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0)) API_UNAVAILABLE(watchos);
+- (void)flushSegment API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 @end
 
-API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0)) API_UNAVAILABLE(watchos)
+NS_SWIFT_SENDABLE
+API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0), visionos(1.0)) API_UNAVAILABLE(watchos)
 @protocol AVAssetWriterDelegate <NSObject>
 @optional
 

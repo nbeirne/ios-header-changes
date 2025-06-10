@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class XCTAttachment;
 
+XCT_SWIFT_MAIN_ACTOR
 @protocol XCUIScreenshotProviding <NSObject>
 
 /*!

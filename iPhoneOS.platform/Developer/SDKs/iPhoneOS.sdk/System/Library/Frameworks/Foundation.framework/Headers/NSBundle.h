@@ -53,7 +53,11 @@ NS_SWIFT_SENDABLE
 @property (nullable, readonly, copy) NSURL *sharedSupportURL API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0));
 @property (nullable, readonly, copy) NSURL *builtInPlugInsURL API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0));
 
+#if defined(__swift__) // Deprecated for Swift only
+@property (nullable, readonly, copy) NSURL *appStoreReceiptURL API_DEPRECATED("Use AppTransaction.shared and Transaction.all from StoreKit.framework instead", macosx(10.7,15.0), ios(7.0,18.0), watchos(2.0,11.0), tvos(9.0,18.0));
+#else
 @property (nullable, readonly, copy) NSURL *appStoreReceiptURL API_AVAILABLE(macos(10.7), ios(7.0), watchos(2.0), tvos(9.0));
+#endif
 
 @property (readonly, copy) NSString *bundlePath;
 @property (nullable, readonly, copy) NSString *resourcePath;
@@ -89,7 +93,9 @@ NS_SWIFT_SENDABLE
 
 /* Methods for retrieving localized strings. */
 - (NSString *)localizedStringForKey:(NSString *)key value:(nullable NSString *)value table:(nullable NSString *)tableName NS_FORMAT_ARGUMENT(1);
+#if !0
 - (NSAttributedString *)localizedAttributedStringForKey:(NSString *)key value:(nullable NSString *)value table:(nullable NSString *)tableName NS_FORMAT_ARGUMENT(1) NS_REFINED_FOR_SWIFT API_AVAILABLE(macos(12.0), ios(15.0), watchos(8.0), tvos(15.0));
+#endif 
 
 /* Methods for obtaining various information about a bundle. */
 @property (nullable, readonly, copy) NSString *bundleIdentifier;
@@ -150,6 +156,8 @@ enum {
 FOUNDATION_EXPORT NSNotificationName const NSBundleDidLoadNotification;
 FOUNDATION_EXPORT NSString * const NSLoadedClasses;	// notification key
 
+
+#if !0
 
 /*
  The NSBundleResourceRequest class is used to interact with the on demand resource loading system.
@@ -250,5 +258,7 @@ FOUNDATION_EXPORT NSNotificationName const NSBundleResourceRequestLowDiskSpaceNo
 /* Use this value for the loadingPriority property if the user is doing nothing but waiting on the result of this request. The system will dedicate the maximum amount of resources available to finishing this request as soon as possible.
  */
 FOUNDATION_EXPORT double const NSBundleResourceRequestLoadingPriorityUrgent API_AVAILABLE(ios(9.0), watchos(2.0), tvos(9.0)) API_UNAVAILABLE(macos);
+
+#endif 
 
 NS_HEADER_AUDIT_END(nullability, sendability)

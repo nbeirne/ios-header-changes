@@ -5,6 +5,8 @@
 //  Copyright © 2021 Apple Inc. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -12,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  @class GCVirtualControllerConfiguration
  */
-API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(macos, tvos) API_UNAVAILABLE(xros)
+API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(macos, tvos) API_UNAVAILABLE(visionos)
 NS_SWIFT_NAME(GCVirtualController.Configuration)
 @interface GCVirtualControllerConfiguration : NSObject
  
@@ -34,7 +36,7 @@ NS_SWIFT_NAME(GCVirtualController.Configuration)
 /**
  *  @class GCVirtualControllerElementConfiguration
  */
-API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(macos, tvos) API_UNAVAILABLE(xros)
+API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(macos, tvos) API_UNAVAILABLE(visionos)
 NS_SWIFT_NAME(GCVirtualController.ElementConfiguration)
 @interface GCVirtualControllerElementConfiguration : NSObject
 
@@ -62,7 +64,7 @@ NS_SWIFT_NAME(GCVirtualController.ElementConfiguration)
 /**
  *  @class GCVirtualController
  */
-API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(macos, tvos) API_UNAVAILABLE(xros)
+API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(macos, tvos) API_UNAVAILABLE(visionos)
 @interface GCVirtualController : NSObject
 
 /**

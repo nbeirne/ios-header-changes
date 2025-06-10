@@ -15,7 +15,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @protocol UIVideoEditorControllerDelegate;
 
-UIKIT_EXTERN API_AVAILABLE(ios(3.1)) API_UNAVAILABLE(tvos) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(3.1)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_ACTOR
 @interface UIVideoEditorController : UINavigationController
 
 + (BOOL)canEditVideoAtPath:(NSString *)videoPath API_AVAILABLE(ios(3.1));
@@ -24,11 +24,11 @@ UIKIT_EXTERN API_AVAILABLE(ios(3.1)) API_UNAVAILABLE(tvos) NS_SWIFT_UI_ACTOR
 
 @property(nonatomic, copy)     NSString                              *videoPath;
 @property(nonatomic)           NSTimeInterval                        videoMaximumDuration; // default value is 10 minutes. set to 0 to specify no maximum duration.
-@property(nonatomic)           UIImagePickerControllerQualityType    videoQuality;         // default value is UIImagePickerControllerQualityTypeMedium
+@property(nonatomic)           UIImagePickerControllerQualityType    videoQuality API_UNAVAILABLE(visionos);         // default value is UIImagePickerControllerQualityTypeMedium
 
 @end
 
-API_UNAVAILABLE(tvos) NS_SWIFT_UI_ACTOR
+API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_ACTOR
 @protocol UIVideoEditorControllerDelegate<NSObject>
 @optional
 // The editor does not dismiss itself; the client dismisses it in these callbacks.

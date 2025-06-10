@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, UIPreferredPresentationStyle) {
     UIPreferredPresentationStyleUnspecified = 0,
     UIPreferredPresentationStyleInline,
     UIPreferredPresentationStyleAttachment,
-};
+} API_AVAILABLE(watchos(4.0));
 
 @interface NSItemProvider (UIKitAdditions)
 
@@ -42,6 +42,24 @@ API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR
 @property (nonatomic, readonly) CGSize preferredPresentationSizeForItemProvider;
 
 @end
+
+API_AVAILABLE(watchos(10.4)) @protocol UIItemProviderReadingAugmentationProviding
+// Conforming classes should not fall through to [requestedClass objectWithItemProviderData:typeIdentifier:error:.
+// UIItemProvider does this on your behalf.
++ (nullable id)objectWithItemProviderData:(NSData *)data
+                           typeIdentifier:(NSString *)typeIdentifier
+                           requestedClass:(Class)requestedClass
+                                    error:(NSError **)outError;
+// Conforming classes should not fall through to -readableTypeIdentifiersForItemProvider of the original NSItemProviderReading clas.
+// UIItemProvider does this on your behalf.
+@property (class, NS_NONATOMIC_IOSONLY, readonly, copy) NSArray<NSString *> *additionalLeadingReadableTypeIdentifiersForItemProvider;
+@property (class, NS_NONATOMIC_IOSONLY, readonly, copy) NSArray<NSString *> *additionalTrailingReadableTypeIdentifiersForItemProvider;
+@end
+
+API_AVAILABLE(watchos(10.4)) @protocol UIItemProviderReadingAugmentationDesignating <NSItemProviderReading>
++ (Class<UIItemProviderReadingAugmentationProviding>)_ui_augmentingNSItemProviderReadingClass;
+@end
+
 
 NS_HEADER_AUDIT_END(nullability, sendability)
 

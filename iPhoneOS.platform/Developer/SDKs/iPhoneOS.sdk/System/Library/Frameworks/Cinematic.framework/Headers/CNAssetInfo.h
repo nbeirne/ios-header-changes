@@ -5,8 +5,6 @@
 //  Copyright © 2022-2023 Apple Inc. All rights reserved.
 //
 
-/* WARNING: Preliminary API — subject to change without notice */
-
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 
@@ -76,6 +74,12 @@ API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos)
 @interface CNCompositionInfo : CNAssetInfo
 
 /// Inserts a timeRange of a cinematic source asset into the corresponding tracks of a composition
+/// - Parameters:
+///  - timeRange: time range of the cinematic asset to be inserted
+///  - assetInfo: identifies the tracks of the cinematic asset to be inserted
+///  - atTime: the time at which the inserted tracks are to be presented by the composition; `kCMTimeInvalid` may be used to append at the end.
+///  - error: AVError if it fails, as with `-[AVMutableCompositionTrack insertTimeRange:ofTrack:atTime:error:]`
+/// - Returns: whether the insertion was successful
 - (BOOL)insertTimeRange:(CMTimeRange)timeRange ofCinematicAssetInfo:(CNAssetInfo *)assetInfo atTime:(CMTime)startTime error:(NSError * _Nullable * _Nullable)outError;
 
 @end

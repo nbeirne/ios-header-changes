@@ -29,8 +29,8 @@ NS_CLASS_AVAILABLE(10_9, 7_0) __TVOS_AVAILABLE(9_2) API_UNAVAILABLE(watchos)
 
 @property (nonatomic, copy, nullable) MKPointOfInterestFilter *pointOfInterestFilter API_DEPRECATED("Use preferredConfiguration", macos(10.15, API_TO_BE_DEPRECATED), ios(13.0, API_TO_BE_DEPRECATED), tvos(13.0, API_TO_BE_DEPRECATED)) API_UNAVAILABLE(watchos);
 @property (nonatomic) BOOL showsPointsOfInterest
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros);
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(visionos);
 #else
 API_DEPRECATED("Use preferredConfiguration", macos(10.9, 10.15), ios(7.0, 13.0), tvos(9.2, 13.0)) API_UNAVAILABLE(watchos); // Affects MKMapTypeStandard and MKMapTypeHybrid
 #endif

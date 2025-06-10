@@ -2,16 +2,19 @@
 //  HKLiveWorkoutBuilder.h
 //  HealthKit
 //
-//  Copyright © 2018-2022 Apple. All rights reserved.
+//  Copyright © 2018-2024 Apple. All rights reserved.
 //
 
-#import <HealthKit/HealthKit.h>
-#import <HealthKit/HKWorkoutBuilder.h>
+#import <Foundation/Foundation.h>
+#import <HealthKit/HKDefines.h>
 #import <HealthKit/HKLiveWorkoutDataSource.h>
+#import <HealthKit/HKObjectType.h>
+#import <HealthKit/HKWorkoutBuilder.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class HKLiveWorkoutBuilder;
+@class HKWorkoutSession;
 
 HK_EXTERN API_AVAILABLE(watchos(5.0)) API_UNAVAILABLE(ios)
 @protocol HKLiveWorkoutBuilderDelegate <NSObject>
@@ -61,7 +64,7 @@ HK_EXTERN API_AVAILABLE(watchos(5.0)) API_UNAVAILABLE(ios)
 
 - (instancetype)initWithHealthStore:(HKHealthStore *)healthStore
                       configuration:(HKWorkoutConfiguration *)configuration
-                             device:(nullable HKDevice *)device API_AVAILABLE(watchos(10.0)) API_UNAVAILABLE(ios) API_UNAVAILABLE(tvos, macCatalyst);
+                             device:(nullable HKDevice *)device NS_UNAVAILABLE;
 
 /*!
  @property      delegate

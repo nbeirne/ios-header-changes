@@ -2,7 +2,7 @@
 //  PKTool.h
 //  PencilKit
 //
-//  Copyright © 2019 Apple. All rights reserved.
+//  Copyright © 2019 Apple Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

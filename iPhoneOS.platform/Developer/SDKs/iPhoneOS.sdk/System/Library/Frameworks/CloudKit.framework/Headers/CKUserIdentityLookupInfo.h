@@ -28,9 +28,9 @@ CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer
 + (NSArray<CKUserIdentityLookupInfo *> *)lookupInfosWithPhoneNumbers:(NSArray<NSString *> *)phoneNumbers;
 + (NSArray<CKUserIdentityLookupInfo *> *)lookupInfosWithRecordIDs:(NSArray<CKRecordID *> *)recordIDs;
 
-@property (atomic, readonly, copy, nullable) NSString *emailAddress;
-@property (atomic, readonly, copy, nullable) NSString *phoneNumber;
-@property (atomic, readonly, copy, nullable) CKRecordID *userRecordID;
+@property (nullable, readonly, copy) NSString *emailAddress;
+@property (nullable, readonly, copy) NSString *phoneNumber;
+@property (nullable, readonly, copy) CKRecordID *userRecordID;
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)

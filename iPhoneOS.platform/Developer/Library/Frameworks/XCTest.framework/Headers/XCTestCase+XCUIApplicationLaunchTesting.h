@@ -11,6 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+XCT_SWIFT_MAIN_ACTOR
 @interface XCTestCase (XCUIApplication_LaunchTesting)
 
 /// Determines whether the tests in this class should run multiple times, once for each of the target application's UI configurations.

@@ -1,7 +1,7 @@
 /*
     NSCompositeAttributeDescription.h
     Core Data
-    Copyright (c) 2023, Apple Inc.
+    Copyright (c) 2023-2024, Apple Inc.
     All rights reserved.
 */
 
@@ -16,7 +16,7 @@ API_AVAILABLE(macosx(14.0), ios(17.0), tvos(17.0), watchos(10.0))
 /*  Elements expects an Attribute or an Array of Attributes
     Will throw if the new value is invalid (ie includes NSRelationshipDescription).
 */
-@property (copy) NSArray *elements;
+@property (copy) NSArray<__kindof NSAttributeDescription *> *elements;
 
 @end
 

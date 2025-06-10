@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @c CPRouteChoice describes a possible route for a @c CPTrip.
  */
-API_AVAILABLE(ios(12.0)) API_UNAVAILABLE(macos, watchos, tvos)
+API_AVAILABLE(ios(12.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(macos, watchos)
 @interface CPRouteChoice : NSObject <NSCopying, NSSecureCoding>
 
 /**
@@ -55,7 +55,7 @@ API_AVAILABLE(ios(12.0)) API_UNAVAILABLE(macos, watchos, tvos)
 /**
  @c CPTrip represents an origin and destination with route choices.
  */
-API_AVAILABLE(ios(12.0)) API_UNAVAILABLE(macos, watchos, tvos)
+API_AVAILABLE(ios(12.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(macos, watchos)
 @interface CPTrip : NSObject <NSSecureCoding>
 
 /**
@@ -84,6 +84,13 @@ API_AVAILABLE(ios(12.0)) API_UNAVAILABLE(macos, watchos, tvos)
  Any custom user info related to this trip.
  */
 @property (nullable, nonatomic, strong) id userInfo;
+
+/**
+ destinationNameVariants is an array of @c NSString representing the name of the destination for
+ this trip, arranged from most to least preferred. You must provide at least one variant.
+ The variant strings should be provided as localized, displayable content.
+ */
+@property (nonatomic, copy, nullable) NSArray<NSString *> *destinationNameVariants;
 
 @end
 

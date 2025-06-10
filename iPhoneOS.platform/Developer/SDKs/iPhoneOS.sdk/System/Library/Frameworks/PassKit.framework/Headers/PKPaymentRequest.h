@@ -32,10 +32,13 @@ typedef NS_OPTIONS(NSUInteger, PKMerchantCapability) {
     PKMerchantCapability3DS             NS_SWIFT_NAME(threeDSecure)                                  = 1UL << 0,   // Merchant supports 3DS
     PKMerchantCapabilityEMV             NS_SWIFT_NAME(emv)                                           = 1UL << 1,   // Merchant supports EMV
     PKMerchantCapabilityCredit          NS_SWIFT_NAME(credit)          NS_ENUM_AVAILABLE(11_0, 9_0) = 1UL << 2,   // Merchant supports credit
-    PKMerchantCapabilityDebit           NS_SWIFT_NAME(debit)           NS_ENUM_AVAILABLE(11_0, 9_0) = 1UL << 3    // Merchant supports debit
-    , PKMerchantCapabilityInstantFundsOut NS_SWIFT_NAME(instantFundsOut) NS_ENUM_AVAILABLE(14_0, 17_0) = 1UL << 7    // Merchant supports instant funds out
+    PKMerchantCapabilityDebit           NS_SWIFT_NAME(debit)           NS_ENUM_AVAILABLE(11_0, 9_0) = 1UL << 3,   // Merchant supports debit
+    PKMerchantCapabilityInstantFundsOut NS_SWIFT_NAME(instantFundsOut) NS_ENUM_AVAILABLE(14_0, 17_0) = 1UL << 7    // Merchant supports instant funds out
     // There are more PKMerchantCapability constants defined in PKPaymentRequest_Private.h; beware of conflicting values when adding new public cases
 } API_AVAILABLE(macos(11.0), ios(8.0), watchos(3.0));
+
+typedef SInt16 PKMerchantCategoryCode NS_TYPED_EXTENSIBLE_ENUM NS_REFINED_FOR_SWIFT API_AVAILABLE(macos(15.0), ios(18.0), watchos(11.0));
+extern PKMerchantCategoryCode const PKMerchantCategoryCodeNone API_AVAILABLE(macos(15.0), ios(18.0), watchos(11.0));
 
 typedef NS_OPTIONS(NSUInteger, PKAddressField) {
     PKAddressFieldNone                               = 0UL,      // No address fields required.
@@ -97,7 +100,7 @@ API_AVAILABLE(macos(11.0), ios(8.0), watchos(3.0))
 // Convenience method to create a payment coupon code expired error with the supplied description.
 + (NSError *)paymentCouponCodeExpiredErrorWithLocalizedDescription:(nullable NSString *)localizedDescription API_AVAILABLE(macos(12.0), ios(15.0)) API_UNAVAILABLE(watchos) NS_REFINED_FOR_SWIFT;
 
-// Identifies the merchant, as previously agreed with Apple.  Must match one of the merchant
+// Identifies the merchant, as previously agreed with Apple. Must match one of the merchant
 // identifiers in the application's entitlement.
 @property (nonatomic, copy) NSString *merchantIdentifier;
 
@@ -116,6 +119,11 @@ API_AVAILABLE(macos(11.0), ios(8.0), watchos(3.0))
 
 // An optional coupon code that is valid and has been applied to the payment request already.
 @property (nonatomic, copy, nullable) NSString *couponCode API_AVAILABLE(macos(12.0), ios(15.0)) API_UNAVAILABLE(watchos);
+
+// The ISO 18245 Merchant Category Code for the payment.
+// Some payment methods may not support specific merchant category codes.
+// By setting the merchant category code, these payment methods can be excluded.
+@property (nonatomic, assign) PKMerchantCategoryCode merchantCategoryCode API_AVAILABLE(macos(15.0), ios(18.0), watchos(11.0)) NS_REFINED_FOR_SWIFT;
 
 // Array of PKPaymentSummaryItem objects which should be presented to the user.
 // The last item should be the total you wish to charge, and should not be pending

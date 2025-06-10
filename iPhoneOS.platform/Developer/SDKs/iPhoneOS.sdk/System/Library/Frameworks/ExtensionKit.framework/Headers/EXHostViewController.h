@@ -18,10 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol EXHostViewControllerDelegate;
 
-API_AVAILABLE(macos(13.0), ios(17.0))
-API_AVAILABLE(watchos(9.0), tvos(16.0))
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros)
+API_AVAILABLE(macos(13.0))
+API_UNAVAILABLE(ios, watchos, tvos)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(visionos)
 #endif
 EXTENSIONKIT_EXPORT
 #if TARGET_OS_OSX
@@ -50,10 +50,10 @@ EXTENSIONKIT_EXPORT
 
 @end
 
-API_AVAILABLE(macos(13.0), ios(17.0))
-API_AVAILABLE(watchos(9.0), tvos(16.0))
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros)
+API_AVAILABLE(macos(13.0))
+API_UNAVAILABLE(ios, watchos, tvos)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(visionos)
 #endif
 /// The delegate for a hosted view controller.
 @protocol EXHostViewControllerDelegate <NSObject>
@@ -68,7 +68,7 @@ API_UNAVAILABLE(xros)
 ///
 /// - Parameters:
 ///   - viewController: The user interface object from the remote process.
--(void)hostViewControllerDidActivate:(EXHostViewController*)viewController;
+-(void)hostViewControllerDidActivate:(EXHostViewController*)viewController NS_SWIFT_UI_ACTOR;
 
 /// A delegate method the host view controller calls when an extension
 /// disconnects.
@@ -82,7 +82,7 @@ API_UNAVAILABLE(xros)
 ///
 ///   - error: An error object containing information about why the object
 /// disconnected, or `nil` if it’s disconnecting without error.
--(void)hostViewControllerWillDeactivate:(EXHostViewController*)viewController error:(nullable NSError *)error;
+-(void)hostViewControllerWillDeactivate:(EXHostViewController*)viewController error:(nullable NSError *)error NS_SWIFT_UI_ACTOR;
 
 @end
 

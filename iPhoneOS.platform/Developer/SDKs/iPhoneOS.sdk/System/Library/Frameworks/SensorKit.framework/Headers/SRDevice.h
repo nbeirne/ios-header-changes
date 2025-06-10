@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-SR_EXTERN API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos)
+SR_EXTERN API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos)
 @interface SRDevice : NSObject <NSSecureCoding, NSCopying>
 
 @property (class, readonly) SRDevice *currentDevice;
@@ -19,7 +19,7 @@ SR_EXTERN API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNA
 @property (readonly, copy) NSString *model;             // e.g. @"iPhone"
 @property (readonly, copy) NSString *systemName;        // e.g. @"iOS"
 @property (readonly, copy) NSString *systemVersion;     // e.g. @"4.0"
-@property (readonly, copy) NSString *productType API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, macos, xros) API_UNAVAILABLE(tvos);       // e.g. @"Watch3,4"
+@property (readonly, copy) NSString *productType API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, macos, visionos) API_UNAVAILABLE(tvos);       // e.g. @"Watch3,4"
 
 @end
 

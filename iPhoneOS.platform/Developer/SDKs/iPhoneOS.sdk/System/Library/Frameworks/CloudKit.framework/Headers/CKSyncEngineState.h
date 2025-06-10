@@ -58,17 +58,21 @@ NS_SWIFT_SENDABLE
 /// If it fails to send a change due to some retryable error (e.g. a network failure), it will keep that change in this list.
 ///
 /// If you'd prefer to track pending changes yourself, you can use `hasPendingUntrackedChanges` instead.
-@property (atomic, readonly, copy) NSArray<CKSyncEnginePendingRecordZoneChange *> *pendingRecordZoneChanges;
+@property (readonly, copy) NSArray<CKSyncEnginePendingRecordZoneChange *> *pendingRecordZoneChanges;
 
 /// A list of database changes that need to be sent to the server, similar to `pendingRecordZoneChanges`.
-@property (atomic, readonly, copy) NSArray<CKSyncEnginePendingDatabaseChange *> *pendingDatabaseChanges;
+@property (readonly, copy) NSArray<CKSyncEnginePendingDatabaseChange *> *pendingDatabaseChanges;
 
 /// This represents whether or not you have pending changes to send to the server that aren't tracked in `pendingRecordZoneChanges`.
 /// This is useful if you want to track pending changes in your own local database instead of the sync engine state.
 ///
 /// When this property is set, the sync engine will automatically schedule a sync.
 /// When the sync task runs, it will ask your delegate for pending changes in `nextRecordZoneChangeBatch`.
-@property (atomic, assign) BOOL hasPendingUntrackedChanges;
+@property (assign) BOOL hasPendingUntrackedChanges;
+
+/// The list of zone IDs that have new changes to fetch from the server.
+/// `CKSyncEngine` keeps track of these zones and will update this list as it receives new information.
+@property (readonly, copy) NSArray<CKRecordZoneID *> *zoneIDsWithUnfetchedServerChanges;
 
 /// Adds to the list of pending record zone changes.
 ///
@@ -110,8 +114,8 @@ NS_SWIFT_SENDABLE
 API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0), watchos(10.0))
 NS_REFINED_FOR_SWIFT
 typedef NS_ENUM(NSInteger, CKSyncEnginePendingRecordZoneChangeType) {
-    CKSyncEnginePendingRecordZoneChangeTypeSave,
-    CKSyncEnginePendingRecordZoneChangeTypeDelete,
+    CKSyncEnginePendingRecordZoneChangeTypeSaveRecord,
+    CKSyncEnginePendingRecordZoneChangeTypeDeleteRecord,
 };
 
 /// A change in a record zone that needs to be sent to the server.
@@ -127,16 +131,16 @@ NS_SWIFT_SENDABLE
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-@property (nonatomic, readonly, copy) CKRecordID *recordID;
-@property (nonatomic, readonly) CKSyncEnginePendingRecordZoneChangeType type;
+@property (readonly, copy, nonatomic) CKRecordID *recordID;
+@property (readonly, assign, nonatomic) CKSyncEnginePendingRecordZoneChangeType type;
 
 @end
 
 API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0), watchos(10.0))
 NS_REFINED_FOR_SWIFT
 typedef NS_ENUM(NSInteger, CKSyncEnginePendingDatabaseChangeType) {
-    CKSyncEnginePendingDatabaseChangeTypeSave,
-    CKSyncEnginePendingDatabaseChangeTypeDelete,
+    CKSyncEnginePendingDatabaseChangeTypeSaveZone,
+    CKSyncEnginePendingDatabaseChangeTypeDeleteZone,
 };
 
 /// A change in a database that needs to be sent to the server.
@@ -149,8 +153,8 @@ NS_SWIFT_SENDABLE
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-@property (nonatomic, readonly, copy) CKRecordZoneID *zoneID;
-@property (nonatomic, readonly) CKSyncEnginePendingDatabaseChangeType type;
+@property (readonly, copy, nonatomic) CKRecordZoneID *zoneID;
+@property (readonly, assign, nonatomic) CKSyncEnginePendingDatabaseChangeType type;
 
 @end
 
@@ -163,7 +167,7 @@ NS_SWIFT_SENDABLE
 
 - (instancetype)initWithZone:(CKRecordZone *)zone NS_SWIFT_NAME(init(_:));
 
-@property (nonatomic, readonly, copy) CKRecordZone *zone;
+@property (readonly, copy, nonatomic) CKRecordZone *zone;
 
 @end
 

@@ -704,13 +704,6 @@ HK_EXTERN NSString * const HKMetadataKeyQuantityClampedToUpperBound API_AVAILABL
  HK_EXTERN NSString * const HKMetadataKeyGlassesPrescriptionDescription API_AVAILABLE(ios(16.0), watchos(9.0), macCatalyst(16.0), macos(13.0));
 
 /*!
- @constant      HKMetadataKeyAverageLightIntensity
- @abstract      Represents average intensity of light for an outdoor time sample.
- @discussion    The expected value type is an HKQuantity expressed in HKUnit Lux.
- */
-HK_EXTERN NSString * const HKMetadataKeyAverageLightIntensity API_AVAILABLE(ios(17.0), watchos(10.0), macCatalyst(17.0), macos(14.0));
-
-/*!
  @enum          HKWaterSalinity
  @abstract      Represents the water salinity for an underwater depth or water temperature sample.
  @discussion    This value indicates the water salinity
@@ -783,5 +776,12 @@ typedef NS_ENUM(NSInteger, HKPhysicalEffortEstimationType) {
     HKPhysicalEffortEstimationTypeActivityLookup = 1,
     HKPhysicalEffortEstimationTypeDeviceSensed,
 } API_AVAILABLE(ios(17.0), watchos(10.0), macCatalyst(17.0), macos(14.0));
+
+/*!
+ @constant      HKMetadataKeyMaximumLightIntensity
+ @abstract      Represents maximum intensity of light for an outdoor time sample.
+ @discussion    The expected value type is an HKQuantity expressed in HKUnit Lux.
+ */
+HK_EXTERN NSString * const HKMetadataKeyMaximumLightIntensity API_AVAILABLE(ios(17.0), watchos(10.0), macCatalyst(17.0), macos(14.0));
 
 NS_ASSUME_NONNULL_END

@@ -24,14 +24,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 NS_REFINED_FOR_SWIFT NS_SWIFT_SENDABLE
 CL_EXTERN
-API_AVAILABLE(macos(14.0), ios(17.0), watchos(10.0)) API_UNAVAILABLE(tvos)
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_AVAILABLE(macos(14.0), ios(17.0)) API_UNAVAILABLE(watchos, tvos, visionos)
+#else
+API_AVAILABLE(macos(14.0), ios(17.0)) API_UNAVAILABLE(watchos, tvos)
 #endif
 @interface CLMonitor : NSObject
 
 /* requestMonitorWithConfiguration:completion:
- * TODO: rdar://105089713 ([CLMonitor] API Review for vending CLMonitor and new state)
  * 	Discussion:
  *		Creates or opens, a `CLMonitor` instance with the given name.
  *      The completion handler will be called with the instance of `CLMonitor`
@@ -71,10 +71,7 @@ API_UNAVAILABLE(xros)
  *
  */
 + (void)requestMonitorWithConfiguration:(CLMonitorConfiguration *)config
-							 completion:(void(^)(CLMonitor *monitor))completionHandler API_AVAILABLE(ios(17.0), macos(14.0), watchos(10.0)) API_UNAVAILABLE(tvos)
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros)
-#endif
+							 completion:(void(^)(CLMonitor *monitor))completionHandler
 NS_REFINED_FOR_SWIFT NS_SWIFT_ASYNC(2);
 
 /*

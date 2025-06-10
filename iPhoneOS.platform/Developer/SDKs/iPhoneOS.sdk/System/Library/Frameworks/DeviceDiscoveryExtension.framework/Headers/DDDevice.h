@@ -1,4 +1,4 @@
-// Copyright (C) 2021-2022 Apple Inc. All Rights Reserved.
+// Copyright (C) 2021-2024 Apple Inc. All Rights Reserved.
 
 #ifndef DEVICE_DISCOVERY_EXTENSION_INDIRECT_INCLUDES
 #error "Please #import <DeviceDiscoveryExtension/DeviceDiscoveryExtension.h> instead of this file directly."
@@ -50,6 +50,7 @@ typedef NS_ENUM( NSInteger, DDDeviceCategory )
 	DDDeviceCategoryTV NS_SWIFT_NAME(tv)									= 3,	/// TV.
 	DDDeviceCategoryLaptopComputer NS_SWIFT_NAME(laptopComputer)			= 4,	/// Laptop computer.
 	DDDeviceCategoryDesktopComputer NS_SWIFT_NAME(desktopComputer)			= 5,	/// Desktop computer.
+	DDDeviceCategoryAccessorySetup NS_SWIFT_NAME(accessorySetup)			= 6,	/// AccessorySetupKit.
 } NS_SWIFT_NAME(DDDevice.Category);
 
 /// Converts a device category to a string for logging, etc.
@@ -82,6 +83,15 @@ typedef NS_ENUM( NSInteger, DDDeviceMediaPlaybackState )
 	DDDeviceMediaPlaybackStatePlaying		= 2, /// Media content is playing.
 } NS_SWIFT_NAME(DDDevice.MediaPlaybackState);
 
+//===========================================================================================================================
+/*!    @brief		Device Support
+*/
+typedef NS_OPTIONS( NSUInteger, DDDeviceSupports )
+{
+	DDDeviceSupportsBluetoothPairingLE			= ( 1U << 1 ),	/// Device supports Bluetooth Low Energy pairing.
+	DDDeviceSupportsBluetoothTransportBridging	= ( 1U << 2 ),	/// Device supports bring up of classic transport profiles when low energy transport for peripheral is connected.
+};
+
 /// Converts a device media playback state to a string for logging, etc.
 DD_EXTERN
 API_AVAILABLE( ios( 16.0 ) )
@@ -99,17 +109,34 @@ API_AVAILABLE( ios( 16.0 ) )
 - (instancetype) initWithDisplayName:(NSString *) displayName category:(DDDeviceCategory) category
 	protocolType:(UTType *) protocolType identifier:(NSString *) identifier NS_DESIGNATED_INITIALIZER;
 
+/// Device supported capabilities.
+@property (readwrite, assign, nonatomic) DDDeviceSupports deviceSupports
+	API_AVAILABLE( ios( 18.0 ) );
+
 /// Identifier to communicate with the device via Bluetooth.
 @property (readwrite, strong, nullable, nonatomic) NSUUID *bluetoothIdentifier;
 
 /// Category of the device.
 @property (readwrite, assign, nonatomic) DDDeviceCategory category;
 
+/// Device's custom asset for product image name in the main App bundle.
+@property (readwrite, copy, nullable, nonatomic) NSString *displayImageName
+	API_AVAILABLE( ios( 18.0 ) );
+
 /// Name of the device. Should be suitable for displaying to a user.
 @property (readwrite, copy, nonatomic) NSString *displayName;
 
 /// Identifier of the device.
 @property (readwrite, copy, nonatomic) NSString *identifier;
+
+/// Current state of media playback on this device.
+@property (readwrite, assign, nonatomic) DDDeviceMediaPlaybackState mediaPlaybackState;
+
+/// Title of the media content being played.
+@property (readwrite, copy, nullable, nonatomic) NSString *mediaContentTitle;
+
+/// Subtitle of the media content being played. It can be used to display extra information about the content, such as the name of the artist.
+@property (readwrite, copy, nullable, nonatomic) NSString *mediaContentSubtitle;
 
 /// Endpoint to communicate with the device via networking.
 @property (readwrite, dd_os_ownership, nullable, nonatomic) nw_endpoint_t networkEndpoint
@@ -124,11 +151,13 @@ API_AVAILABLE( ios( 16.0 ) )
 /// State of the device.
 @property (readwrite, assign, nonatomic) DDDeviceState state;
 
-/// Whether the device supports grouping with other devices with the same protocol.
-@property (readwrite, assign, nonatomic) BOOL supportsGrouping;
+/// Device's WiFi Hotspot SSID.
+@property (readwrite, copy, nullable, nonatomic) NSString *SSID
+	API_AVAILABLE( ios( 18.0 ) );
 
-/// The identifier of the potential pre-configured group the device is in.
-@property (readwrite, copy, nullable, nonatomic) NSString *groupIdentifier;
+/// Whether the device supports grouping with other devices with the same protocol.
+@property (readwrite, assign, nonatomic) BOOL supportsGrouping
+	API_AVAILABLE( ios( 17.0 ) );
 
 /// TXT record of the device.
 @property (readwrite, copy, nullable, nonatomic) NSData *txtRecordData
@@ -138,14 +167,6 @@ API_AVAILABLE( ios( 16.0 ) )
 /// The URL must have a valid hostname, no query parameters, and a maximum size of 100 bytes.
 @property (readwrite, copy, nonatomic) NSURL *url;
 
-/// Current state of media playback on this device.
-@property (readwrite, assign, nonatomic) DDDeviceMediaPlaybackState mediaPlaybackState;
-
-/// Title of the media content being played.
-@property (readwrite, copy, nullable, nonatomic) NSString *mediaContentTitle;
-
-/// Subtitle of the media content being played. It can be used to display extra information about the content, such as the name of the artist.
-@property (readwrite, copy, nullable, nonatomic) NSString *mediaContentSubtitle;
 
 @end
 

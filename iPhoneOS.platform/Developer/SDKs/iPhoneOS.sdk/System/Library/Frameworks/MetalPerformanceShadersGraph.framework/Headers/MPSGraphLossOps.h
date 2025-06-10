@@ -13,32 +13,37 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// Defines the type of the reduction the graph applies in the loss operations.
+/// The type of the reduction the graph applies in the loss operations.
 typedef NS_ENUM(uint64_t, MPSGraphLossReductionType)
 {
-    /// No Reductions
+    /// Computes the loss without reduction.
     MPSGraphLossReductionTypeNone                                            MPS_ENUM_AVAILABLE_STARTING(macos(14.0), ios(17.0), tvos(17.0)) MPS_SWIFT_NAME(none) =   0L,
-    /// No Reductions
+    /// Computes the loss without reduction.
     MPSGraphLossReductionTypeAxis                                            MPS_ENUM_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0)) MPS_SWIFT_NAME(axis) =   MPSGraphLossReductionTypeNone,
-    /// Reduce sum down to a scalar.
+    /// Reduces the loss down to a scalar with a sum operation.
     MPSGraphLossReductionTypeSum                                             MPS_ENUM_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))                      =   1L,
-    /// Reduce mean down to a scalar.
-    MPSGraphLossReductionTypeMean                                            MPS_ENUM_AVAILABLE_STARTING(macos(12.0),  ios(15.0), tvos(15.0))                      =   2L,
+    /// Reduces the loss down to a scalar with a mean operation.
+    MPSGraphLossReductionTypeMean                                            MPS_ENUM_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0))                      =   2L,
 };
 
 MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
 @interface MPSGraph(MPSGraphLossOps)
 
-/// Creates a softmax cross entropy loss operation and returns the result tensor.
-/// This computes: `loss = reduction( - labels*ln( softmax(source) ))`,
-/// where `sotfmax(source) = exp(source) / sum( exp(source) )`, where the sum is computed over ``axis``.
+/// Creates a softmax cross-entropy loss operation and returns the result tensor.
+///
+/// The softmax cross-entropy operation computes:
+/// ```md
+///     loss = reduction( - labels*ln( softmax(source) )), where
+///     sotfmax(source) = exp(source) / sum( exp(source) ), and
+/// ```
+/// the operation performs the reduction over the `axis` dimension.
 ///
 /// - Parameters:
 ///   - sourceTensor: The source tensor.
 ///   - labelsTensor: The labels tensor.
-///   - axis: Axis over which the softmax reduction happens.
-///   - reductionType: The type of reduction MPSGraph uses to reduce across all other axes.
-///   - name: Name for the operation
+///   - axis: The axis over which the operation computes the softmax reduction.
+///   - reductionType: The type of reduction MPSGraph uses to reduce across all other axes than `axis`. See: ``MPSGraphLossReductionType``.
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) softMaxCrossEntropyWithSourceTensor:(MPSGraphTensor *) sourceTensor
                                            labelsTensor:(MPSGraphTensor *) labelsTensor
@@ -47,15 +52,15 @@ MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
                                                    name:(NSString * _Nullable) name
 MPS_SWIFT_NAME( softMaxCrossEntropy(_:labels:axis:reuctionType:name:) );
 
-/// Creates a softmax cross entropy loss operation and returns the result tensor.
+/// Creates the gradient of a softmax cross-entropy loss operation and returns the result tensor.
 ///
 /// - Parameters:
-///   - gradientTensor: gradientTensor - Note: in most cases you want to pass in the initial gradient tensor, which is a constant tensor with value one.
+///   - gradientTensor: The input gradientTensor. Note: in most cases this is the initial gradient tensor, which is a constant tensor with value one.
 ///   - sourceTensor: The source tensor.
 ///   - labelsTensor: The labels tensor.
-///   - axis: Axis over which loss reduction happens.
-///   - reductionType: The type of reduction MPSGraph uses to reduce across all other axes.
-///   - name: Name for the operation.
+///   - axis: The axis over which the operation computes the softmax reduction.
+///   - reductionType: The type of reduction MPSGraph uses to reduce across all other axes than `axis`. See: ``MPSGraphLossReductionType``.
+///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object.
 -(MPSGraphTensor *) softMaxCrossEntropyGradientWithIncomingGradientTensor:(MPSGraphTensor *) gradientTensor
                                                              sourceTensor:(MPSGraphTensor *) sourceTensor

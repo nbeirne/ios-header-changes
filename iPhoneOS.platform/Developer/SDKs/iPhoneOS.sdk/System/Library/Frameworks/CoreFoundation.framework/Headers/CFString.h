@@ -154,52 +154,10 @@ since it is the default choice with Mac OS X developer tools.
 #endif
 #endif
 
-#if DEPLOYMENT_RUNTIME_SWIFT
-    #if TARGET_OS_MAC
-        #define _CF_CONSTANT_STRING_SWIFT_CLASS $s15SwiftFoundation19_NSCFConstantStringCN
-    #else
-        #define _CF_CONSTANT_STRING_SWIFT_CLASS $s10Foundation19_NSCFConstantStringCN
-    #endif
-
-CF_EXPORT void *_CF_CONSTANT_STRING_SWIFT_CLASS[];
-#endif
-
-#if DEPLOYMENT_RUNTIME_SWIFT && TARGET_OS_MAC
-
-struct __CFConstStr {
-    struct {
-        __ptrauth_cf_objc_isa_pointer uintptr_t _cfisa;
-        uintptr_t _swift_rc;
-        uint64_t _cfinfoa;
-    } _base;
-    uint8_t *_ptr;
-#if TARGET_RT_64_BIT && defined(__BIG_ENDIAN__)
-    uint64_t _length;
-#else // 32-bit:
-    uint32_t _length;
-#endif // TARGET_RT_64_BIT && defined(__BIG_ENDIAN__)
-};
-
-#if __BIG_ENDIAN__
-#define CFSTR(cStr)  ({ \
-    static struct __CFConstStr str = {{(uintptr_t)&_CF_CONSTANT_STRING_SWIFT_CLASS, _CF_CONSTANT_OBJECT_STRONG_RC, 0x00000000C8070000}, (uint8_t *)(cStr), sizeof(cStr) - 1}; \
-    (CFStringRef)&str; \
-})
-#else // Little endian:
-#define CFSTR(cStr)  ({ \
-    static struct __CFConstStr str = {{(uintptr_t)&_CF_CONSTANT_STRING_SWIFT_CLASS, _CF_CONSTANT_OBJECT_STRONG_RC, 0x07C8}, (uint8_t *)(cStr), sizeof(cStr) - 1}; \
-    (CFStringRef)&str; \
-})
-#endif // __BIG_ENDIAN__
-
-#else
-
 #ifdef __CONSTANT_CFSTRINGS__
 #define CFSTR(cStr)  ((CFStringRef) __builtin___CFStringMakeConstantString ("" cStr ""))
 #else
 #define CFSTR(cStr)  __CFStringMakeConstantString("" cStr "")
-#endif
-
 #endif
 
 #if defined(__GNUC__) && (__GNUC__*10+__GNUC_MINOR__ >= 42) && defined(__APPLE_CC__) && (__APPLE_CC__ > 1) && !defined(__INTEL_COMPILER) && TARGET_OS_MAC
@@ -550,7 +508,7 @@ void CFStringGetLineBounds(CFStringRef theString, CFRange range, CFIndex *lineBe
 CF_EXPORT
 void CFStringGetParagraphBounds(CFStringRef string, CFRange range, CFIndex *parBeginIndex, CFIndex *parEndIndex, CFIndex *contentsEndIndex) API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0));
 
-#if (!0 || !0)
+#if !0
 /*!
 	@function CFStringGetHyphenationLocationBeforeIndex
 	Retrieve the first potential hyphenation location found before the specified location.
@@ -742,7 +700,7 @@ CF_EXPORT void CFStringNormalize(CFMutableStringRef theString, CFStringNormaliza
 CF_EXPORT
 void CFStringFold(CFMutableStringRef theString, CFStringCompareFlags theFlags, CFLocaleRef theLocale) API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0));
 
-#if !0 || !0
+#if !0
 /* Perform string transliteration.  The transformation represented by transform is applied to the given range of string, modifying it in place. Only the specified range will be modified, but the transform may look at portions of the string outside that range for context. NULL range pointer causes the whole string to be transformed. On return, range is modified to reflect the new range corresponding to the original range. reverse indicates that the inverse transform should be used instead, if it exists. If the transform is successful, true is returned; if unsuccessful, false. Reasons for the transform being unsuccessful include an invalid transform identifier, or attempting to reverse an irreversible transform.
 
 You can pass one of the predefined transforms below, or any valid ICU transform ID as defined in the ICU User Guide. Note that we do not support arbitrary set of ICU transform rules.

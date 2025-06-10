@@ -40,14 +40,14 @@ CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer
 @interface CKAllowedSharingOptions : NSObject <NSSecureCoding, NSCopying>
 - (instancetype)initWithAllowedParticipantPermissionOptions:(CKSharingParticipantPermissionOption)allowedParticipantPermissionOptions allowedParticipantAccessOptions:(CKSharingParticipantAccessOption)allowedParticipantAccessOptions;
 
-@property (atomic, assign) CKSharingParticipantPermissionOption allowedParticipantPermissionOptions;
-@property (atomic, assign) CKSharingParticipantAccessOption allowedParticipantAccessOptions;
+@property (assign) CKSharingParticipantPermissionOption allowedParticipantPermissionOptions;
+@property (assign) CKSharingParticipantAccessOption allowedParticipantAccessOptions;
 
 /*!
  Standard allowed options are most permissive i.e. @c allowedParticipantPermissionOptions = @c CKSharingParticipantPermissionOptionAny
  and @c allowedParticipantAccessOptions = @c CKSharingParticipantAccessOptionAny
  */
-@property (class, nonatomic, strong, readonly) CKAllowedSharingOptions *standardOptions;
+@property (class, readonly, strong, nonatomic) CKAllowedSharingOptions *standardOptions;
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)

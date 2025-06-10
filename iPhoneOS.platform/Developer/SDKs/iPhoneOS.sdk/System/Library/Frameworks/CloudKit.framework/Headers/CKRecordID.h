@@ -28,8 +28,8 @@ NS_SWIFT_SENDABLE
 
 - (instancetype)initWithRecordName:(NSString *)recordName zoneID:(CKRecordZoneID *)zoneID NS_DESIGNATED_INITIALIZER;
 
-@property (nonatomic, readonly, copy) NSString *recordName;
-@property (nonatomic, readonly, copy) CKRecordZoneID *zoneID;
+@property (readonly, copy, nonatomic) NSString *recordName;
+@property (readonly, copy, nonatomic) CKRecordZoneID *zoneID;
 
 @end
 

@@ -40,7 +40,10 @@ typedef NS_ENUM(NSInteger, GKErrorCode) {
     GKErrorNotAuthorized                        = 32,
     GKErrorConnectionTimeout                    = 33,
     GKErrorAPIObsolete                          = 34,
-    
+    GKErrorICloudUnavailable                    = 35,
+    GKErrorLockdownMode                         = 36,
+    GKErrorAppUnlisted                          = 37,
+
     GKErrorFriendListDescriptionMissing         = 100,
     GKErrorFriendListRestricted                 = 101,
     GKErrorFriendListDenied                     = 102,

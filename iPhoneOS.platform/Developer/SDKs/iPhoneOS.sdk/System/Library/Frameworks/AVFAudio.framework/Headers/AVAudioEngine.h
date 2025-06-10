@@ -462,6 +462,12 @@ API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0))
 	Trying to perform input through the input node when it is not enabled or available will
 	cause the engine to throw an error (when possible) or an exception.
 
+	Note that if the engine has at any point previously had its inputNode enabled and permission to
+	record was granted, then any time the engine is running, the mic-in-use indicator will appear.
+
+	For applications which may need to dynamically switch between output-only and input-output
+	modes, it may be advantageous to use two engine instances.
+ 
 	In manual rendering mode, the input node can be used to synchronously supply data to
 	the engine while it is rendering (see 
 	`AVAudioInputNode(setManualRenderingInputPCMFormat:inputBlock:)`.

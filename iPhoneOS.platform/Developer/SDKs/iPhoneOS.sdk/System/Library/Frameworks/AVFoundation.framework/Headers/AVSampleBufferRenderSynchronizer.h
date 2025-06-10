@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
   @class		AVSampleBufferRenderSynchronizer
   @abstract		AVSampleBufferRenderSynchronizer can synchronize multiple objects conforming to AVQueuedSampleBufferRendering to a single timebase.
 */
-API_AVAILABLE(macos(10.13), ios(11.0), tvos(11.0), watchos(4.0))
+API_AVAILABLE(macos(10.13), ios(11.0), tvos(11.0), watchos(4.0), visionos(1.0))
 @interface AVSampleBufferRenderSynchronizer : NSObject
 {
 @private
@@ -54,7 +54,7 @@ API_AVAILABLE(macos(10.13), ios(11.0), tvos(11.0), watchos(4.0))
 	@discussion
 		The rate can change as a result of setting the rate property, either by directly setting the property or calling -setRate:time:.  The rate can also change at any time, without any action by the client of the render synchronizer.  For example, on iOS if the app's playback is interrupted (e.g. by a phone call or another non-mixable app starting playback), the rate will automatically be set to zero.  This notification will be sent in all of those cases.
  */
-AVF_EXPORT NSNotificationName const AVSampleBufferRenderSynchronizerRateDidChangeNotification API_AVAILABLE(macos(10.14), ios(12.0), tvos(12.0), watchos(5.0));
+AVF_EXPORT NSNotificationName const AVSampleBufferRenderSynchronizerRateDidChangeNotification API_AVAILABLE(macos(10.14), ios(12.0), tvos(12.0), watchos(5.0), visionos(1.0));
 
 /*!
 	@method			currentTime
@@ -62,7 +62,7 @@ AVF_EXPORT NSNotificationName const AVSampleBufferRenderSynchronizerRateDidChang
 	@result			A CMTime
 	@discussion		Returns the current time of the synchronizer. Not key-value observable; use -addPeriodicTimeObserverForInterval:queue:usingBlock: instead.
 */
-- (CMTime)currentTime API_AVAILABLE(macos(10.14), ios(12.0), tvos(12.0), watchos(5.0));
+- (CMTime)currentTime API_AVAILABLE(macos(10.14), ios(12.0), tvos(12.0), watchos(5.0), visionos(1.0));
 
 /*!
 	@method			setRate:time:
@@ -73,6 +73,7 @@ AVF_EXPORT NSNotificationName const AVSampleBufferRenderSynchronizerRateDidChang
 		A new time to set.  Must be greater than or equal to kCMTimeZero, or kCMTimeInvalid
 	@discussion
 		Sets the timebase's time to time and then sets the rendering rate to rate.  A rate value of 0.0 means "stopped"; a rate value of 1.0 means "play at the natural rate of the media".  Use kCMTimeInvalid for time to not modify the timebase's time.
+		Note that this method updates the rate property synchronously, but the timebase is updated asynchronously.
 */
 - (void)setRate:(float)rate time:(CMTime)time;
 
@@ -106,15 +107,17 @@ AVF_EXPORT NSNotificationName const AVSampleBufferRenderSynchronizerRateDidChang
 		}];
 		CMTime inOneSecond = CMTimeAdd(CMClockGetTime(CMClockGetHostTimeClock()), CMTimeMake(1, 1));
 		[synchronizer setRate:rate time:startTime atHostTime:inOneSecond];
+
+		Also note that this method updates the rate property synchronously, but the timebase is updated asynchronously.
 */
-- (void)setRate:(float)rate time:(CMTime)time atHostTime:(CMTime)hostTime API_AVAILABLE(macos(11.3), ios(14.5), tvos(14.5), watchos(7.4));
+- (void)setRate:(float)rate time:(CMTime)time atHostTime:(CMTime)hostTime API_AVAILABLE(macos(11.3), ios(14.5), tvos(14.5), watchos(7.4), visionos(1.0));
 
 /*!
     @property	delaysRateChangeUntilHasSufficientMediaData
     @abstract	Indicates whether the playback should be started immediately on rate change request.
     @discussion	If set to YES, playback will be delayed if the value of hasSufficientMediaDataForReliablePlaybackStart of any added renderer is NO. If set to NO, playback will attempt to start immediately regardless of the value of hasSufficientMediaDataForReliablePlaybackStart of added renderers. Default is YES.
  */
-@property (nonatomic) BOOL delaysRateChangeUntilHasSufficientMediaData API_AVAILABLE(macos(11.3), ios(14.5), tvos(14.5), watchos(7.4));
+@property (nonatomic) BOOL delaysRateChangeUntilHasSufficientMediaData API_AVAILABLE(macos(11.3), ios(14.5), tvos(14.5), watchos(7.4), visionos(1.0));
 
 @end
 
@@ -164,7 +167,7 @@ AVF_EXPORT NSNotificationName const AVSampleBufferRenderSynchronizerRateDidChang
 			- If a removal of a particular renderer is scheduled after another removal of that same renderer has already been scheduled but not yet occurred, the previously-scheduled removal's completionHandler will be called and didRemoveRenderer will be NO.  The new scheduled removal's completionHandler will not be called until it is replaced by another scheduled removal or the renderer is actually removed.
 			- When the renderer is removed due to a scheduled removal, the completionHandler provided when that removal was scheduled will be called and didRemoveRenderer will be YES.
 */
-- (void)removeRenderer:(id <AVQueuedSampleBufferRendering>)renderer atTime:(CMTime)time completionHandler:(nullable void (^)(BOOL didRemoveRenderer))completionHandler;
+- (void)removeRenderer:(id <AVQueuedSampleBufferRendering>)renderer atTime:(CMTime)time completionHandler:(nullable void (^ NS_SWIFT_SENDABLE)(BOOL didRemoveRenderer))completionHandler;
 
 @end
 

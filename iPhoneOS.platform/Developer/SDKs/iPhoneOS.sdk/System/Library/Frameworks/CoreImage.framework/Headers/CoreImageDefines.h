@@ -38,9 +38,9 @@
 
 #ifdef __OBJC__
 #ifdef CI_SILENCE_GL_DEPRECATION
-  #if defined(TARGET_OS_XR) && TARGET_OS_XR
-  #define CI_GL_DEPRECATED(...)  API_UNAVAILABLE(xros)
-  #define CI_GL_DEPRECATED_IOS(...) API_UNAVAILABLE(xros)
+  #if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+  #define CI_GL_DEPRECATED(...)  API_UNAVAILABLE(visionos)
+  #define CI_GL_DEPRECATED_IOS(...) API_UNAVAILABLE(visionos)
   #else
   #define CI_GL_DEPRECATED(fromM,toM, fromI,toI)  NS_AVAILABLE(fromM,fromI)
   #define CI_GL_DEPRECATED_IOS(from, to)  NS_AVAILABLE_IOS(from)
@@ -48,9 +48,9 @@
   #define CI_GL_DEPRECATED_MAC(from, to)  NS_AVAILABLE_MAC(from)
   #define CIKL_DEPRECATED(fromM,toM, fromI,toI)  NS_AVAILABLE(fromM,fromI)
 #else
-  #if defined(TARGET_OS_XR) && TARGET_OS_XR
-  #define CI_GL_DEPRECATED(...)  API_UNAVAILABLE(xros)
-  #define CI_GL_DEPRECATED_IOS(...) API_UNAVAILABLE(xros)
+  #if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+  #define CI_GL_DEPRECATED(...)  API_UNAVAILABLE(visionos)
+  #define CI_GL_DEPRECATED_IOS(...) API_UNAVAILABLE(visionos)
   #else
   #define CI_GL_DEPRECATED(fromM,toM, fromI,toI)  NS_DEPRECATED(fromM,toM, fromI,toI, "Core Image OpenGL API deprecated. (Define CI_SILENCE_GL_DEPRECATION to silence these warnings)")
   #define CI_GL_DEPRECATED_IOS(from, to)  NS_DEPRECATED_IOS(from, to, "Core Image OpenGLES API deprecated. (Define CI_SILENCE_GL_DEPRECATION to silence these warnings)")

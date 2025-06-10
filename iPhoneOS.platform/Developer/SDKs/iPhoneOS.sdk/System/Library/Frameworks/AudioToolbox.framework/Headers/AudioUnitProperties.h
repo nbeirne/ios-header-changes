@@ -1281,7 +1281,6 @@ struct AUDependentParameter {
 };
 typedef struct AUDependentParameter AUDependentParameter;
 
-#if !(0 && 0)
 #if !TARGET_OS_IPHONE
 /*!
 	@struct			AudioUnitCocoaViewInfo
@@ -1307,7 +1306,6 @@ struct AUHostVersionIdentifier {
 };
 typedef struct AUHostVersionIdentifier AUHostVersionIdentifier;
 #endif //!TARGET_OS_IPHONE
-#endif 
 
 /*!
 	@struct			MIDIPacketList
@@ -2072,9 +2070,11 @@ typedef struct AUParameterMIDIMapping AUParameterMIDIMapping;
     @abstract       The collection of Instrument Unit Property IDs
 
 	@constant		kMusicDeviceProperty_MIDIXMLNames
-	@discussion			Scope:
-						Value Type:
-						Access:
+	@discussion			Scope:              Global
+						Value Type:         CFURLRef
+						Access:             read
+ 
+                        This property's value specifies a URL to a local file containg the XML Instrument description.
 
 	@constant		kMusicDeviceProperty_PartGroup
 	@discussion			Scope:				Part
@@ -2967,12 +2967,31 @@ typedef struct AudioUnitMeterClipping AudioUnitMeterClipping;
                         apply a second rotation on top of head yaw, pitch, and roll parameters.
  
     @constant       kAudioUnitProperty_SpatialMixerPersonalizedHRTFMode
-                        Scope:          Global
+ 
+    @discussion         Scope:          Global
                         Value Type:     UInt32
                         Access:         Read / Write
-    @discussion     Sets personalized head-related transfer function (HRTF) mode for spatial audio rendering
-                    with kSpatializationAlgorithm_UseOutputType and kSpatialMixerOutputType_Headphones.
-    @seealso        AUSpatialMixerPersonalizedHRTFMode
+ 
+                        Sets personalized head-related transfer function (HRTF) mode for spatial audio rendering
+                        with kSpatializationAlgorithm_UseOutputType and kSpatialMixerOutputType_Headphones.
+ 
+    @seealso            AUSpatialMixerPersonalizedHRTFMode
+ 
+    @constant       kAudioUnitProperty_SpatialMixerAnyInputIsUsingPersonalizedHRTF
+ 
+    @discussion         Scope:          Global
+                        Value Type:     UInt32
+                        Access:         Read
+ 
+                        Returns a Boolean value that indicates whether AUSpatialMixer is currently using personalized
+                        HRTF or not. The property should be queried after AU is initialized for a reliable outcome.
+                
+                        Personalization of spatial audio rendering is subject to various factors such as data availability or
+                        whether AUSpatialMixer is rendering for headphones with kSpatializationAlgorithm_UseOutputType.
+                        Hence, the value of kAudioUnitProperty_SpatialMixerPersonalizedHRTFMode alone does not
+                        guarantee that personalized HRTF is being used for spatial audio rendering.
+                
+    @seealso            kAudioUnitProperty_SpatialMixerPersonalizedHRTFMode
 
 */
 CF_ENUM(AudioUnitPropertyID) {
@@ -2985,8 +3004,9 @@ CF_ENUM(AudioUnitPropertyID) {
 	kAudioUnitProperty_SpatialMixerAttenuationCurve			= 3013,
 	kAudioUnitProperty_SpatialMixerOutputType				= 3100,
 	kAudioUnitProperty_SpatialMixerPointSourceInHeadMode	= 3103,
-    kAudioUnitProperty_SpatialMixerEnableHeadTracking API_AVAILABLE(macos(12.3)) API_UNAVAILABLE(ios, tvos) API_UNAVAILABLE(watchos) = 3111,
-    kAudioUnitProperty_SpatialMixerPersonalizedHRTFMode API_AVAILABLE(macos(13.0)) API_UNAVAILABLE(ios, tvos) API_UNAVAILABLE(watchos) = 3113
+    kAudioUnitProperty_SpatialMixerEnableHeadTracking API_AVAILABLE(macos(12.3), ios(18.0), tvos(18.0)) API_UNAVAILABLE(watchos, visionos) = 3111,
+    kAudioUnitProperty_SpatialMixerPersonalizedHRTFMode API_AVAILABLE(macos(13.0), ios(18.0), tvos(18.0)) API_UNAVAILABLE(watchos) = 3113,
+    kAudioUnitProperty_SpatialMixerAnyInputIsUsingPersonalizedHRTF API_AVAILABLE(macos(14.0), ios(18.0), tvos(18.0)) API_UNAVAILABLE(watchos) = 3116
 };
 
 /*!
@@ -3102,9 +3122,9 @@ typedef CF_OPTIONS(UInt32, AUSpatialMixerRenderingFlags) {
                      head-related transfer function (HRTF).
 */
 typedef CF_ENUM(UInt32, AUSpatialMixerPersonalizedHRTFMode) {
-    kSpatialMixerPersonalizedHRTFMode_Off CF_SWIFT_NAME(off) API_AVAILABLE(macos(13.0)) API_UNAVAILABLE(ios, tvos) API_UNAVAILABLE(watchos) = 0,
-    kSpatialMixerPersonalizedHRTFMode_On CF_SWIFT_NAME(on) API_AVAILABLE(macos(13.0)) API_UNAVAILABLE(ios, tvos) API_UNAVAILABLE(watchos) = 1,
-    kSpatialMixerPersonalizedHRTFMode_Auto CF_SWIFT_NAME(auto) API_AVAILABLE(macos(13.0)) API_UNAVAILABLE(ios, tvos) API_UNAVAILABLE(watchos) = 2
+    kSpatialMixerPersonalizedHRTFMode_Off CF_SWIFT_NAME(off) API_AVAILABLE(macos(13.0), ios(18.0), tvos(18.0)) API_UNAVAILABLE(watchos) = 0,
+    kSpatialMixerPersonalizedHRTFMode_On CF_SWIFT_NAME(on) API_AVAILABLE(macos(13.0), ios(18.0), tvos(18.0)) API_UNAVAILABLE(watchos) = 1,
+    kSpatialMixerPersonalizedHRTFMode_Auto CF_SWIFT_NAME(auto) API_AVAILABLE(macos(13.0), ios(18.0), tvos(18.0)) API_UNAVAILABLE(watchos) = 2
 };
 
 /*!
@@ -3755,7 +3775,6 @@ CF_ENUM(AudioUnitPropertyID) {
 						For the preset instruments, the numeric ID of a particular preset within that bank to load.
  						Range is 0 to 127.
  */
-#if !(0 && 0)
 struct AUSamplerInstrumentData {
 	CFURLRef				fileURL;
 	UInt8					instrumentType;
@@ -3764,7 +3783,6 @@ struct AUSamplerInstrumentData {
 	UInt8					presetID;
 };
 typedef struct AUSamplerInstrumentData AUSamplerInstrumentData;
-#endif 
 
 /*
 	@enum			InstrumentTypes
@@ -4112,7 +4130,6 @@ enum {
 
 // Deprecated in favor of the newer AUSamplerInstrumentData
 // structure and its supporting property.
-#if !(0 && 0)
 typedef struct AUSamplerBankPresetData {
 	CFURLRef				bankURL;
 	UInt8					bankMSB;
@@ -4120,7 +4137,6 @@ typedef struct AUSamplerBankPresetData {
 	UInt8					presetID;
 	UInt8					reserved;
 } AUSamplerBankPresetData;
-#endif 
 
 CF_ENUM(AudioUnitPropertyID) {
 	kAUSamplerProperty_LoadPresetFromBank			= 4100,

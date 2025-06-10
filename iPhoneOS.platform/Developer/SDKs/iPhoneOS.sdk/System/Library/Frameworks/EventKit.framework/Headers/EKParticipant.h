@@ -13,8 +13,8 @@
 #if __has_include(<AddressBook/ABPerson.h>)
 #import <AddressBook/ABPerson.h>
 #endif
-typedef CFTypeRef ABRecordRef;
-typedef CFTypeRef ABAddressBookRef;
+typedef CFTypeRef ABRecordRef API_DEPRECATED("use CNContact, CNGroup, or CNContainer", ios(2.0, 9.0));
+typedef CFTypeRef ABAddressBookRef API_DEPRECATED("use CNContactStore", ios(2.0, 9.0));
 #else
 @class ABPerson, ABAddressBook;
 #endif
@@ -93,8 +93,8 @@ NS_CLASS_AVAILABLE(10_8, 4_0)
  */
 
 - (nullable ABRecordRef)ABRecordWithAddressBook:(ABAddressBookRef)addressBook API_AVAILABLE(ios(4.0), macCatalyst(14.0)) API_DEPRECATED("Use contactPredicate instead", ios(4.0, 9.0)) API_UNAVAILABLE(watchos)
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-    API_UNAVAILABLE(xros)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+    API_UNAVAILABLE(visionos)
 #endif
 CF_RETURNS_NOT_RETAINED;
 

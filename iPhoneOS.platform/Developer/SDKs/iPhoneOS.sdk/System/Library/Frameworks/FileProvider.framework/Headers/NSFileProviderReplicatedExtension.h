@@ -234,10 +234,17 @@ FILEPROVIDER_API_AVAILABILITY_V3_IOS
  - downloads. The system has a per-domain limit on the number of concurrent calls to fetchContents and similar calls.
    That limit is configurable by setting the NSExtensionFileProviderDownloadPipelineDepth key to an integer
    value (between 1 and 128) in the Info.plist of the extension.
+   The configuration key is honored starting in macOS 11.0 and iOS 16.0.
  - uploads. The system has a per-domain limit on the number of concurrent calls to createItemBasedOnTemplate and
-   modifyItem when the call includes new content to be uploaded. That limit is configurable by setting the
-   NSExtensionFileProviderUploadPipelineDepth key to an integer value (between 1 and 128) in the Info.plist
-   of the extension.
+   modifyItem when the call includes new content to be uploaded.
+   That limit is configurable by setting the NSExtensionFileProviderUploadPipelineDepth key to an integer value
+   (between 1 and 128) in the Info.plist of the extension.
+   The configuration key is honored starting in macOS 12.0 and iOS 16.0.
+ - metadata-only uploads. The system has a per-domain limit on the number of concurrent calls to createItemBasedOnTemplate
+   and modifyItem when the call does not include new content to be uploaded.
+   That limit is configurable by setting the NSExtensionFileProviderMetadataOnlyUploadPipelineDepth key to an
+   integer value (between 1 and 128) in the Info.plist of the extension.
+   The configuration key is honored starting in macOS 15.0 and iOS 18.0.
  */
 FILEPROVIDER_API_AVAILABILITY_V3_IOS
 @protocol NSFileProviderReplicatedExtension <NSObject, NSFileProviderEnumerating>
@@ -477,9 +484,19 @@ FILEPROVIDER_API_AVAILABILITY_V3_IOS
  If the imported item is refused by the extension, it should return nil for the
  createdItem without any error. In that case, the source item will be deleted
  from disk. In case the item represents a directory, the content will be deleted
- recursively. If the extension does not wish to synchronise the item, while still
- keeping it on disk, it should still import it locally, but not sync it to its
- server, and return a valid createItem object.
+ recursively.
+
+ If the extension does not wish to sync the item, while still
+ keeping the item on disk, on macOS 13.0, iOS 16.0, and later,
+ it should return `NSFileProviderErrorExcludedFromSync`
+ on the completion handler. For more details, see the header comment for that
+ error code.
+ On earlier versions of macOS, where `NSFileProviderErrorExcludedFromSync` is
+ unavailable, the extension could choose to respond to FileProvider API calls as
+ if the item is synced to it's server, but the extension only tracks the item
+ in it's own local database on the device. The extension must be careful to respond to
+ all FileProvider API calls as if the file is really synced to it's server, including
+ enumerations of the parent directory of that item, itemForIdentifier calls, etc.
 
  The progress returned by createItemBasedOnTemplate is expected to include the
  upload progress of the item and will be presented in the user interface until
@@ -530,12 +547,12 @@ FILEPROVIDER_API_AVAILABILITY_V3_IOS
  collision, by renaming one of the colliding items. When the collision is resolved,
  the system will call createItemBasedOnTemplate again.
 
- The extension can also report the NSFileProviderErrorNotAuthenticated,
- NSFileProviderErrorServerUnreachable, NSFileProviderErrorInsufficientQuota
- or NSFileProviderErrorCannotSynchronize in case the modification cannot be applied
- because of the current state of the system / domain. In that case, the system will
- present an appropriate error message and back off until the next time it is signalled.
- The provider can signal the error resolution by calling signalErrorResolved:completionHandler:.
+ The extension can also report NSFileProviderErrorNotAuthenticated,
+ NSFileProviderErrorCannotSynchronize, or NSFileProviderErrorExcludedFromSync,
+ in case the modification cannot be applied because of the current state of the
+ system / domain. In that case, the system will present an appropriate error message
+ and back off until the next time it is signalled. The provider can signal the error
+ resolution by calling signalErrorResolved:completionHandler:.
 
  Any other error, including crashes of the extension process, will be considered to be transient
  and will cause the creation to be retried.
@@ -644,8 +661,9 @@ NS_SWIFT_NAME(createItem(basedOn:fields:contents:options:request:completionHandl
  fetchContents to retrieve the new contents and replace them on disk.
 
  The `baseVersion` might contain one or both component set to
- `NSFileProviderItemVersionComponentZero` in case there has never been a version for
- which the item on disk and the item in the provider were known to be in sync.
+ `+[NSFileProviderItemVersion beforeFirstSyncComponent]`, in case
+ there has never been a version for which the item on disk and the item in the provider
+ were known to be in sync.
 
  Structural consistency and Cycle handling:
  ------------------------------------------
@@ -706,12 +724,12 @@ NS_SWIFT_NAME(createItem(basedOn:fields:contents:options:request:completionHandl
  the colliding items. When the collision is resolved, the system will call
  modifyItem again.
 
- The extension can also report the NSFileProviderErrorNotAuthenticated,
- NSFileProviderErrorServerUnreachable, NSFileProviderErrorInsufficientQuota
- or NSFileProviderErrorCannotSynchronize in case the modification cannot be applied
- because of the current state of the system / domain. In that case, the system will
- present an appropriate error message and back off until the next time it is signalled.
- The provider can signal the error resolution by calling signalErrorResolved:completionHandler:.
+ The extension can also report NSFileProviderErrorNotAuthenticated,
+ NSFileProviderErrorCannotSynchronize, or NSFileProviderErrorExcludedFromSync,
+ in case the modification cannot be applied because of the current state of the
+ system / domain. In that case, the system will present an appropriate error message
+ and back off until the next time it is signalled. The provider can signal the error
+ resolution by calling signalErrorResolved:completionHandler:.
 
  Any other error, including crashes of the extension process, will be considered to be transient
  and will cause the modification to be retried.
@@ -1313,6 +1331,36 @@ FILEPROVIDER_API_AVAILABILITY_V4_1
                                                                    NSFileProviderMaterializationFlags flags,
                                                                    NSError * _Nullable error))completionHandler
     NS_SWIFT_NAME(fetchPartialContents(for:version:request:minimalRange:aligningTo:options:completionHandler:));
+
+@end
+
+FILEPROVIDER_API_AVAILABILITY_EXTERNAL_VOLUME
+@protocol NSFileProviderExternalVolumeHandling <NSObject>
+
+/**
+ Implement this protocol on your extension's Principal Class in order for the system
+ to ask your extension whether a domain located on an external volume should be connected.
+
+ Your extension may use this method as an opportunity to check for, and setup if necessary,
+ state to operate the extension. Such as prompting the user to login in your application.
+ When creating domains on external drive, store state related to the domain in the `userInfo` parameter to
+ `-[NSFileProviderDomain initWithDisplayName:userInfo:volumeURL:]`,
+ such as the user's ID, to help your extension identify the domain when connected on other devices. This userInfo will be
+ persisted on the external volume, and provided in the ReplicatedExtension initializer when the drive is connected to a new device.
+
+ If your extension responds with an NSError, the domain will be in a disconnected state. Non-downloaded files
+ in the domain will not be downloadable, and file edits will not be synced up. The system will display
+ UI to inform the user. Your extension will be able to enumerate this domain in
+ `+[NSFileProviderManager getDomainsWithCompletionHandler:]`, with the
+ `-[NSFileProviderDomain disconnected]` property set as YES.
+
+ If at a later point, the user has setup the necessary state to service requests for the disconnected external
+ domain, your extension may call `-[NSFileProviderManager reconnectWithCompletionHandler:]`.
+
+ If your extension does not implement this protocol, domains on external volumes will automatically be
+ connected and instantiated in your extension.
+ */
+- (void)shouldConnectExternalDomainWithCompletionHandler:(void (^)(NSError * _Nullable connectionError))completionHandler;
 
 @end
 

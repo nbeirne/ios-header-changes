@@ -20,8 +20,8 @@ NS_CLASS_AVAILABLE(10_8, 5_0)
     @discussion This is now deprecated; use calendarItemIdentifier instead.
  */
 @property(nonatomic, readonly) NSString *UUID NS_DEPRECATED(NA, NA, 5_0, 6_0)
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(visionos)
 #endif
 ;
 

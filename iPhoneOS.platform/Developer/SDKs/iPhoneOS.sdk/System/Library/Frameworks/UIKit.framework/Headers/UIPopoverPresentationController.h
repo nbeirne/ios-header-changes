@@ -17,7 +17,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @class UIPopoverPresentationController, UISheetPresentationController;
 
-API_UNAVAILABLE(tvos) NS_SWIFT_UI_ACTOR
+API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_ACTOR
 @protocol UIPopoverPresentationControllerDelegate <UIAdaptivePresentationControllerDelegate>
 @optional
 
@@ -25,10 +25,10 @@ API_UNAVAILABLE(tvos) NS_SWIFT_UI_ACTOR
 
 // Called on the delegate when the popover controller will dismiss the popover. Return NO to prevent the
 // dismissal of the view.
-- (BOOL)popoverPresentationControllerShouldDismissPopover:(UIPopoverPresentationController *)popoverPresentationController API_DEPRECATED_WITH_REPLACEMENT("presentationControllerShouldDismiss:", ios(8.0, 13.0)) API_UNAVAILABLE(xros);
+- (BOOL)popoverPresentationControllerShouldDismissPopover:(UIPopoverPresentationController *)popoverPresentationController API_DEPRECATED_WITH_REPLACEMENT("presentationControllerShouldDismiss:", ios(8.0, 13.0)) API_UNAVAILABLE(visionos, watchos);
 
 // Called on the delegate when the user has taken action to dismiss the popover. This is not called when the popover is dismissed programatically.
-- (void)popoverPresentationControllerDidDismissPopover:(UIPopoverPresentationController *)popoverPresentationController API_DEPRECATED_WITH_REPLACEMENT("presentationControllerDidDismiss:", ios(8.0, 13.0)) API_UNAVAILABLE(xros);
+- (void)popoverPresentationControllerDidDismissPopover:(UIPopoverPresentationController *)popoverPresentationController API_DEPRECATED_WITH_REPLACEMENT("presentationControllerDidDismiss:", ios(8.0, 13.0)) API_UNAVAILABLE(visionos, watchos);
 
 // -popoverPresentationController:willRepositionPopoverToRect:inView: is called on your delegate when the
 // popover may require a different view or rectangle.
@@ -36,7 +36,7 @@ API_UNAVAILABLE(tvos) NS_SWIFT_UI_ACTOR
 
 @end
 
-UIKIT_EXTERN API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(tvos) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_ACTOR
 @interface UIPopoverPresentationController : UIPresentationController
 
 @property (nullable, nonatomic, weak) id <UIPopoverPresentationControllerDelegate> delegate;
@@ -55,9 +55,9 @@ UIKIT_EXTERN API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(tvos) NS_SWIFT_UI_ACTOR
 @property (nonatomic, assign) BOOL canOverlapSourceViewRect API_AVAILABLE(ios(9.0));
 
 // Accepts UIBarButtonItem as well as NSToolbarItem in Catalyst.
-@property (nullable, nonatomic, strong) id<UIPopoverPresentationControllerSourceItem> sourceItem API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos);
+@property (nullable, nonatomic, strong) id<UIPopoverPresentationControllerSourceItem> sourceItem API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
 
-@property (nullable, nonatomic, strong) UIBarButtonItem *barButtonItem API_DEPRECATED_WITH_REPLACEMENT("sourceItem", ios(8.0, API_TO_BE_DEPRECATED), xros(1.0, API_TO_BE_DEPRECATED));
+@property (nullable, nonatomic, strong) UIBarButtonItem *barButtonItem API_DEPRECATED_WITH_REPLACEMENT("sourceItem", ios(8.0, API_TO_BE_DEPRECATED), visionos(1.0, API_TO_BE_DEPRECATED)) API_UNAVAILABLE(watchos);
 
 // Returns the direction the arrow is pointing on a presented popover. Before presentation, this returns UIPopoverArrowDirectionUnknown.
 @property (nonatomic, readonly) UIPopoverArrowDirection arrowDirection;
@@ -68,20 +68,20 @@ UIKIT_EXTERN API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(tvos) NS_SWIFT_UI_ACTOR
 @property (nullable, nonatomic, copy) NSArray<UIView *> *passthroughViews;
 
 // Set popover background color. Set to nil to use default background color. Default is nil.
-@property (nullable, nonatomic, copy) UIColor *backgroundColor API_UNAVAILABLE(xros);
+@property (nullable, nonatomic, copy) UIColor *backgroundColor API_UNAVAILABLE(visionos);
 
 // Clients may wish to change the available area for popover display. The default implementation of this method always
 // returns a system defined inset from the edges of the display, and presentation of popovers always accounts
 // for the status bar. The rectangle being inset is always expressed in terms of the current device orientation; (0, 0)
 // is always in the upper-left of the device. This may require insets to change on device rotation.
-@property (nonatomic, readwrite) UIEdgeInsets popoverLayoutMargins API_UNAVAILABLE(xros);
+@property (nonatomic, readwrite) UIEdgeInsets popoverLayoutMargins API_UNAVAILABLE(visionos);
 
 // Clients may customize the popover background chrome by providing a class which subclasses `UIPopoverBackgroundView`
 // and which implements the required instance and class methods on that class.
 @property (nullable, nonatomic, readwrite, strong) Class <UIPopoverBackgroundViewMethods> popoverBackgroundViewClass;
 
 // The UISheetPresentationController instance this popover will adapt to in compact size classes. Access this instance to customize or adjust the adaptive sheet.
-@property (nonatomic, readonly, strong) UISheetPresentationController *adaptiveSheetPresentationController API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(tvos, watchos, xros);
+@property (nonatomic, readonly, strong) UISheetPresentationController *adaptiveSheetPresentationController API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(tvos, watchos, visionos);
 
 @end
 

@@ -29,7 +29,7 @@
 #import <UIKit/NSStringDrawing.h>
 #import <UIKit/NSText.h>
 
-#if !TARGET_OS_WATCH || __has_include(<QuartzCore/QuartzCore.h>)
+#if !TARGET_OS_WATCH || (__has_include(<QuartzCore/QuartzCore.h>) && __has_include(<UIKit/UIAccelerometer.h>))
 #import <UIKit/UIAccelerometer.h>
 #import <UIKit/UIAccessibility.h>
 #import <UIKit/UIAccessibilityContentSizeCategoryImageAdjusting.h>
@@ -83,6 +83,7 @@
 #import <UIKit/UIDevice.h>
 #import <UIKit/UIDocument.h>
 #import <UIKit/UIDocumentViewController.h>
+#import <UIKit/UIDocumentViewControllerLaunchOptions.h>
 #import <UIKit/UIDocumentPickerViewController.h>
 #import <UIKit/UIDocumentMenuViewController.h>
 #import <UIKit/UIDocumentPickerExtensionViewController.h>
@@ -118,6 +119,7 @@
 #import <UIKit/UIFocusDebugger.h>
 #import <UIKit/UIFocusMovementHint.h>
 #import <UIKit/UIHoverEffect.h>
+#import <UIKit/UIHoverEffectLayer.h>
 #import <UIKit/UIHoverStyle.h>
 #import <UIKit/UIShape.h>
 #import <UIKit/UIHoverGestureRecognizer.h>
@@ -162,6 +164,7 @@
 #import <UIKit/UISegmentedControl.h>
 #import <UIKit/UISlider.h>
 #import <UIKit/UISplitViewController.h>
+#import <UIKit/UIStandardTextCursorView.h>
 #import <UIKit/UIStepper.h>
 #import <UIKit/UIStoryboard.h>
 #import <UIKit/UIStoryboardPopoverSegue.h>
@@ -169,6 +172,7 @@
 #import <UIKit/UIStringDrawing.h>
 #import <UIKit/UISwipeGestureRecognizer.h>
 #import <UIKit/UISwitch.h>
+#import <UIKit/UISymbolEffectCompletion.h>
 #import <UIKit/UITabBar.h>
 #import <UIKit/UITabBarController.h>
 #import <UIKit/UITabBarItem.h>
@@ -178,6 +182,7 @@
 #import <UIKit/UITableViewController.h>
 #import <UIKit/UITapGestureRecognizer.h>
 #import <UIKit/UITextChecker.h>
+#import <UIKit/UITextCursorDropPositionAnimator.h>
 #import <UIKit/UITextCursorView.h>
 #import <UIKit/UITextField.h>
 #import <UIKit/UITextInput.h>
@@ -191,6 +196,7 @@
 #import <UIKit/UITouch.h>
 #import <UIKit/UITrait.h>
 #import <UIKit/UITraitCollection.h>
+#import <UIKit/UITraitListEnvironment.h>
 #import <UIKit/UIUserActivity.h>
 #import <UIKit/UIVideoEditorController.h>
 #import <UIKit/UIView.h>
@@ -257,6 +263,7 @@
 #import <UIKit/UISelectionFeedbackGenerator.h>
 #import <UIKit/UIImpactFeedbackGenerator.h>
 #import <UIKit/UINotificationFeedbackGenerator.h>
+#import <UIKit/UICanvasFeedbackGenerator.h>
 #import <UIKit/UITimingCurveProvider.h>
 #import <UIKit/NSIndexPath+UIKitAdditions.h>
 #import <UIKit/UIPopoverSupport.h>
@@ -295,6 +302,7 @@
 #import <UIKit/UISceneOptions.h>
 #import <UIKit/UIScene.h>
 #import <UIKit/UIScene+AVAudioSession.h>
+#import <UIKit/UISceneSystemProtectionManager.h>
 #import <UIKit/UIWindowScene.h>
 #import <UIKit/UISceneSession.h>
 #import <UIKit/UISceneSessionActivationRequest.h>
@@ -303,10 +311,12 @@
 #import <UIKit/UIWindowSceneGeometryPreferences.h>
 #import <UIKit/UIWindowSceneGeometryPreferencesMac.h>
 #import <UIKit/UIWindowSceneGeometryPreferencesIOS.h>
-#import <UIKit/UIWindowSceneGeometryPreferencesReality.h>
+#import <UIKit/UIWindowSceneGeometryPreferencesVision.h>
 #import <UIKit/UIWindowScenePlacement.h>
 #import <UIKit/UIWindowSceneStandardPlacement.h>
 #import <UIKit/UIWindowSceneProminentPlacement.h>
+#import <UIKit/UIWindowSceneReplacePlacement.h>
+#import <UIKit/UIWindowScenePushPlacement.h>
 #import <UIKit/UIOpenURLContext.h>
 #import <UIKit/UIStatusBarManager.h>
 #import <UIKit/UIScreenshotService.h>
@@ -315,6 +325,7 @@
 #import <UIKit/UNNotificationResponse+UIKitAdditions.h>
 #import <UIKit/UIAction.h>
 #import <UIKit/UIMenu.h>
+#import <UIKit/UIMenuDisplayPreferences.h>
 #import <UIKit/UIMenuLeaf.h>
 #import <UIKit/UIMenuBuilder.h>
 #import <UIKit/UIMenuElement.h>
@@ -345,6 +356,7 @@
 #import <UIKit/UICalendarSelection.h>
 #import <UIKit/UICalendarSelectionSingleDate.h>
 #import <UIKit/UICalendarSelectionMultiDate.h>
+#import <UIKit/UICalendarSelectionWeekOfYear.h>
 #import <UIKit/UITextSearching.h>
 #import <UIKit/UIFindSession.h>
 #import <UIKit/UIFindInteraction.h>
@@ -355,4 +367,21 @@
 #import <UIKit/UIContentUnavailableButtonProperties.h>
 #import <UIKit/UIContentUnavailableConfigurationState.h>
 #import <UIKit/UIContentUnavailableView.h>
+#import <UIKit/UIUpdateInfo.h>
+#import <UIKit/UIUpdateActionPhase.h>
+#import <UIKit/UIUpdateLink.h>
+#import <UIKit/UITab.h>
+#import <UIKit/UITabGroup.h>
+#import <UIKit/UISearchTab.h>
+#import <UIKit/UITabBarControllerSidebar.h>
+#import <UIKit/UITabSidebarItem.h>
+#import <UIKit/UIViewControllerTransition.h>
+#import <UIKit/UIZoomTransitionOptions.h>
+#import <UIKit/UIShadowProperties.h>
+#import <UIKit/UITextFormattingViewController.h>
+#import <UIKit/UITextFormattingViewControllerChangeValue.h>
+#import <UIKit/UITextFormattingViewControllerFormattingStyle.h>
+#import <UIKit/UITextFormattingViewControllerConfiguration.h>
+#import <UIKit/UITextFormattingViewControllerComponent.h>
+#import <UIKit/UITextFormattingViewControllerFormattingDescriptor.h>
 #endif

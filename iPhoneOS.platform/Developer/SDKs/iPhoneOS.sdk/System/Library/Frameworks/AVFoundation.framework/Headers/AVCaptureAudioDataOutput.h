@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
  @discussion
     Instances of AVCaptureAudioDataOutput produce audio sample buffers suitable for processing using other media APIs. Applications can access the sample buffers with the captureOutput:didOutputSampleBuffer:fromConnection: delegate method.
  */
-API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
 @interface AVCaptureAudioDataOutput : AVCaptureOutput
 {
 @private
@@ -52,7 +52,7 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILA
  
     Clients that need to minimize the chances of samples being dropped should specify a queue on which a sufficiently small amount of processing is being done outside of receiving sample buffers. However, if such clients migrate extra processing to another queue, they are responsible for ensuring that memory usage does not grow without bound from samples that have not been processed.
  
-    A serial dispatch queue must be used to guarantee that audio samples will be delivered in order. The sampleBufferCallbackQueue parameter may not be NULL, except when setting sampleBufferDelegate to nil.
+    A serial dispatch queue must be used to guarantee that audio samples will be delivered in order. The sampleBufferCallbackQueue parameter may not be NULL, except when setting sampleBufferDelegate to nil otherwise -setSampleBufferDelegate:queue: throws an NSInvalidArgumentException.
  */
 - (void)setSampleBufferDelegate:(nullable id<AVCaptureAudioDataOutputSampleBufferDelegate>)sampleBufferDelegate queue:(nullable dispatch_queue_t)sampleBufferCallbackQueue;
 
@@ -84,7 +84,7 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILA
  @discussion
     The value of this property is an NSDictionary containing values for audio settings keys defined in AVAudioSettings.h. When audioSettings is set to nil, the AVCaptureAudioDataOutput vends samples in their device native format.
  */
-@property(nonatomic, copy, null_resettable) NSDictionary<NSString *, id> *audioSettings API_UNAVAILABLE(ios, macCatalyst, watchos, tvos, xros);
+@property(nonatomic, copy, null_resettable) NSDictionary<NSString *, id> *audioSettings API_UNAVAILABLE(ios, macCatalyst, watchos, tvos, visionos);
 
 /*!
  @method recommendedAudioSettingsForAssetWriterWithOutputFileType:
@@ -105,7 +105,7 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILA
  
     Note that the dictionary of settings is dependent on the current configuration of the receiver's AVCaptureSession and its inputs. The settings dictionary may change if the session's configuration changes. As such, you should configure your session first, then query the recommended audio settings.
  */
-- (nullable NSDictionary<NSString *, id> *)recommendedAudioSettingsForAssetWriterWithOutputFileType:(AVFileType)outputFileType API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros);
+- (nullable NSDictionary<NSString *, id> *)recommendedAudioSettingsForAssetWriterWithOutputFileType:(AVFileType)outputFileType API_AVAILABLE(macos(10.15), ios(7.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos);
 
 @end
 
@@ -115,7 +115,7 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILA
  @abstract
     Defines an interface for delegates of AVCaptureAudioDataOutput to receive captured audio sample buffers.
  */
-API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
 @protocol AVCaptureAudioDataOutputSampleBufferDelegate <NSObject>
 
 @optional

@@ -64,9 +64,11 @@ enum
 	kVTVideoDecoderReferenceMissingErr		= -17694,
 	kVTVideoDecoderCallbackMessagingErr		= -17695,
 	kVTVideoDecoderUnknownErr				= -17696,
-	kVTFigAudioSessionInitializationErr		= -17697,
+	kVTExtensionDisabledErr 				= -17697,
     kVTVideoEncoderMVHEVCVideoLayerIDsMismatchErr = -17698,
 	kVTCouldNotOutputTaggedBufferGroupErr	= -17699,
+	kVTCouldNotFindExtensionErr				= -19510,
+	kVTExtensionConflictErr					= -19511,
 };
 
 /*!

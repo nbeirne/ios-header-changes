@@ -3,9 +3,9 @@
  
      Contains:   Master include for vecLib framework
  
-     Version:    vecLib-1038.0
+     Version:    vecLib-1068.0
  
-     Copyright:  Copyright (c) 2000-2023 by Apple Inc. All rights reserved.
+     Copyright:  Copyright (c) 2000-2024 by Apple Inc. All rights reserved.
  
      Bugs:       For bug reports, consult the following page on
                  the World Wide Web:
@@ -20,11 +20,9 @@
 #include <vecLib/vecLibTypes.h>
 #endif
 
-#ifndef __VBASICOPS__
-#include <vecLib/vBasicOps.h>
-#endif
-
 #include <TargetConditionals.h>
+
+
 
 
 
@@ -40,6 +38,10 @@
 #include <vecLib/vfp.h>
 #endif
 
+#ifndef __VBASICOPS__
+#include <vecLib/vBasicOps.h>
+#endif
+
 #ifndef __VDSP__
 #include <vecLib/vDSP.h>
 #endif
@@ -50,6 +52,14 @@
 #endif
 #endif
 
+// LAPACK + BLAS Headers
+
+#if !0 && !0
+
+#include <vecLib/thread_api.h>
+
+#endif
+
 #if defined(ACCELERATE_NEW_LAPACK)
 
 #include <vecLib/blas_new.h>
@@ -57,12 +67,15 @@
 #include <vecLib/lapack.h>
 
 // Prevent nested inclusion of old headers if we are using the new ones
+#define __FORTRAN_BLAS_H
 #define CBLAS_H
 #define __CLAPACK_H
 
-#else
+#else	// #if defined(ACCELERATE_NEW_LAPACK)
 
+#ifndef __FORTRAN_BLAS_H
 #include <vecLib/fortran_blas.h>
+#endif
 
 #ifndef CBLAS_H
 #include <vecLib/cblas.h>
@@ -80,8 +93,11 @@
 
 #ifndef __SPARSE_HEADER__
 #include <vecLib/Sparse/Sparse.h>
+#endif // __SPARSE_HEADER__
+
+#ifndef SPARSE_SOLVE_HEADER
 #include <vecLib/Sparse/Solve.h>
-#endif
+#endif // SPARSE_SOLVE_HEADER
 
 #ifndef __QUADRATURE_PUBLIC_HEADER__
 #include <vecLib/Quadrature/Quadrature.h>

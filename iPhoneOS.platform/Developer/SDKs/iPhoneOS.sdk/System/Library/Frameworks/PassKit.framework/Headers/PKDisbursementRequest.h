@@ -5,7 +5,6 @@
 //  Copyright © 2019 Apple, Inc. All rights reserved.
 //
 
-
 #import <Foundation/Foundation.h>
 #import <PassKit/PKPaymentRequest.h>
 
@@ -13,10 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class PKPaymentSummaryItem;
 
-API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(macos, tvos, watchos);
+API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, tvos)
 @interface PKDisbursementRequest : NSObject
 
-// Identifies the merchant, as previously agreed with Apple.  Must match one of the merchant
+// Identifies the merchant, as previously agreed with Apple. Must match one of the merchant
 // identifiers in the application's entitlement.
 @property (nonatomic, copy) NSString *merchantIdentifier;
 
@@ -73,7 +72,6 @@ API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(macos, tvos, watchos);
 @end
 
 NS_ASSUME_NONNULL_END
-
 
 #else
 #import <TargetConditionals.h>

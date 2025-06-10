@@ -60,8 +60,8 @@ __BEGIN_DECLS
  * objects. Functions from the dispatch_sync() family on queues targeting
  * a workloop are still permitted but discouraged for performance reasons.
  */
-DISPATCH_SWIFT_UNAVAILABLE("Unavailable in Swift")
-DISPATCH_DECL_SUBCLASS(dispatch_workloop, dispatch_queue);
+API_AVAILABLE(macos(10.14), ios(12.0), tvos(12.0), watchos(5.0))
+DISPATCH_DECL_SERIAL_EXECUTOR_SWIFT(dispatch_workloop, DispatchWorkloop);
 
 /*!
  * @function dispatch_workloop_create
@@ -78,7 +78,7 @@ DISPATCH_DECL_SUBCLASS(dispatch_workloop, dispatch_queue);
 API_AVAILABLE(macos(10.14), ios(12.0), tvos(12.0), watchos(5.0))
 DISPATCH_EXPORT DISPATCH_MALLOC DISPATCH_RETURNS_RETAINED DISPATCH_WARN_RESULT
 DISPATCH_NOTHROW
-DISPATCH_SWIFT_UNAVAILABLE("Unavailable in Swift")
+DISPATCH_REFINED_FOR_SWIFT
 dispatch_workloop_t
 dispatch_workloop_create(const char *DISPATCH_UNSAFE_INDEXABLE _Nullable label);
 
@@ -105,7 +105,7 @@ dispatch_workloop_create(const char *DISPATCH_UNSAFE_INDEXABLE _Nullable label);
 API_AVAILABLE(macos(10.14), ios(12.0), tvos(12.0), watchos(5.0))
 DISPATCH_EXPORT DISPATCH_MALLOC DISPATCH_RETURNS_RETAINED DISPATCH_WARN_RESULT
 DISPATCH_NOTHROW
-DISPATCH_SWIFT_UNAVAILABLE("Unavailable in Swift")
+DISPATCH_REFINED_FOR_SWIFT DISPATCH_SWIFT_NAME(DispatchWorkloop.init(__label:))
 dispatch_workloop_t
 dispatch_workloop_create_inactive(const char *DISPATCH_UNSAFE_INDEXABLE _Nullable label);
 
@@ -131,7 +131,7 @@ dispatch_workloop_create_inactive(const char *DISPATCH_UNSAFE_INDEXABLE _Nullabl
  */
 API_AVAILABLE(macos(10.14), ios(12.0), tvos(12.0), watchos(5.0))
 DISPATCH_EXPORT DISPATCH_NONNULL_ALL DISPATCH_NOTHROW
-DISPATCH_SWIFT_UNAVAILABLE("Unavailable in Swift")
+DISPATCH_REFINED_FOR_SWIFT
 void
 dispatch_workloop_set_autorelease_frequency(dispatch_workloop_t workloop,
 		dispatch_autorelease_frequency_t frequency);
@@ -144,6 +144,10 @@ dispatch_workloop_set_autorelease_frequency(dispatch_workloop_t workloop,
   *
   * The worker thread will be a member of the specified os_workgroup_t while executing
   * work items submitted to the workloop.
+  *
+  * Using both dispatch_workloop_set_scheduler_priority() and
+  * dispatch_workloop_set_os_workgroup() will prefer scheduling policies
+  * from the workgroup, if they exist.
   *
   * @param workloop
   * The dispatch workloop to modify.
@@ -159,6 +163,7 @@ dispatch_workloop_set_autorelease_frequency(dispatch_workloop_t workloop,
   */
 API_AVAILABLE(macos(11.0), ios(14.0), tvos(14.0), watchos(7.0))
 DISPATCH_EXPORT DISPATCH_NONNULL_ALL DISPATCH_NOTHROW
+DISPATCH_REFINED_FOR_SWIFT
 void
 dispatch_workloop_set_os_workgroup(dispatch_workloop_t workloop,
 		os_workgroup_t workgroup);

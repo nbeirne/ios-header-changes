@@ -51,7 +51,9 @@ extern "C"
 
 /*!
     @enum           General Audio error codes
-    @abstract       These are the error codes returned from the APIs found through Core Audio related frameworks.
+    @abstract       These are some of the error codes returned from the APIs found through Core Audio related frameworks.
+    @constant       kAudio_NoError
+                        Returned on success.
     @constant       kAudio_UnimplementedError
                         Unimplemented core routine.
     @constant       kAudio_FileNotFoundError
@@ -70,6 +72,7 @@ extern "C"
 
 CF_ENUM(OSStatus)
 {
+    kAudio_NoError                = 0,
     kAudio_UnimplementedError     = -4,
     kAudio_FileNotFoundError      = -43,
     kAudio_FilePermissionError    = -54,
@@ -363,6 +366,8 @@ static const Float64    kAudioStreamAnyRate = 0.0;
                         Free Lossless Audio Codec, the flags indicate the bit depth of the source material.
     @constant       kAudioFormatOpus
                         Opus codec, has no flags.
+    @constant       kAudioFormatAPAC
+                        Apple Positional Audio Codec, has no flags.
 */
 CF_ENUM(AudioFormatID)
 {
@@ -405,7 +410,8 @@ CF_ENUM(AudioFormatID)
     kAudioFormatAES3                    = 'aes3',
     kAudioFormatEnhancedAC3             = 'ec-3',
     kAudioFormatFLAC                    = 'flac',
-    kAudioFormatOpus                    = 'opus'
+    kAudioFormatOpus                    = 'opus',
+    kAudioFormatAPAC                    = 'apac',
 };
 
 /*!
@@ -1425,6 +1431,11 @@ CF_ENUM(AudioChannelLayoutTag)
     kAudioChannelLayoutTag_Ogg_5_1                  = (213U<<16) | 6,	                    ///< 6 channels, L C R Rls Rrs LFE
     kAudioChannelLayoutTag_Ogg_6_1                  = (214U<<16) | 7,						///< 7 channels, L C R Ls Rs Cs LFE
     kAudioChannelLayoutTag_Ogg_7_1                  = (215U<<16) | 8,						///< 8 channels, L C R Ls Rs Rls Rrs LFE
+
+    kAudioChannelLayoutTag_MPEG_5_0_E               = (216U<<16) | 5,						///< 5 channels, L R Rls Rrs C
+    kAudioChannelLayoutTag_MPEG_5_1_E               = (217U<<16) | 6,						///< 6 channels, L R Rls Rrs C LFE
+    kAudioChannelLayoutTag_MPEG_6_1_B               = (218U<<16) | 7,						///< 7 channels, L R Ls Rs C Cs LFE
+    kAudioChannelLayoutTag_MPEG_7_1_D               = (219U<<16) | 8,						///< 8 channels, L R Rls Rrs Ls Rs C LFE
 
     kAudioChannelLayoutTag_BeginReserved            = 0xF0000000,                           ///< Channel layout tag values in this range are reserved for internal use
     kAudioChannelLayoutTag_EndReserved              = 0xFFFEFFFF,

@@ -68,8 +68,8 @@ CB_EXTERN_CLASS @interface CBMutableDescriptor : CBDescriptor
  *
  */
 - (instancetype)initWithType:(CBUUID *)UUID value:(nullable id)value API_AVAILABLE(ios(6.0), macos(10.9)) API_UNAVAILABLE(watchos, tvos) NS_DESIGNATED_INITIALIZER
-#if TARGET_OS_XR
-API_UNAVAILABLE(xros)
+#if TARGET_OS_VISION
+API_UNAVAILABLE(visionos)
 #endif
 ;
 

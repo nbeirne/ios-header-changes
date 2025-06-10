@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
  *    information such as the country, state, city, and street address.
  */
 CL_EXTERN
-API_AVAILABLE(macos(10.8), ios(5.0))
+NS_SWIFT_SENDABLE API_AVAILABLE(macos(10.8), ios(5.0))
 @interface CLPlacemark : NSObject <NSCopying, NSSecureCoding>
 {
 @private
@@ -56,8 +56,8 @@ API_AVAILABLE(macos(10.8), ios(5.0))
  *  Discussion:
  *    Returns the geographic region associated with the placemark.
  */
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-@property (nonatomic, readonly, copy, nullable) CLRegion *region API_UNAVAILABLE(xros);
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+@property (nonatomic, readonly, copy, nullable) CLRegion *region API_UNAVAILABLE(visionos);
 #else
 @property (nonatomic, readonly, copy, nullable) CLRegion *region;
 #endif
@@ -77,8 +77,8 @@ API_AVAILABLE(macos(10.8), ios(5.0))
  *    This dictionary can be formatted as an address using ABCreateStringWithAddressDictionary,
  *    defined in the AddressBookUI framework.
  */
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-@property (nonatomic, readonly, copy, nullable) NSDictionary *addressDictionary API_DEPRECATED("Use @properties", macos(10.8, 10.13), ios(5.0, 11.0), watchos(1.0, 4.0)) API_UNAVAILABLE(xros);
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+@property (nonatomic, readonly, copy, nullable) NSDictionary *addressDictionary API_DEPRECATED("Use @properties", macos(10.8, 10.13), ios(5.0, 11.0), watchos(1.0, 4.0)) API_UNAVAILABLE(visionos);
 #else
 @property (nonatomic, readonly, copy, nullable) NSDictionary *addressDictionary API_DEPRECATED("Use @properties", macos(10.8, 10.13), ios(5.0, 11.0), watchos(1.0, 4.0));
 #endif

@@ -13,7 +13,7 @@
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 /// The corner curve to apply to a view.
-API_AVAILABLE(ios(17.0), xros(1.0))
+API_AVAILABLE(ios(17.0), visionos(1.0)) API_UNAVAILABLE(tvos, watchos)
 typedef NS_ENUM(NSInteger, UICornerCurve) {
     /// Select the corner style automatically.
     UICornerCurveAutomatic,
@@ -21,9 +21,20 @@ typedef NS_ENUM(NSInteger, UICornerCurve) {
     UICornerCurveCircular,
     /// Always use a continuous corner style.
     UICornerCurveContinuous,
-};
+} API_UNAVAILABLE(watchos);
 
 @class UIShapeResolutionContext, UIResolvedShape, UIBezierPath;
+
+/// A type that can provide a custom `UIShape`, resolved dynamically based on
+/// context.
+UIKIT_EXTERN API_AVAILABLE(ios(17.0), visionos(1.0)) API_UNAVAILABLE(tvos, watchos)
+NS_REFINED_FOR_SWIFT
+@protocol UIShapeProvider <NSObject>
+
+/// Resolves this shape in the provided `context`.
+- (UIResolvedShape *)resolvedShapeInContext:(UIShapeResolutionContext *)context;
+
+@end
 
 /// An abstract representation of a shape.
 ///
@@ -35,9 +46,9 @@ typedef NS_ENUM(NSInteger, UICornerCurve) {
 ///
 /// You typically use a `UIShape` with APIs like `UIHoverStyle` to represent the
 /// shape of an effect.
-UIKIT_EXTERN API_AVAILABLE(ios(17.0), xros(1.0)) API_UNAVAILABLE(watchos, tvos)
+UIKIT_EXTERN API_AVAILABLE(ios(17.0), visionos(1.0)) API_UNAVAILABLE(tvos, watchos)
 NS_REFINED_FOR_SWIFT
-@interface UIShape : NSObject <NSCopying>
+@interface UIShape : NSObject <UIShapeProvider, NSCopying>
 
 /// A rectangular shape.
 @property (class, nonatomic, readonly) UIShape *rectShape;
@@ -52,26 +63,34 @@ NS_REFINED_FOR_SWIFT
 
 /// A rectangular shape with rounded corners, aligned inside the frame of
 /// in which it is contained.
-+ (instancetype)roundedRectShapeWithCornerRadius:(CGFloat)cornerRadius;
++ (instancetype)rectShapeWithCornerRadius:(CGFloat)cornerRadius;
 
 /// A rectangular shape with rounded corners, aligned inside the frame of
 /// in which it is contained.
-+ (instancetype)roundedRectShapeWithCornerRadius:(CGFloat)cornerRadius cornerCurve:(UICornerCurve)cornerCurve;
++ (instancetype)rectShapeWithCornerRadius:(CGFloat)cornerRadius cornerCurve:(UICornerCurve)cornerCurve;
 
 /// A rectangular shape with rounded corners, aligned inside the frame of
 /// in which it is contained.
-+ (instancetype)roundedRectShapeWithCornerRadius:(CGFloat)cornerRadius cornerCurve:(UICornerCurve)cornerCurve maskedCorners:(UIRectCorner)maskedCorners;
++ (instancetype)rectShapeWithCornerRadius:(CGFloat)cornerRadius cornerCurve:(UICornerCurve)cornerCurve maskedCorners:(UIRectCorner)maskedCorners;
 
 /// A fixed rectangle shape using `rect` as its shape, regardless of the
 /// frame in which it is contained.
 + (instancetype)fixedRectShapeWithRect:(CGRect)rect;
 
+/// A fixed rectangle shape using `rect` as its shape, regardless of the
+/// frame in which it is contained, with rounded corners using `cornerRadius`.
++ (instancetype)fixedRectShapeWithRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius;
+
+/// A fixed rectangle shape using `rect` as its shape, regardless of the
+/// frame in which it is contained, with rounded corners using `cornerRadius`.
++ (instancetype)fixedRectShapeWithRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius cornerCurve:(UICornerCurve)cornerCurve maskedCorners:(UIRectCorner)maskedCorners;
+
 /// A shape with a custom bezier path.
 + (instancetype)shapeWithBezierPath:(UIBezierPath *)path;
 
 /// Creates a dynamic shape that can be resolved using the provided
-/// `resolver` closure based on context like its containing rect.
-+ (instancetype)dynamicShapeWithProvider:(UIResolvedShape *(^)(UIShapeResolutionContext *context))provider;
+/// `UIShapeProvider` based on context like its containing rect.
++ (instancetype)shapeWithProvider:(id<UIShapeProvider>)provider;
 
 /// Insets this shape by the provided `insets`, returning a new modified
 /// shape.
@@ -102,9 +121,9 @@ NS_REFINED_FOR_SWIFT
 @end
 
 /// A shape that has been resolved based on a `ResolutionContext`.
-UIKIT_EXTERN API_AVAILABLE(ios(17.0), xros(1.0)) API_UNAVAILABLE(watchos, tvos)
+UIKIT_EXTERN API_AVAILABLE(ios(17.0), visionos(1.0)) API_UNAVAILABLE(tvos, watchos)
 NS_REFINED_FOR_SWIFT
-@interface UIResolvedShape : NSObject
+@interface UIResolvedShape : NSObject <NSCopying>
 
 /// The abstract shape that produced this resolved shape.
 @property (nonatomic, readonly) UIShape *shape;
@@ -115,13 +134,33 @@ NS_REFINED_FOR_SWIFT
 /// The bezier path representing this shape.
 @property (nonatomic, readonly) UIBezierPath *path;
 
+/// Insets this shape by the provided `insets`, returning a new modified
+/// shape.
+///
+/// Negative values can be used to add inner padding to a shape. If this
+/// shape is not insettable (e.g., if it is a custom path), this has no
+/// effect. For some shapes like rounded rectangles, this can also modify
+/// the corner radii of the shape to ensure the resulting corners are
+/// concentric.
+- (UIResolvedShape *)shapeByApplyingInsets:(UIEdgeInsets)insets;
+
+/// Insets this shape by the provided `inset`, returning a new modified
+/// shape.
+///
+/// Negative values can be used to add inner padding to a shape. If this
+/// shape is not insettable (e.g., if it is a custom path), this has no
+/// effect. For some shapes like rounded rectangles, this can also modify
+/// the corner radii of the shape to ensure the resulting corners are
+/// concentric.
+- (UIResolvedShape *)shapeByApplyingInset:(CGFloat)inset;
+
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
 @end
 
 /// The context used for resolving a `dynamic` `UIShape`.
-UIKIT_EXTERN API_AVAILABLE(ios(17.0), xros(1.0)) API_UNAVAILABLE(watchos, tvos)
+UIKIT_EXTERN API_AVAILABLE(ios(17.0), visionos(1.0)) API_UNAVAILABLE(tvos, watchos)
 NS_REFINED_FOR_SWIFT
 @interface UIShapeResolutionContext : NSObject
 

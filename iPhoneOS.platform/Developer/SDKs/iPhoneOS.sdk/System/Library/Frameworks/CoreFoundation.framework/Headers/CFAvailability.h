@@ -16,20 +16,11 @@
 #include <TargetConditionals.h>
 #endif
 
-#if __has_include(<Availability.h>) && __has_include(<os/availability.h>) && __has_include(<AvailabilityMacros.h>) && (!0 || !0)
+#if __has_include(<Availability.h>) && __has_include(<os/availability.h>) && __has_include(<AvailabilityMacros.h>)
 #include <Availability.h>
 #include <os/availability.h>
 // Even if unused, these must remain here for compatibility, because projects rely on them being included.
 #include <AvailabilityMacros.h>
-#elif __has_include(<Availability.h>) && __has_include(<AvailabilityMacros.h>)
-#include <Availability.h>
-#include <AvailabilityMacros.h>
-#if !defined(API_AVAILABLE)
-#define API_AVAILABLE(...) __API_AVAILABLE(__VA_ARGS__)
-#define API_DEPRECATED(...) __API_DEPRECATED(__VA_ARGS__)
-#define API_UNAVAILABLE(...) __API_UNAVAILABLE(__VA_ARGS__)
-#define API_DEPRECATED_WITH_REPLACEMENT(...) __API_DEPRECATED_WITH_REPLACEMENT(__VA_ARGS__)
-#endif
 #else
 #define API_AVAILABLE(...)
 #define API_DEPRECATED(...)
@@ -189,19 +180,11 @@ CF_ENUM(CFIndex) {
 #define _CF_TYPED_EXTENSIBLE_ENUM
 #endif
 
-#if DEPLOYMENT_RUNTIME_SWIFT
-#define CF_STRING_ENUM
-#define CF_EXTENSIBLE_STRING_ENUM
-
-#define CF_TYPED_ENUM
-#define CF_TYPED_EXTENSIBLE_ENUM
-#else
 #define CF_STRING_ENUM _CF_TYPED_ENUM
 #define CF_EXTENSIBLE_STRING_ENUM _CF_TYPED_EXTENSIBLE_ENUM
 
 #define CF_TYPED_ENUM _CF_TYPED_ENUM
 #define CF_TYPED_EXTENSIBLE_ENUM _CF_TYPED_EXTENSIBLE_ENUM
-#endif
 
 #define __CF_ERROR_ENUM_GET_MACRO(_1, _2, NAME, ...) NAME
 #if ((__cplusplus && __cplusplus >= 201103L && (__has_extension(cxx_strong_enums) || __has_feature(objc_fixed_enum))) || (!__cplusplus && __has_feature(objc_fixed_enum))) && __has_attribute(ns_error_domain)

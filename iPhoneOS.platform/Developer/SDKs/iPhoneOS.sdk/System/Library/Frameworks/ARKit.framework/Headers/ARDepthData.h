@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger, ARConfidenceLevel) {
  A container for depth data and its associated confidence.
  */
 API_AVAILABLE(ios(14.0))
+NS_SWIFT_SENDABLE
 @interface ARDepthData : NSObject
 
 /**

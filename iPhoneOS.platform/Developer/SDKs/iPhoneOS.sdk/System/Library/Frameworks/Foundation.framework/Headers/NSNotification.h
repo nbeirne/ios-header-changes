@@ -47,7 +47,7 @@ NS_SWIFT_SENDABLE
 - (void)removeObserver:(id)observer;
 - (void)removeObserver:(id)observer name:(nullable NSNotificationName)aName object:(nullable id)anObject;
 
-#if !0 || !0
+#if !0
 - (id <NSObject>)addObserverForName:(nullable NSNotificationName)name object:(nullable id)obj queue:(nullable NSOperationQueue *)queue usingBlock:(void (NS_SWIFT_SENDABLE ^)(NSNotification *notification))block API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0));
     // The return value is retained by the system, and should be held onto by the caller in
     // order to remove the observer with removeObserver: later, to stop observation.

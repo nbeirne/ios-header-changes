@@ -2,7 +2,7 @@
 //  MPSGraphImToColOps.h
 //  MetalPerformanceShadersGraph
 //
-//  Created by local on 4/26/23.
+//  Created on 4/26/23.
 //  Copyright © 2023 Apple Inc. All rights reserved.
 //
 
@@ -13,49 +13,52 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// Descriptor for properties of convolution.
-/// It is used to create ImToCol operation.
+/// The class that defines the parameters for an image to column or column to image operation.
+///
+/// Use this descriptor with the following ``MPSGraph`` methods:
+/// - ``MPSGraph/imToColWithSourceTensor:descriptor:name:``
+/// - ``MPSGraph/colToImWithSourceTensor:outputShape:descriptor:name:``
 MPS_CLASS_AVAILABLE_STARTING(macos(14.0), ios(17.0), tvos(17.0))
 @interface MPSGraphImToColOpDescriptor : MPSGraphObject<NSCopying>
 
-/// kernel in `x` or width dimension.
+/// The property that defines the kernel size in width dimension.
 @property (readwrite, nonatomic) NSUInteger kernelWidth;
-/// kernel in `y` or height dimension.
+/// The property that defines the kernel size  in height dimension.
 @property (readwrite, nonatomic) NSUInteger kernelHeight;
-/// stride in `x` or width dimension.
+/// The property that defines the stride in width dimension.
 @property (readwrite, nonatomic) NSUInteger strideInX;
-/// stride in `y` or height dimension.
+/// The property that defines the stride in height dimension.
 @property (readwrite, nonatomic) NSUInteger strideInY;
-/// dilation in `x` or width dimension.
+/// The property that defines the dilation in width dimension.
 @property (readwrite, nonatomic) NSUInteger dilationRateInX;
-/// dilation in `y` or height dimension.
+/// The property that defines the dilation in height dimension.
 @property (readwrite, nonatomic) NSUInteger dilationRateInY;
-/// padding in `x` or width dimension on left side.
+/// The property that defines the padding in width dimension on the left side.
 @property (readwrite, nonatomic) NSUInteger paddingLeft;
-/// padding in `x` or width dimension on right side.
+/// The property that defines the padding in width dimension on the right side.
 @property (readwrite, nonatomic) NSUInteger paddingRight;
-/// padding in `y` or height dimension at top.
+/// The property that defines the padding in height dimension at the top.
 @property (readwrite, nonatomic) NSUInteger paddingTop;
-/// padding in `y` or height dimension at bottom.
+/// The property that defines the padding in height dimension at the bottom.
 @property (readwrite, nonatomic) NSUInteger paddingBottom;
-/// layout of source tensor.
+/// The property that defines the layout of source or output  tensor.
 /// e.g. `batch x channels x width x height` for `NCHW` layout
 @property (readwrite, nonatomic) MPSGraphTensorNamedDataLayout dataLayout;
 
-/// Creates imToCol descriptor with given values for parameters.
+/// Creates an image to column descriptor with given values for parameters.
 /// - Parameters:
-///   - kernelWidth: See ``kernelWidth`` property.
-///   - kernelHeight: See ``kernelHeight`` property.
-///   - strideInX: See ``strideInX`` property.
-///   - strideInY: See ``strideInY`` property.
-///   - dilationRateInX: See ``dilationRateInX`` property.
-///   - dilationRateInY: See ``dilationRateInY`` property.
-///   - paddingLeft: See ``paddingLeft`` property.
-///   - paddingRight: See ``paddingRight`` property.
-///   - paddingTop: See ``paddingTop`` property.
-///   - paddingBottom: See ``paddingBottom`` property.
-///   - dataLayout: See ``dataLayout`` property.
-/// - Returns: The descriptor on autoreleasepool.
+///   - kernelWidth: See `kernelWidth` property.
+///   - kernelHeight: See `kernelHeight` property.
+///   - strideInX: See `strideInX` property.
+///   - strideInY: See `strideInY` property.
+///   - dilationRateInX: See `dilationRateInX` property.
+///   - dilationRateInY: See `dilationRateInY` property.
+///   - paddingLeft: See `paddingLeft` property.
+///   - paddingRight: See `paddingRight` property.
+///   - paddingTop: See `paddingTop` property.
+///   - paddingBottom: See `paddingBottom` property.
+///   - dataLayout: See `dataLayout` property.
+/// - Returns: A valid MPSGraphImToColOpDescriptor on autoreleasepool.
 +(nullable instancetype) descriptorWithKernelWidth:(NSUInteger) kernelWidth
                                       kernelHeight:(NSUInteger) kernelHeight
                                          strideInX:(NSUInteger) strideInX
@@ -68,16 +71,16 @@ MPS_CLASS_AVAILABLE_STARTING(macos(14.0), ios(17.0), tvos(17.0))
                                      paddingBottom:(NSUInteger) paddingBottom
                                         dataLayout:(MPSGraphTensorNamedDataLayout) dataLayout;
 
-/// Creates imToCol descriptor with given values for parameters.
+/// Creates column to image descriptor with given values for parameters.
 /// - Parameters:
-///   - kernelWidth: See ``kernelWidth`` property.
-///   - kernelHeight: See ``kernelHeight`` property.
-///   - strideInX: See ``strideInX`` property.
-///   - strideInY: See ``strideInY`` property.
-///   - dilationRateInX: See ``dilationRateInX`` property.
-///   - dilationRateInY: See ``dilationRateInY`` property.
-///   - dataLayout: See ``dataLayout`` property.
-/// - Returns: The descriptor on autoreleasepool.
+///   - kernelWidth: See `kernelWidth` property.
+///   - kernelHeight: See `kernelHeight` property.
+///   - strideInX: See `strideInX` property.
+///   - strideInY: See `strideInY` property.
+///   - dilationRateInX: See `dilationRateInX` property.
+///   - dilationRateInY: See `dilationRateInY` property.
+///   - dataLayout: See `dataLayout` property.
+/// - Returns: A valid MPSGraphImToColOpDescriptor on autoreleasepool.
 +(nullable instancetype) descriptorWithKernelWidth:(NSUInteger) kernelWidth
                                       kernelHeight:(NSUInteger) kernelHeight
                                          strideInX:(NSUInteger) strideInX
@@ -86,12 +89,12 @@ MPS_CLASS_AVAILABLE_STARTING(macos(14.0), ios(17.0), tvos(17.0))
                                    dilationRateInY:(NSUInteger) dilationRateInY
                                         dataLayout:(MPSGraphTensorNamedDataLayout) dataLayout;
 
-/// Sets values of padding to given values.
+/// Sets the descriptor's padding to the given values.
 /// - Parameters:
-///   - paddingLeft: See ``paddingLeft`` property.
-///   - paddingRight: See ``paddingRight`` property.
-///   - paddingTop: See ``paddingTop`` property.
-///   - paddingBottom: See ``paddingBottom`` property.
+///   - paddingLeft: See `paddingLeft` property.
+///   - paddingRight: See `paddingRight` property.
+///   - paddingTop: See `paddingTop` property.
+///   - paddingBottom: See `paddingBottom` property.
 -(void) setExplicitPaddingWithPaddingLeft:(NSUInteger) paddingLeft
                              paddingRight:(NSUInteger) paddingRight
                                paddingTop:(NSUInteger) paddingTop
@@ -106,8 +109,8 @@ MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
 /// Creates an imToCol operation and returns the result tensor.
 ///
 /// - Parameters:
-///   - source: source tensor - must be of rank 4. The layout is defined by ``descriptor.dataLayout``.
-///   - descriptor: Specifies strides, dilation rates, paddings and layout.
+///   - source: The tensor containing the source data. Must be of rank 4. The layout is defined by `descriptor.dataLayout`.
+///   - descriptor: The descriptor object that specifies the parameters of the operation.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(MPSGraphTensor *) imToColWithSourceTensor:(MPSGraphTensor *) source
@@ -116,11 +119,12 @@ MPS_CLASS_AVAILABLE_STARTING(macos(11.0), ios(14.0), tvos(14.0))
 MPS_SWIFT_NAME( imToCol(_:descriptor:name:) );
 MPS_AVAILABLE_STARTING(macos(14.0), ios(17.0), tvos(17.0));
 
-/// Creates an colToIm operation and returns the result tensor.
+/// Creates a column to image operation and returns the result tensor.
 ///
 /// - Parameters:
-///   - source: source tensor - must be of rank 3. The layout is defined by ``descriptor.dataLayout``.
-///   - descriptor: Specifies strides, dilation rates, paddings and layout.
+///   - source: The tensor containing the source data. Must be of rank 4. The layout is defined by `descriptor.dataLayout`.
+///   - outputShape: The result tensor shape.
+///   - descriptor: The descriptor object that specifies the parameters of the operation.
 ///   - name: The name for the operation.
 /// - Returns: A valid MPSGraphTensor object
 -(MPSGraphTensor *) colToImWithSourceTensor:(MPSGraphTensor *) source

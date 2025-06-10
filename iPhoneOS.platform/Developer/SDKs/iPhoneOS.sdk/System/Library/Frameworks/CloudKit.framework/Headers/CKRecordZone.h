@@ -38,10 +38,10 @@ CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer
 - (instancetype)initWithZoneName:(NSString *)zoneName;
 - (instancetype)initWithZoneID:(CKRecordZoneID *)zoneID;
 
-@property (atomic, readonly, copy) CKRecordZoneID *zoneID;
+@property (readonly, copy) CKRecordZoneID *zoneID;
 
 /*! Capabilities on locally-created record zones are not valid until the record zone is saved. Capabilities on record zones fetched from the server are valid. */
-@property (atomic, readonly, assign) CKRecordZoneCapabilities capabilities;
+@property (readonly, assign) CKRecordZoneCapabilities capabilities;
 
 /*! @discussion The share property on a record zone will only be set on zones fetched from the server and only if a
  * corresponding zone-wide share record for the zone exists on the server.
@@ -51,7 +51,7 @@ CK_SUBCLASSING_DEPRECATED // should not be subclassed, or Sendable may no longer
  *  Zone-wide sharing is only supported in zones with the @c CKRecordZoneCapabilityZoneWideSharing sharing capability.
  *  You cannot share a zone if it already contains shared records.
  */
-@property (atomic, readonly, copy, nullable) CKReference *share API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0));
+@property (nullable, readonly, copy) CKReference *share API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0));
 
 @end
 

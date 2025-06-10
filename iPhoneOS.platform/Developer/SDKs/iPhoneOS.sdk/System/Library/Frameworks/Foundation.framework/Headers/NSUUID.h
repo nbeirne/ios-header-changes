@@ -3,7 +3,7 @@
 */
 
 #import <Foundation/NSObject.h>
-#if !0 || !0
+#if !0
 #include <CoreFoundation/CFUUID.h>
 #endif
 #include <uuid/uuid.h>

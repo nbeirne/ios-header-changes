@@ -7,16 +7,14 @@
 
 #import <PassKit/PKPaymentSummaryItem.h>
 
-
 NS_ASSUME_NONNULL_BEGIN
 
-API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(macos, tvos, watchos);
+API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, tvos)
 @interface PKDisbursementSummaryItem : PKPaymentSummaryItem
 
 @end
 
 NS_ASSUME_NONNULL_END
-
 
 #else
 #import <TargetConditionals.h>

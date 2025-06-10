@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <SensorKit/SRDefines.h>
 
-#if TARGET_OS_XR
+#if TARGET_OS_VISION
 #if __has_include(<ARKitCore/ARKitCore.h>)
 #import <ARKitCore/ARKitCore.h>
 #define SR_ARKIT_SUPPORTED 1
@@ -23,10 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_OPTIONS(NSUInteger, SRFaceMetricsContext) {
     SRFaceMetricsContextDeviceUnlock = 1 << 0,
     SRFaceMetricsContextMessagingAppUsage = 1 << 1,
-} API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, xros) API_UNAVAILABLE(tvos, macos);
+} API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, visionos) API_UNAVAILABLE(tvos, macos);
 
 NS_SWIFT_SENDABLE
-SR_EXTERN API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, xros) API_UNAVAILABLE(tvos, macos)
+SR_EXTERN API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, visionos) API_UNAVAILABLE(tvos, macos)
 @interface SRFaceMetricsExpression : NSObject  <NSCopying, NSSecureCoding>
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
@@ -46,7 +46,7 @@ SR_EXTERN API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, xros) API_UNAVAILABL
 @end
 
 NS_SWIFT_SENDABLE
-SR_EXTERN API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, xros) API_UNAVAILABLE(tvos, macos)
+SR_EXTERN API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos, visionos) API_UNAVAILABLE(tvos, macos)
 @interface SRFaceMetrics: NSObject  <NSCopying, NSSecureCoding>
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;

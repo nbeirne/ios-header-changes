@@ -125,7 +125,7 @@ API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0))
 
 	@return A dictionary of per-stage supported compute devices, or `nil` if an error occurs.
 */
-- (nullable NSDictionary<VNComputeStage, NSArray<id<MLComputeDeviceProtocol>>*>*) supportedComputeStageDevicesAndReturnError:(NSError**)error NS_SWIFT_NAME(supportedComputeStageDevices());
+- (nullable NSDictionary<VNComputeStage, NSArray<id<MLComputeDeviceProtocol>>*>*) supportedComputeStageDevicesAndReturnError:(NSError**)error NS_REFINED_FOR_SWIFT;
 
 /*!
 	@brief Determine what the currently configured compute device is for a specific compute stage.
@@ -134,7 +134,7 @@ API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0))
 
 	@return The currently assigned compute device, or `nil` if there is no explicit assignment.
 */
-- (nullable id<MLComputeDeviceProtocol>) computeDeviceForComputeStage:(VNComputeStage)computeStage;
+- (nullable id<MLComputeDeviceProtocol>) computeDeviceForComputeStage:(VNComputeStage)computeStage NS_REFINED_FOR_SWIFT;
 
 /*!
 	@brief Assign a specific compute device for a compute stage.
@@ -143,7 +143,7 @@ API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0))
 	@param computeDevice The compute device to assign to the compute stage.  Passing nil for this parameter will remove any explicit compute device assignment, allowing Vision to select which device to use.
 	@param computeStage The compute stage being configured.
 */
-- (void) setComputeDevice:(nullable id<MLComputeDeviceProtocol>)computeDevice forComputeStage:(VNComputeStage)computeStage;
+- (void) setComputeDevice:(nullable id<MLComputeDeviceProtocol>)computeDevice forComputeStage:(VNComputeStage)computeStage NS_REFINED_FOR_SWIFT;
 
 @end
 

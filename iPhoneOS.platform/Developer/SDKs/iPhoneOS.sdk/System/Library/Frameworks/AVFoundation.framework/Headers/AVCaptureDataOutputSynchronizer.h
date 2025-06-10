@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
  
     Note that the AVCaptureDataOutputSynchronizer overrides each data output's -setSampleBufferDelegate:queue:, -setDepthDataDelegate:queue:, or -setMetadataObjectsDelegate:queue: method call. -[AVCaptureVideoDataOutput alwaysDiscardsLateVideoFrames] and -[AVCaptureDepthDataOutput alwaysDiscardsLateDepthData] properties are honored.
  */
-API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, visionos) API_UNAVAILABLE(watchos)
 @interface AVCaptureDataOutputSynchronizer : NSObject
 {
 @private
@@ -71,7 +71,7 @@ AV_INIT_UNAVAILABLE
  @discussion
     AVCaptureDataOutputSynchronizer gathers data from its dataOutputs, and when it determines that all data has been received for a given timestamp, it calls the specified delegate on the specified delegateCallbackQueue. AVCaptureDataOutputSynchronizer overrides all the data outputs' delegates and callbacks. Data outputs under the control of AVCaptureDataOutputSynchronizer do not fire delegate callbacks. Delegate callbacks are restored to individual data outputs when you call this method with nil as your delegate and NULL as your delegateCallbackQueue.
  
-    A serial dispatch queue must be used to guarantee that synchronized data will be delivered in order. The delegateCallbackQueue parameter may not be NULL, except when setting the delegate to nil.
+    A serial dispatch queue must be used to guarantee that synchronized data will be delivered in order. The delegateCallbackQueue parameter may not be NULL, except when setting the delegate to nil otherwise -setDelegate:queue: throws an NSInvalidArgumentException.
  */
 - (void)setDelegate:(nullable id<AVCaptureDataOutputSynchronizerDelegate>)delegate queue:(nullable dispatch_queue_t)delegateCallbackQueue;
 
@@ -98,7 +98,7 @@ AV_INIT_UNAVAILABLE
 @end
 
 
-API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, visionos) API_UNAVAILABLE(watchos)
 @protocol AVCaptureDataOutputSynchronizerDelegate <NSObject>
 
 @required
@@ -133,7 +133,7 @@ API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, x
  @discussion
     AVCaptureDataOutputSynchronizer's -dataOutputSynchronizer:didOutputSynchronizedDataCollection: delegate method delivers a collection of AVCaptureSynchronizedData objects which can be iterated by AVCaptureOutput. AVCaptureSynchronizedDataCollection supports object subscripting and fast enumeration of the data outputs as keys.
  */
-API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, visionos) API_UNAVAILABLE(watchos)
 @interface AVCaptureSynchronizedDataCollection : NSObject <NSFastEnumeration>
 {
 @private
@@ -195,7 +195,7 @@ AV_INIT_UNAVAILABLE
  @discussion
     AVCaptureDataOutputSynchronizer's -dataOutputSynchronizer:didOutputSynchronizedData: delegate callback delivers a dictionary of key/value pairs, with the keys being the AVCaptureOutput instances returning data, and the values being concrete subclasses of AVCaptureSynchronizedData.
  */
-API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, visionos) API_UNAVAILABLE(watchos)
 @interface AVCaptureSynchronizedData : NSObject
 {
 @private
@@ -229,7 +229,7 @@ AV_INIT_UNAVAILABLE
  @discussion
     Synchronized sample buffer data is valid for the duration of AVCaptureDataOutputSynchronizer's -dataOutputSynchronizer:didOutputSynchronizedData: delegate callback. To extend the sample buffer data beyond the callback, you must CFRetain it, and later call CFRelease when you're done with it.
  */
-API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, visionos) API_UNAVAILABLE(watchos)
 @interface AVCaptureSynchronizedSampleBufferData : AVCaptureSynchronizedData
 {
 @private
@@ -281,7 +281,7 @@ API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, x
  @discussion
     A single AVCaptureMetadataOutput may be configured to deliver multiple kinds of metadata objects (such as QRCodes and detected faces). AVCaptureSynchronizedMetadataObjectData's -metadataObjects array may contain multiple AVMetadataObject subclasses, depending on how the AVCaptureMetadataOutput was configured. All synchronized metadata objects share a common timestamp.
  */
-API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, visionos) API_UNAVAILABLE(watchos)
 @interface AVCaptureSynchronizedMetadataObjectData : AVCaptureSynchronizedData
 {
 @private
@@ -313,7 +313,7 @@ API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, x
  @discussion
     Depth data, like video, may be dropped if not serviced in a timely fashion.
  */
-API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, xros) API_UNAVAILABLE(watchos)
+API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, visionos) API_UNAVAILABLE(watchos)
 @interface AVCaptureSynchronizedDepthData : AVCaptureSynchronizedData
 {
 @private

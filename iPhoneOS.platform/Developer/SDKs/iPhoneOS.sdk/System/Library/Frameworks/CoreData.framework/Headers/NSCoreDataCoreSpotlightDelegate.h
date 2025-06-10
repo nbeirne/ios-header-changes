@@ -1,7 +1,7 @@
 /*
     NSCoreDataCoreSpotlightDelegate.h
     Core Data
-    Copyright (c) 2017-2023, Apple Inc.
+    Copyright (c) 2017-2024, Apple Inc.
     All rights reserved.
 */
 
@@ -10,7 +10,7 @@
 
 #import <CoreData/CoreDataDefines.h>
 
-#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST)
+#if (TARGET_OS_OSX || TARGET_OS_IOS || TARGET_OS_MACCATALYST || TARGET_OS_VISION)
 
 @class NSManagedObjectContext;
 @class NSPersistentStoreCoordinator;

@@ -22,12 +22,12 @@
 #include <errno.h>
 #include <float.h>
 #include <limits.h>
-#if (!0 || !0)
+#if !0
 #include <locale.h>
 #endif
 #include <math.h>
 #include <setjmp.h>
-#if (!0 || !0)
+#if !0
 #include <signal.h>
 #endif
 #include <stddef.h>
@@ -57,21 +57,19 @@
 #include <CoreFoundation/CFBinaryHeap.h>
 #include <CoreFoundation/CFBitVector.h>
 #include <CoreFoundation/CFByteOrder.h>
-#if (!0 || !0)
 #include <CoreFoundation/CFCalendar.h>
-#endif
 #include <CoreFoundation/CFCGTypes.h>
 #include <CoreFoundation/CFCharacterSet.h>
 #include <CoreFoundation/CFData.h>
 #include <CoreFoundation/CFDate.h>
-#if (!0 || !0)
+#if !0
 #include <CoreFoundation/CFDateFormatter.h>
 #endif
 #include <CoreFoundation/CFDictionary.h>
 #include <CoreFoundation/CFError.h>
 #include <CoreFoundation/CFLocale.h>
 #include <CoreFoundation/CFNumber.h>
-#if (!0 || !0)
+#if !0
 #include <CoreFoundation/CFNumberFormatter.h>
 #include <CoreFoundation/CFPreferences.h>
 #endif
@@ -79,19 +77,17 @@
 #include <CoreFoundation/CFSet.h>
 #include <CoreFoundation/CFString.h>
 #include <CoreFoundation/CFStringEncodingExt.h>
-#if (!0 || !0)
 #include <CoreFoundation/CFTimeZone.h>
-#endif
 #include <CoreFoundation/CFTree.h>
-#if (!0 || !0)
 #include <CoreFoundation/CFURL.h>
 #include <CoreFoundation/CFURLAccess.h>
+#if !0
 #include <CoreFoundation/CFUUID.h>
 #include <CoreFoundation/CFUtilities.h>
-#include <CoreFoundation/CFBundle.h>
 #endif
+#include <CoreFoundation/CFBundle.h>
 
-#if (TARGET_OS_OSX || TARGET_OS_IPHONE || TARGET_OS_WIN32) && (!0 || !0)
+#if (TARGET_OS_OSX || TARGET_OS_IPHONE || TARGET_OS_WIN32) && !0
 #include <CoreFoundation/CFMessagePort.h>
 #include <CoreFoundation/CFPlugIn.h>
 #include <CoreFoundation/CFRunLoop.h>
@@ -99,21 +95,21 @@
 #include <CoreFoundation/CFSocket.h>
 #include <CoreFoundation/CFMachPort.h>
 #endif
-#if (TARGET_OS_OSX || TARGET_OS_IPHONE || TARGET_OS_WIN32 || (0 && 0))
+#if (TARGET_OS_OSX || TARGET_OS_IPHONE || TARGET_OS_WIN32 || 0)
 #include <CoreFoundation/CFAttributedString.h>
 #endif
-#if (TARGET_OS_OSX || TARGET_OS_IPHONE || TARGET_OS_WIN32) && (!0 || !0)
+#if (TARGET_OS_OSX || TARGET_OS_IPHONE || TARGET_OS_WIN32) && !0
 #ifndef CF_OPEN_SOURCE
 #include <CoreFoundation/CFURLEnumerator.h>
 #endif
 
 #endif
 
-#if (TARGET_OS_OSX || TARGET_OS_IPHONE || TARGET_OS_WIN32 || (0 && 0))
+#if (TARGET_OS_OSX || TARGET_OS_IPHONE || TARGET_OS_WIN32 || 0)
 #include <CoreFoundation/CFNotificationCenter.h>
 #endif
 
-#if (TARGET_OS_OSX || TARGET_OS_IPHONE) && (!0 || !0)
+#if (TARGET_OS_OSX || TARGET_OS_IPHONE) && !0
 #ifndef CF_OPEN_SOURCE
 #include <CoreFoundation/CFFileSecurity.h>
 #include <CoreFoundation/CFStringTokenizer.h>
@@ -121,7 +117,7 @@
 #endif
 #endif
 
-#if (!0 || !0)
+#if !0
 #include <CoreFoundation/CFUserNotification.h>
 #include <CoreFoundation/CFXMLNode.h>
 #include <CoreFoundation/CFXMLParser.h>

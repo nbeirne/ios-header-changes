@@ -13,8 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class SFContentBlockerState;
 
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-SF_EXTERN NSString * const SFContentBlockerErrorDomain API_DEPRECATED_WITH_REPLACEMENT("SFErrorDomain", ios(9.0, 10.0), macCatalyst(13.4, 13.4)) API_UNAVAILABLE(xros);
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+SF_EXTERN NSString * const SFContentBlockerErrorDomain API_DEPRECATED_WITH_REPLACEMENT("SFErrorDomain", ios(9.0, 10.0), macCatalyst(13.4, 13.4)) API_UNAVAILABLE(visionos);
 #else
 SF_EXTERN NSString * const SFContentBlockerErrorDomain API_DEPRECATED_WITH_REPLACEMENT("SFErrorDomain", ios(9.0, 10.0), macCatalyst(13.4, 13.4));
 #endif
@@ -24,8 +24,8 @@ typedef NS_ENUM(NSInteger, SFContentBlockerErrorCode) {
     SFContentBlockerNoAttachmentFound API_DEPRECATED_WITH_REPLACEMENT("SFErrorNoAttachmentFound", ios(9.0, 10.0), macCatalyst(13.4, 13.4)) = SFErrorNoAttachmentFound,
     SFContentBlockerLoadingInterrupted API_DEPRECATED_WITH_REPLACEMENT("SFErrorLoadingInterrupted", ios(9.0, 10.0), macCatalyst(13.4, 13.4)) = SFErrorLoadingInterrupted,
 }
-#if defined(TARGET_OS_XR) && TARGET_OS_XR
-API_UNAVAILABLE(xros)
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+API_UNAVAILABLE(visionos)
 #endif
 API_DEPRECATED_WITH_REPLACEMENT("SFErrorCode", ios(9.0, 10.0), macCatalyst(13.4, 13.4));
 
