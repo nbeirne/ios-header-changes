@@ -11,6 +11,7 @@
 #import <Cinematic/CNCinematicError.h>
 
 #import <Cinematic/CNAssetInfo.h>
+#import <Cinematic/CNSpatialAudio.h>
 
 #import <Cinematic/CNRenderingSession.h>
 

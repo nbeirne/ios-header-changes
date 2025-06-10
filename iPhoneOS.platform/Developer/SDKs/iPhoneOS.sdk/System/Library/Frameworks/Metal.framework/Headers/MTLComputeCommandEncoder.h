@@ -29,6 +29,11 @@ typedef struct {
 } MTLDispatchThreadgroupsIndirectArguments;
 
 typedef struct {
+    uint32_t threadsPerGrid[3];
+    uint32_t threadsPerThreadgroup[3];
+} MTLDispatchThreadsIndirectArguments;
+
+typedef struct {
 	uint32_t  stageInOrigin[3];
 	uint32_t  stageInSize[3];
 } MTLStageInRegionIndirectArguments API_AVAILABLE(macos(10.14), ios(12.0));

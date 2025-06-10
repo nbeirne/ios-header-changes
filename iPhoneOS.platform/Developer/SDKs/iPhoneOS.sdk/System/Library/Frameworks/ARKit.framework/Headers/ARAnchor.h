@@ -11,8 +11,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define AR_ANCHOR_PROTOCOLS ARAnchorCopying, NSSecureCoding
-
 @class ARAnchor;
 /**
  An anchor object that can be copied from values of an existing anchor.
@@ -45,13 +43,14 @@ API_AVAILABLE(ios(11.0))
 
 @end
 
-
 /**
  Object representing a physical location and orientation in 3D space.
  */
 API_AVAILABLE(ios(11.0))
 NS_SWIFT_SENDABLE
-@interface ARAnchor : NSObject <AR_ANCHOR_PROTOCOLS>
+@interface ARAnchor : NSObject <ARAnchorCopying,
+                                NSSecureCoding
+                                >
 
 /**
  Unique identifier of the anchor.
@@ -65,7 +64,7 @@ NS_SWIFT_SENDABLE
 
 /**
  Identifier of the session that owns the anchor.
- 
+
  @discussion The session identifier will be assigned to anchor when added to the session.
  */
 @property (nonatomic, nullable, readonly) NSUUID *sessionIdentifier API_AVAILABLE(ios(13.0));

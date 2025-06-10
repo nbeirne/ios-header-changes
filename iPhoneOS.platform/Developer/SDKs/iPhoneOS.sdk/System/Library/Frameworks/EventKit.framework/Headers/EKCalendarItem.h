@@ -124,6 +124,8 @@ API_UNAVAILABLE(visionos)
 - (void)addRecurrenceRule:(EKRecurrenceRule *)rule;
 - (void)removeRecurrenceRule:(EKRecurrenceRule *)rule;
 
+@property (nonatomic, readonly) BOOL hasMaximumAlarms;
+
 @end
 
 NS_ASSUME_NONNULL_END

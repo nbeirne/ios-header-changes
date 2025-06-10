@@ -222,6 +222,8 @@ typedef NS_ENUM(NSUInteger, MTLPixelFormat)
     MTLPixelFormatX32_Stencil8  API_AVAILABLE(macos(10.12), ios(10.0)) = 261,
     MTLPixelFormatX24_Stencil8  API_AVAILABLE(macos(10.12), macCatalyst(13.0)) API_UNAVAILABLE(ios) = 262,
 
+    MTLPixelFormatUnspecialized API_AVAILABLE(macos(26.0), ios(26.0)) = 263,
+    
 } API_AVAILABLE(macos(10.11), ios(8.0));
 
 NS_ASSUME_NONNULL_END

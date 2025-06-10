@@ -139,7 +139,14 @@
  * @stable ICU 2.2
  */
 #ifndef U_OVERRIDE_CXX_ALLOCATION
+#if APPLE_ICU_CHANGES
+// rdar://138504706 (ICU implements wrappers around the system allocator interfaces)
+// This removes the ability to call u_setMemoryFunctions() and have it do anything, but we'd already disabled that
+// functionality in response to rdar://133066316
+#define U_OVERRIDE_CXX_ALLOCATION 0
+#else
 #define U_OVERRIDE_CXX_ALLOCATION 1
+#endif // APPLE_ICU_CHANGES
 #endif
 
 /**
@@ -426,6 +433,17 @@
  */
 #ifndef UCONFIG_NO_FORMATTING
 #   define UCONFIG_NO_FORMATTING 0
+#endif
+
+/**
+ * \def UCONFIG_NO_MF2
+ * This switch turns off the experimental MessageFormat 2.0 API.
+ *
+ * @internal ICU 75 technology preview
+ * @deprecated This API is for technology preview only.
+ */
+#ifndef UCONFIG_NO_MF2
+#   define UCONFIG_NO_MF2 1
 #endif
 
 /**

@@ -83,6 +83,8 @@ AVF_EXPORT NSNotificationName const AVCaptureSessionWasInterruptedNotification N
     An interruption caused when the app is running in a multi-app layout, causing resource contention and degraded recording quality of service. Given your present AVCaptureSession configuration, the session may only be run if your app occupies the full screen.
  @constant AVCaptureSessionInterruptionReasonVideoDeviceNotAvailableDueToSystemPressure
     An interruption caused by the video device temporarily being made unavailable due to system pressure, such as thermal duress. See AVCaptureDevice's AVCaptureSystemPressure category for more information.
+ @constant AVCaptureSessionInterruptionReasonSensitiveContentMitigationActivated
+    An interruption caused by a SCVideoStreamAnalyzer when it detects sensitive content on an associated AVCaptureDeviceInput.  To resume your capture session, call your analyzer's `continueStream` method.
  */
 typedef NS_ENUM(NSInteger, AVCaptureSessionInterruptionReason) {
     AVCaptureSessionInterruptionReasonVideoDeviceNotAvailableInBackground               = 1,
@@ -90,6 +92,7 @@ typedef NS_ENUM(NSInteger, AVCaptureSessionInterruptionReason) {
     AVCaptureSessionInterruptionReasonVideoDeviceInUseByAnotherClient                   = 3,
     AVCaptureSessionInterruptionReasonVideoDeviceNotAvailableWithMultipleForegroundApps = 4,
     AVCaptureSessionInterruptionReasonVideoDeviceNotAvailableDueToSystemPressure API_AVAILABLE(ios(11.1), macCatalyst(14.0), visionos(1.0)) = 5,
+    AVCaptureSessionInterruptionReasonSensitiveContentMitigationActivated API_AVAILABLE(ios(26.0), macCatalyst(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(macos) = 6,
 } API_AVAILABLE(ios(9.0), macCatalyst(14.0), tvos(17.0), visionos(1.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos);
 
 
@@ -152,6 +155,7 @@ typedef NS_ENUM(NSInteger, AVCaptureVideoOrientation) {
 @class AVCaptureControl;
 @class AVCaptureSessionInternal;
 @protocol AVCaptureSessionControlsDelegate;
+@protocol AVCaptureSessionDeferredStartDelegate;
 
 /*!
  @class AVCaptureSession
@@ -312,7 +316,7 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0), visionos(1.0
  @discussion
     An AVCaptureInput instance can only be added to a session using -addInputWithNoConnections: if -canAddInput: returns YES, otherwise an NSInvalidArgumentException is thrown. -addInputWithNoConnections: may be called while the session is running. The -addInput: method is the preferred method for adding an input to an AVCaptureSession. -addInputWithNoConnections: may be called if you need fine-grained control over which inputs are connected to which outputs.
  */
-- (void)addInputWithNoConnections:(AVCaptureInput *)input API_AVAILABLE(ios(8.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos);
+- (void)addInputWithNoConnections:(AVCaptureInput *)input API_AVAILABLE(ios(8.0), macCatalyst(14.0), tvos(17.0), visionos(2.1));
 
 /*!
  @method addOutputWithNoConnections:
@@ -325,7 +329,7 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0), visionos(1.0
  @discussion
     An AVCaptureOutput instance can only be added to a session using -addOutputWithNoConnections: if -canAddOutput: returns YES, otherwise an NSInvalidArgumentException is thrown. -addOutputWithNoConnections: may be called while the session is running. The -addOutput: method is the preferred method for adding an output to an AVCaptureSession. -addOutputWithNoConnections: may be called if you need fine-grained control over which inputs are connected to which outputs.
  */
-- (void)addOutputWithNoConnections:(AVCaptureOutput *)output API_AVAILABLE(ios(8.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos);
+- (void)addOutputWithNoConnections:(AVCaptureOutput *)output API_AVAILABLE(ios(8.0), macCatalyst(14.0), tvos(17.0), visionos(2.1));
 
 /*!
  @property connections
@@ -348,7 +352,7 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0), visionos(1.0
  @discussion
     An AVCaptureConnection instance can only be added to a session using -addConnection: if -canAddConnection: returns YES, otherwise an NSInvalidArgumentException is thrown. When using -addInput: or -addOutput:, connections are formed automatically between all compatible inputs and outputs. Manually adding connections is only necessary when adding an input or output with no connections.
  */
-- (BOOL)canAddConnection:(AVCaptureConnection *)connection API_AVAILABLE(ios(8.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos);
+- (BOOL)canAddConnection:(AVCaptureConnection *)connection API_AVAILABLE(ios(8.0), macCatalyst(14.0), tvos(17.0), visionos(2.1));
 
 /*!
  @method addConnection:
@@ -361,7 +365,7 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0), visionos(1.0
  @discussion
     An AVCaptureConnection instance can only be added to a session using -addConnection: if canAddConnection: returns YES, otherwise an NSInvalidArgumentException is thrown. When using -addInput: or -addOutput:, connections are formed automatically between all compatible inputs and outputs. Manually adding connections is only necessary when adding an input or output with no connections. -addConnection: may be called while the session is running.
  */
-- (void)addConnection:(AVCaptureConnection *)connection API_AVAILABLE(ios(8.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos);
+- (void)addConnection:(AVCaptureConnection *)connection API_AVAILABLE(ios(8.0), macCatalyst(14.0), tvos(17.0), visionos(2.1));
 
 /*!
  @method removeConnection:
@@ -374,7 +378,7 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0), visionos(1.0
  @discussion
     -removeConnection: may be called while the session is running.
  */
-- (void)removeConnection:(AVCaptureConnection *)connection API_AVAILABLE(ios(8.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos);
+- (void)removeConnection:(AVCaptureConnection *)connection API_AVAILABLE(ios(8.0), macCatalyst(14.0), tvos(17.0), visionos(2.1));
 
 /*!
  @property supportsControls
@@ -385,7 +389,6 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0), visionos(1.0
     `AVCaptureControl`s are only supported on platforms with necessary hardware.
  */
 @property(nonatomic, readonly) BOOL supportsControls API_AVAILABLE(macos(15.0), ios(18.0), macCatalyst(18.0), tvos(18.0)) API_UNAVAILABLE(visionos);
-
 
 /*!
  @property maxControlsCount
@@ -593,6 +596,15 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0), visionos(1.0
 @property(nonatomic) BOOL configuresApplicationAudioSessionToMixWithOthers API_AVAILABLE(ios(18.0), macCatalyst(18.0), tvos(18.0)) API_UNAVAILABLE(macos, visionos);
 
 /*!
+ @property configuresApplicationAudioSessionForBluetoothHighQualityRecording
+ @abstract
+    Indicates whether the receiver should configure the application's audio session for bluetooth high quality recording.
+ 
+ @discussion
+    The value of this property is a BOOL indicating whether the receiver should configure the application's audio session for bluetooth high quality recording (AirPods as a high quality microphone). When this property is set to YES, the AVCaptureSession will opt in for high quality bluetooth recording, allowing a user to select AirPods as the active mic source for capture. This property has no effect when usesApplicationAudioSession is set to NO. The default value is NO.
+ */
+@property(nonatomic) BOOL configuresApplicationAudioSessionForBluetoothHighQualityRecording API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(macos, macCatalyst, tvos, visionos);
+/*!
  @property automaticallyConfiguresCaptureDeviceForWideColor
  @abstract
     Indicates whether the receiver automatically configures its video device's activeFormat and activeColorSpace properties, preferring wide color for photos.
@@ -670,6 +682,67 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0), visionos(1.0
  */
 @property(nonatomic, readonly) float hardwareCost API_AVAILABLE(ios(16.0), macCatalyst(16.0), tvos(17.0)) API_UNAVAILABLE(macos, visionos) API_UNAVAILABLE(watchos);
 
+/// A Boolean value that indicates whether the session supports manually running deferred start.
+///
+/// Deferred Start is a feature that allows you to control, on a per-output basis, whether output objects start when or after the session is started. The session defers starting an output when its ``deferredStartEnabled`` property is set to `true`, and starts it after the session is started.
+///
+/// You can only set the ``automaticallyRunsDeferredStart`` property value to `false` if the session supports manual deferred start.
+@property(nonatomic, readonly, getter=isManualDeferredStartSupported) BOOL manualDeferredStartSupported API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
+
+/// A Boolean value that indicates whether deferred start runs automatically.
+///
+/// Deferred Start is a feature that allows you to control, on a per-output basis, whether output objects start when or after the session is started. The session defers starting an output when its ``deferredStartEnabled`` property is set to `true`, and starts it after the session is started.
+///
+/// When this value is `true`, ``AVCaptureSession`` automatically runs deferred start. If only ``AVCaptureVideoPreviewLayer`` objects have ``deferredStartEnabled`` set to `false`, the session runs deferred start a short time after displaying the first frame. If there are ``AVCaptureOutput`` objects that have ``deferredStartEnabled`` set to `false`, then the session waits until each output that provides streaming data to your app sends its first frame.
+///
+/// If you set this value to `false`, call ``runDeferredStartWhenNeeded`` to indicate when to run deferred start.
+///
+/// By default, for apps that are linked on or after iOS 19, this value is `true`.
+///
+/// If ``manualDeferredStartSupported`` is `false`, setting this property value to `false` results in the session throwing an invalid argument exception.
+///
+/// - Note: Set this value before committing the configuration.
+@property(nonatomic) BOOL automaticallyRunsDeferredStart API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
+
+/// Tells the session to run deferred start when appropriate.
+///
+/// You can only call this when automaticallyRunsDeferredStart is `false`. Otherwise, the session throws an invalid argument exception.
+///
+/// For best perceived startup performance, call this after displaying the first frame, so that deferred start processing doesn't interfere with other initialization operations. For example, if using a <doc://com.apple.documentation/documentation/quartzcore/cametallayer> to draw camera frames, add a presentHandler (using <doc://com.apple.documentation/metal/mtldrawable/addpresentedhandler>) to the first drawable and call ``runDeferredStartWhenNeeded`` from there.
+///
+/// If one or more outputs need to start to perform a capture operation, and ``runDeferredStartWhenNeeded`` has not run yet, the session runs the deferred start on your app's behalf. Only call this method once for each configuration commit - after the first call, subsequent calls to ``runDeferredStartWhenNeeded`` have no effect. The deferred start runs asynchronously, so this method returns immediately.
+///
+/// Important: -To avoid blocking your app's UI, don't call this method from the application's main actor or queue.
+- (void)runDeferredStartWhenNeeded API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
+
+/// A delegate object that observes events about deferred start.
+///
+/// Call the ``setDeferredStartDelegate:queue:`` method to set the deferred start delegate for a session.
+@property(nonatomic, readonly, nullable) id<AVCaptureSessionDeferredStartDelegate> deferredStartDelegate API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
+
+/// The dispatch queue on which the session calls deferred start delegate methods.
+///
+/// Call the ``setDeferredStartDelegate:queue:`` method to specify the dispatch queue on which to call the deferred start delegate methods.
+@property(nonatomic, readonly, nullable) dispatch_queue_t deferredStartDelegateCallbackQueue API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
+
+/// Sets a delegate object for the session to call when performing deferred start.
+///
+/// This delegate receives a call to the ``sessionWillRunDeferredStart`` method when deferred start is about to run. It is non-blocking, so it's also possible that by the time this method is called, the deferred start is already underway. If you want your app to perform initialization (potentially) concurrently with deferred start (e.g. user-facing camera features that are not needed to display the first preview frame, but are available to the user as soon as possible) it may be done in the delegate's ``sessionWillRunDeferredStart`` method. To wait until deferred start is finished to perform some remaining initialization work, use the ``sessionDidRunDeferredStart`` method instead.
+///
+/// The delegate receives a call to the ``sessionDidRunDeferredStart`` method when the deferred start finishes running. This allows you to run less-critical application initialization code. For example, if you've deferred an ``AVCapturePhotoOutput`` by setting its ``deferredStartEnabled`` property to `true`, and you'd like to do some app-specific initialization related to still capture, here might be a good place to put it.
+///
+/// If the delegate is non-nil, the session still calls the ``sessionWillRunDeferredStart`` and ``sessionDidRunDeferredStart`` methods regardless of the value of the session's ``automaticallyRunsDeferredStart`` property.
+///
+/// To minimize the capture session's startup latency, defer all unnecessary work until after the session starts. This delegate provides callbacks for you to schedule deferred work without impacting session startup performance.
+///
+/// To perform initialization prior to deferred start but after the user interface displays, set ``automaticallyRunsDeferredStart`` to `false`, and then run the custom initialization prior to calling ``runDeferredStartWhenNeeded``.
+///
+/// If ``deferredStartDelegate`` is not `NULL`, the session throws an exception if ``deferredStartDelegateCallbackQueue`` is `nil`.
+///
+/// - Parameters:
+///   - deferredStartDelegate: An object conforming to the 'AVCaptureSessionDeferredStartDelegate' protocol that receives events about deferred start.
+///   - deferredStartDelegateCallbackQueue: A dispatch queue on which deferredStart delegate methods are called.
+- (void)setDeferredStartDelegate:(nullable id<AVCaptureSessionDeferredStartDelegate>) deferredStartDelegate deferredStartDelegateCallbackQueue:(nullable dispatch_queue_t)deferredStartDelegateCallbackQueue API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
 @end
 
 
@@ -695,7 +768,6 @@ API_AVAILABLE(macos(15.0), ios(18.0), macCatalyst(18.0), tvos(18.0)) API_UNAVAIL
     Delegates receive this message when the controls of an `AVCaptureSession` instance become active and are available for interaction.
  */
 - (void)sessionControlsDidBecomeActive:(AVCaptureSession *)session;
-
 
 /*!
  @method sessionControlsWillEnterFullscreenAppearance:
@@ -723,7 +795,6 @@ API_AVAILABLE(macos(15.0), ios(18.0), macCatalyst(18.0), tvos(18.0)) API_UNAVAIL
  */
 - (void)sessionControlsWillExitFullscreenAppearance:(AVCaptureSession *)session;
 
-
 /*!
  @method sessionControlsDidBecomeInactive:
  @abstract
@@ -736,6 +807,25 @@ API_AVAILABLE(macos(15.0), ios(18.0), macCatalyst(18.0), tvos(18.0)) API_UNAVAIL
     Delegates receive this message when the controls of an `AVCaptureSession` instance become inactive and are no longer available for interaction.
  */
 - (void)sessionControlsDidBecomeInactive:(AVCaptureSession *)session;
+
+@end
+
+/// Defines an interface for delegates of `AVCaptureSession` to receive events about the session's deferred start.
+API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
+@protocol AVCaptureSessionDeferredStartDelegate <NSObject>
+
+/// This method gets called by the session when deferred start is about to run.
+///
+/// Delegates receive this message when the session has finished the deferred start. This message will be sent regardless of whether the session's automaticallyRunsDeferredStart property is set. See ``setDeferredStartDelegate:queue:`` documentation for more information.
+///
+/// - Parameters:
+///   - session: The `AVCaptureSession` instance that runs the deferred start.
+- (void)sessionWillRunDeferredStart:(AVCaptureSession *)session;
+
+/// This method gets called by the session when deferred start has finished running.
+/// - Parameters:
+///   - session: The `AVCaptureSession` instance that runs the deferred start.
+- (void)sessionDidRunDeferredStart:(AVCaptureSession *)session;
 
 @end
 
@@ -752,8 +842,10 @@ API_AVAILABLE(macos(15.0), ios(18.0), macCatalyst(18.0), tvos(18.0)) API_UNAVAIL
     AVCaptureMultiCamSession's sessionPreset is always AVCaptureSessionPresetInputPriority and may not be set to any other value. Each input's device.activeFormat must be set manually to achieve the desired quality of service.
  
     AVCaptureMultiCamSession supports dynamic enabling and disabling of individual camera inputs without interrupting preview. In order to stop an individual camera input, set the enabled property on all of its connections or connected ports to NO. When the last active connection or port is disabled, the source camera stops streaming to save power and bandwidth. Other inputs streaming data through the session are unaffected.
+ 
+    Prior to iOS 19, AVCaptureMultiCamSession requires all input devices to have an activeFormat where multiCamSupported returns YES. In applications linked on or after iOS 19, this requirement is not enforced when only a single input device is used.
  */
-API_AVAILABLE(ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, visionos) API_UNAVAILABLE(watchos)
+API_AVAILABLE(ios(13.0), macCatalyst(14.0), tvos(17.0), visionos(2.1)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos)
 @interface AVCaptureMultiCamSession : AVCaptureSession
 
 /*!
@@ -781,7 +873,7 @@ API_AVAILABLE(ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, v
         - The number of sources configured to deliver streaming disparity / depth via AVCaptureDepthDataOutput. The higher the number of cameras configured to produce depth, the higher the cost.
     In order to reduce hardwareCost, consider picking a sensor-cropped activeFormat, or a binned format. You may also use AVCaptureDeviceInput's videoMinFrameDurationOverride property to artificially limit the max frame rate (which is the reciprocal of the min frame duration) of a source device to a lower value. By doing so, you only pay the hardware cost for the max frame rate you intend to use.
  */
-@property(nonatomic, readonly) float hardwareCost;
+@property(nonatomic, readonly) float hardwareCost API_UNAVAILABLE(visionos);
 
 /*!
  @property systemPressureCost
@@ -791,7 +883,7 @@ API_AVAILABLE(ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, v
  @discussion
     The value of this property is a float whose nominal range is 0.0 => 1.0 indicating the system pressure cost of your current configuration. When your systemPressureCost is greater than 1.0, the capture session cannot run sustainably. It may be able to run for a brief period before needing to stop due to high system pressure. While running in an unsustainable configuration, you may monitor the session's systemPressureState and reduce pressure by reducing the frame rate, throttling your use of the GPU, etc. When the session reaches critical system pressure state, it must temporarily shut down, and you receive an AVCaptureSessionWasInterruptedNotification indicating the reason your session needed to stop. When system pressure alleviates, the session interruption ends.
  */
-@property(nonatomic, readonly) float systemPressureCost;
+@property(nonatomic, readonly) float systemPressureCost API_UNAVAILABLE(visionos);
 
 @end
 
@@ -861,7 +953,7 @@ AV_INIT_UNAVAILABLE
  @discussion
     This method returns an instance of AVCaptureConnection that may be subsequently added to an AVCaptureSession instance using AVCaptureSession's -addConnection: method. When using -addInput: or -addOutput:, connections are formed between all compatible inputs and outputs automatically. You do not need to manually create and add connections to the session unless you use the primitive -addInputWithNoConnections: or -addOutputWithNoConnections: methods.
  */
-+ (instancetype)connectionWithInputPorts:(NSArray<AVCaptureInputPort *> *)ports output:(AVCaptureOutput *)output API_AVAILABLE(ios(8.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos);
++ (instancetype)connectionWithInputPorts:(NSArray<AVCaptureInputPort *> *)ports output:(AVCaptureOutput *)output API_AVAILABLE(ios(8.0), macCatalyst(14.0), tvos(17.0), visionos(2.1));
 
 /*!
  @method connectionWithInputPort:videoPreviewLayer:
@@ -895,7 +987,7 @@ AV_INIT_UNAVAILABLE
  @discussion
     This method returns an instance of AVCaptureConnection that may be subsequently added to an AVCaptureSession instance using AVCaptureSession's -addConnection: method. When using -addInput: or -addOutput:, connections are formed between all compatible inputs and outputs automatically. You do not need to manually create and add connections to the session unless you use the primitive -addInputWithNoConnections: or -addOutputWithNoConnections: methods.
  */
-- (instancetype)initWithInputPorts:(NSArray<AVCaptureInputPort *> *)ports output:(AVCaptureOutput *)output API_AVAILABLE(ios(8.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos);
+- (instancetype)initWithInputPorts:(NSArray<AVCaptureInputPort *> *)ports output:(AVCaptureOutput *)output API_AVAILABLE(ios(8.0), macCatalyst(14.0), tvos(17.0), visionos(2.1));
 
 /*!
  @method initWithInputPort:videoPreviewLayer:
@@ -923,7 +1015,7 @@ AV_INIT_UNAVAILABLE
  @discussion
     An AVCaptureConnection may involve one or more AVCaptureInputPorts producing data to the connection's AVCaptureOutput. This property is read-only. An AVCaptureConnection's inputPorts remain static for the life of the object.
  */
-@property(nonatomic, readonly) NSArray<AVCaptureInputPort *> *inputPorts API_UNAVAILABLE(visionos);
+@property(nonatomic, readonly) NSArray<AVCaptureInputPort *> *inputPorts API_AVAILABLE(visionos(2.1));
 
 /*!
  @property output
@@ -933,7 +1025,7 @@ AV_INIT_UNAVAILABLE
  @discussion
     An AVCaptureConnection may involve one or more AVCaptureInputPorts producing data to the connection's AVCaptureOutput. This property is read-only. An AVCaptureConnection's output remains static for the life of the object. Note that a connection can either be to an output or a video preview layer, but never to both.
  */
-@property(nonatomic, readonly, nullable) AVCaptureOutput *output API_UNAVAILABLE(visionos);
+@property(nonatomic, readonly, nullable) AVCaptureOutput *output API_AVAILABLE(visionos(2.1));
 
 /*!
  @property videoPreviewLayer

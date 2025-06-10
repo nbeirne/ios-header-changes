@@ -714,7 +714,9 @@ AudioConverterConvertBuffer(    AudioConverterRef               inAudioConverter
                                 UInt32                          inInputDataSize,
                                 const void *                    inInputData,
                                 UInt32 *                        ioOutputDataSize,
-                                void *                          outOutputData)  API_AVAILABLE(macos(10.1), ios(2.0), watchos(2.0), tvos(9.0));
+                                void *                          outOutputData)
+                        CA_REALTIME_API
+                        API_AVAILABLE(macos(10.1), ios(2.0), watchos(2.0), tvos(9.0));
 
 //-----------------------------------------------------------------------------
 /*!
@@ -782,6 +784,20 @@ typedef OSStatus
                                         AudioStreamPacketDescription * __nullable * __nullable outDataPacketDescription,
                                         void * __nullable               inUserData);
 
+/*!
+	@typedef	AudioConverterComplexInputDataProcRealtimeSafe
+	@abstract	Realtime-safe variant of AudioConverterComplexInputDataProc.
+	
+	See the discussions of AudioConverterComplexInputDataProc and AudioConverterFillComplexBuffer.
+*/
+typedef OSStatus
+(*AudioConverterComplexInputDataProcRealtimeSafe)(
+                                        AudioConverterRef               inAudioConverter,
+                                        UInt32 *                        ioNumberDataPackets,
+                                        AudioBufferList *               ioData,
+                                        AudioStreamPacketDescription * __nullable * __nullable outDataPacketDescription,
+                                        void * __nullable               inUserData) CA_REALTIME_API;
+
 //-----------------------------------------------------------------------------
 /*!
     @function   AudioConverterFillComplexBuffer
@@ -828,6 +844,74 @@ AudioConverterFillComplexBuffer(    AudioConverterRef                   inAudioC
                                     AudioStreamPacketDescription * __nullable outPacketDescription)
                                                                                 API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0));
 
+/*!
+    @function   AudioConverterFillComplexBufferRealtimeSafe
+    @abstract   Identical to AudioConverterFillComplexBuffer, with the addition of a realtime-safety
+    			guarantee.
+	
+	Conversions involving only PCM formats -- interleaving, deinterleaving, channel count changes,
+	sample rate conversions -- are realtime-safe. Such conversions may use this API in order to
+	obtain compiler checks involving the `CA_REALTIME_API` attributes.
+	
+	At runtime, this function returns `kAudioConverterErr_OperationNotSupported` if the conversion 
+	requires non-realtime-safe functionality.
+*/
+extern OSStatus
+AudioConverterFillComplexBufferRealtimeSafe(
+                                    AudioConverterRef                   inAudioConverter,
+                                    AudioConverterComplexInputDataProcRealtimeSafe inInputDataProc,
+                                    void * __nullable                   inInputDataProcUserData,
+                                    UInt32 *                            ioOutputDataPacketSize,
+                                    AudioBufferList *                   outOutputData,
+                                    AudioStreamPacketDescription * __nullable outPacketDescription)
+                                        CA_REALTIME_API
+                                        API_AVAILABLE(macos(26.0), ios(26.0), watchos(26.0), tvos(26.0), visionos(26.0));
+
+/*!
+    @function   AudioConverterFillComplexBufferWithPacketDependencies
+    @abstract   Converts audio data supplied by a callback function, supporting non-interleaved and
+                packetized formats, and also supporting packet dependency descriptions.
+    @discussion For output formats that use packet dependency descriptions, this must be used instead of
+                AudioConverterFillComplexBuffer, which will return an error for such formats.
+    @param inAudioConverter         The audio converter to use for format conversion.
+    @param inInputDataProc          A callback function that supplies audio data to convert.
+                                    This callback is invoked repeatedly as the converter is ready for
+                                    new input data.
+    @param inInputDataProcUserData  Custom data for use by your application when receiving a
+                                    callback invocation.
+    @param ioOutputDataPacketSize   On input, the size of the output buffer (in the `outOutputData`
+                                    parameter), expressed in number packets in the audio converter’s
+                                    output format.  On output, the number of packets of converted data
+                                    that were written to the output buffer.
+    @param outOutputData            The converted output data is written to this buffer. On entry, the
+                                    buffers' `mDataByteSize` fields (which must all be the same) reflect
+                                    buffer capacity.  On exit, `mDataByteSize` is set to the number of
+                                    bytes written.
+    @param outPacketDescriptions    If not `NULL`, and if the audio converter's output format uses packet
+                                    descriptions, this must point to a block of memory capable of holding
+                                    the number of packet descriptions specified in the `ioOutputDataPacketSize`
+                                    parameter.  (See _Audio Format Services Reference_ for functions that
+                                    let you determine whether an audio format uses packet descriptions).
+                                    If not `NULL` on output and if the audio converter's output format
+                                    uses packet descriptions, then this parameter contains an array of
+                                    packet descriptions.
+    @param outPacketDependencies    Should point to a memory block capable of holding the number of
+                                    packet dependency description structures specified in the
+                                    `ioOutputDataPacketSize` parameter.  Must not be `NULL`.  This array
+                                    will be filled out only by encoders that produce a format which has a
+                                    non-zero value for `kAudioFormatProperty_FormatEmploysDependentPackets`.
+    @result                         A result code.
+*/
+OSStatus
+AudioConverterFillComplexBufferWithPacketDependencies(
+    AudioConverterRef                            inAudioConverter,
+    AudioConverterComplexInputDataProc           inInputDataProc,
+    void * __nullable                            inInputDataProcUserData,
+    UInt32 *                                     ioOutputDataPacketSize,
+    AudioBufferList *                            outOutputData,
+    AudioStreamPacketDescription * __nullable    outPacketDescriptions,
+    AudioStreamPacketDependencyDescription *     outPacketDependencies)
+API_AVAILABLE(macos(26.0), ios(26.0), watchos(26.0), tvos(26.0), visionos(26.0));
 
 //-----------------------------------------------------------------------------
 /*!
@@ -855,7 +939,8 @@ AudioConverterConvertComplexBuffer( AudioConverterRef               inAudioConve
                                     UInt32                          inNumberPCMFrames,
                                     const AudioBufferList *         inInputData,
                                     AudioBufferList *               outOutputData)
-                                                                                API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0));
+                                    	CA_REALTIME_API
+										API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0));
 
 // =================================================================================================
 // DEPRECATED

@@ -50,7 +50,8 @@ typedef NS_ERROR_ENUM(NFCErrorDomain, NFCReaderError) {
     NFCReaderErrorInvalidParameterLength API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos, macos, tvos, visionos),
     NFCReaderErrorParameterOutOfBound API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos, macos, tvos, visionos),
     NFCReaderErrorRadioDisabled API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, macos, tvos, visionos),
-
+    NFCReaderErrorIneligible API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos, macos, tvos, visionos),
+    
     NFCReaderTransceiveErrorTagConnectionLost API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos, macos, tvos, visionos)                    = 100,
     NFCReaderTransceiveErrorRetryExceeded API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos, macos, tvos, visionos),
     NFCReaderTransceiveErrorTagResponseError API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos, macos, tvos, visionos),

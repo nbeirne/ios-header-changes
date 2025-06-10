@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class CHHapticPattern;
 @class AVAudioSession;
 @protocol CHHapticDeviceCapability;
+@class CASpatialAudioExperience;
 
 /*!	@typedef CHHapticCompletionHandler
 	@abstract
@@ -371,6 +372,17 @@ CHHapticAudioResourceKey CHHapticAudioResourceKeyLoopEnabled API_AVAILABLE(ios(1
  */
 - (BOOL)playPatternFromData:(NSData *)data
 					  error:(NSError **)outError;
+
+/*! @property intendedSpatialExperience
+    @abstract
+        The CHHapticEngine's intended spatial experience.
+    @discussion
+        Only useful for engines that have audio output. The default value of
+        CAAutomaticSpatialAudio means the engine uses its AVAudioSession's
+        intended spatial experience. See CASpatialAudioExperience for more
+        details.
+ */
+@property (nonnull, copy) CASpatialAudioExperience *intendedSpatialExperience API_AVAILABLE(visionos(26.0)) API_UNAVAILABLE(ios, watchos, tvos, macos) NS_REFINED_FOR_SWIFT;
 
 @end
 

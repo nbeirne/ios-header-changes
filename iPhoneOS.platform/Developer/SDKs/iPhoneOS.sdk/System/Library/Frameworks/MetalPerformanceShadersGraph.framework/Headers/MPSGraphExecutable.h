@@ -84,7 +84,7 @@ typedef NS_ENUM(uint64_t, MPSGraphDeploymentPlatform)
     /// Deployment target for tvOS.
     MPSGraphDeploymentPlatformTvOS              MPS_ENUM_AVAILABLE_STARTING(macos(14.0), ios(17.0), tvos(17.0)) MPS_SWIFT_NAME(tvOS)  = 2L,
     /// Deployment target for visionOS.
-    MPSGraphDeploymentPlatformVisionOS          MPS_ENUM_AVAILABLE_STARTING( macos(14.4), ios(17.4), macCatalyst(17.4), tvos(17.4), xros(1.1)) MPS_SWIFT_NAME(visionOS)  = 3L,
+    MPSGraphDeploymentPlatformVisionOS          MPS_ENUM_AVAILABLE_STARTING( macos(14.4), ios(17.4), macCatalyst(17.4), tvos(17.4)) MPS_SWIFT_NAME(visionOS)  = 3L,
 };
 
 /// A class that consists of all the levers  to serialize an executable.
@@ -103,8 +103,8 @@ MPS_CLASS_AVAILABLE_STARTING(macos(14.0), ios(17.0), tvos(17.0))
 
 /// The minimum deployment target to serialize the executable.
 ///
-/// Defaults to the current sdk.
-@property (readwrite, atomic) NSString* minimumDeploymentTarget;
+/// If not set, the package created will target the latest version of the `deploymentPlatform` set.
+@property (readwrite, atomic, copy) NSString* minimumDeploymentTarget;
 
 @end
 
@@ -112,6 +112,7 @@ MPS_CLASS_AVAILABLE_STARTING(macos(14.0), ios(17.0), tvos(17.0))
 ///
 /// An `MPSGraphExecutable` is a compiled graph for specific feeds for specific target tensors and target operations.
 MPS_CLASS_AVAILABLE_STARTING(macos(12.0), ios(15.0), tvos(15.0))
+NS_SWIFT_SENDABLE
 @interface MPSGraphExecutable : MPSGraphObject
 
 /// Options for the graph executable.

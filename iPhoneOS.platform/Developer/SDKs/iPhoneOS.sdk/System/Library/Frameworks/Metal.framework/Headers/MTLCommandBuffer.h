@@ -218,7 +218,7 @@ API_AVAILABLE(macos(11.0), ios(14.0))
 @end // MTLCommandBufferEncoderInfo
 
 
-typedef void (^MTLCommandBufferHandler)(id <MTLCommandBuffer>);
+typedef void (^ NS_SWIFT_SENDABLE MTLCommandBufferHandler)(id <MTLCommandBuffer>);
 
 /*!
  @enum MTLDispatchType
@@ -339,7 +339,7 @@ API_AVAILABLE(macos(10.11), ios(8.0))
  @method waitUntilScheduled
  @abstract Synchronously wait for this command buffer to be scheduled.
  */
-- (void)waitUntilScheduled;
+- (void)waitUntilScheduled NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use 'await scheduled()' instead.");
 
 /*!
  @method addCompletedHandler:block:
@@ -351,7 +351,7 @@ API_AVAILABLE(macos(10.11), ios(8.0))
  @method waitUntilCompleted
  @abstract Synchronously wait for this command buffer to complete.
  */
-- (void)waitUntilCompleted;
+- (void)waitUntilCompleted NS_SWIFT_UNAVAILABLE_FROM_ASYNC("Use 'await completed()' instead.");
 
 /*!
  @property status

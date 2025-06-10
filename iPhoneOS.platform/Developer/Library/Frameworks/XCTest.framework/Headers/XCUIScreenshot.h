@@ -1,48 +1,9 @@
-#if __has_include(<XCUIAutomation/XCUIScreenshot.h>)
+//
+//  Copyright (c) 2014-2024 Apple Inc. All rights reserved.
+//
+
 #import <XCUIAutomation/XCUIScreenshot.h>
-#else
 
-//
-//  Copyright © 2017 Apple. All rights reserved.
-//
-
-#import <XCTest/XCTestDefines.h>
-
-#if TARGET_OS_OSX
-@class NSImage;
-#elif TARGET_OS_IPHONE
-@class UIImage;
-#endif
-
-NS_ASSUME_NONNULL_BEGIN
-
-/*!
- * Represents a captured screenshot.
- */
-XCT_SWIFT_MAIN_ACTOR
-@interface XCUIScreenshot : NSObject
-
-+ (instancetype)new XCT_UNAVAILABLE("Only XCUIScreenshotProviding objects create screenshots. See XCUIScreen or XCUIElement.");
-- (instancetype)init XCT_UNAVAILABLE("Only XCUIScreenshotProviding objects create screenshots. See XCUIScreen or XCUIElement.");
-
-/*!
- * @property image
- * Underlying platform-specific image object.
- */
-#if TARGET_OS_OSX
-@property (readonly, copy) NSImage *image;
-#else
-@property (readonly, copy) UIImage *image;
-#endif
-
-/*!
- * @property PNGRepresentation
- * PNG image data of the underlying image.
- */
-@property (readonly, copy) NSData *PNGRepresentation;
-
-@end
-
-NS_ASSUME_NONNULL_END
-
-#endif
+// The contents of this header have been moved. Please update any explicit
+// imports of this header to use `#import <XCUIAutomation/XCUIScreenshot.h>` or
+// the XCUIAutomation umbrella header instead.

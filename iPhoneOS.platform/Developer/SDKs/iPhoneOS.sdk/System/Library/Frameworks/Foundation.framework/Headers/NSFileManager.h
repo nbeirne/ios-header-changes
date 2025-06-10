@@ -12,7 +12,7 @@
 #import <CoreFoundation/CFBase.h>
 #import <dispatch/dispatch.h>
 
-@class NSArray<ObjectType>, NSData, NSDate, NSDirectoryEnumerator<ObjectType>, NSError, NSNumber, NSFileProviderService, NSXPCConnection, NSLock;
+@class NSArray<ObjectType>, NSData, NSDate, NSDirectoryEnumerator<ObjectType>, NSError, NSNumber, NSFileProviderService, NSXPCConnection, NSLock, NSFileVersion;
 @protocol NSFileManagerDelegate;
 
 typedef NSString * NSFileAttributeKey NS_TYPED_EXTENSIBLE_ENUM;
@@ -323,6 +323,73 @@ extern NSNotificationName const NSUbiquityIdentityDidChangeNotification API_AVAI
     If you don't need the container URL and just want to check if ubiquity containers are available you should use this method instead of checking -URLForUbiquityContainerIdentifier:.
 */
 @property (nullable, readonly, copy) id<NSObject,NSCopying,NSCoding> ubiquityIdentityToken API_AVAILABLE(macos(10.8), ios(6.0), watchos(2.0), tvos(9.0));
+
+/* Sync controls available on an item
+ */
+typedef NS_OPTIONS(NSUInteger, NSFileManagerSupportedSyncControls) {
+    /* Sync with the server can be paused on the item.
+     */
+    NSFileManagerSupportedSyncControlsPauseSync = 1 << 0,
+
+    /* File Provider supports failing an upload if the local version conflicts with the server version.
+     */
+    NSFileManagerSupportedSyncControlsFailUploadOnConflict = 1 << 1,
+} API_AVAILABLE(ios(26.0), macos(26.0), watchos(26.0), tvos(26.0), visionos(26.0));
+
+/* Asynchronously pauses the sync of an item at given URL. If the item is already paused, the pause will be considered successful. If the item is undergoing changes (sync up or sync down pending), the pause will fail with EBUSY and the app will have to wait for the state to have stabilized before retrying the pause.
+
+    The pause of the sync is independent from the calling app's lifecycle. The sync of a file will not be resumed if the app closes or crashes. It has to be explicitely resumed using: [NSFileManager resumeSyncForUbiquitousItemAtURL:withBehavior:completionHandler:].
+
+     Warning: To preserve the paused sync state of a file, the app should use document-level writing APIs such as NSFileWrapper or [NSFileManager replaceItemAtURL:withItemAtURL:backupItemName:options:resultingItemURL:error:]. Using data-level writing APIs such as [NSString writeToFile:atomically:encoding:error:] or [NSData writeToFile:atomically:] will result in the file resuming its sync to the server.
+ */
+- (void)pauseSyncForUbiquitousItemAtURL:(NSURL *)url completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSError * _Nullable error))completionHandler API_AVAILABLE(ios(26.0), macos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos, tvos);
+
+/* Behaviors available to resume the sync on an item.
+
+    Always using preserveLocalChanges or afterUploadWithFailOnConflict is strongly recommended to avoid any risk of dataloss. In order to avoid conflicted file states, use afterUploadWithFailOnConflict to apply the local version cleanly on the server before resuming.
+    The dropLocalChanges behavior should only be used when the app uses a side-channel to handle and merge conflicting changes on a file.
+ */
+typedef NS_ENUM(NSInteger, NSFileManagerResumeSyncBehavior) {
+    /* Resume the sync by trying to upload the local version of the file. If a newer version of the file is available on the server, the resume operation might create a conflict. To get out of a conflicted state, the app should use the NSFileVersion API to solve the conflicts
+     */
+    NSFileManagerResumeSyncBehaviorPreserveLocalChanges          = 0,
+    /* First upload the local version of the file with a failOnConflict policy. If it succeeds, resume the sync with the preserveLocalChanges behavior.
+     */
+    NSFileManagerResumeSyncBehaviorAfterUploadWithFailOnConflict = 1,
+    /* Resume the sync by overwriting any local changes with the remote version of the file. The local changes will be stored as an alternate version. This option shouldn't be used unless a side channel is used to merge conflicts.
+     */
+    NSFileManagerResumeSyncBehaviorDropLocalChanges              = 2,
+} API_AVAILABLE(ios(26.0), macos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos, tvos);
+
+/* Asynchronously resumes the sync on a paused file using the given resume behavior.
+ */
+- (void)resumeSyncForUbiquitousItemAtURL:(NSURL *)url withBehavior:(NSFileManagerResumeSyncBehavior)behavior completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSError * _Nullable error))completionHandler API_AVAILABLE(ios(26.0), macos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos, tvos);
+
+/* Asynchronously fetches the latest remote version of a given item on the server and returns it in the completionHandler as a NSFileVersion.
+
+    If the sync of an item is not paused, the live file will be updated with the latest remote version and the NSFileVersion will be +[NSFileVersion currentVersionOfItemAtURL:].
+    If the sync of an item is paused and there are no changes on the server, the NSFileVersion will point at the live URL.
+    If the sync of an item is paused and there are newer changes on the server, the NSFileVersion will point to a side location. In that case, the app can use the NSFileVersion and -[NSFileVersion replaceItemAtURL:options:error:] to replace the live version.
+ */
+- (void)fetchLatestRemoteVersionOfItemAtURL:(NSURL *)url completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSFileVersion * _Nullable latestRemoteVersion, NSError * _Nullable error))completionHandler API_AVAILABLE(ios(26.0), macos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos, tvos);
+
+/* Conflict resolution policies when uploading a local version of an item.
+ */
+typedef NS_ENUM(NSInteger, NSFileManagerUploadLocalVersionConflictPolicy) {
+    /* Solves a conflict using the provider-defined policy.
+     */
+    NSFileManagerUploadConflictPolicyDefault = 0,
+    /* Fails the upload with a NSFileProviderErrorLocalVersionConflictingWithServer underlying error if the version on top of which the local changes have been applied doesn't match the server version of the file.
+        If the server version of the file differs from the one on which the changes are based, the app will have to call [NSFileManager fetchLatestRemoteVersionOfItemAtURL:completionHandler:], rebase the local changes on top of the server version and try again.
+
+        Only available on paused items that have NSSupportsFailUploadOnConflict set to 1.
+    */
+    NSFileManagerUploadConflictPolicyFailOnConflict = 1,
+} API_AVAILABLE(ios(26.0), macos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos, tvos);
+
+/*  Asynchronously uploads the local version of the paused item using the provided conflict resolution policy. If the upload succeeds, the uploaded NSFileVersion is sent back in the completionHandler. If the item is not paused, the call will fail with NSFeatureUnsupportedError.
+*/
+- (void)uploadLocalVersionOfUbiquitousItemAtURL:(NSURL *)url withConflictResolutionPolicy:(NSFileManagerUploadLocalVersionConflictPolicy)conflictResolutionPolicy completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSFileVersion * _Nullable uploadedVersion, NSError * _Nullable error))completionHandler API_AVAILABLE(ios(26.0), macos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos, tvos);
 
 /* Asynchronously returns a dictionary of zero or more NSFileProviderService instances, which enable your application to instruct the file's provider to take various actions on or with regards to the given URL. To do this, first identify an NSFileProviderService object whose name matches the service you wish to use. Then get an NSXPCConnection from it and set up its NSXPCInterface with the protocol that matches the service's name. You'll need to refer to external documentation or an SDK supplied by the provider to get this information. Once an NSXPCConnection is obtained, you must finish configuring it and send it -resume. Failure to do so will result in leaking system resources.
  */

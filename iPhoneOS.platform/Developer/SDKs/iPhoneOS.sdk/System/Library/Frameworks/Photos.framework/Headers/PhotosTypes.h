@@ -10,6 +10,8 @@
 
 #import <Foundation/Foundation.h>
 
+
+
 API_AVAILABLE_BEGIN(macos(10.11), ios(8), tvos(10))
 
 #pragma mark - PHCollectionListTypes
@@ -80,6 +82,7 @@ typedef NS_ENUM(NSInteger, PHAssetCollectionSubtype) {
     // PHAssetCollectionTypeAlbum shared subtypes
     PHAssetCollectionSubtypeAlbumMyPhotoStream   = 100,
     PHAssetCollectionSubtypeAlbumCloudShared     = 101,
+
     
     // PHAssetCollectionTypeSmartAlbum subtypes
     PHAssetCollectionSubtypeSmartAlbumGeneric    = 200,
@@ -102,7 +105,7 @@ typedef NS_ENUM(NSInteger, PHAssetCollectionSubtype) {
     PHAssetCollectionSubtypeSmartAlbumRAW API_AVAILABLE(macos(12), ios(15), tvos(15)) = 217,
     PHAssetCollectionSubtypeSmartAlbumCinematic API_AVAILABLE(macos(12), ios(15), tvos(15)) = 218,
     PHAssetCollectionSubtypeSmartAlbumSpatial API_AVAILABLE(macos(15), ios(18), tvos(18)) = 219,
-
+    PHAssetCollectionSubtypeSmartAlbumScreenRecordings API_AVAILABLE(macos(11), ios(14), tvos(14)) = 220,
 
     
     // Used for fetching, if you don't care about the exact subtype
@@ -111,10 +114,12 @@ typedef NS_ENUM(NSInteger, PHAssetCollectionSubtype) {
 
 #pragma mark - PHAsset types
 
+
 typedef NS_ENUM(NSInteger, PHAssetEditOperation) {
-    PHAssetEditOperationDelete     = 1,
-    PHAssetEditOperationContent    = 2,
-    PHAssetEditOperationProperties = 3,
+    PHAssetEditOperationDelete      = 1,
+    PHAssetEditOperationContent     = 2,
+    PHAssetEditOperationProperties  = 3,
+
 };
 
 typedef NS_ENUM(NSInteger, PHAssetPlaybackStyle) {
@@ -148,6 +153,7 @@ typedef NS_OPTIONS(NSUInteger, PHAssetMediaSubtype) {
     PHAssetMediaSubtypeVideoStreamed      = (1UL << 16),
     PHAssetMediaSubtypeVideoHighFrameRate = (1UL << 17),
     PHAssetMediaSubtypeVideoTimelapse     = (1UL << 18),
+    PHAssetMediaSubtypeVideoScreenRecording API_AVAILABLE(macos(10.15), ios(13), tvos(13)) = (1UL << 19),
     PHAssetMediaSubtypeVideoCinematic API_AVAILABLE(macos(12), ios(15), tvos(15)) = (1UL << 21),
 };
 
@@ -163,6 +169,7 @@ typedef NS_OPTIONS(NSUInteger, PHAssetSourceType) {
     PHAssetSourceTypeUserLibrary     = (1UL << 0),
     PHAssetSourceTypeCloudShared     = (1UL << 1),
     PHAssetSourceTypeiTunesSynced    = (1UL << 2),
+
 } API_AVAILABLE(ios(9));
 
 typedef NS_ENUM(NSInteger, PHAssetResourceType) {

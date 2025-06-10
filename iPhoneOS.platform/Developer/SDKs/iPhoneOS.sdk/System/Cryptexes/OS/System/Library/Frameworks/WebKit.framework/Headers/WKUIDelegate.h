@@ -46,6 +46,10 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol UIEditMenuInteractionAnimating;
 #endif
 
+#if TARGET_OS_IOS
+@class UIInputSuggestion;
+#endif
+
 typedef NS_ENUM(NSInteger, WKPermissionDecision) {
     WKPermissionDecisionPrompt,
     WKPermissionDecisionGrant,
@@ -254,7 +258,7 @@ WK_SWIFT_UI_ACTOR
 
  If you do not implement this method, the web view will display the default Lockdown Mode message.
  */
-- (void)webView:(WKWebView *)webView showLockdownModeFirstUseMessage:(NSString *)message completionHandler:(WK_SWIFT_UI_ACTOR void (^)(WKDialogResult))completionHandler API_AVAILABLE(ios(13.0));
+- (void)webView:(WKWebView *)webView showLockdownModeFirstUseMessage:(NSString *)message completionHandler:(WK_SWIFT_UI_ACTOR void (^)(WKDialogResult))completionHandler API_AVAILABLE(ios(16.0));
 
 #endif // TARGET_OS_IOS || (defined(TARGET_OS_VISION) && TARGET_OS_VISION)
 
@@ -278,19 +282,27 @@ WK_SWIFT_UI_ACTOR
 
 #endif // TARGET_OS_IOS || (defined(TARGET_OS_VISION) && TARGET_OS_VISION) || (defined(TARGET_OS_TV) && TARGET_OS_TV)
 
-#if !TARGET_OS_IPHONE
-
 /*! @abstract Displays a file upload panel.
  @param webView The web view invoking the delegate method.
  @param parameters Parameters describing the file upload control.
  @param frame Information about the frame whose file upload control initiated this call.
  @param completionHandler The completion handler to call after open panel has been dismissed. Pass the selected URLs if the user chose OK, otherwise nil.
 
- If you do not implement this method, the web view will behave as if the user selected the Cancel button.
+ If you do not implement this method on macOS, the web view will behave as if the user selected the Cancel button.
+ If you do not implement this method on iOS or visionOS, the web view will match the file upload behavior of Safari. If you desire
+ the web view to act as if the user selected the Cancel button on iOS or visionOS, immediately call the completion handler with nil.
  */
-- (void)webView:(WKWebView *)webView runOpenPanelWithParameters:(WKOpenPanelParameters *)parameters initiatedByFrame:(WKFrameInfo *)frame completionHandler:(WK_SWIFT_UI_ACTOR void (^)(NSArray<NSURL *> * _Nullable URLs))completionHandler API_AVAILABLE(macos(10.12));
+- (void)webView:(WKWebView *)webView runOpenPanelWithParameters:(WKOpenPanelParameters *)parameters initiatedByFrame:(WKFrameInfo *)frame completionHandler:(WK_SWIFT_UI_ACTOR void (^)(NSArray<NSURL *> * _Nullable URLs))completionHandler API_AVAILABLE(macos(10.12), ios(18.4), visionos(2.4));
 
-#endif
+#if TARGET_OS_IOS && !TARGET_OS_MACCATALYST && __IPHONE_OS_VERSION_MIN_REQUIRED >= 180400
+
+/*! @abstract Tells the delegate when the keyboard delivers an input suggestion.
+ @param webView The web view where the input suggestion should be inserted.
+ @param inputSuggestion The input suggestion that the user or system selected.
+ */
+- (void)webView:(WKWebView *)webView insertInputSuggestion:(UIInputSuggestion *)inputSuggestion API_AVAILABLE(ios(18.4)) API_UNAVAILABLE(tvos, watchos, visionos, macCatalyst) NS_SWIFT_NAME(webView(_:insertInputSuggestion:));
+
+#endif // TARGET_OS_IOS && !TARGET_OS_MACCATALYST && __IPHONE_OS_VERSION_MIN_REQUIRED >= 180400
 
 @end
 

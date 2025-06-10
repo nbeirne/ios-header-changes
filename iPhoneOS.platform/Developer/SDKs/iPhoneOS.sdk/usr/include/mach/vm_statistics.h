@@ -66,6 +66,7 @@
 #ifndef _MACH_VM_STATISTICS_H_
 #define _MACH_VM_STATISTICS_H_
 
+#include <stdbool.h>
 #include <sys/cdefs.h>
 
 #include <mach/machine/vm_types.h>
@@ -140,7 +141,7 @@ struct vm_statistics64 {
 	natural_t       wire_count;             /* # of pages wired down */
 	uint64_t        zero_fill_count;        /* # of zero fill pages */
 	uint64_t        reactivations;          /* # of pages reactivated */
-	uint64_t        pageins;                /* # of pageins */
+	uint64_t        pageins;                /* # of pageins (lifetime) */
 	uint64_t        pageouts;               /* # of pageouts */
 	uint64_t        faults;                 /* # of faults */
 	uint64_t        cow_faults;             /* # of copy-on-writes */
@@ -157,15 +158,17 @@ struct vm_statistics64 {
 	natural_t       speculative_count;      /* # of pages speculative */
 
 	/* added for rev1 */
-	uint64_t        decompressions;         /* # of pages decompressed */
-	uint64_t        compressions;           /* # of pages compressed */
-	uint64_t        swapins;                /* # of pages swapped in (via compression segments) */
-	uint64_t        swapouts;               /* # of pages swapped out (via compression segments) */
+	uint64_t        decompressions;         /* # of pages decompressed (lifetime) */
+	uint64_t        compressions;           /* # of pages compressed (lifetime) */
+	uint64_t        swapins;                /* # of pages swapped in via compressor segments (lifetime) */
+	uint64_t        swapouts;               /* # of pages swapped out via compressor segments (lifetime) */
 	natural_t       compressor_page_count;  /* # of pages used by the compressed pager to hold all the compressed data */
 	natural_t       throttled_count;        /* # of pages throttled */
 	natural_t       external_page_count;    /* # of pages that are file-backed (non-swap) */
 	natural_t       internal_page_count;    /* # of pages that are anonymous */
 	uint64_t        total_uncompressed_pages_in_compressor; /* # of pages (uncompressed) held within the compressor. */
+	/* added for rev2 */
+	uint64_t        swapped_count;          /* # of compressor-stored pages currently stored in swap */
 } __attribute__((aligned(8)));
 
 typedef struct vm_statistics64  *vm_statistics64_t;
@@ -330,17 +333,30 @@ typedef struct vm_purgeable_info        *vm_purgeable_info_t;
 #define GUARD_TYPE_VIRT_MEMORY  0x5
 
 /* Reasons for exception for virtual memory */
-enum virtual_memory_guard_exception_codes {
-	kGUARD_EXC_DEALLOC_GAP  = 1u << 0,
-	kGUARD_EXC_RECLAIM_COPYIO_FAILURE = 1u << 1,
-	kGUARD_EXC_RECLAIM_INDEX_FAILURE = 1u << 2,
-	kGUARD_EXC_RECLAIM_DEALLOCATE_FAILURE = 1u << 3,
-};
+__enum_decl(virtual_memory_guard_exception_code_t, uint32_t, {
+	kGUARD_EXC_DEALLOC_GAP  = 1,
+	kGUARD_EXC_RECLAIM_COPYIO_FAILURE = 2,
+	kGUARD_EXC_SEC_LOOKUP_DENIED = 3,
+	kGUARD_EXC_RECLAIM_INDEX_FAILURE = 4,
+	kGUARD_EXC_SEC_RANGE_DENIED = 6,
+	kGUARD_EXC_SEC_ACCESS_FAULT = 7,
+	kGUARD_EXC_RECLAIM_DEALLOCATE_FAILURE = 8,
+	kGUARD_EXC_RECLAIM_ACCOUNTING_FAILURE = 9,
+	kGUARD_EXC_SEC_COPY_DENIED = 16,
+	kGUARD_EXC_SEC_SHARING_DENIED = 32,
+	kGUARD_EXC_SEC_ASYNC_ACCESS_FAULT = 64,
+});
 
 
 /* current accounting postmark */
 #define __VM_LEDGER_ACCOUNTING_POSTMARK 2019032600
 
+/*
+ *  When making a new VM_LEDGER_TAG_* or VM_LEDGER_FLAG_*, update tests
+ *  vm_parameter_validation_[user|kern] and their expected results; they
+ *  deliberately call VM functions with invalid ledger values and you may
+ *  be turning one of those invalid tags/flags valid.
+ */
 /* discrete values: */
 #define VM_LEDGER_TAG_NONE      0x00000000
 #define VM_LEDGER_TAG_DEFAULT   0x00000001
@@ -387,6 +403,8 @@ enum virtual_memory_guard_exception_codes {
 /* Was a nested pmap (VM_MEMORY_SHARED_PMAP) which has now been unnested */
 #define VM_MEMORY_UNSHARED_PMAP 35
 
+/* for libchannel memory, mostly used on visionOS for communication with realtime threads */
+#define VM_MEMORY_LIBCHANNEL 36
 
 // Placeholders for now -- as we analyze the libraries and find how they
 // use memory, we can make these labels more specific.
@@ -548,6 +566,9 @@ enum virtual_memory_guard_exception_codes {
 
 /* memory allocated by CoreMedia */
 #define VM_MEMORY_CM_HLS 106
+
+/* memory allocated for CompositorServices */
+#define VM_MEMORY_COMPOSITOR_SERVICES 107
 
 /* Reserve 230-239 for Rosetta */
 #define VM_MEMORY_ROSETTA 230

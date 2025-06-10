@@ -74,7 +74,7 @@ MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
 
 
 /* Device-specific compiled depth/stencil state object */
-API_AVAILABLE(macos(10.11), ios(8.0))
+API_AVAILABLE(macos(10.11), ios(8.0)) NS_SWIFT_SENDABLE
 @protocol MTLDepthStencilState <NSObject>
 
 /*!

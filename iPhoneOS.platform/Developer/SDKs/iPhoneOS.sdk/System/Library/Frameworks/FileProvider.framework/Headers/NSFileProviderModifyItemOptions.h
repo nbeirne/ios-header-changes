@@ -15,4 +15,10 @@ typedef NS_OPTIONS(NSUInteger, NSFileProviderModifyItemOptions) {
      This is similar to NSFileProviderCreateItemMayAlreadyExist
      */
     NSFileProviderModifyItemMayAlreadyExist = 1 << 0,
+    /**
+    If the base version of the item trying to be uploaded doesn't match
+    the version of the file on server, the call to modifyItem should fail with a
+    NSFileProviderErrorLocalVersionConflictingWithServer error.
+    */
+    NSFileProviderModifyItemFailOnConflict FILEPROVIDER_API_AVAILABILITY_SYNC_CONTROLS = 1 << 1,
 } FILEPROVIDER_API_AVAILABILITY_V3_IOS;

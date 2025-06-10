@@ -463,6 +463,9 @@ CF_ENUM(UInt32) {
  
 	@constant       kAudioUnitSubType_AUSoundIsolation
 					An audio unit that can be used to isolate a specified sound type
+ 
+	@constant       kAudioUnitSubType_AUAudioMix
+					An audio unit that supports AudioMix separate-and-remix functionality
 */
 CF_ENUM(UInt32) {
 	kAudioUnitSubType_PeakLimiter			= 'lmtr',
@@ -479,6 +482,7 @@ CF_ENUM(UInt32) {
 	kAudioUnitSubType_NBandEQ				= 'nbeq',
     kAudioUnitSubType_Reverb2               = 'rvb2',
 	kAudioUnitSubType_AUSoundIsolation API_AVAILABLE(macos(13.0), ios(16.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) = 'vois',
+	kAudioUnitSubType_AUAudioMix API_AVAILABLE(macos(26.0), ios(26.0)) API_UNAVAILABLE(watchos, tvos, visionos) = 'amix',
 };
 
 #if !TARGET_OS_IPHONE
@@ -798,6 +802,9 @@ typedef CF_OPTIONS(UInt32, AudioUnitRenderActionFlags)
 					deprecated Component Manager. A host application should use the API functions
 					AudioComponentInstantiate or AudioComponentInstanceNew when rebuilding
 					against the macOS 11 or later SDK.
+	@constant		kAudioUnitErr_MultipleVoiceProcessors
+					On some platforms, this error is returned when a client attempts to initialize
+					a voice processor instance while another is initialized.
 */
 CF_ENUM(OSStatus) {
 	kAudioUnitErr_InvalidProperty					= -10879,
@@ -827,7 +834,8 @@ CF_ENUM(OSStatus) {
 	kAudioUnitErr_InvalidParameterValue				= -66743,
 	kAudioUnitErr_InvalidFilePath					= -66742,
 	kAudioUnitErr_MissingKey						= -66741,
-	kAudioUnitErr_ComponentManagerNotSupported		= -66740
+	kAudioUnitErr_ComponentManagerNotSupported		= -66740,
+	kAudioUnitErr_MultipleVoiceProcessors			= -66635
 };
 
 
@@ -1056,7 +1064,7 @@ typedef OSStatus
 						const AudioTimeStamp *			inTimeStamp,
 						UInt32							inBusNumber,
 						UInt32							inNumberFrames,
-						AudioBufferList * __nullable	ioData);
+						AudioBufferList * __nullable	ioData) CA_REALTIME_API;
 
 /*!
 	@typedef		AudioUnitPropertyListenerProc
@@ -1104,7 +1112,7 @@ typedef void
 (*AUInputSamplesInOutputCallback)(	void *						inRefCon,
 									const AudioTimeStamp *		inOutputTimeStamp,
 									Float64						inInputSample,
-									Float64						inNumberInputSamples);
+									Float64						inNumberInputSamples) CA_REALTIME_API;
 
 /*!
 	@constant kAudioComponentRegistrationsChangedNotification
@@ -1433,7 +1441,8 @@ AudioUnitGetParameter(				AudioUnit					inUnit,
 									AudioUnitParameterID		inID,
 									AudioUnitScope				inScope,
 									AudioUnitElement			inElement,
-									AudioUnitParameterValue *	outValue)			
+									AudioUnitParameterValue *	outValue)
+												CA_REALTIME_API
 												API_AVAILABLE(macos(10.0), ios(2.0), watchos(2.0), tvos(9.0));
 
 /*!
@@ -1465,7 +1474,8 @@ AudioUnitSetParameter(				AudioUnit					inUnit,
 									AudioUnitScope				inScope,
 									AudioUnitElement			inElement,
 									AudioUnitParameterValue		inValue,
-									UInt32						inBufferOffsetInFrames) 
+									UInt32						inBufferOffsetInFrames)
+												CA_REALTIME_API
 												API_AVAILABLE(macos(10.0), ios(2.0), watchos(2.0), tvos(9.0));
 
 /*!
@@ -1502,7 +1512,8 @@ AudioUnitSetParameter(				AudioUnit					inUnit,
 extern OSStatus
 AudioUnitScheduleParameters(		AudioUnit						inUnit,
 									const AudioUnitParameterEvent *	inParameterEvent,
-									UInt32							inNumParamEvents) 
+									UInt32							inNumParamEvents)
+												CA_REALTIME_API
 												API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0));
 
 /*!
@@ -1551,19 +1562,21 @@ AudioUnitRender(					AudioUnit						inUnit,
 									const AudioTimeStamp *			inTimeStamp,
 									UInt32							inOutputBusNumber,
 									UInt32							inNumberFrames,
-									AudioBufferList *				ioData)			
+									AudioBufferList *				ioData)
+												CA_REALTIME_API
 												API_AVAILABLE(macos(10.2), ios(2.0), watchos(2.0), tvos(9.0));
 
 extern OSStatus
-AudioUnitProcess (					AudioUnit						inUnit, 
+AudioUnitProcess (					AudioUnit						inUnit,
 									AudioUnitRenderActionFlags * __nullable	ioActionFlags, 
 									const AudioTimeStamp *			inTimeStamp, 
 									UInt32							inNumberFrames, 
 									AudioBufferList *				ioData)
+												CA_REALTIME_API
 												API_AVAILABLE(macos(10.7), ios(6.0), watchos(2.0), tvos(9.0));
 
 extern OSStatus
-AudioUnitProcessMultiple(			AudioUnit						inUnit, 
+AudioUnitProcessMultiple(			AudioUnit						inUnit,
 									AudioUnitRenderActionFlags * __nullable ioActionFlags, 
 									const AudioTimeStamp *			inTimeStamp, 
 									UInt32							inNumberFrames,
@@ -1571,6 +1584,7 @@ AudioUnitProcessMultiple(			AudioUnit						inUnit,
 									const AudioBufferList * __nonnull * __nonnull inInputBufferLists,
 									UInt32							inNumberOutputBufferLists,
 									AudioBufferList * __nonnull * __nonnull ioOutputBufferLists)
+												CA_REALTIME_API
 												API_AVAILABLE(macos(10.7), ios(6.0), watchos(2.0), tvos(9.0));
 	
 /*!
@@ -1831,25 +1845,25 @@ typedef OSStatus
 (*AudioUnitRemoveRenderNotifyProc) (void *self, AURenderCallback proc, void * __nullable userData);
 
 typedef OSStatus	
-(*AudioUnitScheduleParametersProc) (void *self, const AudioUnitParameterEvent *events, UInt32 numEvents);
+(*AudioUnitScheduleParametersProc) (void *self, const AudioUnitParameterEvent *events, UInt32 numEvents) CA_REALTIME_API;
 
 typedef OSStatus	
 (*AudioUnitResetProc) (void *self, AudioUnitScope		inScope, AudioUnitElement	inElement);
 
-typedef OSStatus	
-(*AudioUnitComplexRenderProc) (void *self, AudioUnitRenderActionFlags * __nullable ioActionFlags, const AudioTimeStamp *inTimeStamp, 
+typedef OSStatus
+(*AudioUnitComplexRenderProc) (void *self, AudioUnitRenderActionFlags * __nullable ioActionFlags, const AudioTimeStamp *inTimeStamp,
 									UInt32 inOutputBusNumber, UInt32 inNumberOfPackets, UInt32 *outNumberOfPackets, 
 									AudioStreamPacketDescription *outPacketDescriptions, AudioBufferList *ioData, 
-									void *outMetadata, UInt32 *outMetadataByteSize);
+									void *outMetadata, UInt32 *outMetadataByteSize) CA_REALTIME_API;
 
-typedef OSStatus	
-(*AudioUnitProcessProc) (void *self, AudioUnitRenderActionFlags * __nullable ioActionFlags, const AudioTimeStamp *inTimeStamp, 
-									UInt32 inNumberFrames, AudioBufferList *ioData);
+typedef OSStatus
+(*AudioUnitProcessProc) (void *self, AudioUnitRenderActionFlags * __nullable ioActionFlags, const AudioTimeStamp *inTimeStamp,
+									UInt32 inNumberFrames, AudioBufferList *ioData) CA_REALTIME_API;
 
-typedef OSStatus	
-(*AudioUnitProcessMultipleProc) (void *self, AudioUnitRenderActionFlags * __nullable ioActionFlags, const AudioTimeStamp *inTimeStamp, 
+typedef OSStatus
+(*AudioUnitProcessMultipleProc) (void *self, AudioUnitRenderActionFlags * __nullable ioActionFlags, const AudioTimeStamp *inTimeStamp,
 									UInt32 inNumberFrames, UInt32 inNumberInputBufferLists, const AudioBufferList * __nonnull * __nonnull inInputBufferLists,
-									UInt32 inNumberOutputBufferLists, AudioBufferList * __nonnull * __nonnull ioOutputBufferLists);
+									UInt32 inNumberOutputBufferLists, AudioBufferList * __nonnull * __nonnull ioOutputBufferLists) CA_REALTIME_API;
 
 
 /*!
@@ -1868,7 +1882,7 @@ typedef OSStatus
 								AudioUnitParameterID		inID,
 								AudioUnitScope				inScope,
 								AudioUnitElement			inElement,
-								AudioUnitParameterValue *	outValue);
+								AudioUnitParameterValue *	outValue) CA_REALTIME_API;
 								
 /*!
 	@typedef		AudioUnitSetParameterProc
@@ -1887,7 +1901,7 @@ typedef OSStatus
 								AudioUnitScope				inScope,
 								AudioUnitElement			inElement,
 								AudioUnitParameterValue		inValue,
-								UInt32						inBufferOffsetInFrames);
+								UInt32						inBufferOffsetInFrames) CA_REALTIME_API;
 								
 /*!
 	@typedef		AudioUnitRenderProc
@@ -1906,7 +1920,7 @@ typedef OSStatus
 								const AudioTimeStamp *			inTimeStamp,
 								UInt32							inOutputBusNumber,
 								UInt32							inNumberFrames,
-								AudioBufferList *				ioData);
+								AudioBufferList *				ioData) CA_REALTIME_API;
 
 
 //================================================================================================

@@ -8,7 +8,7 @@
 //  NSAttributedString.h
 //  UIKit
 //
-//  Copyright (c) 2011-2024, Apple Inc. All rights reserved.
+//  Copyright (c) 2011-2025, Apple Inc. All rights reserved.
 //
 
 #import <Foundation/NSAttributedString.h>
@@ -51,6 +51,9 @@ UIKIT_EXTERN NSAttributedStringKey const NSTextHighlightStyleAttributeName API_A
 UIKIT_EXTERN NSAttributedStringKey const NSTextHighlightColorSchemeAttributeName API_AVAILABLE(macos(15.0), ios(18.0), tvos(18.0), watchos(11.0), visionos(2.0)); // The default color scheme. The color is based on the tint/accent color for the rendering context. By default UIKit uses UIView.tintColor and AppKit uses NSColor.controlAccentColor.
 
 UIKIT_EXTERN NSAttributedStringKey const NSAdaptiveImageGlyphAttributeName API_AVAILABLE(macos(15.0), ios(18.0), tvos(18.0), watchos(11.0), visionos(2.0)); // NSAdaptiveImageGlyph, default nil
+
+// NSNumber (Boolean) value. Default is false. The range of text with NSWritingToolsExclusionAttributeName=true is excluded from the WritingTools processing and preserved.
+UIKIT_EXTERN NSAttributedStringKey const NSWritingToolsExclusionAttributeName API_AVAILABLE(ios(18.2), macos(15.2), visionos(2.4)) API_UNAVAILABLE(tvos, watchos);
 
 /************************ Attribute values ************************/
 // This defines currently supported values for NSUnderlineStyleAttributeName and NSStrikethroughStyleAttributeName. These values are or'ed together to produce an underline style.

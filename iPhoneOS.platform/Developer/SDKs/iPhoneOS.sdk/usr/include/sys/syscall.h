@@ -104,8 +104,8 @@
 			/* 64  old getpagesize */
 #define	SYS_msync          65
 #define	SYS_vfork          66
-			/* 67  old vread */
-			/* 68  old vwrite */
+#define	SYS_oslog_coproc_reg 67
+#define	SYS_oslog_coproc   68
 			/* 69  old sbrk */
 			/* 70  old sstk */
 			/* 71  old mmap */
@@ -201,7 +201,7 @@
 #define	SYS_getfh          161
 			/* 162  old getdomainname */
 			/* 163  old setdomainname */
-			/* 164  */
+#define	SYS_funmount       164
 #define	SYS_quotactl       165
 			/* 166  old exportfs */
 #define	SYS_mount          167

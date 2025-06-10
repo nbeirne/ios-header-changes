@@ -752,8 +752,13 @@ IMAGEIO_EXTERN const CFStringRef  kCGImagePropertyMakerCanonLensModel  IMAGEIO_A
 IMAGEIO_EXTERN const CFStringRef  kCGImagePropertyMakerCanonFirmware  IMAGEIO_AVAILABLE_STARTING(10.5, 4.0);
 IMAGEIO_EXTERN const CFStringRef  kCGImagePropertyMakerCanonAspectRatioInfo IMAGEIO_AVAILABLE_STARTING(10.5, 4.0);
 
-/* Possible keys for kCGImagePropertyOpenEXRDictionary */
+/*  For EXR files:
+ *  The value (CFNumberRef) specifies the EXR compression method. See AppleEXR.h for possible values.
+ *  Default value if not specified is 'axr_compression_piz'
+ */
+IMAGEIO_EXTERN const CFStringRef kCGImagePropertyOpenEXRCompression    IMAGEIO_AVAILABLE_STARTING(13.0, 16.1);
 
+/* Possible keys for kCGImagePropertyOpenEXRDictionary */
 IMAGEIO_EXTERN const CFStringRef  kCGImagePropertyOpenEXRAspectRatio  IMAGEIO_AVAILABLE_STARTING(10.9, 11.3);
 
 

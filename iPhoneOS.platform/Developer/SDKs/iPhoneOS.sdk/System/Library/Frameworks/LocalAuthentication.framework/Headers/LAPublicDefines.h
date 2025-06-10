@@ -17,6 +17,14 @@
 #define kLAPolicyDeviceOwnerAuthenticationWithCompanion         kLAPolicyDeviceOwnerAuthenticationWithWatch
 #define kLAPolicyDeviceOwnerAuthenticationWithBiometricsOrCompanion kLAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch
 
+// ACL operations
+#define kLAAccessControlOperationCreateItem         0
+#define kLAAccessControlOperationUseItem            1
+#define kLAAccessControlOperationCreateKey          2
+#define kLAAccessControlOperationUseKeySign         3
+#define kLAAccessControlOperationUseKeyDecrypt      4
+#define kLAAccessControlOperationUseKeyKeyExchange  5
+
 // Biometry types
 #define kLABiometryTypeNone           0
 #define kLABiometryTypeTouchID        1 << 0
@@ -52,7 +60,9 @@
 #define kLAErrorDomain        "com.apple.LocalAuthentication"
 
 // Companion types
+#define kLACompanionTypeNone            0
 #define kLACompanionTypeWatch           1 << 0
 #define kLACompanionTypeMac             1 << 1
+#define kLACompanionTypeVision          1 << 2
 
 #endif

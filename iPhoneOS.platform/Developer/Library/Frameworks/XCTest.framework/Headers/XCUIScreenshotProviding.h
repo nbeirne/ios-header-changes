@@ -1,32 +1,9 @@
-#if __has_include(<XCUIAutomation/XCUIScreenshotProviding.h>)
+//
+//  Copyright (c) 2014-2024 Apple Inc. All rights reserved.
+//
+
 #import <XCUIAutomation/XCUIScreenshotProviding.h>
-#else
 
-//
-//  Copyright © 2017 Apple. All rights reserved.
-//
-
-#import <XCTest/XCTestDefines.h>
-
-@class XCUIScreenshot;
-
-NS_ASSUME_NONNULL_BEGIN
-
-@class XCTAttachment;
-
-XCT_SWIFT_MAIN_ACTOR
-@protocol XCUIScreenshotProviding <NSObject>
-
-/*!
- * Captures and returns a screenshot of the receiver.
- *
- * Equivalent to capturing a screenshot manually, e.g. if two windows are overlapping and
- * the occluded window is captured, the front window will be visible in the screenshot.
- */
-- (XCUIScreenshot *)screenshot;
-
-@end
-
-NS_ASSUME_NONNULL_END
-
-#endif
+// The contents of this header have been moved. Please update any explicit
+// imports of this header to use `#import <XCUIAutomation/XCUIScreenshotProviding.h>` or
+// the XCUIAutomation umbrella header instead.

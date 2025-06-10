@@ -2,8 +2,9 @@
 //  HKDefines.h
 //  HealthKit
 //
-//  Copyright (c) 2013-2024 Apple Inc. All rights reserved.
+//  Copyright (c) 2013-2025 Apple Inc. All rights reserved.
 //
+
 
 #import <Foundation/Foundation.h>
 #import <os/availability.h>
@@ -30,7 +31,7 @@ HK_EXTERN NSString * const HKErrorDomain API_AVAILABLE(ios(8.0), watchos(2.0), m
                                                 perform the requested operation.
  @constant  HKErrorDatabaseInaccessible         Protected health data is inaccessible because the device is locked.
  @constant  HKErrorUserCanceled                 The user canceled the operation.
- @constant  HKErrorAnotherWorkoutSessionStarted Another workout session was started by this or another application.
+ @constant  HKErrorAnotherWorkoutSessionStarted Another primary workout session has started or is already ongoing by this or another application.
  @constant  HKErrorUserExitedWorkoutSession     User exited the application while a workout session was running.
  @constant  HKErrorRequiredAuthorizationDenied  The user has not granted the application authorization to access
                                                 required data types.

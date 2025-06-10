@@ -26,12 +26,12 @@ API_UNAVAILABLE(macos)
 /*!
  * @brief Delegate that receives updates on the camera snapshot changes.
  */
-@property (weak, nonatomic) id<HMCameraSnapshotControlDelegate> delegate;
+@property (nonatomic, weak) id<HMCameraSnapshotControlDelegate> delegate;
 
 /*!
  * @brief Represents the most recent snapshot taken from the camera.
  */
-@property (readonly, strong, nonatomic, nullable) HMCameraSnapshot *mostRecentSnapshot;
+@property (nullable, nonatomic, readonly, strong) HMCameraSnapshot *mostRecentSnapshot;
 
 /*!
  * @brief Takes an image snapshot.
@@ -48,7 +48,7 @@ API_UNAVAILABLE(macos)
  */
 API_AVAILABLE(ios(10.0), watchos(3.0), tvos(10.0), macCatalyst(14.0))
 API_UNAVAILABLE(macos)
-@protocol HMCameraSnapshotControlDelegate <NSObject>
+@protocol HMCameraSnapshotControlDelegate<NSObject>
 
 @optional
 

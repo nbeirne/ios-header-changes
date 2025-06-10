@@ -27,6 +27,12 @@
 #import <CarPlay/CPInstrumentClusterController.h>
 #import <CarPlay/CPInterfaceController.h>
 #import <CarPlay/CPListImageRowItem.h>
+#import <CarPlay/CPListImageRowItemCardElement.h>
+#import <CarPlay/CPListImageRowItemCondensedElement.h>
+#import <CarPlay/CPListImageRowItemElement.h>
+#import <CarPlay/CPListImageRowItemGridElement.h>
+#import <CarPlay/CPListImageRowItemImageGridElement.h>
+#import <CarPlay/CPListImageRowItemRowElement.h>
 #import <CarPlay/CPListItem.h>
 #import <CarPlay/CPListItemTypes.h>
 #import <CarPlay/CPListSection.h>
@@ -39,6 +45,7 @@
 #import <CarPlay/CPNavigationAlert.h>
 #import <CarPlay/CPNavigationSession.h>
 #import <CarPlay/CPNowPlayingButton.h>
+#import <CarPlay/CPNowPlayingMode.h>
 #import <CarPlay/CPNowPlayingTemplate.h>
 #import <CarPlay/CPPointOfInterest.h>
 #import <CarPlay/CPPointOfInterestTemplate.h>

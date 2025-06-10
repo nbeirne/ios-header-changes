@@ -8,6 +8,7 @@
 */
 
 #import <AVFoundation/AVBase.h>
+#import <AVFoundation/AVCaptureDevice.h>
 #import <Foundation/Foundation.h>
 #import <CoreMedia/CMTime.h>
 #import <CoreGraphics/CGGeometry.h>
@@ -85,6 +86,45 @@ AV_INIT_UNAVAILABLE
     The value of this property is an AVMetadataObjectType representing the type of the metadata object. Clients inspecting a collection of metadata objects can use this property to filter objects with a matching type.
  */
 @property(readonly) AVMetadataObjectType type;
+
+/*!
+ @property groupID
+ @abstract
+    A number associated with object groups (e.g., face and body) that is unique for each physical object (e.g., a person whom the face and body belong to).
+ @discussion
+    The value of this property is an NSInteger indicating the unique identifier to combine objects (for instance, face and body) into groups (a physical person). A human body and face for the same person will have the same group ID. It is set to -1 when it's invalid or not available. When it's set to a value of >=0, it is unique across all object groups.
+ */
+@property(readonly) NSInteger groupID API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(visionos, watchos);
+
+/*!
+ @property objectID
+ @abstract
+    A unique identifier for each detected object type (face, body, hands, heads and salient objects).
+ @discussion
+    Defaults to a value of -1 when it is invalid or not available. When a new object enters the picture, it is assigned a new unique identifier. objectIDs are not re-used as objects leave the picture and new ones enter. Objects that leave the picture then re-enter are assigned a new objectID.
+ */
+@property(readonly) NSInteger objectID API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(visionos, watchos);
+
+@end
+
+API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
+@interface AVMetadataObject (AVMetadataObjectCinematicVideoSupport)
+
+/*!
+ @property cinematicVideoFocusMode
+ @abstract
+    Current focus mode when recording a Cinematic Video.
+ @discussion
+    Default is AVCaptureCinematicVideoFocusModeNone.
+ */
+@property(readonly) AVCaptureCinematicVideoFocusMode cinematicVideoFocusMode API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
+
+/*!
+ @property fixedFocus
+ @abstract
+    A BOOL indicating whether this metadata object represents a fixed focus.
+ */
+@property(readonly, getter=isFixedFocus) BOOL fixedFocus API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
 
 @end
 
@@ -170,6 +210,27 @@ API_AVAILABLE(macos(14.0), ios(17.0), macCatalyst(17.0), tvos(17.0)) API_UNAVAIL
 
 @end
 
+#pragma mark - AVMetadataCatHeadObject
+
+/*!
+ @constant AVMetadataObjectTypeCatHead
+ @abstract
+    An identifier for an instance of AVMetadataCatHeadObject.
+
+ @discussion
+    AVMetadataCatHeadObject objects return this constant as their type.
+*/
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeCatHead API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
+
+/*!
+ @class AVMetadataCatHeadObject
+ @abstract
+    AVMetadataCatHeadObject is a concrete subclass of AVMetadataObject representing a cat head.
+ */
+API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
+@interface AVMetadataCatHeadObject : AVMetadataObject <NSCopying>
+
+@end
 
 #pragma mark - AVMetadataCatBodyObject
 
@@ -198,6 +259,27 @@ API_AVAILABLE(macos(10.15), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAI
 
 @end
 
+#pragma mark - AVMetadataDogHeadObject
+
+/*!
+ @constant AVMetadataObjectTypeDogHead
+ @abstract
+    An identifier for an instance of AVMetadataDogHeadObject.
+
+ @discussion
+    AVMetadataDogHeadObject objects return this constant as their type.
+*/
+AVF_EXPORT AVMetadataObjectType const AVMetadataObjectTypeDogHead API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
+
+/*!
+ @class AVMetadataDogHeadObject
+ @abstract
+    AVMetadataDogHeadObject is a concrete subclass of AVMetadataObject representing a dog head.
+ */
+API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
+@interface AVMetadataDogHeadObject : AVMetadataObject <NSCopying>
+
+@end
 
 #pragma mark - AVMetadataDogBodyObject
 

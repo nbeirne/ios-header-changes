@@ -13,7 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-NS_CLASS_AVAILABLE(10_9, 3_0) __TVOS_AVAILABLE(9_2)
+API_DEPRECATED("Use MKMapItem", ios(3.0, API_TO_BE_DEPRECATED), visionos(1.0, API_TO_BE_DEPRECATED), tvos(9.2, API_TO_BE_DEPRECATED), macos(10.9, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED))
 @interface MKPlacemark : CLPlacemark <MKAnnotation>
 
 - (instancetype)initWithCoordinate:(CLLocationCoordinate2D)coordinate NS_AVAILABLE(10_12, 10_0) __TVOS_AVAILABLE(10_0) __WATCHOS_AVAILABLE(3_0);

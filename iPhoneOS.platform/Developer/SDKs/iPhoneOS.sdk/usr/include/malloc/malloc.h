@@ -606,6 +606,62 @@ extern void malloc_zone_enumerate_discharged_pointers(malloc_zone_t *zone, void 
 //  * Check zone version to ensure zone struct is large enough to include the member.
 //  * Check that the function pointer is not null.
 
+#if defined(_MALLOC_TYPE_MALLOC_IS_BACKDEPLOYING) && _MALLOC_TYPE_MALLOC_IS_BACKDEPLOYING
+static void * __sized_by_or_null(size) __attribute__((always_inline)) malloc_type_zone_malloc_backdeploy(malloc_zone_t *zone, size_t size, malloc_type_id_t type_id) __result_use_check __alloc_size(2) {
+	__attribute__((weak_import)) void * __sized_by_or_null(size) malloc_type_zone_malloc(malloc_zone_t *zone, size_t size, malloc_type_id_t type_id) __result_use_check __alloc_size(2);
+	__auto_type func = malloc_zone_malloc;
+	if (malloc_type_zone_malloc) {
+		return malloc_type_zone_malloc(zone, size, type_id);
+	}
+	return func(zone, size);
+}
+
+static void * __sized_by_or_null(count * size) __attribute__((always_inline)) malloc_type_zone_calloc_backdeploy(malloc_zone_t *zone, size_t count, size_t size, malloc_type_id_t type_id) __result_use_check __alloc_size(2,3) {
+	__attribute__((weak_import)) void * __sized_by_or_null(count * size) malloc_type_zone_calloc(malloc_zone_t *zone, size_t count, size_t size, malloc_type_id_t type_id) __result_use_check __alloc_size(2,3);
+	__auto_type func = malloc_zone_calloc;
+	if (malloc_type_zone_calloc) {
+		return malloc_type_zone_calloc(zone, count, size, type_id);
+	}
+	return func(zone, count, size);
+}
+
+static void __attribute__((always_inline)) malloc_type_zone_free_backdeploy(malloc_zone_t *zone, void * __unsafe_indexable ptr, malloc_type_id_t type_id) {
+	__attribute__((weak_import)) void malloc_type_zone_free(malloc_zone_t *zone, void * __unsafe_indexable ptr, malloc_type_id_t type_id);
+	__auto_type func = malloc_zone_free;
+	if (malloc_type_zone_free) {
+		malloc_type_zone_free(zone, ptr, type_id);
+	} else {
+		func(zone, ptr);
+	}
+}
+
+static void * __sized_by_or_null(size) __attribute__((always_inline)) malloc_type_zone_realloc_backdeploy(malloc_zone_t *zone, void * __unsafe_indexable ptr, size_t size, malloc_type_id_t type_id) __result_use_check __alloc_size(3) {
+	__auto_type func = malloc_zone_realloc;
+	__attribute__((weak_import)) void * __sized_by_or_null(size) malloc_type_zone_realloc(malloc_zone_t *zone, void * __unsafe_indexable ptr, size_t size, malloc_type_id_t type_id) __result_use_check __alloc_size(3);
+	if (malloc_type_zone_realloc) {
+		return malloc_type_zone_realloc(zone, ptr, size, type_id);
+	}
+	return func(zone, ptr, size);
+}
+
+static void *__sized_by_or_null(size) __attribute__((always_inline)) malloc_type_zone_valloc_backdeploy(malloc_zone_t *zone, size_t size, malloc_type_id_t type_id) __result_use_check __alloc_size(2) {
+	__attribute__((weak_import)) void *__sized_by_or_null(size) malloc_type_zone_valloc(malloc_zone_t *zone, size_t size, malloc_type_id_t type_id) __result_use_check __alloc_size(2);
+	__auto_type func = malloc_zone_valloc;
+	if (malloc_type_zone_valloc) {
+		return malloc_type_zone_valloc(zone, size, type_id);
+	}
+	return func(zone, size);
+}
+
+static void *__sized_by_or_null(size) __attribute__((always_inline)) malloc_type_zone_memalign_backdeploy(malloc_zone_t *zone, size_t alignment, size_t size, malloc_type_id_t type_id) __result_use_check __alloc_size(3) {
+	__attribute__((weak_import)) void *__sized_by_or_null(size) malloc_type_zone_memalign(malloc_zone_t *zone, size_t alignment, size_t size, malloc_type_id_t type_id) __result_use_check __alloc_size(3);
+	__auto_type func = malloc_zone_memalign;
+	if (malloc_type_zone_memalign) {
+		return malloc_type_zone_memalign(zone, alignment, size, type_id);
+	}
+	return func(zone, alignment, size);
+}
+#endif // defined(_MALLOC_TYPE_MALLOC_IS_BACKDEPLOYING) && _MALLOC_TYPE_MALLOC_IS_BACKDEPLOYING
 __END_DECLS
 
 #endif /* _MALLOC_MALLOC_H_ */

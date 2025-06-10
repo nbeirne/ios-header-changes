@@ -4,7 +4,7 @@
 
 	Framework:  AVFoundation
  
-	Copyright 2010-2020,2022-2023 Apple Inc. All rights reserved.
+	Copyright 2010-2020,2022-2025 Apple Inc. All rights reserved.
  
 	$Log$
 	1apr2024 dcasey

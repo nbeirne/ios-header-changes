@@ -7,6 +7,8 @@
 #import <Foundation/Foundation.h>
 #import <BrowserEngineKit/BEMacros.h>
 
+#import <BrowserEngineKit/BEExtensionProcess.h>
+
 #if TARGET_OS_OSX || TARGET_OS_IOS && !TARGET_OS_VISION
 #include <xpc/xpc.h>
 #endif // TARGET_OS_OSX || TARGET_OS_IOS && !TARGET_OS_VISION
@@ -43,6 +45,17 @@ BROWSERENGINE_EXPORT
 +(void)webContentProcessWithInterruptionHandler:(void(^)(void))interruptionHandler
                                   completion:(void(^)(BEWebContentProcess* _Nullable process, NSError* _Nullable error))completion;
 
+/// Asynchronously launches a web content process
+///
+/// This initializer launches a new web content extension process.
+///
+/// - Parameters:
+///   - `bundleID` : The bundle identifier of the WebContent process to launch.
+///   - `interruptionHandler` : A block that is called if the extension process terminates.
+///   - `completion` : A block called with a new ``BEWebContentProcess`` when the extension process has
+///     launched or with an error.
++(void)webContentProcessWithBundleID:(NSString *)bundleID interruptionHandler:(void(^)(void))interruptionHandler completion:(void(^)(BEWebContentProcess *_Nullable process, NSError *_Nullable error))completion API_AVAILABLE(ios(18.2));
+
 /// Stops the extension process.
 ///
 /// When you call this method, you tell the system your app no longer needs this extension process.
@@ -67,6 +80,13 @@ BROWSERENGINE_EXPORT
 - (id<UIInteraction>)createVisibilityPropagationInteraction;
 #endif
 
+@end
+
+NS_REFINED_FOR_SWIFT
+API_AVAILABLE(macos(14.3), ios(17.4))
+API_UNAVAILABLE(watchos, tvos, visionos)
+BROWSERENGINE_EXPORT
+@interface BEWebContentProcess (BEExtensionProcessConformance) <BEExtensionProcess>
 @end
 
 NS_ASSUME_NONNULL_END

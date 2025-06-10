@@ -24,7 +24,7 @@ API_UNAVAILABLE(macos)
 /*!
  * @brief Represents the audio setting for the current stream.
  */
-@property (assign, nonatomic, readonly) HMCameraAudioStreamSetting audioStreamSetting API_AVAILABLE(tvos(14.5));
+@property (nonatomic, readonly, assign) HMCameraAudioStreamSetting audioStreamSetting API_AVAILABLE(tvos(14.5));
 
 /*!
  * @brief Sets the audio stream setting.
@@ -32,7 +32,7 @@ API_UNAVAILABLE(macos)
  * @param audioStreamSetting New audio stream setting.
  *
  */
-- (void)setAudioStreamSetting:(HMCameraAudioStreamSetting)audioStreamSetting API_DEPRECATED_WITH_REPLACEMENT("updateAudioStreamSetting:completionHandler:", ios(10.0, 10.0), watchos(3.0, 3.0))API_UNAVAILABLE(tvos);
+- (void)setAudioStreamSetting:(HMCameraAudioStreamSetting)audioStreamSetting API_DEPRECATED_WITH_REPLACEMENT("updateAudioStreamSetting:completionHandler:", ios(10.0, 10.0), watchos(3.0, 3.0)) API_UNAVAILABLE(tvos);
 
 /*!
  * @brief Updates the settings of the audio stream.

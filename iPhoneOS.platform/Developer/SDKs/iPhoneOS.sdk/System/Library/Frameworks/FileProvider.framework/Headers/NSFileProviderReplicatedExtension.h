@@ -14,10 +14,9 @@
 #import <FileProvider/NSFileProviderActions.h>
 #import <FileProvider/NSFileProviderRequest.h>
 #import <FileProvider/NSFileProviderModifyItemOptions.h>
+#import <FileProvider/NSFileProviderDomain.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
-@class NSFileProviderDomain;
 
 #pragma mark - Options
 
@@ -723,6 +722,11 @@ NS_SWIFT_NAME(createItem(basedOn:fields:contents:options:request:completionHandl
  the system will be responsible for resolving the collision, by renaming one of
  the colliding items. When the collision is resolved, the system will call
  modifyItem again.
+
+ In case the NSFileProviderModifyItemFailOnConflict option is passed, the provider should
+ fail the modification if the baseVersion does not match the version on the server. It
+ will be up to the system to merge the conflict and call modifyItem again with an
+ updated baseVersion.
 
  The extension can also report NSFileProviderErrorNotAuthenticated,
  NSFileProviderErrorCannotSynchronize, or NSFileProviderErrorExcludedFromSync,

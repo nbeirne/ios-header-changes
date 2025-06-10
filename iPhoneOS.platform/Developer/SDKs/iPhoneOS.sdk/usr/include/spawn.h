@@ -174,10 +174,16 @@ int     posix_spawn_file_actions_addinherit_np(posix_spawn_file_actions_t *,
     int) __API_AVAILABLE(macos(10.7), ios(4.3)) __API_UNAVAILABLE(watchos, tvos);
 
 int     posix_spawn_file_actions_addchdir_np(posix_spawn_file_actions_t *,
-    const char * __restrict) __API_AVAILABLE(macos(10.15)) __API_UNAVAILABLE(ios, tvos, watchos);
+    const char * __restrict) __API_DEPRECATED("posix_spawn_file_actions_addchdir(3) has replaced posix_spawn_file_actions_addchdir_np(3)", macos(10.15, 26.0)) __API_UNAVAILABLE(ios, tvos, watchos, visionos);
 
 int     posix_spawn_file_actions_addfchdir_np(posix_spawn_file_actions_t *,
-    int) __API_AVAILABLE(macos(10.15)) __API_UNAVAILABLE(ios, tvos, watchos);
+    int) __API_DEPRECATED("posix_spawn_file_actions_addfchdir(3) has replaced posix_spawn_file_actions_addfchdir_np(3)", macos(10.15, 26.0)) __API_UNAVAILABLE(ios, tvos, watchos, visionos);
+
+int     posix_spawn_file_actions_addchdir(posix_spawn_file_actions_t *,
+    const char * __restrict) __API_AVAILABLE(macos(26.0)) __API_UNAVAILABLE(ios, tvos, watchos, visionos);
+
+int     posix_spawn_file_actions_addfchdir(posix_spawn_file_actions_t *,
+    int) __API_AVAILABLE(macos(26.0)) __API_UNAVAILABLE(ios, tvos, watchos, visionos);
 
 __END_DECLS
 

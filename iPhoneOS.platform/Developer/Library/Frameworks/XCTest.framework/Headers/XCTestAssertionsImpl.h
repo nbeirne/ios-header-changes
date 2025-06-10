@@ -51,14 +51,10 @@ XCT_EXPORT void _XCTFailureHandler(XCTestCase * _Nullable test, BOOL expected, c
 XCT_EXPORT void _XCTPreformattedFailureHandler(XCTestCase * _Nullable test, BOOL expected, NSString *filePath, NSUInteger lineNumber, NSString *condition, NSString *message);
 
 #define _XCTRegisterFailure(test, condition, ...) \
-({ \
-    _XCTFailureHandler(test, YES, __FILE__, __LINE__, condition, @"" __VA_ARGS__); \
-})
+    _XCTFailureHandler(test, YES, __FILE__, __LINE__, condition, @"" __VA_ARGS__)
 
 #define _XCTRegisterUnexpectedFailure(test, condition, ...) \
-({ \
-_XCTFailureHandler(test, NO, __FILE__, __LINE__, condition, @"" __VA_ARGS__); \
-})
+    _XCTFailureHandler(test, NO, __FILE__, __LINE__, condition, @"" __VA_ARGS__)
 
 #pragma mark -
 
@@ -92,12 +88,10 @@ typedef NS_ENUM(NSUInteger, _XCTAssertionType) {
 XCT_EXPORT NSString * _XCTFailureFormat (_XCTAssertionType assertionType, NSUInteger formatIndex);
 
 #define _XCTFailureDescription(assertion_type, format_index, ...) \
-({ \
     _Pragma("clang diagnostic push") \
     _Pragma("clang diagnostic ignored \"-Wformat-nonliteral\"") \
-    [NSString stringWithFormat:_XCTFailureFormat(assertion_type, format_index), @"" __VA_ARGS__]; \
-    _Pragma("clang diagnostic pop") \
-})
+    [NSString stringWithFormat:_XCTFailureFormat(assertion_type, format_index), @"" __VA_ARGS__] \
+    _Pragma("clang diagnostic pop")
 
 #pragma mark -
 
@@ -115,35 +109,26 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
 #define _XCT_THROW @throw
 #endif
 
+#define _XCT_ASSERT_BEGIN \
+    _Pragma("clang diagnostic push") \
+    _Pragma("clang diagnostic ignored \"-Wgnu-statement-expression-from-macro-expansion\"") \
+    ({ \
+    _Pragma("clang diagnostic pop")
+#define _XCT_ASSERT_END })
+
 XCT_WEAK_EXPORT NSString * _XCTGetCurrentExceptionReasonWithFallback (NSString *_Nullable fallback);
 
-// C++ exception handling is not enabled yet, so provide a minimal-compatibility
-// inline implementation of this function.
-#define _XCTGetCurrentExceptionReason() ({\
-    NSString *_xct_current_reason = nil; \
-    if (&_XCTGetCurrentExceptionReasonWithFallback != 0) { \
-        _xct_current_reason = _XCTGetCurrentExceptionReasonWithFallback(nil); \
-    } else _XCT_TRY { \
-        _XCT_THROW; \
-    } _XCT_CATCH (NSException *e) { \
-        _xct_current_reason = [e reason]; \
-    } _XCT_CATCH (...) { \
-        _xct_current_reason = @"An unknown exception occurred."; \
-    } \
-    _xct_current_reason; \
-})
+#define _XCTGetCurrentExceptionReason() _XCTGetCurrentExceptionReasonWithFallback(nil)
 
 NS_ASSUME_NONNULL_END
 
 #pragma mark -
 
 #define _XCTPrimitiveFail(test, ...) \
-({ \
-    _XCTRegisterFailure(test, _XCTFailureDescription(_XCTAssertion_Fail, 0), __VA_ARGS__); \
-})
+    _XCTRegisterFailure(test, _XCTFailureDescription(_XCTAssertion_Fail, 0, ""), __VA_ARGS__)
 
 #define _XCTPrimitiveAssertNil(test, expression, expressionStr, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         id expressionValue = (expression); \
         if (expressionValue != nil) { \
@@ -155,10 +140,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterUnexpectedFailure(test, _XCTFailureDescription(_XCTAssertion_Nil, 1, expressionStr, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertNotNil(test, expression, expressionStr, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         id expressionValue = (expression); \
         if (expressionValue == nil) { \
@@ -170,10 +155,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterUnexpectedFailure(test, _XCTFailureDescription(_XCTAssertion_NotNil, 1, expressionStr, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertTrue(test, expression, expressionStr, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         BOOL expressionValue = !!(expression); \
         if (!expressionValue) { \
@@ -185,10 +170,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterUnexpectedFailure(test, _XCTFailureDescription(_XCTAssertion_True, 1, expressionStr, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertFalse(test, expression, expressionStr, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         BOOL expressionValue = !!(expression); \
         if (expressionValue) { \
@@ -200,10 +185,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterUnexpectedFailure(test, _XCTFailureDescription(_XCTAssertion_False, 1, expressionStr, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertEqualObjects(test, expression1, expressionStr1, expression2, expressionStr2, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         id expressionValue1 = (expression1); \
         id expressionValue2 = (expression2); \
@@ -216,10 +201,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterUnexpectedFailure(test, _XCTFailureDescription(_XCTAssertion_EqualObjects, 1, expressionStr1, expressionStr2, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertNotEqualObjects(test, expression1, expressionStr1, expression2, expressionStr2, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         id expressionValue1 = (expression1); \
         id expressionValue2 = (expression2); \
@@ -232,10 +217,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterUnexpectedFailure(test, _XCTFailureDescription(_XCTAssertion_NotEqualObjects, 1, expressionStr1, expressionStr2, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertEqual(test, expression1, expressionStr1, expression2, expressionStr2, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         __typeof__(expression1) expressionValue1 = (expression1); \
         __typeof__(expression2) expressionValue2 = (expression2); \
@@ -250,10 +235,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterUnexpectedFailure(test, _XCTFailureDescription(_XCTAssertion_Equal, 1, expressionStr1, expressionStr2, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertNotEqual(test, expression1, expressionStr1, expression2, expressionStr2, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         __typeof__(expression1) expressionValue1 = (expression1); \
         __typeof__(expression2) expressionValue2 = (expression2); \
@@ -268,10 +253,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterUnexpectedFailure(test, _XCTFailureDescription(_XCTAssertion_NotEqual, 1, expressionStr1, expressionStr2, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertIdentical(test, expression1, expressionStr1, expression2, expressionStr2, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         id expressionValue1 = (expression1); \
         id expressionValue2 = (expression2); \
@@ -284,10 +269,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterUnexpectedFailure(test, _XCTFailureDescription(_XCTAssertion_Identical, 1, expressionStr1, expressionStr2, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertNotIdentical(test, expression1, expressionStr1, expression2, expressionStr2, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         id expressionValue1 = (expression1); \
         id expressionValue2 = (expression2); \
@@ -300,10 +285,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterUnexpectedFailure(test, _XCTFailureDescription(_XCTAssertion_NotIdentical, 2, expressionStr1, expressionStr2, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertEqualWithAccuracy(test, expression1, expressionStr1, expression2, expressionStr2, accuracy, accuracyStr, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         __typeof__(expression1) expressionValue1 = (expression1); \
         __typeof__(expression2) expressionValue2 = (expression2); \
@@ -320,10 +305,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterUnexpectedFailure(test, _XCTFailureDescription(_XCTAssertion_EqualWithAccuracy, 1, expressionStr1, expressionStr2, accuracyStr, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertNotEqualWithAccuracy(test, expression1, expressionStr1, expression2, expressionStr2, accuracy, accuracyStr, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         __typeof__(expression1) expressionValue1 = (expression1); \
         __typeof__(expression2) expressionValue2 = (expression2); \
@@ -340,10 +325,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterUnexpectedFailure(test, _XCTFailureDescription(_XCTAssertion_NotEqualWithAccuracy, 1, expressionStr1, expressionStr2, accuracyStr, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertGreaterThan(test, expression1, expressionStr1, expression2, expressionStr2, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         __typeof__(expression1) expressionValue1 = (expression1); \
         __typeof__(expression2) expressionValue2 = (expression2); \
@@ -358,10 +343,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterUnexpectedFailure(test, _XCTFailureDescription(_XCTAssertion_GreaterThan, 1, expressionStr1, expressionStr2, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertGreaterThanOrEqual(test, expression1, expressionStr1, expression2, expressionStr2, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         __typeof__(expression1) expressionValue1 = (expression1); \
         __typeof__(expression2) expressionValue2 = (expression2); \
@@ -376,10 +361,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterUnexpectedFailure(test, _XCTFailureDescription(_XCTAssertion_GreaterThanOrEqual, 1, expressionStr1, expressionStr2, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertLessThan(test, expression1, expressionStr1, expression2, expressionStr2, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         __typeof__(expression1) expressionValue1 = (expression1); \
         __typeof__(expression2) expressionValue2 = (expression2); \
@@ -394,10 +379,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterUnexpectedFailure(test, _XCTFailureDescription(_XCTAssertion_LessThan, 1, expressionStr1, expressionStr2, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertLessThanOrEqual(test, expression1, expressionStr1, expression2, expressionStr2, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         __typeof__(expression1) expressionValue1 = (expression1); \
         __typeof__(expression2) expressionValue2 = (expression2); \
@@ -412,10 +397,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterUnexpectedFailure(test, _XCTFailureDescription(_XCTAssertion_LessThanOrEqual, 1, expressionStr1, expressionStr2, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertThrows(test, expression, expressionStr, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     BOOL _didThrow = NO; \
     _XCT_TRY { \
         (void)(expression); \
@@ -426,10 +411,10 @@ NS_ASSUME_NONNULL_END
     if (!_didThrow) { \
         _XCTRegisterFailure(test, _XCTFailureDescription(_XCTAssertion_Throws, 0, expressionStr), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertThrowsSpecific(test, expression, expressionStr, exception_class, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     BOOL _didThrow = NO; \
     _XCT_TRY { \
         (void)(expression); \
@@ -446,10 +431,10 @@ NS_ASSUME_NONNULL_END
     if (!_didThrow) { \
         _XCTRegisterFailure(test, _XCTFailureDescription(_XCTAssertion_ThrowsSpecific, 2, expressionStr, @#exception_class), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertThrowsSpecificNamed(test, expression, expressionStr, exception_class, exception_name, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     BOOL _didThrow = NO; \
     _XCT_TRY { \
         _XCT_TRY { \
@@ -473,10 +458,10 @@ NS_ASSUME_NONNULL_END
     if (!_didThrow) { \
         _XCTRegisterFailure(test, _XCTFailureDescription(_XCTAssertion_ThrowsSpecificNamed, 3, expressionStr, @#exception_class, exception_name), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertNoThrow(test, expression, expressionStr, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         (void)(expression); \
     } \
@@ -484,10 +469,10 @@ NS_ASSUME_NONNULL_END
         NSString *_xct_reason = _XCTGetCurrentExceptionReason(); \
         _XCTRegisterFailure(test, _XCTFailureDescription(_XCTAssertion_NoThrow, 0, expressionStr, _xct_reason), __VA_ARGS__); \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertNoThrowSpecific(test, expression, expressionStr, exception_class, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         (void)(expression); \
     } \
@@ -498,10 +483,10 @@ NS_ASSUME_NONNULL_END
     _XCT_CATCH (...) { \
         ; \
     } \
-})
+_XCT_ASSERT_END
 
 #define _XCTPrimitiveAssertNoThrowSpecificNamed(test, expression, expressionStr, exception_class, exception_name, ...) \
-({ \
+_XCT_ASSERT_BEGIN \
     _XCT_TRY { \
         (void)(expression); \
     } \
@@ -513,6 +498,6 @@ NS_ASSUME_NONNULL_END
     _XCT_CATCH (...) { \
         ; \
     } \
-})
+_XCT_ASSERT_END
 
 #endif

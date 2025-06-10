@@ -45,7 +45,16 @@ NS_SWIFT_NAME(LayerHierarchyHostingTransactionCoordinator)
 /// note that coordinators should have as constrained a lifespan as possible and will timeout if held open too long.
 - (void)commit NS_SWIFT_UI_ACTOR NS_SWIFT_NAME(commit());
 
-@end
+/// takes ownership of the port right (even if it returns nil).
++ (nullable BELayerHierarchyHostingTransactionCoordinator *)coordinatorWithPort:(mach_port_t)port
+                                                                           data:(NSData *)data
+                                                                          error:(NSError **)error NS_SWIFT_NAME(init(port:data:)) API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(macos, watchos, tvos, visionos);
 
+/// passes a copy of the send right or `MACH_PORT_NULL` if inert.
+/// the receiver is responsible for disposing of `copiedPort`.
+/// the port and data should be consumed together and _only_ once by `init(port:data:)`.
+- (void)encodeWithBlock:(void(^ NS_NOESCAPE)(mach_port_t copiedPort, NSData *data))block NS_SWIFT_NAME(encode(_:)) API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(macos, watchos, tvos, visionos);
+
+@end
 
 NS_ASSUME_NONNULL_END

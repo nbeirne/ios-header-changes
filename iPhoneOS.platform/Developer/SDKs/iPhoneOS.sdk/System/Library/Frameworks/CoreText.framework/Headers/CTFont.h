@@ -1555,7 +1555,7 @@ CFArrayRef _Nullable CTFontCopyAvailableTables(
     @param      font
                 The font reference.
 
-    @param      table
+    @param      tag
                 The font table identifier as a CTFontTableTag.
 
     @result     Returns true if the call was successful and the requested table is present.

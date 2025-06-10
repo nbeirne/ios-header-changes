@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark AVCaptureVideoDataOutput
 
+@class AVMetadataItem;
 @class AVCaptureVideoDataOutputInternal;
 @protocol AVCaptureVideoDataOutputSampleBufferDelegate;
 
@@ -182,6 +183,17 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0), visionos(1.0
  */
 - (nullable NSDictionary<NSString *, id> *)recommendedVideoSettingsForVideoCodecType:(AVVideoCodecType)videoCodecType assetWriterOutputFileType:(AVFileType)outputFileType outputFileURL:(nullable NSURL *)outputFileURL API_AVAILABLE(macos(14.0), ios(17.0), macCatalyst(17.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
 
+
+/*!
+ @property recommendedMediaTimeScaleForAssetWriter
+ @abstract
+    Indicates the recommended media timescale for the video track.
+
+ @discussion
+    This will return a recommended media timescale based on the active capture session's inputs. It will not be less than 600. It may or may not be a multiple of 600.
+ */
+@property(nonatomic, readonly) CMTimeScale recommendedMediaTimeScaleForAssetWriter API_AVAILABLE(macos(26.0), ios(26.0), macCatalyst(16.0), tvos(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
+
 /*!
  @property availableVideoCVPixelFormatTypes
  @abstract
@@ -236,11 +248,23 @@ API_AVAILABLE(macos(10.7), ios(4.0), macCatalyst(14.0), tvos(17.0), visionos(1.0
  @property deliversPreviewSizedOutputBuffers
  @abstract
     Indicates whether the receiver is currently configured to deliver preview sized buffers.
- 
+
  @discussion
     If you wish to manually set deliversPreviewSizedOutputBuffers, you must first set automaticallyConfiguresOutputBufferDimensions to NO. When deliversPreviewSizedOutputBuffers is set to YES, auto focus, exposure, and white balance changes are quicker. AVCaptureVideoDataOutput assumes that the buffers are being used for on-screen preview rather than recording.
  */
 @property(nonatomic) BOOL deliversPreviewSizedOutputBuffers API_AVAILABLE(ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, visionos) API_UNAVAILABLE(watchos);
+
+/*!
+ @property preparesCellularRadioForNetworkConnection
+ @abstract
+    Indicates whether the receiver should prepare the cellular radio for imminent network activity.
+ 
+ @discussion
+    Apps that scan video data output buffers for information that will result in network activity (such as detecting a QRCode containing a URL) should set this property true to allow the cellular radio to prepare for an imminent network request. Enabling this property requires a lengthy reconfiguration of the capture render pipeline, so you should set this property to YES before calling -[AVCaptureSession startRunning].
+     
+    Using this API requires your app to adopt the entitlement `com.apple.developer.avfoundation.video-data-output-prepares-cellular-radio-for-machine-readable-code-scanning`.
+ */
+@property BOOL preparesCellularRadioForNetworkConnection API_AVAILABLE(ios(26.0), macCatalyst(26.0), tvos(26.0)) API_UNAVAILABLE(macos, visionos) API_UNAVAILABLE(watchos);
 
 @end
 

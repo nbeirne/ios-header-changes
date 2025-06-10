@@ -44,7 +44,7 @@ API_UNAVAILABLE(macos)
 /*!
  *  @abstract   Delegate that receives updates on the collection of homes.
  */
-@property (weak, nonatomic, nullable) id<HMHomeManagerDelegate> delegate;
+@property (nullable, nonatomic, weak) id<HMHomeManagerDelegate> delegate;
 
 /*!
  *  @abstract   The current authorization status of the application.
@@ -55,7 +55,7 @@ API_UNAVAILABLE(macos)
 /*!
  *  @abstract   The primary home for this collection.
  */
-@property (readonly, strong, nonatomic, nullable) HMHome *primaryHome API_DEPRECATED("No longer supported.", ios(8.0, 16.1), macos(10.14, 13.0), tvos(10.0, 16.1), watchos(2.0, 9.1));
+@property (nullable, nonatomic, readonly, strong) HMHome *primaryHome API_DEPRECATED("No longer supported.", ios(8.0, 16.1), macos(10.14, 13.0), tvos(10.0, 16.1), watchos(2.0, 9.1));
 
 /*!
  *  @abstract   Array of HMHome objects that represents the homes associated with the home manager.
@@ -64,7 +64,7 @@ API_UNAVAILABLE(macos)
  *              not guaranteed to be filled with the list of homes, represented as HMHome objects,
  *              until the homeManagerDidUpdateHomes: delegate method has been invoked.
  */
-@property (readonly, copy, nonatomic) NSArray<HMHome *> *homes;
+@property (nonatomic, readonly, copy) NSArray<HMHome *> *homes;
 
 /*!
  *  @abstract   This method is used to change the primary home.
@@ -87,7 +87,7 @@ API_UNAVAILABLE(macos)
  *                          will be nil on success.
  *
  */
-- (void)addHomeWithName:(NSString *)homeName completionHandler:(void (^)(HMHome *__nullable home, NSError *__nullable error))completion API_UNAVAILABLE(watchos, tvos)NS_SWIFT_ASYNC_NAME(addHome(named:));
+- (void)addHomeWithName:(NSString *)homeName completionHandler:(void (^)(HMHome *__nullable home, NSError *__nullable error))completion API_UNAVAILABLE(watchos, tvos) NS_SWIFT_ASYNC_NAME(addHome(named:));
 
 /*!
  *  @abstract   Removes an existing home from the collection.
@@ -107,7 +107,7 @@ API_UNAVAILABLE(macos)
  */
 API_AVAILABLE(ios(8.0), watchos(2.0), tvos(10.0), macCatalyst(14.0))
 API_UNAVAILABLE(macos)
-@protocol HMHomeManagerDelegate <NSObject>
+@protocol HMHomeManagerDelegate<NSObject>
 
 @optional
 
@@ -117,7 +117,7 @@ API_UNAVAILABLE(macos)
  *  @param      manager     Sender of this message.
  *  @param      status      The updated authorization status.
  */
-- (void)homeManager:(HMHomeManager *)manager didUpdateAuthorizationStatus:(HMHomeManagerAuthorizationStatus)status API_AVAILABLE(ios(13.0), watchos(6.0), tvos(13.0))API_UNAVAILABLE(macos);
+- (void)homeManager:(HMHomeManager *)manager didUpdateAuthorizationStatus:(HMHomeManagerAuthorizationStatus)status API_AVAILABLE(ios(13.0), watchos(6.0), tvos(13.0)) API_UNAVAILABLE(macos);
 
 /*!
  *  @abstract   Informs the delegate when homes configured by the user have been detected by the system.
@@ -163,7 +163,7 @@ API_UNAVAILABLE(macos)
  *
  *  @param      request     Information for the add accessory request.
  */
-- (void)homeManager:(HMHomeManager *)manager didReceiveAddAccessoryRequest:(HMAddAccessoryRequest *)request API_DEPRECATED("No longer supported", ios(13.0, 15.0))API_UNAVAILABLE(ios, macos, watchos, tvos, macCatalyst)NS_SWIFT_NAME(homeManager(_:didReceiveAddAccessoryRequest:));
+- (void)homeManager:(HMHomeManager *)manager didReceiveAddAccessoryRequest:(HMAddAccessoryRequest *)request API_DEPRECATED("No longer supported", ios(13.0, 15.0)) API_UNAVAILABLE(ios, macos, watchos, tvos, macCatalyst) NS_SWIFT_NAME(homeManager(_:didReceiveAddAccessoryRequest:));
 
 @end
 

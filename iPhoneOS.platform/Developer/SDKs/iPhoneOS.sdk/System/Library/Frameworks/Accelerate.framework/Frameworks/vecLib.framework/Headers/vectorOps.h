@@ -3,9 +3,9 @@
  
      Contains:   vector and matrix functions for AltiVec
  
-     Version:    vecLib-1068.0
+     Version:    vecLib-1120.0
  
-     Copyright:  Copyright (c) 1999-2024 by Apple Inc. All rights reserved.
+     Copyright:  Copyright (c) 1999-2025 by Apple Inc. All rights reserved.
  
      Bugs:       For bug reports, consult the following page on
                  the World Wide Web:

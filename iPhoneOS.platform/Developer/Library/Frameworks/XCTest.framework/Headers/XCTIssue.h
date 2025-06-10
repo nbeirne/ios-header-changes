@@ -29,6 +29,27 @@ typedef NS_ENUM(NSInteger, XCTIssueType) {
     XCTIssueTypeUnmatchedExpectedFailure = 5,
 };
 
+/// An enum representing the severity of a test issue.
+///
+/// The numeric values of this enum's cases are comparable. A case which represents
+/// higher severity has a larger numeric value than one which represents lower
+/// severity. Specifying a numeric severity value other than one corresponding to
+/// a case defined below when initializing an ``XCTIssue`` is unsupported.
+typedef NS_ENUM(NSInteger, XCTIssueSeverity) {
+    /// The severity level for an issue which should be noted but is not
+    /// necessarily an error.
+    /// 
+    /// An issue with warning severity does not cause the test it's associated
+    /// with to be marked as a failure, but is noted in the results.
+    XCTIssueSeverityWarning = 4,
+
+    /// The severity level for an issue which represents an error in a test.
+    ///
+    /// An issue with error severity causes the test it's associated with to be
+    /// marked as a failure.
+    XCTIssueSeverityError = 8,
+} NS_SWIFT_NAME(XCTIssue.Severity);
+
 @class XCTAttachment;
 @class XCTSourceCodeContext;
 
@@ -44,6 +65,18 @@ typedef NS_ENUM(NSInteger, XCTIssueType) {
            sourceCodeContext:(XCTSourceCodeContext *)sourceCodeContext
              associatedError:(nullable NSError *)associatedError
                  attachments:(NSArray<XCTAttachment *> *)attachments NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithType:(XCTIssueType)type
+          compactDescription:(NSString *)compactDescription
+         detailedDescription:(nullable NSString *)detailedDescription
+           sourceCodeContext:(XCTSourceCodeContext *)sourceCodeContext
+             associatedError:(nullable NSError *)associatedError
+                 attachments:(NSArray<XCTAttachment *> *)attachments
+                    severity:(XCTIssueSeverity)severity NS_DESIGNATED_INITIALIZER;
+                    
+- (instancetype)initWithType:(XCTIssueType)type
+          compactDescription:(NSString *)compactDescription
+                    severity:(XCTIssueSeverity)severity;
 
 - (instancetype)initWithType:(XCTIssueType)type compactDescription:(NSString *)compactDescription;
 
@@ -70,6 +103,20 @@ typedef NS_ENUM(NSInteger, XCTIssueType) {
 /// All attachments associated with the issue.
 @property (readonly, copy) NSArray<XCTAttachment *> *attachments;
 
+/// The severity of the issue.
+@property (readonly) XCTIssueSeverity severity;
+
+/// Whether or not this issue should cause the test it's associated with to be
+/// considered a failure.
+///
+/// The value of this property is `YES` for issues which have a severity level of
+/// ``XCTIssueSeverityError`` or higher.
+/// Otherwise, the value of this property is `NO`.
+///
+/// Use this property to determine if an issue should be considered a failure, instead of
+/// directly comparing the value of the ``severity`` property.
+@property (readonly) BOOL isFailure;
+
 @end
 
 /*!
@@ -84,6 +131,7 @@ typedef NS_ENUM(NSInteger, XCTIssueType) {
 @property (readwrite, strong) XCTSourceCodeContext *sourceCodeContext;
 @property (readwrite, strong, nullable) NSError *associatedError;
 @property (readwrite, copy) NSArray<XCTAttachment *> *attachments;
+@property (readwrite) XCTIssueSeverity severity;
 
 /// Add an attachment to this issue.
 - (void)addAttachment:(XCTAttachment *)attachment;

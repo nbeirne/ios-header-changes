@@ -25,6 +25,8 @@ NS_CLASS_AVAILABLE(12_0, 15_0)
 
 typedef NSString* CIRAWDecoderVersion NS_TYPED_ENUM;
 CORE_IMAGE_EXPORT CIRAWDecoderVersion const CIRAWDecoderVersionNone;
+CORE_IMAGE_EXPORT CIRAWDecoderVersion const CIRAWDecoderVersion9;
+CORE_IMAGE_EXPORT CIRAWDecoderVersion const CIRAWDecoderVersion9DNG;
 CORE_IMAGE_EXPORT CIRAWDecoderVersion const CIRAWDecoderVersion8;
 CORE_IMAGE_EXPORT CIRAWDecoderVersion const CIRAWDecoderVersion8DNG;
 CORE_IMAGE_EXPORT CIRAWDecoderVersion const CIRAWDecoderVersion7;

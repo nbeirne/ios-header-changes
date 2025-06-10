@@ -35,6 +35,18 @@ API_AVAILABLE(ios(13.0), macos(10.15))
 - (instancetype)initWithInkType:(PKInkType)type color:(NSColor *)color width:(CGFloat)width NS_DESIGNATED_INITIALIZER;
 #endif
 
+/// Create a new inking tool, specifying its type, color, width, and angle.
+///
+/// @param type The type of ink.
+/// @param color The color of the ink.
+/// @param width The width of the ink.
+/// @param angle The angle of the ink.
+#if TARGET_OS_IPHONE
+- (instancetype)initWithInkType:(PKInkType)type color:(UIColor *)color width:(CGFloat)width azimuth:(CGFloat)angle NS_DESIGNATED_INITIALIZER API_AVAILABLE(ios(26.0), macos(26.0), visionos(26.0));
+#else
+- (instancetype)initWithInkType:(PKInkType)type color:(NSColor *)color width:(CGFloat)width azimuth:(CGFloat)angle NS_DESIGNATED_INITIALIZER API_AVAILABLE(ios(26.0), macos(26.0), visionos(26.0));
+#endif
+
 /// Create a new inking tool, specifying its type and color, using a default width.
 ///
 /// @param type The type of ink.
@@ -83,6 +95,9 @@ API_AVAILABLE(ios(13.0), macos(10.15))
 
 /// The base width of the ink.
 @property (nonatomic, readonly) CGFloat width;
+
+/// The base angle of the ink.
+@property (nonatomic, readonly) CGFloat azimuth API_AVAILABLE(ios(26.0), macos(26.0), visionos(26.0));
 
 /// The ink that this tool will create strokes with.
 @property (nonatomic, readonly) PKInk *ink API_AVAILABLE(ios(14.0));

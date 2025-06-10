@@ -11,10 +11,15 @@
 #import <Metal/MTLTypes.h>
 #import <Metal/MTLPixelFormat.h>
 #import <Metal/MTLResource.h>
+#import <Metal/MTLTensor.h>
 #import <Metal/MTLLibrary.h>
 #import <IOSurface/IOSurfaceRef.h>
 #import <Metal/MTLCounters.h>
 
+
+#import <Metal/MTL4Compiler.h>
+#import <Metal/MTL4Counters.h>
+@protocol MTL4BinaryFunction;
 
 NS_ASSUME_NONNULL_BEGIN
 @protocol MTLCommandQueue;
@@ -74,6 +79,31 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol MTLArgumentEncoder;
 @class MTLResidencySetDescriptor;
 @protocol MTLResidencySet;
+
+
+@class MTL4CommandQueueDescriptor;
+@protocol MTL4CommandQueue;
+
+@protocol MTL4CommandBuffer;
+
+@class MTL4CommandAllocatorDescriptor;
+@protocol MTL4CommandAllocator;
+
+@class MTL4ArgumentTableDescriptor;
+@protocol MTL4ArgumentTable;
+
+@class MTLResourceViewPoolDescriptor;
+@protocol MTLTextureViewPool;
+@class MTL4CompilerDescriptor;
+@protocol MTL4Compiler;
+@protocol MTL4Archive;
+@protocol MTL4PipelineDataSetSerializer;
+@class MTL4PipelineDataSetSerializerDescriptor;
+
+
+@class MTL4CounterHeapDescriptor;
+@protocol MTL4CounterHeap;
+
 
 @protocol MTLIOFileHandle;
 @protocol MTLIOCommandQueue;
@@ -164,7 +194,7 @@ typedef NS_ENUM(NSInteger, MTLGPUFamily)
     MTLGPUFamilyApple7  = 1007,
     MTLGPUFamilyApple8  = 1008,
     MTLGPUFamilyApple9  = 1009,
-    
+
     MTLGPUFamilyMac1 API_DEPRECATED_WITH_REPLACEMENT("MTLGPUFamilyMac2", macos(10.15, 13.0), ios(13.0, 16.0)) = 2001,
     MTLGPUFamilyMac2 = 2002,
     
@@ -176,6 +206,7 @@ typedef NS_ENUM(NSInteger, MTLGPUFamily)
     MTLGPUFamilyMacCatalyst2 API_DEPRECATED_WITH_REPLACEMENT("MTLGPUFamilyMac2", macos(10.15, 13.0), ios(13.0, 16.0)) = 4002,
     
     MTLGPUFamilyMetal3 API_AVAILABLE(macos(13.0), ios(16.0)) = 5001,
+    MTLGPUFamilyMetal4 API_AVAILABLE(macos(26.0), ios(26.0)) = 5002,
 } API_AVAILABLE(macos(10.15), ios(13.0));
 
 
@@ -222,17 +253,6 @@ typedef NS_ENUM(NSUInteger, MTLSparseTextureRegionAlignmentMode)
     MTLSparseTextureRegionAlignmentModeOutward   = 0,
     MTLSparseTextureRegionAlignmentModeInward    = 1,
 } API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(13.0));
-
-/*!
- @enum MTLSparsePageSize
- @abstract Physical size of sparse resource page in KBs.
- */
-typedef NS_ENUM(NSInteger, MTLSparsePageSize)
-{
-    MTLSparsePageSize16 = 101,
-    MTLSparsePageSize64 = 102,
-    MTLSparsePageSize256 = 103,
-} API_AVAILABLE(macos(13.0), ios(16.0));
 
 /**
  * @brief Describes the memory requirements for an acceleration structure
@@ -290,17 +310,6 @@ typedef struct {
     NSUInteger align;
 } MTLSizeAndAlign;
 
-/* Convenience typedefs that make it easy to declare storage for certain return types. */
-typedef __autoreleasing MTLRenderPipelineReflection * __nullable MTLAutoreleasedRenderPipelineReflection;
-typedef __autoreleasing MTLComputePipelineReflection * __nullable MTLAutoreleasedComputePipelineReflection;
-
-typedef void (^MTLNewLibraryCompletionHandler)(id <MTLLibrary> __nullable library, NSError * __nullable error);
-
-typedef void (^MTLNewRenderPipelineStateCompletionHandler)(id <MTLRenderPipelineState> __nullable renderPipelineState, NSError * __nullable error);
-typedef void (^MTLNewRenderPipelineStateWithReflectionCompletionHandler)(id <MTLRenderPipelineState> __nullable renderPipelineState, MTLRenderPipelineReflection * _Nullable_result reflection, NSError * __nullable error);
-
-typedef void (^MTLNewComputePipelineStateCompletionHandler)(id <MTLComputePipelineState> __nullable computePipelineState, NSError * __nullable error);
-typedef void (^MTLNewComputePipelineStateWithReflectionCompletionHandler)(id <MTLComputePipelineState> __nullable computePipelineState, MTLComputePipelineReflection * _Nullable_result reflection, NSError * __nullable error);
 
 
 /*!
@@ -375,7 +384,7 @@ MTL_EXPORT API_AVAILABLE(macos(14.0), ios(17.0))
  @protocol MTLDevice
  @abstract MTLDevice represents a processor capable of data parallel computations
  */
-API_AVAILABLE(macos(10.11), ios(8.0))
+API_AVAILABLE(macos(10.11), ios(8.0)) NS_SWIFT_SENDABLE
 @protocol MTLDevice <NSObject>
 
 /*!
@@ -529,7 +538,7 @@ API_AVAILABLE(macos(10.11), ios(8.0))
  @method newLogStateWithDescriptor
  @abstract This method will create a new MTLLogState.
  */
-- (nullable id <MTLLogState>) newLogStateWithDescriptor:(MTLLogStateDescriptor* _Nonnull) descriptor error:(__autoreleasing NSError* _Nullable *)error API_AVAILABLE(macos(15.0), ios(18.0));
+- (nullable id <MTLLogState>) newLogStateWithDescriptor:(MTLLogStateDescriptor* _Nonnull) descriptor error:(NSError** )error API_AVAILABLE(macos(15.0), ios(18.0));
 
 /*!
  @method newCommandQueue
@@ -587,7 +596,7 @@ API_AVAILABLE(macos(10.11), ios(8.0))
  @method newBufferWithBytesNoCopy:length:options:deallocator:
  @brief Create a buffer by wrapping an existing part of the address space.
  */
-- (nullable id <MTLBuffer>)newBufferWithBytesNoCopy:(void *)pointer length:(NSUInteger)length options:(MTLResourceOptions)options deallocator:(void (^ __nullable)(void *pointer, NSUInteger length))deallocator;
+- (nullable id <MTLBuffer>)newBufferWithBytesNoCopy:(void *)pointer length:(NSUInteger)length options:(MTLResourceOptions)options deallocator:(void (^ NS_SWIFT_SENDABLE __nullable)(void *pointer, NSUInteger length))deallocator;
 
 /*!
  @method newDepthStencilStateWithDescriptor:
@@ -1189,6 +1198,204 @@ typedef uint64_t MTLTimestamp;
 - (nullable id<MTLResidencySet>) newResidencySetWithDescriptor:(MTLResidencySetDescriptor *)desc
                                             error:(NSError *__nullable*)error
                                             API_AVAILABLE(macos(15.0), ios(18.0));
+
+/// Determines the size and alignment required to hold the data of a tensor you create with a descriptor in a buffer.
+///
+/// - Parameters:
+///    - descriptor: A description of the properties for the new tensor.
+/// - Returns: The size and alignment required to hold the data of a tensor you create with `descriptor` in a buffer.
+- (MTLSizeAndAlign)tensorSizeAndAlignWithDescriptor:(MTLTensorDescriptor *)descriptor API_AVAILABLE(macos(26.0), ios(26.0));
+
+/// Creates a tensor by allocating new memory.
+///
+/// - Parameters:
+///   - descriptor: A description of the properties for the new tensor.
+///   - error: Metal populates this parameter with information in case an error occurs.
+/// - Returns: A new tensor instance that Metal configures using `descriptor` or `nil` if an error occurred.
+- (nullable id <MTLTensor>)newTensorWithDescriptor:(MTLTensorDescriptor *)descriptor
+                                             error:(__autoreleasing NSError * _Nullable * _Nullable)error API_AVAILABLE(macos(26.0), ios(26.0));
+
+/*!
+ @method functionHandleWithFunction:
+ @abstract Returns the function handle for a function that was compiled with MTLFunctionOptionPipelineIndependent and MTLFunctionOptionCompileToBinary.
+ */
+- (nullable id<MTLFunctionHandle>)functionHandleWithFunction:(id<MTLFunction>)function API_AVAILABLE(macos(26.0), ios(26.0));
+
+
+
+/// Creates a new command allocator.
+///
+/// - Returns: A ``MTL4CommandAllocator`` instance, or `nil` if the function failed.
+ - (nullable id<MTL4CommandAllocator>)newCommandAllocator
+API_AVAILABLE(macos(26.0), ios(26.0));
+
+/// Creates a new command allocator from a command allocator descriptor.
+///
+/// - Parameters:
+///   - descriptor: A ``MTL4CommandAllocatorDescriptor`` instance that configures the
+///                 ``MTL4CommandAllocator`` instance.
+///   - error:      Optional pointer to a `NSError` instance that Metal uses to describe the failure
+///                 if this function fails.
+///
+/// - Returns: A ``MTL4CommandAllocator`` instance, or `nil` if the function failed.
+- (nullable id<MTL4CommandAllocator>)newCommandAllocatorWithDescriptor:(MTL4CommandAllocatorDescriptor *)descriptor
+                                                                 error:(NSError**)error
+API_AVAILABLE(macos(26.0), ios(26.0));
+
+/// Creates a new command queue.
+///
+/// - Returns: A ``MTL4CommandQueue`` instance, or `nil` if the function failed.
+- (nullable id<MTL4CommandQueue>)newMTL4CommandQueue
+API_AVAILABLE(macos(26.0), ios(26.0));
+
+/// Creates a new command queue from a queue descriptor.
+///
+/// - Parameters:
+///   - descriptor: A ``MTL4CommandQueueDescriptor`` instance that configures the
+///                 ``MTL4CommandQueue`` instance.
+///   - error:      Optional pointer to a `NSError` instance that Metal uses to describe the failure
+///                 if this function fails.
+///
+/// - Returns: A ``MTL4CommandQueue`` instance, or `nil` if the function failed.
+- (nullable id<MTL4CommandQueue>)newMTL4CommandQueueWithDescriptor:(MTL4CommandQueueDescriptor *)descriptor
+                                                             error:(__autoreleasing NSError * _Nullable * _Nullable)error
+API_AVAILABLE(macos(26.0), ios(26.0));
+
+/// Creates a new command buffer.
+///
+/// - Returns: A ``MTL4CommandBuffer`` instance, or `nil` if the function failed.
+ - (nullable id<MTL4CommandBuffer>)newCommandBuffer
+API_AVAILABLE(macos(26.0), ios(26.0));
+
+/// Creates a new argument table from an argument table descriptor.
+///
+/// - Parameters:
+///   - descriptor: A ``MTL4ArgumentTableDescriptor`` instance that configures the
+///                 ``MTL4ArgumentTable`` instance.
+///   - error:      Optional pointer to a `NSError` instance that Metal uses to describe the failure
+///                 if this function fails.
+///
+/// - Returns: A ``MTL4ArgumentTable`` instance, or `nil` if the function failed.
+- (nullable id<MTL4ArgumentTable>)newArgumentTableWithDescriptor:(MTL4ArgumentTableDescriptor *)descriptor
+                                                           error:(NSError * _Nullable *)error
+API_AVAILABLE(macos(26.0), ios(26.0));
+
+
+
+/// Creates a new texture view pool from a resource view pool descriptor.
+///
+/// - Parameters:
+///   - descriptor: A ``MTLResourceViewPoolDescriptor`` instance that configures the
+///                 ``MTLTextureViewPool`` instance.
+///   - error:      Optional pointer to a `NSError` instance that Metal uses to describe the failure
+///                 if this function fails.
+///
+/// - Returns: A ``MTLTextureViewPool`` instance, or `nil` if the function failed.
+- (nullable id<MTLTextureViewPool>)newTextureViewPoolWithDescriptor:(MTLResourceViewPoolDescriptor *)descriptor
+                                                              error:(NSError * _Nullable *)error
+API_AVAILABLE(macos(26.0), ios(26.0));
+
+
+
+
+/// Creates a new compiler from a compiler descriptor.
+///
+/// - Parameters:
+///   - descriptor: A ``MTL4CompilerDescriptor`` instance that configures the
+///                 ``MTL4Compiler`` instance.
+///   - error:      Optional pointer to a `NSError` instance that Metal uses to describe the failure
+///                 if this function fails.
+///
+/// - Returns: A ``MTL4Compiler`` instance, or `nil` if the function failed.
+- (nullable id<MTL4Compiler>)newCompilerWithDescriptor:(MTL4CompilerDescriptor *)descriptor
+                                                 error:(NSError **)error
+API_AVAILABLE(macos(26.0), ios(26.0));
+
+/// Creates a new archive from data available at an `NSURL` address.
+///
+/// - Parameters:
+///   - url:   An `NSURL` instance that represents the path from which the device loads the ``MTL4Archive``.
+///   - error:      Optional pointer to a `NSError` instance that Metal uses to describe the failure
+///                 if this function fails.
+///
+/// - Returns: A ``MTL4Archive`` instance, or `nil` if the function failed.
+- (nullable id<MTL4Archive>)newArchiveWithURL:(NSURL *)url
+                                        error:(NSError **)error
+API_AVAILABLE(macos(26.0), ios(26.0));
+
+
+/// Creates a new pipeline data set serializer instance from a descriptor.
+///
+/// - Parameter descriptor: A ``MTL4PipelineDataSetSerializerDescriptor`` instance that configures
+///                         the new ``MTL4PipelineDataSetSerializer`` instance.
+///
+/// - Returns: A ``MTL4PipelineDataSetSerializer`` instance, or `nil` if the function failed.
+- (id<MTL4PipelineDataSetSerializer>)newPipelineDataSetSerializerWithDescriptor:
+    (MTL4PipelineDataSetSerializerDescriptor *)descriptor
+API_AVAILABLE(macos(26.0), ios(26.0));
+
+
+/// Creates a new placement sparse buffer of a specific length.
+///
+/// This method creates a new placement sparse ``MTLBuffer`` of a specific length. You assign memory to
+/// placement sparse buffers using a ``MTLHeap`` of type ``MTLHeapType/MTLHeapTypePlacement``.
+///
+/// - Parameters:
+///   - length:                  The size of the ``MTLBuffer``, in bytes.
+///   - options:                 A ``MTLResourceOptions`` instance that establishes the buffer’s storage modes.
+///   - placementSparsePageSize: ``MTLSparsePageSize`` to use for the placement sparse buffer.
+///
+/// - Returns: A ``MTLBuffer`` instance, or `nil` if the function failed.
+- (nullable id<MTLBuffer>)newBufferWithLength:(NSUInteger)length
+                                      options:(MTLResourceOptions)options
+                      placementSparsePageSize:(MTLSparsePageSize)placementSparsePageSize
+API_AVAILABLE(macos(26.0), ios(26.0));
+
+
+/// Creates a new counter heap configured from a counter heap descriptor.
+///
+/// - Parameters:
+///   - descriptor: ``MTL4CounterHeapDescriptor`` instance that configures the ``MTL4CounterHeap`` instance.
+///   - error:      Optional pointer to a `NSError` instance that Metal uses to describe the failure
+///                 if this function fails.
+///
+/// - Returns: A ``MTL4CounterHeap`` instance, or `nil` if the function failed.
+- (nullable id<MTL4CounterHeap>)newCounterHeapWithDescriptor:(MTL4CounterHeapDescriptor *)descriptor
+                                                       error:(NSError *__nullable*)error
+                                            API_AVAILABLE(macos(26.0), ios(26.0));
+
+/// Returns the size, in bytes, of each entry in a counter heap of a specific counter heap type when
+/// your app resolves it into a usable format.
+///
+/// In order to use the data available in a ``MTL4CounterHeap``, your app first resolves it either in the CPU timeline
+/// or in the GPU timeline. When your app calls ``MTL4CommandBuffer/resolveCounterHeap:withRange:intoBuffer:atOffset:waitFence:updateFence:``
+/// to resolve counter data in the GPU timeline, Metal writes the data into a ``MTLBuffer``.
+///
+/// During this process, Metal transform the data in the heap into a format consisting of entries of the size
+/// that this method advertises, based on the ``MTL4CounterHeapType``.
+///
+/// - Parameters:
+///   - type: ``MTL4CounterHeapType`` value that represents the type of the ``MTL4CounterHeap`` to resolve.
+///
+/// - Returns: The size of the post-transformation entry from a ``MTL4CounterHeap`` of type ``MTL4CounterHeapType``.
+- (NSUInteger)sizeOfCounterHeapEntry:(MTL4CounterHeapType)type
+API_AVAILABLE(macos(26.0), ios(26.0));
+
+/// Queries the frequency of the GPU timestamp in ticks per second.
+///
+/// - Returns: The frequency of the GPU timestamp in ticks per second.
+- (uint64_t)queryTimestampFrequency
+API_AVAILABLE(macos(26.0), ios(26.0));
+
+/// Get the function handle for the specified binary-linked function from the pipeline state.
+///
+/// - Parameters:
+///   - function: A ``MTL4BinaryFunction`` instance representing the function binary.
+///
+/// - Returns: A ``MTLFunctionHandle`` instance  for a binary function that was compiled with ``MTLFunctionOptionPipelineIndependent``, otherwise `nil`.
+- (nullable id<MTLFunctionHandle>)functionHandleWithBinaryFunction:(id<MTL4BinaryFunction>)function
+API_AVAILABLE(macos(26.0), ios(26.0));
+
 
 @end
 NS_ASSUME_NONNULL_END

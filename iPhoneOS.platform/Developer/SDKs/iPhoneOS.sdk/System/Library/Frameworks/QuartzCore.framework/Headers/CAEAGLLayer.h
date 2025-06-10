@@ -1,6 +1,6 @@
 /* CoreAnimation - CAEAGLLayer.h
 
-   Copyright (c) 2007-2022, Apple Inc.
+   Copyright (c) 2007-2025, Apple Inc.
    All rights reserved. */
 
 #ifdef __OBJC__
@@ -18,7 +18,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
  * the created surface. */
 
 #ifndef GLES_SILENCE_DEPRECATION
-API_DEPRECATED("OpenGLES is deprecated", ios(2.0, 12.0), tvos(9.0, 12.0))
+API_DEPRECATED("OpenGLES is deprecated. (Define GLES_SILENCE_DEPRECATION to silence these warnings)", ios(2.0, 12.0), tvos(9.0, 12.0))
 API_UNAVAILABLE(macos, watchos, visionos)
 #else
 API_AVAILABLE(ios(2.0), tvos(9.0)) API_UNAVAILABLE(macos, watchos, visionos)

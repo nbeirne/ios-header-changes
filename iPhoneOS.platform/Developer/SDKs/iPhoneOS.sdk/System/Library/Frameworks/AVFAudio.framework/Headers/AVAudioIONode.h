@@ -85,6 +85,8 @@ typedef struct API_AVAILABLE(macos(14.0), ios(17.0)) API_UNAVAILABLE(tvos, watch
 	AVAudioVoiceProcessingOtherAudioDuckingLevel duckingLevel;
 } AVAudioVoiceProcessingOtherAudioDuckingConfiguration API_AVAILABLE(macos(14.0), ios(17.0)) API_UNAVAILABLE(tvos, watchos);
 
+@class CASpatialAudioExperience;
+
 /*!	@class AVAudioIONode
 	@abstract 
 		Base class for a node that performs audio input or output in the engine.
@@ -271,6 +273,18 @@ API_AVAILABLE(macos(10.10), ios(8.0), watchos(4.0), tvos(11.0))
 API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0))
 @interface AVAudioOutputNode : AVAudioIONode
 - (instancetype)init NS_UNAVAILABLE; // fetch instance via -[AVAudioEngine outputNode].
+
+/*! @property intendedSpatialExperience
+    @abstract
+        The AVAudioEngine output node's intended spatial experience.
+    @discussion
+        Only useful for engines that have an output node and are not
+        configured in any manual rendering mode. The default value of
+        CAAutomaticSpatialAudio means the engine uses its AVAudioSession's intended
+        spatial experience. See CASpatialAudioExperience for more details.
+ */
+@property (nonnull, copy) CASpatialAudioExperience *intendedSpatialExperience API_AVAILABLE(visionos(26.0)) API_UNAVAILABLE(ios, watchos, tvos, macos) NS_REFINED_FOR_SWIFT;
+
 @end
 
 NS_ASSUME_NONNULL_END

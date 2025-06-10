@@ -116,6 +116,7 @@ enum
   kCVPixelFormatType_444YpCbCr10BiPlanarFullRange  = 'xf44', /* 2 plane YCbCr10 4:4:4, each 10 bits in the MSBs of 16bits, full-range (Y range 0-1023) */
   kCVPixelFormatType_420YpCbCr8VideoRange_8A_TriPlanar   = 'v0a8', /* first and second planes as per 420YpCbCr8BiPlanarVideoRange (420v), alpha 8 bits in third plane full-range.  No CVPlanarPixelBufferInfo struct. */
   kCVPixelFormatType_16VersatileBayer    = 'bp16',   /* Single plane Bayer 16-bit little-endian sensor element ("sensel") samples from full-size decoding of ProRes RAW images; Bayer pattern (sensel ordering) and other raw conversion information is described via buffer attachments */
+  kCVPixelFormatType_96VersatileBayerPacked12      = 'btp2',   /* Bayer 12-bit Little-Endian, packed 12-bits per component in 96-bits; Bayer pattern (sensel ordering) and other raw conversion information is described via buffer attachments */
   kCVPixelFormatType_64RGBA_DownscaledProResRAW    = 'bp64',   /* Single plane 64-bit RGBA (16-bit little-endian samples) from downscaled decoding of ProRes RAW images; components--which may not be co-sited with one another--are sensel values and require raw conversion, information for which is described via buffer attachments */
   kCVPixelFormatType_422YpCbCr16BiPlanarVideoRange       = 'sv22', /* 2 plane YCbCr16 4:2:2, video-range (luma=[4096,60160] chroma=[4096,61440]) */
   kCVPixelFormatType_444YpCbCr16BiPlanarVideoRange       = 'sv44', /* 2 plane YCbCr16 4:4:4, video-range (luma=[4096,60160] chroma=[4096,61440]) */
@@ -621,6 +622,15 @@ CV_EXPORT CVReturn CVPixelBufferFillExtendedPixels( CVPixelBufferRef CV_NONNULL 
     @param      pixelBuffer Target PixelBuffer.
 */
 CV_EXPORT CFDictionaryRef CV_NONNULL CVPixelBufferCopyCreationAttributes( CVPixelBufferRef CV_NONNULL pixelBuffer ) CV_RETURNS_RETAINED API_AVAILABLE(macosx(12.0), ios(15.0), tvos(15.0), watchos(8.0));
+
+/*!
+    @function   CVPixelBufferIsCompatibleWithAttributes
+    @abstract   Returns true if given pixel buffer is compatible with pixelBufferAttributes dictionary.
+    @param      pixelBuffer PixelBuffer to check for compatibility.
+    @param      attributes Creation attributes which pixel buffer should have.
+*/
+CV_EXPORT Boolean CVPixelBufferIsCompatibleWithAttributes( CVPixelBufferRef CV_NONNULL pixelBuffer, CFDictionaryRef CV_NULLABLE attributes )
+    API_AVAILABLE(macosx(10.4), ios(4.0), tvos(4.0), watchos(1.0), visionos(1.0));
 
 #if defined(__cplusplus)
 }

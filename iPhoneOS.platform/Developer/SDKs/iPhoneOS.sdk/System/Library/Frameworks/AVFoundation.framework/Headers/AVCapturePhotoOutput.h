@@ -68,7 +68,7 @@ API_AVAILABLE(macos(10.15), ios(10.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAI
     An object conforming to the AVCapturePhotoCaptureDelegate protocol. This object's delegate methods are called back as the photo advances from capture to processing to finished delivery. May not be nil.
  
  @discussion
-    This method initiates a photo capture. The receiver copies your provided settings to prevent unintentional mutation. It is illegal to re-use settings. The receiver throws a NSInvalidArgumentException if your settings.uniqueID matches that of any previously used settings. This method is used to initiate all flavors of photo capture: single photo, RAW capture with or without a processed image (such as a JPEG), bracketed capture, and Live Photo.
+    This method initiates a photo capture. The receiver copies your provided settings to prevent unintentional mutation. It is illegal to re-use settings. The receiver throws an NSInvalidArgumentException if your settings.uniqueID matches that of any previously used settings. This method is used to initiate all flavors of photo capture: single photo, RAW capture with or without a processed image (such as a JPEG), bracketed capture, and Live Photo.
  
     Clients need not wait for a capture photo request to complete before issuing another request. This is true for single photo captures as well as Live Photos, where movie complements of adjacent photo captures are allowed to overlap.
  
@@ -91,9 +91,9 @@ API_AVAILABLE(macos(10.15), ios(10.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAI
         - portraitEffectsMatteDeliveryEnabled will automatically be disabled in AVCapturePhotoSettings
         - enabledSemanticSegmentationMatteTypes will automatically be cleared in AVCapturePhotoSettings
     Processed Format rules:
-        - If format is non-nil, a kCVPixelBufferPixelFormatTypeKey or AVVideoCodecKey must be present, and both may not be present.
+        - If format is non-nil, a kCVPixelBufferPixelFormatTypeKey or AVVideoCodecKey must be present. You cannot specify both.
         - If format has a kCVPixelBufferPixelFormatTypeKey, its value must be present in the receiver's -availablePhotoPixelFormatTypes array.
-        - If format has a AVVideoCodecKey, its value must be present in the receiver's -availablePhotoCodecTypes array.
+        - If format has an AVVideoCodecKey, its value must be present in the receiver's -availablePhotoCodecTypes array.
         - If format is non-nil, your delegate must respond to -captureOutput:didFinishProcessingPhotoSampleBuffer:previewPhotoSampleBuffer:resolvedSettings:bracketSettings:error:.
         - If processedFileType is specified, it must be present in -availablePhotoFileTypes and must support the format's specified kCVPixelBufferPixelFormatTypeKey (using -supportedPhotoPixelFormatTypesForFileType:) or AVVideoCodecKey (using -supportedPhotoCodecTypesForFileType:).
         - The photoQualityPrioritization you specify may not be a greater number than the photo output's maxPhotoQualityPrioritization. You must set your AVCapturePhotoOutput maxPhotoQualityPrioritization up front.
@@ -178,6 +178,7 @@ API_AVAILABLE(macos(10.15), ios(10.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAI
     Not all codecs can be used for all rawPixelFormatType values and this call will show all of the possible codecs available. To check if a codec is available for a specific rawPixelFormatType and rawFileType, one should use supportedRawPhotoCodecTypesForRawPhotoPixelFormatType:fileType:.
  */
 @property(nonatomic, readonly) NSArray<AVVideoCodecType> *availableRawPhotoCodecTypes API_AVAILABLE(ios(18.0), macCatalyst(18.0), tvos(18.0)) API_UNAVAILABLE(macos, visionos) API_UNAVAILABLE(watchos);
+
 /*!
  @property appleProRAWSupported
  @abstract
@@ -298,6 +299,7 @@ API_AVAILABLE(macos(10.15), ios(10.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAI
     If you wish to capture a raw photo for storage using a Bayer RAW or Apple ProRAW pixel format and to be stored in a file container, such as DNG, you must ensure that the codec type you request is valid for that file and pixel format type. If no RAW codec types are supported for a given file type and/or pixel format type, an empty array is returned. If you have not yet added your receiver to an AVCaptureSession with a video source, an empty array is returned.
  */
 - (NSArray<AVVideoCodecType> *)supportedRawPhotoCodecTypesForRawPhotoPixelFormatType:(OSType)pixelFormatType fileType:(AVFileType)fileType API_AVAILABLE(ios(18.0), macCatalyst(18.0), tvos(18.0)) API_UNAVAILABLE(macos, visionos) API_UNAVAILABLE(watchos);
+
 /*!
  @method supportedRawPhotoPixelFormatTypesForFileType:
  @abstract
@@ -312,6 +314,7 @@ API_AVAILABLE(macos(10.15), ios(10.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAI
     If you wish to capture a photo for storage in a particular file container, such as DNG, you must ensure that the RAW pixel format type you request is valid for that file type. If no RAW pixel format types are supported for a given fileType, an empty array is returned. If you've not yet added your receiver to an AVCaptureSession with a video source, no pixel format types are supported.
  */
 - (NSArray<NSNumber *> *)supportedRawPhotoPixelFormatTypesForFileType:(AVFileType)fileType API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, visionos);
+
 
 /*!
  @enum AVCapturePhotoQualityPrioritization
@@ -330,6 +333,7 @@ typedef NS_ENUM(NSInteger, AVCapturePhotoQualityPrioritization) {
 	AVCapturePhotoQualityPrioritizationBalanced = 2,
 	AVCapturePhotoQualityPrioritizationQuality  = 3,
 } API_AVAILABLE(macos(13.0), ios(13.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
+
 
 /*!
  @property maxPhotoQualityPrioritization
@@ -716,6 +720,7 @@ typedef NS_ENUM(NSInteger, AVCapturePhotoQualityPrioritization) {
  */
 @property(nonatomic, getter=isResponsiveCaptureEnabled) BOOL responsiveCaptureEnabled API_AVAILABLE(ios(17.0), macos(14.0), macCatalyst(17.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
 
+
 /*!
  @enum AVCapturePhotoOutputCaptureReadiness
  @abstract
@@ -739,6 +744,7 @@ typedef NS_ENUM(NSInteger, AVCapturePhotoOutputCaptureReadiness) {
     AVCapturePhotoOutputCaptureReadinessNotReadyWaitingForCapture = 3,
     AVCapturePhotoOutputCaptureReadinessNotReadyWaitingForProcessing = 4,
 } NS_SWIFT_NAME(AVCapturePhotoOutput.CaptureReadiness) API_AVAILABLE(ios(17.0), macos(14.0), macCatalyst(17.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
+
 
 /*!
  @property captureReadiness
@@ -851,7 +857,7 @@ AV_INIT_UNAVAILABLE
     The AVCapturePhotoSettings.uniqueID of the settings passed to -startTrackingCaptureRequestUsingPhotoSettings:.
 
  @discussion
-    Tracking automatically stops when -[AVCapturePhotoOutput capturePhotoWithSettings:delegate] is called with a photo settings objects with the same or a newer uniqueID, but in cases where an error or other condition prevents calling -capturePhotoWithSettings:delegate tracking should be explictly stopped to ensure the captureReadiness value is up to date. When called on the main queue the delegate callback is invoked synchronously before returning to ensure shutter availability is updated immediately.
+    Tracking automatically stops when -[AVCapturePhotoOutput capturePhotoWithSettings:delegate] is called with a photo settings objects with the same or a newer uniqueID, but in cases where an error or other condition prevents calling -capturePhotoWithSettings:delegate tracking should be explicitly stopped to ensure the captureReadiness value is up to date. When called on the main queue the delegate callback is invoked synchronously before returning to ensure shutter availability is updated immediately.
  */
 - (void)stopTrackingCaptureRequestUsingPhotoSettingsUniqueID:(int64_t)settingsUniqueID NS_SWIFT_NAME(stopTrackingCaptureRequest(using:));
 
@@ -1296,6 +1302,7 @@ API_AVAILABLE(macos(10.15), ios(10.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAI
     One can specify desired format properties of the RAW file that will be created. Currently only the key AVVideoAppleProRAWBitDepthKey is allowed and the value to which it can be set should be from 8-16.  The AVVideoCodecKey must be present in the receiver's -availableRawPhotoCodecTypes array as well as in -supportedRawPhotoCodecTypesForRawPhotoPixelFormatType:fileType:. AVVideoQualityKey (NSNumber in range [0.0,1.0]) can be optionally set and a value between [0.0,1.0] will use lossy compression with lower values being more lossy resulting in smaller file sizes but lower image quality, while a value of 1.0 will use lossless compression resulting in the largest file size but also the best quality.
 */
 @property(nonatomic, copy, nullable) NSDictionary<NSString *, id> *rawFileFormat API_AVAILABLE(ios(18.0), macCatalyst(18.0), tvos(18.0)) API_UNAVAILABLE(macos, visionos) API_UNAVAILABLE(watchos);
+
 /*!
  @property processedFileType
  @abstract
@@ -2201,6 +2208,7 @@ API_AVAILABLE(macos(10.15), ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAI
 @end
 
 
+
 /*!
  @enum AVCaptureLensStabilizationStatus
  @abstract
@@ -2224,6 +2232,7 @@ typedef NS_ENUM(NSInteger, AVCaptureLensStabilizationStatus) {
     AVCaptureLensStabilizationStatusOutOfRange  = 3,
     AVCaptureLensStabilizationStatusUnavailable = 4,
 } API_AVAILABLE(ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(macos, visionos) API_UNAVAILABLE(watchos);
+
 
 API_AVAILABLE(macos(10.15), ios(11.0), macCatalyst(14.0), tvos(17.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos)
 @interface AVCapturePhoto (AVCapturePhotoBracketedCapture)

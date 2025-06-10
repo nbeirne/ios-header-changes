@@ -10,6 +10,12 @@
 #import <CloudKit/CKRecord.h>
 #import <CloudKit/CKShareParticipant.h>
 
+
+#define CKSHARE_REQUEST_ACCESS_INTERFACES_AVAILABILITY API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0))
+
+
+@class CKShareAccessRequester, CKShareBlockedIdentity, CKUserIdentityLookupInfo;
+
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 CK_EXTERN CKRecordType const CKRecordTypeShare API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0));
@@ -85,12 +91,24 @@ API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0))
 @property (nullable, readonly, copy) CKShareParticipant *currentUserParticipant;
 
 /*! @discussion If a participant with a matching userIdentity already exists, then that existing participant's properties will be updated; no new participant will be added.
+ *  A ``CKShareParticipant`` instance that has already been added to one ``CKShare`` cannot be added to another, unless it is removed from the first ``CKShare`` through `removeParticipant`.
  *  In order to modify the list of participants, a share must have publicPermission set to @c CKShareParticipantPermissionNone.  That is, you cannot mix-and-match private users and public users in the same share.
- *  Only certain participant types may be added via this API
  *  @see CKShareParticipantRole
  */
 - (void)addParticipant:(CKShareParticipant *)participant;
+
+/*! @discussion It's not allowed to call `removeParticipant` on a ``CKShare`` with a ``CKShareParticipant`` that has never been added to that share through `addParticipant`.
+ */
 - (void)removeParticipant:(CKShareParticipant *)participant;
+
+/*! @abstract Invitation URLs that can be used by any receiver to claim the associated participantID and join the share.
+ *
+ *  @discussion Only available after share record has been saved to the server for participants created via `+[CKShareParticipant oneTimeURLParticipant]`.
+ *  One-time URLs are stable, and tied to the associated participantIDs as long as the participant is part of the share.
+ *  Typically, a recipient user invited via their handle (i.e. `.acceptanceStatus` == `.pending`) is provided a `CKShare.URL` directly by the share's owner. However, any user can also use a `oneTimeURL` in the same manner by fetching share metadata and accepting the share.
+ *  After share acceptance, the `oneTimeURL` becomes functionally equivalent to the regular `CKShare.URL`.
+ */
+- (nullable NSURL *)oneTimeURLForParticipantID:(NSString *)participantID API_AVAILABLE(macos(15.0), ios(18.0), tvos(18.0), watchos(11.0), visionos(2.0)) NS_REFINED_FOR_SWIFT;
 
 /*! These superclass-provided initializers are not allowed for CKShare */
 - (instancetype)init NS_UNAVAILABLE;
@@ -98,6 +116,67 @@ API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0))
 - (instancetype)initWithRecordType:(CKRecordType)recordType NS_UNAVAILABLE;
 - (instancetype)initWithRecordType:(CKRecordType)recordType recordID:(CKRecordID *)recordID NS_UNAVAILABLE;
 - (instancetype)initWithRecordType:(CKRecordType)recordType zoneID:(CKRecordZoneID *)zoneID NS_UNAVAILABLE;
+
+/// A list of all uninvited users who have requested access to this share.
+///
+/// When share access requests are allowed, uninvited users can attempt to join the share
+/// by sending an access request. Those pending requests appear in this array.
+/// Share owners or administrators can approve the requester or use ``denyRequesters(_:)`` to respond
+/// to these access requests. Requesters are always returned with name components and either an email or phone number.
+/// Requesters can be approved by running ``CKFetchShareParticipantsOperation`` with the requester's ``CKShareAccessRequester/participantLookupInfo``
+/// and adding the resulting participant to the share.
+@property (readonly, copy) NSArray<CKShareAccessRequester *> *requesters CKSHARE_REQUEST_ACCESS_INTERFACES_AVAILABILITY;
+
+/// A list of users blocked from requesting access to this share.
+///
+/// Identities remain in this list until a user calls ``unblockIdentities(_:)``.
+@property (readonly, copy) NSArray<CKShareBlockedIdentity *> *blockedIdentities CKSHARE_REQUEST_ACCESS_INTERFACES_AVAILABILITY;
+
+/// Indicates whether uninvited users can request access to this share.
+///
+/// By default, allows access requests is `NO`
+/// When `YES`, uninvited users can submit an access request to the share
+/// if they discover the share URL. When `NO`, the server does not allow uninvited users
+/// to request access and does not reveal whether the share exists. This property can only be
+/// modified by the share owner or an admin. Attempting to change its value as any other
+/// participant will result in an exception.
+@property (readwrite, assign) BOOL allowsAccessRequests CKSHARE_REQUEST_ACCESS_INTERFACES_AVAILABILITY;
+
+/// Denies share access to the specified requesters.
+///
+/// Use this method to reject pending requests from one or more uninvited users.
+/// Denied requesters are removed from the ``requesters`` array.
+/// You must save the share to the server after denying to persist the changes.
+/// Once saved, these requesters are not given access to the share, but they may attempt to request
+/// access again unless you block them. This method can only be used by the share owner or an
+/// admin. Attempting to use it as any other participant will result in an exception.
+///
+/// - Parameters:
+///   - requesters: An array of ``CKShareAccessRequester`` objects to deny.
+- (void)denyRequesters:(NSArray<CKShareAccessRequester *> *)requesters CKSHARE_REQUEST_ACCESS_INTERFACES_AVAILABILITY;
+
+/// Blocks the specified requesters from requesting access to this share.
+///
+/// This method permanently prevents the listed requesters from requesting access to the share in the future.
+/// Blocked requesters appear in the ``blockedIdentities`` array.
+/// The share must be saved to the server after blocking to persist the changes. This method can only be used
+/// by the share owner or an admin. Attempting to use it as any other participant will result in an exception.
+/// Blocking an existing participant removes the participant from the share.
+///
+/// - Parameters:
+///   - requesters: An array of ``CKShareAccessRequester`` objects to block.
+- (void)blockRequesters:(NSArray<CKShareAccessRequester *> *)requesters CKSHARE_REQUEST_ACCESS_INTERFACES_AVAILABILITY;
+
+/// Unblocks previously blocked identities, allowing them to request access again.
+///
+/// Call this method to remove the specified identities from the ``blockedIdentities`` array.
+/// Once unblocked, those identities are free to request access to the share unless access
+/// requests are disabled. You must save the share to commit this change to the server.
+/// This method can only be used by the share owner or an admin. Attempting to use it as any
+/// other participant will result in an exception.
+///
+/// - Parameter blockedIdentities: An array of ``CKShareBlockedIdentity`` objects to unblock.
+- (void)unblockIdentities:(NSArray<CKShareBlockedIdentity *> *)blockedIdentities CKSHARE_REQUEST_ACCESS_INTERFACES_AVAILABILITY;
 
 @end
 

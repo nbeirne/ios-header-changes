@@ -2,7 +2,7 @@
 //  HKLiveWorkoutBuilder.h
 //  HealthKit
 //
-//  Copyright © 2018-2024 Apple. All rights reserved.
+//  Copyright © 2018-2025 Apple. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -16,7 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @class HKLiveWorkoutBuilder;
 @class HKWorkoutSession;
 
-HK_EXTERN API_AVAILABLE(watchos(5.0)) API_UNAVAILABLE(ios)
+HK_EXTERN
+API_AVAILABLE(ios(26.0), watchos(5.0)) API_UNAVAILABLE(visionos)
 @protocol HKLiveWorkoutBuilderDelegate <NSObject>
 
 /*!
@@ -46,7 +47,7 @@ HK_EXTERN API_AVAILABLE(watchos(5.0)) API_UNAVAILABLE(ios)
  @param         workoutBuilder      The workout builder to which the activity was added to.
  @param         workoutActivity     The activity that was added.
  */
-- (void)workoutBuilder:(HKLiveWorkoutBuilder *)workoutBuilder didBeginActivity:(HKWorkoutActivity *)workoutActivity API_AVAILABLE(watchos(9.0));
+- (void)workoutBuilder:(HKLiveWorkoutBuilder *)workoutBuilder didBeginActivity:(HKWorkoutActivity *)workoutActivity API_AVAILABLE(ios(26.0), watchos(9.0)) API_UNAVAILABLE(visionos);
 
 /*!
  @method        workoutBuilder:didEndActivity:
@@ -55,11 +56,13 @@ HK_EXTERN API_AVAILABLE(watchos(5.0)) API_UNAVAILABLE(ios)
  @param         workoutBuilder      The workout builder to which the activity belongs to
  @param         workoutActivity     The activity that was ended.
  */
-- (void)workoutBuilder:(HKLiveWorkoutBuilder *)workoutBuilder didEndActivity:(HKWorkoutActivity *)workoutActivity API_AVAILABLE(watchos(9.0));
+- (void)workoutBuilder:(HKLiveWorkoutBuilder *)workoutBuilder didEndActivity:(HKWorkoutActivity *)workoutActivity API_AVAILABLE(ios(26.0), watchos(9.0)) API_UNAVAILABLE(visionos);
 
 @end
 
-HK_EXTERN API_AVAILABLE(watchos(5.0)) API_UNAVAILABLE(ios)
+HK_EXTERN
+NS_SWIFT_SENDABLE
+API_AVAILABLE(ios(26.0), watchos(5.0)) API_UNAVAILABLE(visionos)
 @interface HKLiveWorkoutBuilder : HKWorkoutBuilder
 
 - (instancetype)initWithHealthStore:(HKHealthStore *)healthStore
@@ -108,7 +111,7 @@ HK_EXTERN API_AVAILABLE(watchos(5.0)) API_UNAVAILABLE(ios)
  @discussion    When an activity is in progress it will be returned by this property. The end date of this activity will always
                 be nil. When the activity is ended, the property would be set to nil until a new activity begins.
  */
-@property (copy, readonly, nullable) HKWorkoutActivity *currentWorkoutActivity API_AVAILABLE(watchos(9.0));
+@property (copy, readonly, nullable) HKWorkoutActivity *currentWorkoutActivity API_AVAILABLE(ios(26.0), watchos(9.0)) API_UNAVAILABLE(visionos);
 
 @end
 

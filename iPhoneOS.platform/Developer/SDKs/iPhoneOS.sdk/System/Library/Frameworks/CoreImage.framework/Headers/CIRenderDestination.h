@@ -184,6 +184,13 @@ typedef NS_ENUM(NSUInteger, CIRenderDestinationAlphaMode) {
 // This is false by default.
 @property BOOL blendsInDestinationColorSpace;
 
+/// Tell the next using this destination to capture a Metal trace.
+/// 
+/// If this property is set to a file-based URL, then the next render using this 
+/// destination will capture a Metal trace, deleting any existing file if present.
+/// This property is nil by default.
+@property (nullable, nonatomic, retain) NSURL* captureTraceURL NS_AVAILABLE(16_0, 19_0);
+
 @end
 
 

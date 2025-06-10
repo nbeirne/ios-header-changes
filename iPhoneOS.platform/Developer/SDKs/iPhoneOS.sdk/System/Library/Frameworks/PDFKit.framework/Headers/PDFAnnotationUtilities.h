@@ -241,6 +241,12 @@ PDFKIT_EXTERN PDFAnnotationHighlightingMode PDFAnnotationHighlightingModePush PD
 // Used by annotations type(s): /Widget (field type(s): /Btn).
 @property (nonatomic, copy) NSString *buttonWidgetStateString;
 
+// This is a property that holds the annotations that would represent the signature that was used to sign this widget.
+// It changes with the platform.
+// On iOS this field holds a struct that represents a PPK Signature
+// On OSX this field holds the AKSignatureAnnotation
+@property (nonatomic, copy, nullable) id signatureAnnotationForRendering;
+
 // Used to tell if an annotation is open or closed.
 // Used by annotations type(s): /Popup.
 @property (nonatomic, getter=isOpen) BOOL open;

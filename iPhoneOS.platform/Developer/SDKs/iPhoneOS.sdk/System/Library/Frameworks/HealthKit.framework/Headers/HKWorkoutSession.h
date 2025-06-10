@@ -2,9 +2,11 @@
 //  HKWorkoutSession.h
 //  HealthKit
 //
-//  Copyright (c) 2015-2022 Apple. All rights reserved.
+//  Copyright (c) 2015-2025 Apple. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+#import <HealthKit/HKDefines.h>
 #import <HealthKit/HKLiveWorkoutBuilder.h>
 #import <HealthKit/HKMetadata.h>
 #import <HealthKit/HKWorkout.h>
@@ -16,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class HKHealthStore;
 @class HKLiveWorkoutBuilder;
+@class HKQuantityType;
 @protocol HKWorkoutSessionDelegate;
 
 /*!
@@ -47,7 +50,9 @@ typedef NS_ENUM(NSInteger, HKWorkoutSessionType) {
  @class         HKWorkoutSession
  @abstract      An HKWorkoutSession is an object describing the properties of a workout activity session.
  */
-HK_EXTERN API_AVAILABLE(ios(17.0), watchos(2.0))
+HK_EXTERN
+NS_SWIFT_SENDABLE
+API_AVAILABLE(ios(17.0), watchos(2.0))
 @interface HKWorkoutSession : NSObject <NSSecureCoding>
 
 /*!
@@ -105,9 +110,9 @@ HK_EXTERN API_AVAILABLE(ios(17.0), watchos(2.0))
 
 /*!
  @property      endDate
- @abstract      Indicates the date when the workout session ended.
+ @abstract      Indicates the date when the workout session stopped.
  @discussion    This value is nil when a workout session is initialized. It is set when the workout session state
-                changes to HKWorkoutSessionStateEnded.
+                changes to HKWorkoutSessionStateStopped.
  */
 @property (readonly, nullable) NSDate *endDate;
 
@@ -121,13 +126,19 @@ HK_EXTERN API_AVAILABLE(ios(17.0), watchos(2.0))
 @property (readonly, copy) HKWorkoutActivity *currentActivity API_AVAILABLE(ios(17.0), watchos(9.0));
 
 /*!
+ @property currentGeneratedTypes
+ @abstract The quantity types the receiver is collecting.
+ */
+@property (copy, readonly) NSSet<HKQuantityType *> *currentGeneratedTypes API_AVAILABLE(ios(26.0), watchos(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(macos, macCatalyst, tvos);;
+
+/*!
  @method        initWithActivityType:locationType:
 
  @param         activityType    The activity type of the workout session.
  @param         locationType    The type of location where the workout will be performed.
  */
 - (instancetype)initWithActivityType:(HKWorkoutActivityType)activityType
-                        locationType:(HKWorkoutSessionLocationType)locationType API_DEPRECATED_WITH_REPLACEMENT("initWithHealthStore:configuration:error:", watchos(2.0, 3.0)) API_UNAVAILABLE(ios) API_UNAVAILABLE(macos, macCatalyst, tvos);
+                        locationType:(HKWorkoutSessionLocationType)locationType API_DEPRECATED_WITH_REPLACEMENT("initWithHealthStore:configuration:error:", watchos(2.0, 3.0)) API_UNAVAILABLE(ios, visionos) API_UNAVAILABLE(macos, macCatalyst, tvos);
 
 /*!
  @method        initWithConfiguration:error:
@@ -136,7 +147,7 @@ HK_EXTERN API_AVAILABLE(ios(17.0), watchos(2.0))
  @param         error                If the configuration does not specify valid configuration properties, an
                                      an NSError describing the error is set and nil is returned.
  */
-- (nullable instancetype)initWithConfiguration:(HKWorkoutConfiguration *)workoutConfiguration error:(NSError **)error API_DEPRECATED_WITH_REPLACEMENT("initWithHealthStore:configuration:error:", watchos(3.0, 5.0)) API_UNAVAILABLE(ios) API_UNAVAILABLE(macos, macCatalyst, tvos);
+- (nullable instancetype)initWithConfiguration:(HKWorkoutConfiguration *)workoutConfiguration error:(NSError **)error API_DEPRECATED_WITH_REPLACEMENT("initWithHealthStore:configuration:error:", watchos(3.0, 5.0)) API_UNAVAILABLE(ios, visionos) API_UNAVAILABLE(macos, macCatalyst, tvos);
 
 /*!
  @method        initWithHealthStore:configuration:error:
@@ -148,7 +159,7 @@ HK_EXTERN API_AVAILABLE(ios(17.0), watchos(2.0))
  */
 - (nullable instancetype)initWithHealthStore:(HKHealthStore *)healthStore
                                configuration:(HKWorkoutConfiguration *)workoutConfiguration
-                                       error:(NSError **)error API_AVAILABLE(watchos(5.0)) API_UNAVAILABLE(ios, tvos) API_UNAVAILABLE(macos, macCatalyst);
+                                       error:(NSError **)error API_AVAILABLE(ios(26.0), watchos(5.0)) API_UNAVAILABLE(tvos, visionos) API_UNAVAILABLE(macos, macCatalyst);
 
 - (instancetype)init NS_UNAVAILABLE;
 
@@ -221,7 +232,7 @@ HK_EXTERN API_AVAILABLE(ios(17.0), watchos(2.0))
                 Calling this method more than once will return the previously-created builder. If this session was not
                 initialized with initWithHealthStore:configuration:error:, an exception will be thrown.
  */
-- (HKLiveWorkoutBuilder *)associatedWorkoutBuilder API_AVAILABLE(watchos(5.0)) API_UNAVAILABLE(ios);
+- (HKLiveWorkoutBuilder *)associatedWorkoutBuilder API_AVAILABLE(ios(26.0), watchos(5.0)) API_UNAVAILABLE(tvos, visionos) API_UNAVAILABLE(macos, macCatalyst);
 
 /*!
  @method        beginNewActivityWithConfiguration:date:metadata:
@@ -252,7 +263,7 @@ HK_EXTERN API_AVAILABLE(ios(17.0), watchos(2.0))
                 This method will fail if called for a session that is ended.
                 The completion handler will be executed on an arbitrary background queue.
  */
-- (void)startMirroringToCompanionDeviceWithCompletion:(void (^)(BOOL success, NSError * _Nullable error))completion API_AVAILABLE(watchos(10.0)) API_UNAVAILABLE(ios) API_UNAVAILABLE(macos, macCatalyst, tvos) NS_SWIFT_ASYNC_THROWS_ON_FALSE(1);
+- (void)startMirroringToCompanionDeviceWithCompletion:(void (^NS_SWIFT_SENDABLE)(BOOL success, NSError * _Nullable error))completion API_AVAILABLE(watchos(10.0)) API_UNAVAILABLE(ios) API_UNAVAILABLE(macos, macCatalyst, tvos) NS_SWIFT_ASYNC_THROWS_ON_FALSE(1);
 
 /*!
  @method        stopMirroringToCompanionDeviceWithCompletion:
@@ -262,7 +273,7 @@ HK_EXTERN API_AVAILABLE(ios(17.0), watchos(2.0))
                 When a workout session is ended, mirroring is automatically stopped.
                 The completion handler will be executed on an arbitrary background queue.
  */
-- (void)stopMirroringToCompanionDeviceWithCompletion:(void (^)(BOOL success, NSError * _Nullable error))completion API_AVAILABLE(watchos(10.0)) API_UNAVAILABLE(ios) API_UNAVAILABLE(macos, macCatalyst, tvos) NS_SWIFT_ASYNC_THROWS_ON_FALSE(1);
+- (void)stopMirroringToCompanionDeviceWithCompletion:(void (^NS_SWIFT_SENDABLE)(BOOL success, NSError * _Nullable error))completion API_AVAILABLE(watchos(10.0)) API_UNAVAILABLE(ios) API_UNAVAILABLE(macos, macCatalyst, tvos) NS_SWIFT_ASYNC_THROWS_ON_FALSE(1);
 
 /*!
  @method        sendDataToRemoteWorkoutSession:completion:
@@ -276,7 +287,7 @@ HK_EXTERN API_AVAILABLE(ios(17.0), watchos(2.0))
                 The completion handler will be executed on an arbitrary background queue.
  */
 - (void)sendDataToRemoteWorkoutSession:(NSData *)data
-                            completion:(void (^)(BOOL success, NSError * _Nullable error))completion API_AVAILABLE(ios(17.0), watchos(10.0)) API_UNAVAILABLE(macos, macCatalyst, tvos) NS_SWIFT_NAME(sendToRemoteWorkoutSession(data:completion:)) NS_SWIFT_ASYNC_THROWS_ON_FALSE(1);
+                            completion:(void (^NS_SWIFT_SENDABLE)(BOOL success, NSError * _Nullable error))completion API_AVAILABLE(ios(17.0), watchos(10.0)) API_UNAVAILABLE(macos, macCatalyst, tvos) NS_SWIFT_NAME(sendToRemoteWorkoutSession(data:completion:)) NS_SWIFT_ASYNC_THROWS_ON_FALSE(1);
 
 @end
 
@@ -353,6 +364,17 @@ didEndActivityWithConfiguration:(HKWorkoutConfiguration *)workoutConfiguration
  @discussion    After this method is called for a mirrored workout session, it is no longer considered valid.
  */
 - (void)workoutSession:(HKWorkoutSession *)workoutSession didDisconnectFromRemoteDeviceWithError:(nullable NSError *)error API_AVAILABLE(ios(17.0), watchos(10.0));
+
+/*!
+ @method        workoutSession:didUpdateGeneratedTypes:
+ @abstract      This method is called when the generated types collected on session changed
+ @discussion    With new sample types added or removed, statistics for the currentGeneratedTypes may have changed and should be read again
+ 
+ @param         workoutSession    The workout data source which provides data for active workout session.
+ @param         generatedTypes    The full set of sample types that are currently generated.
+ */
+- (void)workoutSession:(HKWorkoutSession *)workoutSession didUpdateGeneratedTypes:(NSSet<HKSampleType *> *)generatedTypes API_AVAILABLE(ios(26.0), watchos(26.0));
+
 
 @end
 

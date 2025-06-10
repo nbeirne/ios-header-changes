@@ -336,8 +336,9 @@ CTFontDescriptorRef CTFontDescriptorCreateWithAttributes(
                 A CFDictionaryRef of arbitrary attributes.
 
     @result     This function creates a new copy of the original font descriptor with attributes augmented by those specified. If there are conflicts between attributes, the new attributes will replace existing ones, except for kCTFontVariationAttribute and kCTFontFeatureSettingsAttribute which will be merged.
-
                 Starting with macOS 10.12 and iOS 10.0, setting the value of kCTFontFeatureSettingsAttribute to kCFNull will clear the feature settings of the original font descriptor. Setting the value of any individual feature settings pair in the kCTFontFeatureSettingsAttribute value array to kCFNull will clear that feature setting alone. For example, an element like @{ (id)kCTFontFeatureTypeIdentifierKey: @(kLigaturesType), (id)kCTFontFeatureSelectorIdentifierKey: (id)kCFNull } means clear the kLigatureType feature set in the original font descriptor. An element like @[ @"liga", (id)kCFNull ] will have the same effect.
+
+    @seealso    kCTFontFeatureSettingsAttribute
 */
 CT_EXPORT
 CTFontDescriptorRef CTFontDescriptorCreateCopyWithAttributes(
@@ -419,6 +420,9 @@ CTFontDescriptorRef CTFontDescriptorCreateCopyWithVariation(
                 The feature selector identifier.
 
     @result     A copy of the original font descriptor modified with the given feature settings.
+
+    @seealso    CTFontDescriptorCreateCopyWithAttributes
+    @seealso    kCTFontFeatureSettingsAttribute
 */
 CT_EXPORT
 CTFontDescriptorRef CTFontDescriptorCreateCopyWithFeature(

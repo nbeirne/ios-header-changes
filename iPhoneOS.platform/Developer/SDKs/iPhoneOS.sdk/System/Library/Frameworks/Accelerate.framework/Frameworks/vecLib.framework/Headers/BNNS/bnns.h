@@ -3,7 +3,9 @@
 #ifndef __BNNS_HEADER__
 #define __BNNS_HEADER__
 
+#if __has_include( <TargetConditionals.h> )
 #include <TargetConditionals.h>
+#endif // __has_include( <TargetConditionals.h> )
 
 #include "bnns_constants.h"
 #include "bnns_structures.h"
@@ -13,10 +15,11 @@
 
 #if __has_include( <Availability.h> )
 #include <Availability.h>
-#else
+#else // __has_include( <Availability.h> )
 #define __API_AVAILABLE(...)
+#define __API_DEPRECATED(...)
 #define __API_DEPRECATED_WITH_REPLACEMENT(...)
-#endif
+#endif // __has_include( <Availability.h> )
 
 #if __has_feature(assume_nonnull)
 _Pragma("clang assume_nonnull begin")
@@ -375,21 +378,21 @@ __API_DEPRECATED("Use BNNSGraph* APIs", macos(11.0, 15.0), ios(14.0, 18.0), watc
   filter0 is convolution and filter1 is quantization. The filter_type and layer_params arrays should be as follows:
   filter_type: [BNNSConvolution, BNNSQuantization]
   layer_params: [pointer to BNNSLayerParametersConvolution, pointer to BNNSLayerParametersQuantization]
-  input and ouput descriptor data pointers in BNNSLayerParametersQuantization are ignored
+  input and output descriptor data pointers in BNNSLayerParametersQuantization are ignored
   Note that if the quantization layer uses batch as an axis with scale and/or bias, the batch size is encoded in the quantization layer parameters. In this case, if the batch size changes, the filter must be destroyed and recreated.
  
   Configuration 5: FullyConnected -> Quantization
   filter0 is fully connected and filter1 is quantization. The filter_type and layer_params arrays should be as follows:
   filter_type: [BNNSFullyConnected, BNNSQuantization]
   layer_params: [pointer to BNNSLayerParametersFullyConnected, pointer to BNNSLayerParametersQuantization]
-  input and ouput descriptor data pointers in BNNSLayerParametersQuantization are ignored
+  input and output descriptor data pointers in BNNSLayerParametersQuantization are ignored
   Note that if the quantization layer uses batch as an axis with scale and/or bias, the batch size is encoded in the quantization layer parameters. In this case, if the batch size changes, the filter must be destroyed and recreated.
  
   Configuration 6: Transposed Convolution -> Quantization
   filter0 is transposed convolution and filter1 is quantization. The filter_type and layer_params arrays should be as follows:
   filter_type: [BNNSTransposedConvolution, BNNSQuantization]
   layer_params: [pointer to BNNSLayerParametersConvolution, pointer to BNNSLayerParametersQuantization]
-  input and ouput descriptor data pointers in BNNSLayerParametersQuantization are ignored
+  input and output descriptor data pointers in BNNSLayerParametersQuantization are ignored
   Note that if the quantization layer uses batch as an axis with scale and/or bias, the batch size is encoded in the quantization layer parameters. In this case, if the batch size changes, the filter must be destroyed and recreated.
  
   Configuration 7: Arithmetic -> Normalization
@@ -2715,6 +2718,7 @@ __API_DEPRECATED_WITH_REPLACEMENT("BNNSFilterCreateLayerActivation", macos(10.13
 
 #if !__has_include( <Availability.h> )
 #undef __API_AVAILABLE
+#undef __API_DEPRECATED
 #undef __API_DEPRECATED_WITH_REPLACEMENT
 #endif
 

@@ -2,10 +2,11 @@
 //  HKLiveWorkoutDataSource.h
 //  HealthKit
 //
-//  Copyright © 2017 Apple. All rights reserved.
+//  Copyright © 2017-2025  Apple. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import <HealthKit/HKDefines.h>
 #import <HealthKit/HKWorkoutBuilder.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -17,16 +18,31 @@ NS_ASSUME_NONNULL_BEGIN
  @class         HKLiveWorkoutDataSource
  @discussion    An HKLiveWorkoutDataSource is to be used with an HKWorkoutBuilder to automatically collect samples
  */
-HK_EXTERN API_AVAILABLE(watchos(5.0)) API_UNAVAILABLE(ios)
+HK_EXTERN
+NS_SWIFT_SENDABLE
+API_AVAILABLE(ios(26.0), watchos(5.0)) API_UNAVAILABLE(visionos)
 @interface HKLiveWorkoutDataSource : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
 
 /*!
+ @property currentCollectedTypes
+ @abstract The default quantity types that are being collected
+ @discussion: If types are manually enabled or disabled this property will not update
+ */
+@property (copy, readonly) NSSet<HKQuantityType *> *currentCollectedTypes API_AVAILABLE(ios(26.0), watchos(26.0));
+
+/*!
+ @property collectsGeneratedTypes
+ @abstract True if generated types are being collected.
+ */
+@property (nonatomic, assign) BOOL collectsGeneratedTypes API_AVAILABLE(ios(26.0), watchos(26.0));
+
+/*!
  @property      typesToCollect
  @abstract      The quantity types the receiver is collecting.
  */
-@property (copy, readonly) NSSet<HKQuantityType *> *typesToCollect;
+@property (copy, readonly) NSSet<HKQuantityType *> *typesToCollect API_DEPRECATED_WITH_REPLACEMENT("currentCollectedTypes", watchos(5.0, 11.0)) API_UNAVAILABLE(ios, visionos);
 
 /*!
  @method        initWithHealthStore:workoutConfiguration:

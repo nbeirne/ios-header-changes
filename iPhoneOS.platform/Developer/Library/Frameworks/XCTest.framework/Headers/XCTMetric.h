@@ -373,6 +373,18 @@ XCT_METRIC_API_AVAILABLE
 
 @end
 
+/*!
+ * @class XCTHitchMetric
+ * A metric which measures the hitches encountered.
+ */
+API_AVAILABLE(macos(16.0), ios(19.0), watchos(12.0), tvos(19.0)) API_UNAVAILABLE(visionos)
+@interface XCTHitchMetric : NSObject <XCTMetric>
+
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
+
+@end
+
 NS_ASSUME_NONNULL_END
 
 #endif

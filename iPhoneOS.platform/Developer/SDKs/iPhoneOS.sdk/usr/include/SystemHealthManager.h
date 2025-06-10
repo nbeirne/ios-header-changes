@@ -33,6 +33,7 @@ typedef NS_ENUM(uint64_t, SHComponentStatus) {
     SHComponentStatus_Count,
 };
 
+__attribute__((visibility("default")))
 @interface SystemHealthManager : NSObject
 
 /// registerComponentHealthFor

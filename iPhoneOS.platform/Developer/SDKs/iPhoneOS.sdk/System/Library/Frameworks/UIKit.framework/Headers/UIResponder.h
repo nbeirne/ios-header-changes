@@ -19,6 +19,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @class UIPress;
 @class UIPressesEvent;
+@class UIDeferredMenuElement, UIDeferredMenuElementProvider;
 
 typedef NSDictionary<NSAttributedStringKey, id> * _Nonnull(^UITextAttributesConversionHandler)(NSDictionary<NSAttributedStringKey, id> * _Nonnull) API_UNAVAILABLE(watchos);
 
@@ -36,6 +37,7 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 - (void)pasteAndMatchStyle:(nullable id)sender API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos);
 - (void)pasteAndGo:(nullable id)sender API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos);
 - (void)pasteAndSearch:(nullable id)sender API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos);
+- (void)newFromPasteboard:(nullable id)sender API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos);
 - (void)select:(nullable id)sender API_AVAILABLE(ios(3.0)) API_UNAVAILABLE(watchos);
 - (void)selectAll:(nullable id)sender API_AVAILABLE(ios(3.0)) API_UNAVAILABLE(watchos);
 - (void)delete:(nullable id)sender API_AVAILABLE(ios(3.2)) API_UNAVAILABLE(watchos);
@@ -47,6 +49,11 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 - (void)increaseSize:(nullable id)sender API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(watchos);
 - (void)decreaseSize:(nullable id)sender API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(watchos);
+
+- (void)alignLeft:(nullable id)sender API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos);
+- (void)alignCenter:(nullable id)sender API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos);
+- (void)alignJustified:(nullable id)sender API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos);
+- (void)alignRight:(nullable id)sender API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos);
 
 - (void)find:(nullable id)sender API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos);
 - (void)findAndReplace:(nullable id)sender API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos);
@@ -61,6 +68,13 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 - (void)duplicate:(nullable id)sender API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos);
 - (void)move:(nullable id)sender API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos);
 - (void)export:(nullable id)sender API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos);
+
+- (void)toggleSidebar:(nullable id)sender API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos);
+- (void)toggleInspector:(nullable id)sender API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos);
+
+- (void)performClose:(nullable id)sender API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos);
+
+- (void)showWritingTools:(id)sender API_AVAILABLE(ios(18.2)) API_UNAVAILABLE(visionos, tvos, watchos);
 
 @end
 
@@ -114,6 +128,12 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 - (void)buildMenuWithBuilder:(id<UIMenuBuilder>)builder API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos);
 - (void)validateCommand:(UICommand *)command API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos);
 
+/// Asks the responder for an element provider to fulfill the given focus-based deferred element.
+/// Check the `identifier` of the deferred element to identify which deferred element this is.
+/// By default, this returns nil. Return a non-nil `provider` to make this responder responsible for providing
+/// elements for this fulfillment of the deferred element.
+- (nullable UIDeferredMenuElementProvider *)providerForDeferredMenuElement:(UIDeferredMenuElement *)deferredElement API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NAME(provider(for:));
+
 @property(nullable, nonatomic,readonly) NSUndoManager *undoManager API_AVAILABLE(ios(3.0));
 
 // Productivity editing interaction support for undo/redo/cut/copy/paste gestures
@@ -163,29 +183,29 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @end
 
 // These are pre-defined constants for use with the input property of UIKeyCommand objects.
-UIKIT_EXTERN NSString *const UIKeyInputUpArrow         API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputDownArrow       API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputLeftArrow       API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputRightArrow      API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputEscape          API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputPageUp          API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputPageDown        API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputHome            API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputEnd             API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputF1              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputF1              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputF2              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputF3              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputF4              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputF5              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputF6              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputF7              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputF8              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputF9              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputF10             API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputF11             API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputF12             API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString *const UIKeyInputDelete          API_AVAILABLE(ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos);
+UIKIT_EXTERN NSString *const UIKeyInputUpArrow         API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputDownArrow       API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputLeftArrow       API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputRightArrow      API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputEscape          API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputPageUp          API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputPageDown        API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputHome            API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputEnd             API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputF1              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputF1              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputF2              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputF3              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputF4              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputF5              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputF6              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputF7              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputF8              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputF9              API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputF10             API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputF11             API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputF12             API_AVAILABLE(ios(13.4), tvos(13.4)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSString *const UIKeyInputDelete          API_AVAILABLE(ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
 
 @interface UIResponder (ActivityContinuation) <UIUserActivityRestoring>
 @property (nullable, nonatomic, strong) NSUserActivity *userActivity API_AVAILABLE(ios(8.0));

@@ -1,13 +1,11 @@
-#if __has_include(<XCUIAutomation/XCTestCase+XCUIInterruptionMonitoring.h>)
-#import <XCUIAutomation/XCTestCase+XCUIInterruptionMonitoring.h>
-#else
-
 //
 //  Copyright © 2019 Apple Inc. All rights reserved.
 //
 
 #import <XCTest/XCTestDefines.h>
 #import <XCTest/XCTestCase.h>
+
+#if XCT_UI_TESTING_AVAILABLE
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -94,4 +92,4 @@ XCT_SWIFT_MAIN_ACTOR
 
 NS_ASSUME_NONNULL_END
 
-#endif
+#endif // XCT_UI_TESTING_AVAILABLE

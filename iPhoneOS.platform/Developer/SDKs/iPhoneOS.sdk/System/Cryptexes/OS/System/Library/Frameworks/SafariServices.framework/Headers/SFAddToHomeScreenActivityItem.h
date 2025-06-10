@@ -1,6 +1,7 @@
 // Copyright © 2023 Apple Inc. All rights reserved.
 
 #import <Foundation/Foundation.h>
+#import <SafariServices/SFAddToHomeScreenInfo.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -34,9 +35,15 @@ API_AVAILABLE(ios(17.4))
 /*! @abstract An optional method to provide the web app manifest.
  This is only available to apps that can use BrowserEngineKit.
 */
-- (void)getWebAppManifestWithCompletionHandler:(void (^)(BEWebAppManifest *_Nullable))completionHandler API_AVAILABLE(ios(17.5));
+- (void)getWebAppManifestWithCompletionHandler:(void (^)(BEWebAppManifest *_Nullable))completionHandler API_DEPRECATED("Create a SFAddToHomeScreenInfo instead", ios(17.5, API_TO_BE_DEPRECATED));
+
+/*! @abstract An optional method to fetch the SFAddToHomeScreenInfo.
+ This will fetch all of the asynchronous data in one operation. If this method is
+ implemented, it will be used instead of getWebAppManifestWithCompletionHandler:.
+ */
+- (void)getHomeScreenWebAppInfoWithCompletionHandler:(void (^)(SFAddToHomeScreenInfo *_Nullable))completionHandler API_AVAILABLE(ios(18.2));
 
 @end
 
-NS_ASSUME_NONNULL_END
+NS_ASSUME_NONNULL_END 
 

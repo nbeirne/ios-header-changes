@@ -1,7 +1,7 @@
 /*
     NSManagedObject.h
     Core Data
-    Copyright (c) 2004-2024, Apple Inc.
+    Copyright (c) 2004-2025, Apple Inc.
     All rights reserved.
 */
 
@@ -121,7 +121,7 @@ API_AVAILABLE(macosx(10.4),ios(3.0)) NS_REQUIRES_PROPERTY_DEFINITIONS
 - (nullable id)valueForKey:(NSString *)key;    
 
 // KVC - overridden to access generic dictionary storage unless subclasses explicitly provide accessors
-- (void)setValue:(nullable id)value forKey:(NSString *)key;    
+- (void)setValue:(nullable id)value forKey:(NSString *)key;
 
 // primitive methods give access to the generic dictionary storage from subclasses that implement explicit accessors like -setName/-name to add custom document logic
 - (nullable id)primitiveValueForKey:(NSString *)key;    

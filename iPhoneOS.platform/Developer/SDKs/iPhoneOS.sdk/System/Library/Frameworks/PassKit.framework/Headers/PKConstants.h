@@ -50,6 +50,9 @@ extern PKPaymentNetwork const PKPaymentNetworkTmoney API_AVAILABLE(macos(14.0), 
 extern PKPaymentNetwork const PKPaymentNetworkMeeza API_AVAILABLE(macos(14.4), ios(17.4), watchos(10.4));
 extern PKPaymentNetwork const PKPaymentNetworkNAPAS API_AVAILABLE(macos(14.5), ios(17.5), watchos(10.5));
 extern PKPaymentNetwork const PKPaymentNetworkBankAxept API_AVAILABLE(macos(14.5), ios(17.5), watchos(10.5));
+extern PKPaymentNetwork const PKPaymentNetworkHimyan API_AVAILABLE(macos(15.4), ios(18.4), watchos(11.4));
+extern PKPaymentNetwork const PKPaymentNetworkJaywan API_AVAILABLE(macos(15.4), ios(18.4), watchos(11.4));
+extern PKPaymentNetwork const PKPaymentNetworkMyDebit API_AVAILABLE(macos(26.0), ios(26.0), watchos(26.0));
 
 typedef NSString * PKContactField NS_STRING_ENUM;
 extern PKContactField const PKContactFieldPostalAddress API_AVAILABLE(macos(11.0), ios(11.0), watchos(4.0));
@@ -57,7 +60,6 @@ extern PKContactField const PKContactFieldEmailAddress  API_AVAILABLE(macos(11.0
 extern PKContactField const PKContactFieldPhoneNumber   API_AVAILABLE(macos(11.0), ios(11.0), watchos(4.0));
 extern PKContactField const PKContactFieldName          API_AVAILABLE(macos(11.0), ios(11.0), watchos(4.0));
 extern PKContactField const PKContactFieldPhoneticName  API_AVAILABLE(macos(11.0), ios(11.0), watchos(4.0));
-
 
 typedef NS_ENUM(NSInteger, PKPaymentAuthorizationStatus) {
     PKPaymentAuthorizationStatusSuccess, // Merchant auth'd (or expects to auth) the transaction successfully.

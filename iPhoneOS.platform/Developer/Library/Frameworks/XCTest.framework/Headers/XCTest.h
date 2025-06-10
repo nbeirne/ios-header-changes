@@ -30,7 +30,12 @@
 // This notice may not be removed from this file.
 
 #import <XCTest/XCTestCore.h>
-#import <XCTest/XCUnit.h>
+
 #if XCT_UI_TESTING_AVAILABLE
-#import <XCTest/XCUIAutomation.h>
+#import <XCUIAutomation/XCUIAutomation.h>
 #endif
+
+#import <XCTest/XCTAttachment+XCUIScreenshot.h>
+#import <XCTest/XCTestCase+XCUIApplicationLaunchTesting.h>
+#import <XCTest/XCTestCase+XCUIInterruptionMonitoring.h>
+#import <XCTest/XCTMetric+UIAutomation.h>

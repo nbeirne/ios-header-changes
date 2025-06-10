@@ -3,7 +3,7 @@
 
 	Framework:  CoreMedia
  
-	Copyright © 2005-2023 Apple Inc. All rights reserved.
+	Copyright © 2005-2025 Apple Inc. All rights reserved.
 
 */
 
@@ -59,6 +59,7 @@ enum
 	@abstract	A reference to a CMFormatDescription, a CF object describing media of a particular type (audio, video, muxed, etc).
 */
 typedef const struct CM_BRIDGED_TYPE(id) opaqueCMFormatDescription *CMFormatDescriptionRef API_AVAILABLE(macos(10.7), ios(4.0), tvos(9.0), watchos(6.0), visionos(1.0)) CM_SWIFT_SENDABLE;
+CM_SWIFT_INIT_FOR_CF_TYPE(CMFormatDescription, API_AVAILABLE(macos(10.7), ios(4.0), tvos(9.0), watchos(6.0), visionos(1.0)))
 
 /*!
 	@enum CMMediaType
@@ -1000,12 +1001,24 @@ CM_EXPORT const CFStringRef kCMFormatDescriptionExtension_HasAdditionalViews API
 	@abstract	 Indicates the projection that should be applied to presented decoded video frames.
 	@constant    `kCMFormatDescriptionProjectionKind_Rectilinear`
 		Indicates rectilinear projection. Generally less than 90 degree field of view with no barrel distortion.
+	@constant    `kCMFormatDescriptionProjectionKind_Equirectangular`
+		Indicates equirectangular projection of a 360 degree sphere to a rectangular plane, where longitude and latitude of the sphere are mapped linearly to the x,y axes of the plane.
+	@constant    `kCMFormatDescriptionProjectionKind_HalfEquirectangular`
+		Indicates half equirectangular projection of a 180 degree hemisphere to a rectangular plane, where longitude and latitude of the sphere are mapped linearly to the x,y axes of the plane
+	@constant    `kCMFormatDescriptionProjectionKind_ParametricImmersive`
+		Indicates a projection described mathematically by a model of camera lens calibration parameters. Parameters may be found in lens calibration metadata in kCMFormatDescriptionExtension_CameraCalibrationDataLensCollection with algorithm_kind being parametric lens
+	@constant            `kCMFormatDescriptionProjectionKind_AppleImmersiveVideo`
+		Indicates a proprietary projection used for Apple Immersive Video.
 	@discussion
 		The value is a CFString holding one of the kCMFormatDescriptionProjectionKind_* constants.
 */
 CM_EXPORT const CFStringRef kCMFormatDescriptionExtension_ProjectionKind
 	API_AVAILABLE(macos(15.0), ios(18.0), visionos(2.0)) API_UNAVAILABLE(tvos, watchos);
 	CM_EXPORT const CFStringRef kCMFormatDescriptionProjectionKind_Rectilinear API_AVAILABLE(macos(15.0), ios(18.0), visionos(2.0)) API_UNAVAILABLE(tvos, watchos);
+	CM_EXPORT const CFStringRef kCMFormatDescriptionProjectionKind_Equirectangular API_AVAILABLE(macos(15.0), ios(18.0), visionos(2.0)) API_UNAVAILABLE(tvos, watchos);
+	CM_EXPORT const CFStringRef kCMFormatDescriptionProjectionKind_HalfEquirectangular API_AVAILABLE(macos(15.0), ios(18.0), visionos(2.0)) API_UNAVAILABLE(tvos, watchos);
+	CM_EXPORT const CFStringRef kCMFormatDescriptionProjectionKind_ParametricImmersive API_AVAILABLE(macos(26.0), ios(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos);
+	CM_EXPORT const CFStringRef kCMFormatDescriptionProjectionKind_AppleImmersiveVideo API_AVAILABLE(macos(26.0), visionos(26.0)) API_UNAVAILABLE(ios, tvos, watchos);
 
 /*!
 	@constant 	`kCMFormatDescriptionExtension_ViewPackingKind`
@@ -1020,6 +1033,114 @@ CM_EXPORT const CFStringRef kCMFormatDescriptionExtension_ProjectionKind
 CM_EXPORT const CFStringRef kCMFormatDescriptionExtension_ViewPackingKind API_AVAILABLE(macos(15.0), ios(18.0), visionos(2.0)) API_UNAVAILABLE(tvos, watchos);
 	CM_EXPORT const CFStringRef kCMFormatDescriptionViewPackingKind_SideBySide API_AVAILABLE(macos(15.0), ios(18.0), visionos(2.0)) API_UNAVAILABLE(tvos, watchos);
 	CM_EXPORT const CFStringRef kCMFormatDescriptionViewPackingKind_OverUnder API_AVAILABLE(macos(15.0), ios(18.0), visionos(2.0)) API_UNAVAILABLE(tvos, watchos);
+
+/*!
+	@constant kCMFormatDescriptionExtension_CameraCalibrationDataLensCollection
+	@abstract	Specifies intrinsic and extrinsic parameters for single or multiple lenses.
+	@discussion
+		The property value is an array of dictionaries describing the camera calibration data for each lens. The camera calibration data includes intrinsics and extrinics with other parameters.
+		For a stereoscopic camera system, the left and right lens signaling can be done with the kCMFormatDescriptionCameraCalibration_LensRole key and its value.
+*/
+CM_EXPORT const CFStringRef kCMFormatDescriptionExtension_CameraCalibrationDataLensCollection API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));	// CFArray of CFDictionaries
+
+/*!
+	The following keys are required in each kCMFormatDescriptionExtension_CameraCalibrationDataLensCollection dictionary.
+
+	@constant kCMFormatDescriptionCameraCalibration_LensAlgorithmKind
+	@abstract	Specifies the camera calibration methodology.
+	@discussion
+		If the algorithm kind is ParametricLens, the camera lens collection requires camera intrinsic and extrinsic parameters.
+
+	@constant kCMFormatDescriptionCameraCalibration_LensDomain
+	@abstract	Specifies the kind of lens (e.g., color).
+
+	@constant kCMFormatDescriptionCameraCalibration_LensIdentifier
+	@abstract	Specifies a unique number associated with a lens.
+
+	@constant kCMFormatDescriptionCameraCalibration_LensRole
+	@abstract	Specifies the particular use of the lens in the camera system (e.g., left or right for a stereo system).
+	@discussion
+		For a stereoscopic camera system, one lens should have the left role and another should have the right role.
+ 
+	@constant kCMFormatDescriptionCameraCalibration_LensDistortions
+	@abstract	Specifies the first and second radial distortion coefficients(k1 and k2) used to correct the distortion that appeared as curved lines for straight lines and the first and second tangential distortion coefficients(p1 and p2) used to correct the distortion caused by a lens's improper alignment of physical elements.
+	@discussion
+		The values are in a CFArray of four CFNumbers in k1, k2, p1 and p2 order.
+
+    @constant kCMFormatDescriptionCameraCalibration_LensFrameAdjustmentsPolynomialX
+    @abstract    Specifies a three element polynomial for mapping x axis UV parameters with an adjustment using the equation `x' = polynomialX[0] + polynomialX[1]*x + polynomialX[2]*x^3`.
+    @discussion
+		The values are in a CFArray of three CFNumbers(float) in the order polynomialX[0], polynomialX[1] & polynomialX[2].
+		The polynomial transform origin is at the center of the frame. The default values of elements of polynomialX[] are [0.0, 1.0, 0.0].
+
+    @constant kCMFormatDescriptionCameraCalibration_LensFrameAdjustmentsPolynomialY
+    @abstract    Specifies a three element polynomial for mapping y axis UV parameters with an adjustment using the equation `y' = polynomialY[0] + polynomialY[1]*y + polynomialY[2]*y^3`.
+    @discussion
+		The values are in a CFArray of three CFNumbers(float) in the order polynomialY[0], polynomialY[1] & polynomialY[2].
+		The polynomial transform origin is at the center of the frame. The default values of elements of polynomialY[] are [0.0, 1.0, 0.0].
+
+	@constant kCMFormatDescriptionCameraCalibration_RadialAngleLimit
+	@abstract	Specifies the outer limit of the calibration validity in degrees of angle eccentric from the optical axis.
+	@discussion
+		The value is linked to radial distortion corrections with k1 and k2.
+
+	@constant kCMFormatDescriptionCameraCalibration_IntrinsicMatrix
+	@abstract	Specifies the 3x3 camera intrinsic matrix for camera calibration.
+	@discussion
+		Camera intrinsic matrix is a CFData containing a matrix_float3x3, which is column-major. Each element is in IEEE754 native-endian 32-bit floating point. It has the following contents:
+			fx	s	cx
+			0	fy	cy
+			0	0	1
+			fx and fy are the focal length in pixels. For square pixels, they will have the same value.
+			cx and cy are the coordinates of the principal point. The origin is the upper left of the frame.
+			s is an optional skew factor.
+
+	@constant kCMFormatDescriptionCameraCalibration_IntrinsicMatrixProjectionOffset
+	@abstract	Specifies the offset of the point of perspective relative to the rectilinear projection.
+
+	@constant kCMFormatDescriptionCameraCalibration_IntrinsicMatrixReferenceDimensions
+	@abstract	Specifies the image dimensions to which the camera’s intrinsic matrix values are relative.
+	@discussion
+		Values are width and height in a CFDictionary. Dictionary keys are compatible with CGSize dictionary, namely "Width" and "Height".
+
+	@constant kCMFormatDescriptionCameraCalibration_ExtrinsicOriginSource
+	@abstract	Identifies how the origin of the camera system's extrinsics are determined.
+	@discussion
+		The 'blin' value indicates the center of transform is determined by the point mid way along the dimensions indicated by the StereoCameraSystemBaselineBox held in the StereoCameraSystemBox.
+		Each left and right lens within a stereoscopic camera system is equidistant from this point, so the 'blin' value is halved when associated with the respective left and right lenses.
+
+	@constant kCMFormatDescriptionCameraCalibration_ExtrinsicOrientationQuaternion
+		@abstract	Specifies a camera’s orientation to a world or scene coordinate system. The orientation value is a unit quaternion(ix, iy, and iz) instead of the classical 3x3 matrix.
+	@discussion
+		The values are in a CFArray of three CFNumbers in ix, iy, and iz order.
+ */
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibration_LensAlgorithmKind API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));	// CFString one of
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibrationLensAlgorithmKind_ParametricLens API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibration_LensDomain API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));	// CFString one of
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibrationLensDomain_Color API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibration_LensIdentifier API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));	// CFNumber(int32)
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibration_LensRole API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));	// CFString one of
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibrationLensRole_Mono API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibrationLensRole_Left API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibrationLensRole_Right API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibration_LensDistortions API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));	// CFArray[CFNumber(float)], k1, k2, p1 & p2 order
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibration_LensFrameAdjustmentsPolynomialX API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));	// CFArray[CFNumber(float)], polynomialX[0], polynomialX[1] & polynomialX[2] order
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibration_LensFrameAdjustmentsPolynomialY API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));	// CFArray[CFNumber(float)], polynomialY[0], polynomialY[1] & polynomialY[2] order
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibration_RadialAngleLimit API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));	// CFNumber(float)
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibration_IntrinsicMatrix API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));	// CFData(matrix_float3x3)
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibration_IntrinsicMatrixProjectionOffset API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));	// CFNumber(float)
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibration_IntrinsicMatrixReferenceDimensions API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));	// CGSize dictionary
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibration_ExtrinsicOriginSource API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));	// CFString one of
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibrationExtrinsicOriginSource_StereoCameraSystemBaseline API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+CM_EXPORT const CFStringRef kCMFormatDescriptionCameraCalibration_ExtrinsicOrientationQuaternion API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));	// CFArray[CFNumber(float)], ix, iy & iz order
+
+/*!
+    @constant kCMFormatDescriptionExtension_ConvertedFromExternalSphericalTags
+	@abstract	Indicates that the image description contains projected media data converted from an external format
+	@discussion
+		This format description extension is included if boxes containing external stereoscopic or spherical projection information were parsed.
+*/
+CM_EXPORT const CFStringRef kCMFormatDescriptionExtension_ConvertedFromExternalSphericalTags API_AVAILABLE(macos(26.0), ios(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos);	// CFBoolean
 
 CM_ASSUME_NONNULL_END
 

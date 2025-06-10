@@ -29,6 +29,8 @@ typedef NS_OPTIONS(NSInteger, PDFAreaOfInterest)
     kPDFIconArea =          (1UL << 6),
     kPDFPopupArea =         (1UL << 7),
     kPDFImageArea =         (1UL << 8),
+    kPDFTableArea =         (1UL << 9),
+    kPDFTableResizeArea =   (1UL << 10),
 
     kPDFAnyArea =           NSIntegerMax
 };
@@ -145,6 +147,12 @@ PDFKIT_CLASS_AVAILABLE(10_4, 11_0)
 - (NSInteger)characterIndexAtPoint:(PDFPoint)point;
 
 // -------- selections
+
+// Custom function to handle the copying of entire table cells within annotated/detected tables
+- (nullable PDFSelection *)selectionForTableRect:(PDFRect)tableRect;
+
+// Returns a selection representing table cells between startPoint and endPoint
+- (nullable PDFSelection *)tableSelectionFromPoint:(PDFPoint)startPoint toPoint:(PDFPoint)endPoint;
 
 // Given a rect in page-space, returns a selection representing enclosed text on page.
 - (nullable PDFSelection *)selectionForRect:(PDFRect)rect;

@@ -23,6 +23,7 @@
 
 #import <XCTest/XCTActivity.h>
 #import <XCTest/XCTAttachment.h>
+#import <XCTest/XCTAttachmentLifetime.h>
 #import <XCTest/XCTContext.h>
 #import <XCTest/XCTExpectedFailure.h>
 #import <XCTest/XCTIssue.h>

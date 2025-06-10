@@ -7,6 +7,8 @@
 #import <Foundation/Foundation.h>
 #import <BrowserEngineKit/BEMacros.h>
 
+#import <BrowserEngineKit/BEExtensionProcess.h>
+
 #if TARGET_OS_OSX || TARGET_OS_IOS && !TARGET_OS_VISION
 #include <xpc/xpc.h>
 #endif
@@ -45,6 +47,17 @@ BROWSERENGINE_EXPORT
 +(void)renderingProcessWithInterruptionHandler:(void(^)(void))interruptionHandler
                            completion:(void(^)(BERenderingProcess* _Nullable process, NSError* _Nullable error))completion;
 
+/// Asynchronously launches a rendering extension process.
+///
+/// This initializer launches a new rendering extension process with the provided bundle identifier.
+///
+/// - Parameters:
+///   - `bundleID` : The bundle identifier of the rendering extension process to launch.
+///   - `interruptionHandler` : A block that is called if the extension process terminates.
+///   - `completion` : A block called with a new ``BERenderingProcess`` when the extension process has
+///     launched or with an error.
++(void)renderingProcessWithBundleID:(NSString *)bundleID interruptionHandler:(void(^)(void))interruptionHandler completion:(void(^)(BERenderingProcess  *_Nullable process, NSError *_Nullable error))completion API_AVAILABLE(ios(18.2));
+
 /// Stops the extension process.
 ///
 /// When you call this method, you tell the system your app no longer needs this extension process.
@@ -71,6 +84,13 @@ BROWSERENGINE_EXPORT
 - (id<UIInteraction>)createVisibilityPropagationInteraction;
 #endif
 
+@end
+
+NS_REFINED_FOR_SWIFT
+API_AVAILABLE(macos(14.3), ios(17.4))
+API_UNAVAILABLE(watchos, tvos, visionos)
+BROWSERENGINE_EXPORT
+@interface BERenderingProcess (BEExtensionProcessConformance) <BEExtensionProcess>
 @end
 
 NS_ASSUME_NONNULL_END

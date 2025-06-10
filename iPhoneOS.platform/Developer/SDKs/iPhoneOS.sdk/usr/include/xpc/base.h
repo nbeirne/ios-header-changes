@@ -242,6 +242,8 @@ __BEGIN_DECLS
 #define XPC_SWIFT_UNAVAILABLE(msg) __swift_unavailable(msg)
 #define XPC_SWIFT_NOEXPORT XPC_SWIFT_UNAVAILABLE("Unavailable in Swift from the XPC C Module")
 
+#define XPC_SWIFT_SENDABLE __attribute__((__swift_attr__("@Sendable")))
+
 __END_DECLS
 
 #endif // __XPC_BASE_H__ 

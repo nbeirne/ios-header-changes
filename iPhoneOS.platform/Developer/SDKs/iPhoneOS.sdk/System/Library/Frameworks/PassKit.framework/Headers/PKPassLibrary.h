@@ -27,6 +27,17 @@ typedef NS_ENUM(NSUInteger, PKAutomaticPassPresentationSuppressionResult) {
     PKAutomaticPassPresentationSuppressionResultSuccess             // Suppression of automatic pass presentation was successful
 } API_AVAILABLE(ios(9.0), watchos(10.2));
 
+typedef NS_ENUM(NSInteger, PKPassLibraryCapability) {
+    PKPassLibraryCapabilityBackgroundAddPasses,
+} NS_SWIFT_NAME(PKPassLibrary.Capability) API_AVAILABLE(ios(26.0), watchos(26.0));
+
+typedef NS_ENUM(NSInteger, PKPassLibraryAuthorizationStatus) {
+    PKPassLibraryAuthorizationStatusNotDetermined = -1,
+    PKPassLibraryAuthorizationStatusDenied = 0,
+    PKPassLibraryAuthorizationStatusAuthorized = 1,
+    PKPassLibraryAuthorizationStatusRestricted = 2,
+} NS_SWIFT_NAME(PKPassLibrary.AuthorizationStatus) API_AVAILABLE(ios(26.0), watchos(26.0));
+
 typedef NSUInteger PKSuppressionRequestToken;
 
 API_AVAILABLE(ios(6.0), watchos(3.0))
@@ -52,6 +63,7 @@ API_AVAILABLE(ios(6.0), watchos(3.0))
 // These return only local passes the process is entitled to access.
 - (NSArray<PKPass *> *)passes;
 - (nullable PKPass *)passWithPassTypeIdentifier:(NSString *)identifier serialNumber:(NSString *)serialNumber;
+- (NSSet<PKSecureElementPass *> *)passesWithReaderIdentifier:(NSString *)readerIdentifier;
 - (NSArray<PKPass *> *)passesOfType:(PKPassType)passType API_AVAILABLE(ios(8.0), watchos(3.0));
 
 // This returns the remote payment passes from attached devices
@@ -104,6 +116,12 @@ API_AVAILABLE(ios(6.0), watchos(3.0))
 - (void)encryptedServiceProviderDataForSecureElementPass:(PKSecureElementPass *)secureElementPass completion:(void(^)(NSDictionary * _Nullable encryptedServiceProviderData, NSError* _Nullable error))completion NS_SWIFT_NAME(encryptedServiceProviderData(for:completion:)) API_AVAILABLE(ios(16.0), watchos(9.0));
 // Returns custom data for a given secure element pass, if supported by that pass
 - (void)serviceProviderDataForSecureElementPass:(PKSecureElementPass *)secureElementPass completion:(void(^)(NSData * _Nullable serviceProviderData, NSError* _Nullable error))completion NS_SWIFT_NAME(serviceProviderData(for:completion:)) API_AVAILABLE(ios(15.0), watchos(8.0));
+
+// Check TCC authorization for capability
+- (PKPassLibraryAuthorizationStatus)authorizationStatusForCapability:(PKPassLibraryCapability)capability API_AVAILABLE(ios(26.0), watchos(26.0));
+
+// Request authorization for capability, saved in TCC
+- (void)requestAuthorizationForCapability:(PKPassLibraryCapability)capability completion:(void (^)(PKPassLibraryAuthorizationStatus status))completion API_AVAILABLE(ios(26.0), watchos(26.0));
 
 @end
 

@@ -187,6 +187,16 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// Called after the view has fully been dismissed, covered, or otherwise hidden, when any transition animations have completed.
 - (void)viewDidDisappear:(BOOL)animated;
 
+/// Call to manually request a properties update for the view controller.
+/// Multiple requests may be coalesced into a single update alongside the next layout pass.
+- (void)setNeedsUpdateProperties API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+/// Override point for subclasses to update properties of this view controller or its view.
+/// Never call this method directly; use `setNeedsUpdateProperties` to schedule an update.
+- (void)updateProperties NS_REQUIRES_SUPER API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+/// Forces an immediate properties update for this view controller and its view,
+/// including any view controllers and views in this subtree.
+- (void)updatePropertiesIfNeeded API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
 // Called just before the view controller's view's layoutSubviews method is invoked. Subclasses can implement as necessary. The default is a no-op.
 - (void)viewWillLayoutSubviews API_AVAILABLE(ios(5.0));
 // Called just after the view controller's view's layoutSubviews method is invoked. Subclasses can implement as necessary. The default is a no-op.
@@ -642,13 +652,13 @@ UIKIT_EXTERN API_AVAILABLE(ios(9.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @interface UIViewController (UIScreenEdgesDeferringSystemGestures)
 
 // Override to return a child view controller or nil. If non-nil, that view controller's screen edges deferring system gestures will be used. If nil, self is used. Whenever the return value changes, -setNeedsScreenEdgesDeferringSystemGesturesUpdate should be called.
-@property (nonatomic, readonly, nullable) UIViewController *childViewControllerForScreenEdgesDeferringSystemGestures API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos, tvos);
+@property (nonatomic, readonly, nullable) UIViewController *childViewControllerForScreenEdgesDeferringSystemGestures API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
 
 // Controls the application's preferred screen edges deferring system gestures when this view controller is shown. Default is UIRectEdgeNone.
-@property (nonatomic, readonly) UIRectEdge preferredScreenEdgesDeferringSystemGestures API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos, tvos);
+@property (nonatomic, readonly) UIRectEdge preferredScreenEdgesDeferringSystemGestures API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
 
 // This should be called whenever the return values for the view controller's screen edges deferring system gestures have changed.
-- (void)setNeedsUpdateOfScreenEdgesDeferringSystemGestures API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos, tvos);
+- (void)setNeedsUpdateOfScreenEdgesDeferringSystemGestures API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
 
 @end
 
@@ -656,13 +666,13 @@ UIKIT_EXTERN API_AVAILABLE(ios(9.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @interface UIViewController (UIHomeIndicatorAutoHidden)
 
 // Override to return a child view controller or nil. If non-nil, that view controller's home indicator auto-hiding will be used. If nil, self is used. Whenever the return value changes, -setNeedsHomeIndicatorAutoHiddenUpdate should be called.
-@property (nonatomic, readonly, nullable) UIViewController *childViewControllerForHomeIndicatorAutoHidden API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos, tvos);
+@property (nonatomic, readonly, nullable) UIViewController *childViewControllerForHomeIndicatorAutoHidden API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
 
 // Controls the application's preferred home indicator auto-hiding when this view controller is shown.
-@property (nonatomic, readonly) BOOL prefersHomeIndicatorAutoHidden API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos, tvos);
+@property (nonatomic, readonly) BOOL prefersHomeIndicatorAutoHidden API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
 
 // This should be called whenever the return values for the view controller's home indicator auto-hiding have changed.
-- (void)setNeedsUpdateOfHomeIndicatorAutoHidden API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos, tvos);
+- (void)setNeedsUpdateOfHomeIndicatorAutoHidden API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
 
 @end
 
@@ -702,6 +712,21 @@ UIKIT_EXTERN API_AVAILABLE(ios(9.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// Subclasses should override this method and update the content unavailable's configuration using the state provided.
 /// This method should not be called directly, use `setNeedsUpdateContentUnavailableConfiguration` to request an update.
 - (void)updateContentUnavailableConfigurationUsingState:(UIContentUnavailableConfigurationState *)state API_AVAILABLE(ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos);
+
+@end
+
+@interface UIViewController ()
+
+/// Override to return a child view controller or nil. If non-nil, that view controller's preference for interface orientation lock will be used. If nil, `self` is used.
+/// Whenever the return value changes, call `setNeedsUpdateOfPrefersInterfaceOrientationLocked()`.
+@property (nonatomic, readonly, nullable) UIViewController *childViewControllerForInterfaceOrientationLock API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos);
+
+/// Whether this view controller prefers the scene's interface orientation to be locked when shown. The default is `NO`. Note that this preference may or may not be honored.
+/// See `UIWindowScene.Geometry` for the current state of interface orientation lock.
+@property (nonatomic, readonly) BOOL prefersInterfaceOrientationLocked API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos);
+
+/// Call whenever the view controller's preference for interface orientation lock has changed
+- (void)setNeedsUpdateOfPrefersInterfaceOrientationLocked API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos);
 
 @end
 

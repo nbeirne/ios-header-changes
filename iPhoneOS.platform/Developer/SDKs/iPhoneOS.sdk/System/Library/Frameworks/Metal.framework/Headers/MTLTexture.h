@@ -251,7 +251,55 @@ MTL_EXPORT API_AVAILABLE(macos(10.11), ios(8.0))
  */
 @property (readwrite, nonatomic) MTLTextureSwizzleChannels swizzle API_AVAILABLE(macos(10.15), ios(13.0));
 
+/// Determines the page size for a placement sparse texture.
+///
+/// Set this property to a non-zero value to create a *placement sparse texture*.
+///
+/// Placement sparse textures are instances of ``MTLTexture`` that you assign memory to using a ``MTLHeap`` instance
+/// of type ``MTLHeapType/MTLHeapTypePlacement`` and a ``MTLHeapDescriptor/maxCompatiblePlacementSparsePageSize``
+/// at least as large as the ``MTLSparsePageSize`` value you assign to this property.
+///
+/// This value is 0 by default.
+@property (readwrite, nonatomic) MTLSparsePageSize placementSparsePageSize API_AVAILABLE(macos(26.0), ios(26.0));
+
 @end
+
+
+MTL_EXPORT API_AVAILABLE(macos(26.0), ios(26.0))
+@interface MTLTextureViewDescriptor : NSObject <NSCopying>
+
+/*!
+ @property pixelFormat
+ @abstract A desired pixel format of a texture view.
+ */
+@property (readwrite, nonatomic) MTLPixelFormat pixelFormat;
+
+/*!
+ @property textureType
+ @abstract A desired texture view of a texture view.
+ */
+@property (readwrite, nonatomic) MTLTextureType textureType;
+
+/*!
+ @property levelRange
+ @abstract A desired range of mip levels of a texture view.
+ */
+@property (readwrite, nonatomic) NSRange levelRange;
+
+/*!
+ @property sliceRange
+ @abstract A desired range of slices of a texture view.
+ */
+@property (readwrite, nonatomic) NSRange sliceRange;
+
+/*!
+ @property swizzle
+ @abstract A desired swizzle format of a texture view.
+ */
+@property (readwrite, nonatomic) MTLTextureSwizzleChannels swizzle;
+ 
+@end
+
 
 /*!
  @protocol MTLTexture
@@ -469,6 +517,12 @@ API_AVAILABLE(macos(10.11), ios(8.0))
  */
 - (nullable MTLSharedTextureHandle *)newSharedTextureHandle API_AVAILABLE(macos(10.14), ios(13.0));
 
+/*!
+ @method newTextureViewWithDescriptor:
+ @abstract Create a new texture which shares the same storage as the source texture, but with different (but compatible) properties specified by the descriptor
+ */
+- (nullable id<MTLTexture>)newTextureViewWithDescriptor:(MTLTextureViewDescriptor *)descriptor API_AVAILABLE(macos(26.0), ios(26.0));
+
 
 
 /*!
@@ -482,6 +536,12 @@ API_AVAILABLE(macos(10.11), ios(8.0))
  @abstract Create a new texture which shares the same storage as the source texture, but with a different (but compatible) pixel format, texture type, levels, slices and swizzle. 
  */
 - (nullable id<MTLTexture>)newTextureViewWithPixelFormat:(MTLPixelFormat)pixelFormat textureType:(MTLTextureType)textureType levels:(NSRange)levelRange slices:(NSRange)sliceRange swizzle:(MTLTextureSwizzleChannels)swizzle API_AVAILABLE(macos(10.15), ios(13.0));
+
+/*!
+ @property sparseTextureTier
+ @abstract Query support tier for sparse textures.
+ */
+@property (readonly) MTLTextureSparseTier sparseTextureTier API_AVAILABLE(macos(26.0), ios(26.0));
 
 @end
 NS_ASSUME_NONNULL_END

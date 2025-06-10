@@ -1,7 +1,3 @@
-#if __has_include(<XCUIAutomation/XCTMetric+UIAutomation.h>)
-#import <XCUIAutomation/XCTMetric+UIAutomation.h>
-#else
-
 //
 //  Copyright © 2018 Apple Inc. All rights reserved.
 //
@@ -11,6 +7,7 @@
 @class XCUIApplication;
 
 NS_ASSUME_NONNULL_BEGIN
+
 
 XCT_METRIC_API_AVAILABLE
 XCT_SWIFT_MAIN_ACTOR
@@ -60,6 +57,21 @@ XCT_SWIFT_MAIN_ACTOR
 
 @end
 
-NS_ASSUME_NONNULL_END
+API_AVAILABLE(macos(16.0), ios(19.0), watchos(12.0), tvos(19.0)) API_UNAVAILABLE(visionos)
+XCT_SWIFT_MAIN_ACTOR
+@interface XCTHitchMetric (UIAutomation)
 
-#endif
+/*!
+ * @method initWithApplication:
+ * Creates a metric which will target the process described by the XCUIApplication instance.
+ *
+ * @param application An instance of XCUIApplication which will be targeted to gather measurements.
+ *
+ * @return An initialized metric.
+ */
+- (instancetype)initWithApplication:(XCUIApplication *)application;
+
+@end
+
+
+NS_ASSUME_NONNULL_END

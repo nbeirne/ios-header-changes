@@ -125,6 +125,9 @@
 #define O_CREAT         0x00000200      /* create if nonexistant */
 #define O_TRUNC         0x00000400      /* truncate to zero length */
 #define O_EXCL          0x00000800      /* error if already exists */
+#define O_RESOLVE_BENEATH 0x00001000    /* only for open(2), same value as FMARK */
+#define O_UNIQUE        0x00002000      /* only for open(2), same value as FDEFER */
+
 
 #if !defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE)
 #define O_EVTONLY       0x00008000      /* descriptor requested for event notifications only */
@@ -179,6 +182,8 @@
 #define AT_REALDEV              0x0200  /* Return real device inodes resides on for fstatat(2) */
 #define AT_FDONLY               0x0400  /* Use only the fd and Ignore the path for fstatat(2) */
 #define AT_SYMLINK_NOFOLLOW_ANY 0x0800  /* Path should not contain any symlinks */
+#define AT_RESOLVE_BENEATH      0x2000  /* Path must reside in the hierarchy beneath the starting directory */
+#define AT_NODELETEBUSY         0x4000  /* Don't delete busy files */
 #endif
 #endif
 
@@ -337,6 +342,7 @@
 #define F_TRANSFEREXTENTS       110      /* Transfer allocated extents beyond leof to a different file */
 
 #define F_ATTRIBUTION_TAG       111      /* Based on flags, query/set/delete a file's attribution tag */
+#define F_NOCACHE_EXT           112      /* turn data caching off/on for this fd and relax size and alignment restrictions for write */
 
 #define F_ADDSIGS_MAIN_BINARY   113             /* add detached signatures for main binary -- development only */
 
@@ -407,6 +413,7 @@ struct flocktimeout {
 	struct flock    fl;             /* flock passed for file locking */
 	struct timespec timeout;        /* timespec struct for timeout */
 };
+
 #endif /* __DARWIN_C_LEVEL >= __DARWIN_C_FULL */
 
 #if !defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE)

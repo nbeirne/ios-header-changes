@@ -2,13 +2,16 @@
 //  HKQuery.h
 //  HealthKit
 //
-//  Copyright (c) 2013-2024 Apple Inc. All rights reserved.
+//  Copyright (c) 2013-2025 Apple Inc. All rights reserved.
 //
+
+
 
 #import <Foundation/Foundation.h>
 #import <HealthKit/HKDefines.h>
 #import <HealthKit/HKElectrocardiogram.h>
 #import <HealthKit/HKFHIRResource.h>
+#import <HealthKit/HKMedicationDoseEvent.h>
 #import <HealthKit/HKStateOfMind.h>
 #import <HealthKit/HKWorkout.h>
 
@@ -19,7 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @class HKSampleType;
 @class HKSource;
 
-HK_EXTERN API_AVAILABLE(ios(8.0), watchos(2.0), macCatalyst(13.0), macos(13.0))
+HK_EXTERN
+NS_SWIFT_SENDABLE
+API_AVAILABLE(ios(8.0), watchos(2.0), macCatalyst(13.0), macos(13.0))
 @interface HKQuery : NSObject
 
 @property (readonly, strong, nullable) HKObjectType *objectType API_AVAILABLE(ios(9.3), watchos(2.2), macCatalyst(13.0), macos(13.0));
@@ -279,7 +284,7 @@ typedef NS_OPTIONS(NSUInteger, HKQueryOptions) {
  @param         totalEnergyBurned   The value that the workout's totalEnergyBurned is being compared to. It is the right hand side of the
                                     expression. The unit for this value should be of type Energy.
  */
-+ (NSPredicate *)predicateForWorkoutsWithOperatorType:(NSPredicateOperatorType)operatorType totalEnergyBurned:(HKQuantity *)totalEnergyBurned API_DEPRECATED("Use predicateForWorkoutActivitiesWithOperatorType:quantityType:sumQuantity: passing the HKQuantityType for HKQuantityTypeIdentifierActiveEnergyBurned", ios(8.0, 18.0), watchos(2.0, 11.0), macCatalyst(13.0, 18.0), macos(13.0, 15.0));
++ (NSPredicate *)predicateForWorkoutsWithOperatorType:(NSPredicateOperatorType)operatorType totalEnergyBurned:(HKQuantity *)totalEnergyBurned API_DEPRECATED("Use predicateForWorkoutsWithOperatorType:quantityType:sumQuantity: passing the HKQuantityType for HKQuantityTypeIdentifierActiveEnergyBurned", ios(8.0, 18.0), watchos(2.0, 11.0), macCatalyst(13.0, 18.0), macos(13.0, 15.0));
 
 /*!
  @method        predicateForWorkoutsWithOperatorType:totalDistance:
@@ -290,7 +295,7 @@ typedef NS_OPTIONS(NSUInteger, HKQueryOptions) {
  @param         totalDistance   The value that the workout's totalEnergyBurned is being compared to. It is the right hand side of the
                                 expression. The unit for this value should be of type Distance.
  */
-+ (NSPredicate *)predicateForWorkoutsWithOperatorType:(NSPredicateOperatorType)operatorType totalDistance:(HKQuantity *)totalDistance API_DEPRECATED("Use predicateForWorkoutActivitiesWithOperatorType:quantityType:sumQuantity: passing the HKQuantityType for the desired distance type", ios(8.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), macCatalyst(13.0, API_TO_BE_DEPRECATED), macos(13.0, API_TO_BE_DEPRECATED));
++ (NSPredicate *)predicateForWorkoutsWithOperatorType:(NSPredicateOperatorType)operatorType totalDistance:(HKQuantity *)totalDistance API_DEPRECATED("Use predicateForWorkoutsWithOperatorType:quantityType:sumQuantity: passing the HKQuantityType for the desired distance type", ios(8.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), macCatalyst(13.0, API_TO_BE_DEPRECATED), macos(13.0, API_TO_BE_DEPRECATED));
 /*!
  @method        predicateForWorkoutsWithOperatorType:totalSwimmingStrokeCount:
  @abstract      Creates a predicate for use with HKQuery subclasses.
@@ -301,7 +306,7 @@ typedef NS_OPTIONS(NSUInteger, HKQueryOptions) {
                                             It is the right hand side of the expression. The unit for this value should
                                             be of type Count.
  */
-+ (NSPredicate *)predicateForWorkoutsWithOperatorType:(NSPredicateOperatorType)operatorType totalSwimmingStrokeCount:(HKQuantity *)totalSwimmingStrokeCount API_DEPRECATED("Use predicateForWorkoutActivitiesWithOperatorType:quantityType:sumQuantity: passing the HKQuantityType for HKQuantityTypeIdentifierSwimmingStrokeCount", ios(10.0, 18.0), watchos(3.0, 11.0), macCatalyst(13.0, 18.0), macos(13.0, 15.0));
++ (NSPredicate *)predicateForWorkoutsWithOperatorType:(NSPredicateOperatorType)operatorType totalSwimmingStrokeCount:(HKQuantity *)totalSwimmingStrokeCount API_DEPRECATED("Use predicateForWorkoutsWithOperatorType:quantityType:sumQuantity: passing the HKQuantityType for HKQuantityTypeIdentifierSwimmingStrokeCount", ios(10.0, 18.0), watchos(3.0, 11.0), macCatalyst(13.0, 18.0), macos(13.0, 15.0));
 
 /*!
  @method        predicateForWorkoutsWithOperatorType:totalFlightsClimbed:
@@ -313,7 +318,7 @@ typedef NS_OPTIONS(NSUInteger, HKQueryOptions) {
                                             It is the right hand side of the expression. The unit for this value should
                                             be of type Count.
  */
-+ (NSPredicate *)predicateForWorkoutsWithOperatorType:(NSPredicateOperatorType)operatorType totalFlightsClimbed:(HKQuantity *)totalFlightsClimbed API_DEPRECATED("Use predicateForWorkoutActivitiesWithOperatorType:quantityType:sumQuantity: passing the HKQuantityType for HKQuantityTypeIdentifierFlightsClimbed", ios(11.0, 18.0), watchos(4.0, 11.0), macCatalyst(13.0, 18.0), macos(13.0, 15.0));
++ (NSPredicate *)predicateForWorkoutsWithOperatorType:(NSPredicateOperatorType)operatorType totalFlightsClimbed:(HKQuantity *)totalFlightsClimbed API_DEPRECATED("Use predicateForWorkoutsWithOperatorType:quantityType:sumQuantity: passing the HKQuantityType for HKQuantityTypeIdentifierFlightsClimbed", ios(11.0, 18.0), watchos(4.0, 11.0), macCatalyst(13.0, 18.0), macos(13.0, 15.0));
 
 /*!
  @method        predicateForWorkoutsWithOperatorType:quantityType:sumQuantity:
@@ -590,7 +595,7 @@ typedef NS_OPTIONS(NSUInteger, HKQueryOptions) {
  @param         valence The value to be compared against.
  @param         operatorType The comparison operator type for the expression.
  */
-+ (NSPredicate *)predicateForStatesOfMindWithValence:(double)valence 
++ (NSPredicate *)predicateForStatesOfMindWithValence:(double)valence
                                         operatorType:(NSPredicateOperatorType)operatorType;
 
 /**
@@ -619,6 +624,97 @@ typedef NS_OPTIONS(NSUInteger, HKQueryOptions) {
  @param         association The association to be compared against.
  */
 + (NSPredicate *)predicateForStatesOfMindWithAssociation:(HKStateOfMindAssociation)association;
+
+@end
+
+@interface HKQuery (HKMedicationDoseEvent)
+
+/*!
+ @method        predicateForMedicationDoseEventWithStatus:
+ @abstract      Creates a predicate for use with HKQuery subclasses.
+ @discussion    Creates a query predicate that matches HKMedicationDoseEvent samples that have the status specified.
+ 
+ @param         status    The logged status of the medication dose event to match.
+ */
++ (NSPredicate *)predicateForMedicationDoseEventWithStatus:(HKMedicationDoseEventLogStatus)status API_AVAILABLE(ios(26.0), watchos(26.0), macCatalyst(26.0), macos(26.0), visionos(26.0)) NS_SWIFT_NAME(predicateForMedicationDoseEvent(status:));
+
+/*!
+ @method        predicateForMedicationDoseEventWithStatuses:
+ @abstract      Creates a predicate for use with HKQuery subclasses.
+ @discussion    Creates a query predicate that matches HKMedicationDoseEvent samples that have any of the statuses specified.
+ 
+ @param         statuses    The logged statuses of the medication dose event to match.
+ */
++ (NSPredicate *)predicateForMedicationDoseEventWithStatuses:(NSSet<NSNumber *> *)statuses API_AVAILABLE(ios(26.0), watchos(26.0), macCatalyst(26.0), macos(26.0), visionos(26.0)) NS_SWIFT_NAME(predicateForMedicationDoseEvent(statuses:)) NS_REFINED_FOR_SWIFT;
+
+/*!
+ @method        predicateForMedicationDoseEventWithScheduledDate:
+ @abstract      Creates a predicate for use with HKQuery subclasses.
+ @discussion    Creates a query predicate that matches HKMedicationDoseEvent samples that have the exact scheduled date specified.
+ 
+ @param         scheduledDate    The exact scheduled date of the medication dose event to match.
+ */
++ (NSPredicate *)predicateForMedicationDoseEventWithScheduledDate:(NSDate *)scheduledDate API_AVAILABLE(ios(26.0), watchos(26.0), macCatalyst(26.0), macos(26.0), visionos(26.0)) NS_SWIFT_NAME(predicateForMedicationDoseEvent(scheduledDate:));
+
+/*!
+ @method        predicateForMedicationDoseEventWithScheduledDates:
+ @abstract      Creates a predicate for use with HKQuery subclasses.
+ @discussion    Creates a query predicate that matches HKMedicationDoseEvent samples that have any of the exact scheduled dates specified.
+ 
+ @param         scheduledDates    The exact scheduled dates of any medication dose event to match.
+ */
++ (NSPredicate *)predicateForMedicationDoseEventWithScheduledDates:(NSSet<NSDate *> *)scheduledDates API_AVAILABLE(ios(26.0), watchos(26.0), macCatalyst(26.0), macos(26.0), visionos(26.0)) NS_SWIFT_NAME(predicateForMedicationDoseEvent(scheduledDates:));
+
+/*!
+ @method        predicateForMedicationDoseEventWithScheduledStartDate:endDate:
+ @abstract      Creates a predicate for use with HKQuery subclasses.
+ @discussion    Creates a query predicate that matches HKMedicationDoseEvent samples that have a scheduled date within a window of scheduled times. If nil is provided to either parameter, the respective side of the window is unbound.
+ 
+ @param         startDate    The beginning of the window for scheduled dates of any medication dose event to match.
+ @param         endDate    The beginning of the window for scheduled dates of any medication dose event to match.
+ */
++ (NSPredicate *)predicateForMedicationDoseEventWithScheduledStartDate:(nullable NSDate *)startDate
+                                                               endDate:(nullable NSDate *)endDate API_AVAILABLE(ios(26.0), watchos(26.0), macCatalyst(26.0), macos(26.0), visionos(26.0)) NS_SWIFT_NAME(predicateForMedicationDoseEvent(scheduledStart:end:));
+
+/*!
+ @method        predicateForMedicationDoseEventWithMedicationConceptIdentifier:
+ @abstract      Creates a predicate for use with HKQuery subclasses.
+ @discussion    Creates a query predicate that matches HKMedicationDoseEvent samples that match a medication's concept identifier.
+ 
+ @param         medicationConceptIdentifier    The identifier of the medication that a dose event was created for.
+ */
++ (NSPredicate *)predicateForMedicationDoseEventWithMedicationConceptIdentifier:(HKHealthConceptIdentifier *)medicationConceptIdentifier API_AVAILABLE(ios(26.0), watchos(26.0), macCatalyst(26.0), macos(26.0), visionos(26.0)) NS_SWIFT_NAME(predicateForMedicationDoseEvent(medicationConceptIdentifier:));
+
+/*!
+ @method        predicateForMedicationDoseEventWithMedicationConceptIdentifiers:
+ @abstract      Creates a predicate for use with HKQuery subclasses.
+ @discussion    Creates a query predicate that matches HKMedicationDoseEvent samples generated by any medication in a set of medication concept identifiers.
+ 
+ @param         medicationConceptIdentifiers    Any identifier of a medication that a dose event was created for.
+ */
++ (NSPredicate *)predicateForMedicationDoseEventWithMedicationConceptIdentifiers:(NSSet<HKHealthConceptIdentifier *> *)medicationConceptIdentifiers API_AVAILABLE(ios(26.0), watchos(26.0), macCatalyst(26.0), macos(26.0), visionos(26.0)) NS_SWIFT_NAME(predicateForMedicationDoseEvent(medicationConceptIdentifiers:));
+
+@end
+
+@interface HKQuery (HKUserAnnotatedMedications)
+
+/*!
+ @method        predicateForUserAnnotatedMedicationsWithIsArchived:
+ @abstract      Creates a predicate for use with HKUserAnnotatedMedicationQuery.
+ @discussion    Creates a query predicate that matches HKUserAnnotatedMedication objects that have the archived status specified.
+ 
+ @param         isArchived    The archived status of the medication. Ex: True will match medications in the archived section in the Health App.
+ */
++ (NSPredicate *)predicateForUserAnnotatedMedicationsWithIsArchived:(BOOL)isArchived API_AVAILABLE(ios(26.0), watchos(26.0), macCatalyst(26.0), macos(26.0), visionos(26.0)) NS_SWIFT_NAME(predicateForUserAnnotatedMedications(isArchived:));
+
+/*!
+ @method        predicateForUserAnnotatedMedicationsWithHasSchedule:
+ @abstract      Creates a predicate for use with HKUserAnnotatedMedicationQuery.
+ @discussion    Creates a query predicate that matches HKUserAnnotatedMedication objects that match the schedule status specified.
+ 
+ @param         hasSchedule    The schedule status of the medication. Ex: True will match medications that have a reminders schedule set up in the Health App.
+ */
++ (NSPredicate *)predicateForUserAnnotatedMedicationsWithHasSchedule:(BOOL)hasSchedule API_AVAILABLE(ios(26.0), watchos(26.0), macCatalyst(26.0), macos(26.0), visionos(26.0)) NS_SWIFT_NAME(predicateForUserAnnotatedMedications(hasSchedule:));
 
 @end
 

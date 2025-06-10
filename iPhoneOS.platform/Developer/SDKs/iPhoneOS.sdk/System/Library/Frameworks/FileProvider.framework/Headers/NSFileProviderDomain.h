@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 FILEPROVIDER_API_AVAILABILITY_V2_V3
-typedef NSString *NSFileProviderDomainIdentifier NS_EXTENSIBLE_STRING_ENUM;
+typedef NSString *NSFileProviderDomainIdentifier NS_TYPED_EXTENSIBLE_ENUM;
 
 /**
  File provider domain version.
@@ -268,6 +268,15 @@ FILEPROVIDER_API_AVAILABILITY_V2_V3
 /** List known folders that can be replicated by this domain.
  */
 @property (readwrite, assign) NSFileProviderKnownFolders supportedKnownFolders FILEPROVIDER_API_AVAILABILITY_DESKTOP;
+
+/**
+  Whether the system should use this domain's
+  `NSFileProviderSearching` implementation to support
+  search experiences.
+
+  Defaults to NO.
+ */
+@property (readwrite, assign) BOOL supportsStringSearchRequest FILEPROVIDER_API_AVAILABILITY_SEARCH;
 
 @end
 

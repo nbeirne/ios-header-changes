@@ -1,12 +1,10 @@
-#if __has_include(<XCUIAutomation/XCTAttachment+XCUIScreenshot.h>)
-#import <XCUIAutomation/XCTAttachment+XCUIScreenshot.h>
-#else
-
 //
 //  Copyright © 2021 Apple Inc. All rights reserved.
 //
 
 #import <XCTest/XCTAttachment.h>
+
+#if XCT_UI_TESTING_AVAILABLE
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -31,4 +29,4 @@ XCT_SWIFT_MAIN_ACTOR
 
 NS_ASSUME_NONNULL_END
 
-#endif
+#endif // XCT_UI_TESTING_AVAILABLE

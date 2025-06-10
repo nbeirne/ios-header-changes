@@ -25,8 +25,8 @@ typedef NS_OPTIONS(NSUInteger, MTLIndirectCommandType) {
     MTLIndirectCommandTypeConcurrentDispatch  API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(13.0)) = (1 << 5), /* Dispatch threadgroups with concurrent execution */
 
     MTLIndirectCommandTypeConcurrentDispatchThreads  API_AVAILABLE(macos(11.0), macCatalyst(14.0), ios(13.0)) = (1 << 6), /* Dispatch threads with concurrent execution */
-    MTLIndirectCommandTypeDrawMeshThreadgroups API_AVAILABLE(macos(14.0), ios(17.0)) = (1 << 7),
-    MTLIndirectCommandTypeDrawMeshThreads API_AVAILABLE(macos(14.0), ios(17.0)) = (1 << 8),
+    MTLIndirectCommandTypeDrawMeshThreadgroups API_AVAILABLE(macos(14.0), ios(17.0), tvos(18.1), visionos(2.1)) = (1 << 7),
+    MTLIndirectCommandTypeDrawMeshThreads API_AVAILABLE(macos(14.0), ios(17.0), tvos(18.1), visionos(2.1)) = (1 << 8),
 } API_AVAILABLE(macos(10.14), ios(12.0));
 
 
@@ -72,6 +72,7 @@ MTL_EXPORT API_AVAILABLE(macos(10.14), ios(12.0))
  */
 @property (readwrite, nonatomic) BOOL inheritBuffers;
 
+
 /*!
  @abstract
  The maximum bind index of vertex argument buffers that can be set per command.
@@ -101,20 +102,19 @@ MTL_EXPORT API_AVAILABLE(macos(10.14), ios(12.0))
  @abstract
  The maximum bind index of object stage buffers that can be set per render command.
  */
-@property (readwrite, nonatomic) NSUInteger maxObjectBufferBindCount API_AVAILABLE(macos(14.0), ios(17.0));
-
+@property (readwrite, nonatomic) NSUInteger maxObjectBufferBindCount API_AVAILABLE(macos(14.0), ios(17.0), tvos(18.1), visionos(2.1));
 /*!
  @abstract
  The maximum bind index of mesh stage buffers that can be set per render command.
  */
-@property (readwrite, nonatomic) NSUInteger maxMeshBufferBindCount API_AVAILABLE(macos(14.0), ios(17.0));
+@property (readwrite, nonatomic) NSUInteger maxMeshBufferBindCount API_AVAILABLE(macos(14.0), ios(17.0), tvos(18.1), visionos(2.1));
 
 /*!
  @abstract
  The maximum bind index of object threadgroup memory that can be set per render command.
  The default value is 0.
  */
-@property (readwrite, nonatomic) NSUInteger maxObjectThreadgroupMemoryBindCount API_AVAILABLE(macos(14.0), ios(17.0));
+@property (readwrite, nonatomic) NSUInteger maxObjectThreadgroupMemoryBindCount API_AVAILABLE(macos(14.0), ios(17.0), tvos(18.1), visionos(2.1));
 
 /*!
  @abstract
@@ -131,6 +131,9 @@ MTL_EXPORT API_AVAILABLE(macos(10.14), ios(12.0))
     calls
 */
 @property (readwrite, nonatomic) BOOL supportDynamicAttributeStride API_AVAILABLE(macos(14.0), ios(17.0));
+
+/// Specifies if the indirect command buffer should support color attachment mapping.
+@property (nonatomic) BOOL supportColorAttachmentMapping API_AVAILABLE(macos(26.0), ios(26.0));
 
 @end
 

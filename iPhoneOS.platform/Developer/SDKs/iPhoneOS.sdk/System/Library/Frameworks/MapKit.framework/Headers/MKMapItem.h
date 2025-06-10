@@ -9,6 +9,8 @@
 #import <MapKit/MKMapItemIdentifier.h>
 #import <MapKit/MKPlacemark.h>
 #import <MapKit/MKPointOfInterestCategory.h>
+#import <MapKit/MKAddress.h>
+#import <MapKit/MKAddressRepresentations.h>
 
 #if TARGET_OS_IOS
 @class UIScene;
@@ -19,12 +21,16 @@ NS_ASSUME_NONNULL_BEGIN
 NS_CLASS_AVAILABLE(10_9, 6_0) __TVOS_AVAILABLE(9_2)
 @interface MKMapItem : NSObject
 
-@property (nonatomic, nullable, readonly) MKMapItemIdentifier *identifier API_AVAILABLE(ios(18.0), visionos(2.0), tvos(18.0), macos(15.0)) API_UNAVAILABLE(watchos);
-@property (nonatomic, readonly) NSSet<MKMapItemIdentifier *> *alternateIdentifiers API_AVAILABLE(ios(18.0), visionos(2.0), tvos(18.0), macos(15.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic, nullable, readonly) MKMapItemIdentifier *identifier API_AVAILABLE(ios(18.0), visionos(2.0), tvos(18.0), macos(15.0), watchos(11.0));
+@property (nonatomic, readonly) NSSet<MKMapItemIdentifier *> *alternateIdentifiers API_AVAILABLE(ios(18.0), visionos(2.0), tvos(18.0), macos(15.0), watchos(11.0));
 
 // If this MKMapItem represents your current location (isCurrentLocation == YES), then placemark will be nil.
-@property (nonatomic, readonly) MKPlacemark *placemark;
+@property (nonatomic, readonly) MKPlacemark *placemark API_DEPRECATED("Use address or location", ios(6.0, API_TO_BE_DEPRECATED), visionos(1.0, API_TO_BE_DEPRECATED), tvos(9.2, API_TO_BE_DEPRECATED), macos(10.9, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED));
 @property (nonatomic, readonly) BOOL isCurrentLocation;
+
+@property (nonatomic, readonly) CLLocation *location API_AVAILABLE(ios(26.0), visionos(26.0), tvos(26.0), macos(26.0), watchos(26.0));
+@property (nonatomic, readonly, nullable) MKAddress *address API_AVAILABLE(ios(26.0), visionos(26.0), tvos(26.0), macos(26.0), watchos(26.0));
+@property (nonatomic, readonly, nullable) MKAddressRepresentations *addressRepresentations API_AVAILABLE(ios(26.0), visionos(26.0), tvos(26.0), macos(26.0), watchos(26.0));
 
 @property (nonatomic, copy, nullable) NSString *name;
 @property (nonatomic, copy, nullable) NSString *phoneNumber;
@@ -33,10 +39,12 @@ NS_CLASS_AVAILABLE(10_9, 6_0) __TVOS_AVAILABLE(9_2)
 
 @property (nonatomic, copy, nullable) NSTimeZone *timeZone NS_AVAILABLE(10_11, 9_0);
 
-@property (nonatomic, copy, nullable) MKPointOfInterestCategory pointOfInterestCategory API_AVAILABLE(ios(13.0), macos(10.15), tvos(13.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic, copy, nullable) MKPointOfInterestCategory pointOfInterestCategory API_AVAILABLE(ios(13.0), macos(10.15), tvos(13.0), watchos(6.0));
 
 + (MKMapItem *)mapItemForCurrentLocation;
-- (instancetype)initWithPlacemark:(MKPlacemark *)placemark;
+- (instancetype)initWithPlacemark:(MKPlacemark *)placemark API_DEPRECATED("Use initWithLocation:address:", ios(6.0, API_TO_BE_DEPRECATED), visionos(1.0, API_TO_BE_DEPRECATED), tvos(9.2, API_TO_BE_DEPRECATED), macos(10.9, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED));
+
+- (instancetype)initWithLocation:(CLLocation *)location address:(nullable MKAddress *)address API_AVAILABLE(ios(26.0), visionos(26.0), tvos(26.0), macos(26.0), watchos(26.0));
 
 - (BOOL)openInMapsWithLaunchOptions:(nullable NSDictionary<NSString *, id> *)launchOptions API_UNAVAILABLE(tvos);
 + (BOOL)openMapsWithItems:(NSArray<MKMapItem *> *)mapItems launchOptions:(nullable NSDictionary<NSString *, id> *)launchOptions API_UNAVAILABLE(tvos);
@@ -61,6 +69,7 @@ MK_EXTERN NSString * const MKLaunchOptionsDirectionsModeDefault NS_AVAILABLE(10_
 MK_EXTERN NSString * const MKLaunchOptionsDirectionsModeDriving NS_AVAILABLE(10_9, 6_0) API_UNAVAILABLE(tvos);
 MK_EXTERN NSString * const MKLaunchOptionsDirectionsModeWalking NS_AVAILABLE(10_9, 6_0) API_UNAVAILABLE(tvos);
 MK_EXTERN NSString * const MKLaunchOptionsDirectionsModeTransit NS_AVAILABLE(10_11, 9_0) API_UNAVAILABLE(tvos);
+MK_EXTERN NSString * const MKLaunchOptionsDirectionsModeCycling API_AVAILABLE(ios(14.0), macos(11.0), watchos(7.0), visionos(1.0)) API_UNAVAILABLE(tvos);
 
 // If center and span are present, having a camera as well is undefined
 MK_EXTERN NSString * const MKLaunchOptionsMapCenterKey          NS_AVAILABLE(10_9, 6_0) API_UNAVAILABLE(tvos); // Key to an NSValue-encoded CLLocationCoordinate2D

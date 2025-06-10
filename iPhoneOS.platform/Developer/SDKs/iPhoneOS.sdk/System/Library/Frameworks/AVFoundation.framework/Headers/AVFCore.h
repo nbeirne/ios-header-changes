@@ -55,6 +55,7 @@
 #import <AVFoundation/AVMovieTrack.h>
 #import <AVFoundation/AVOutputSettingsAssistant.h>
 #import <AVFoundation/AVPlaybackCoordinator.h>
+#import <AVFoundation/AVPlaybackCoordinationMedium.h>
 #import <AVFoundation/AVPlayer.h>
 #import <AVFoundation/AVPlayerOutput.h>
 #import <AVFoundation/AVPlayerItem.h>

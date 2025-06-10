@@ -44,6 +44,10 @@ API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos)
 /// The identifier associated with the tab, must be unique across the tab bar controller.
 @property (nonatomic, strong, readonly) NSString *identifier;
 
+/// Determines if the tab is enabled. When NO, tabs will have a disabled appearance and cannot be selected by the user.
+/// Default is YES.
+@property (nonatomic, assign, getter=isEnabled) BOOL enabled API_AVAILABLE(ios(18.4), tvos(18.4), visionos(2.4)) API_UNAVAILABLE(watchos);
+
 /// The title of the tab.
 @property (nonatomic, copy) NSString *title;
 
@@ -64,20 +68,20 @@ API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos)
 @property (nonatomic, strong, nullable) id userInfo;
 
 /// The parent group of the tab. This is only non-nil if the tab is part of a parent group, and returns nil otherwise.
-@property (nonatomic, strong, nullable, readonly) UITabGroup *parent;
+@property (nonatomic, weak, nullable, readonly) UITabGroup *parent;
 
 /// The tab bar controller managing the tab. This is non-nil when the tab
 /// or any of its ancestors is added to a UITabBarController; and is nil
 /// otherwise.
 @property (nonatomic, strong, nullable, readonly) UITabBarController *tabBarController;
 
-/// The view controller owned by the tab. The view controller provider is resolved the first time this is called.
-/// For root tabs, the view controller must be non-nil.
+/// The view controller owned by the tab. The view controller provider is used to resolve the view controller
+/// if it is currently nil. For root level tabs, the view controller for the tab must be non-nil.
 @property (nonatomic, strong, nullable, readonly) UIViewController *viewController;
 
 #pragma mark Managed Navigation
 
-/// The managing tab group for the tab. This returns the rootmost `UITabGroup` in the tab's parent hierarchy with an
+/// The managing tab group for the tab. This returns the root-most `UITabGroup` in the tab's parent hierarchy with an
 /// active `managingNavigationController`. This can be different to `parent` if the tab is nested in multiple
 /// levels of tab groups. If the tab does not belong to a hierarchy with a managing navigation controller, then this
 /// will return nil. Default is nil.
@@ -96,10 +100,13 @@ API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos)
 /// Determines if the tab's visibility can be changed by the user while editing. Default is NO.
 @property (nonatomic, assign) BOOL allowsHiding;
 
+/// Determines if the tab has a visible placement. Returns YES if the tab is visible in a tab bar
+/// that supports different tab placements. Otherwise returns NO.
+@property (nonatomic, assign, readonly) BOOL hasVisiblePlacement;
+
 /// Creates a tab with the specified identifier, title, image, and view controller provider.
-/// The view controller provider will be called once and only once, when the view controller
-/// is initially required. For root level tabs on `UITabBarController`, the resolved view
-/// controller must be non-nil.
+/// The view controller provider is called when a view controller is requested and is currently nil.
+/// For root level tabs on `UITabBarController`, the resolved view controller must be non-nil.
 - (instancetype)initWithTitle:(NSString *)title
                         image:(nullable UIImage *)image
                    identifier:(NSString *)identifier

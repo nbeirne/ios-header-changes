@@ -12,6 +12,30 @@
 #import <Metal/MTLFunctionHandle.h>
 
 /**
+ * @brief struct containing arguments for intersection function buffers.
+ */
+typedef struct {
+    /**
+     * @brief The GPU resource ID of the buffer containing intersection-function handles.
+     * Required to be aligned to 8 bytes.
+     */
+    uint64_t intersectionFunctionBuffer;
+
+    /**
+     * @brief The maximum range in bytes of intersectionFunctionBuffer that can be used
+     * for ray tracing.
+     */
+    uint64_t intersectionFunctionBufferSize;
+
+    /**
+     * @brief The stride between intersection function entries in intersectionFunctionBuffer.
+     * The stride needs to be either 0 or aligned to 8 bytes. Note that only the first 12
+     * bits of this value are used by Metal.
+     */
+    uint64_t intersectionFunctionStride;
+} MTLIntersectionFunctionBufferArguments;
+
+/**
  * @brief Signature defining what data is provided to an intersection function. The signature
  * must match across the shading language declaration of the intersection function table,
  * intersection functions in the table, and the intersector using the table.
@@ -69,6 +93,16 @@ typedef NS_OPTIONS(NSUInteger, MTLIntersectionFunctionSignature) {
      * as described in the Metal Shading Language Guide.
      */
     MTLIntersectionFunctionSignatureCurveData API_AVAILABLE(macos(14.0), ios(17.0)) = (1 << 7),
+
+    /**
+     * @brief The intersection function will be used with intersection function buffers
+     */
+    MTLIntersectionFunctionSignatureIntersectionFunctionBuffer API_AVAILABLE(macos(26.0), ios(26.0)) = (1 << 8),
+
+    /**
+     * @brief The intersection function uses the intersection function buffer user_data pointer
+     */
+    MTLIntersectionFunctionSignatureUserData API_AVAILABLE(macos(26.0), ios(26.0)) = (1 << 9),
 } MTL_EXPORT API_AVAILABLE(macos(11.0), ios(14.0));
 
 MTL_EXPORT API_AVAILABLE(macos(11.0), ios(14.0))

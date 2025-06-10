@@ -18,11 +18,12 @@
 typedef NS_ENUM(NSInteger, MKScaleViewAlignment) {
     MKScaleViewAlignmentLeading,
     MKScaleViewAlignmentTrailing,
-} NS_AVAILABLE_IOS(11_0) __TVOS_AVAILABLE(11_0);
+    MKScaleViewAlignmentCenter API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos)
+} API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos);
 
 NS_ASSUME_NONNULL_BEGIN
 
-NS_CLASS_AVAILABLE_IOS(11_0) __TVOS_AVAILABLE(11_0)
+API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos)
 @interface MKScaleView : UIView
 
 + (instancetype)scaleViewWithMapView:(nullable MKMapView *)mapView;

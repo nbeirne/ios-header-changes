@@ -3,9 +3,9 @@
 
     Contains:   AltiVec DSP Interfaces
 
-    Version:    vecLib-1068.0
+    Version:    vecLib-1120.0
 
-    Copyright:  Copyright (c) 2000-2024 by Apple Inc. All rights reserved.
+    Copyright:  Copyright (c) 2000-2025 by Apple Inc. All rights reserved.
 
     For vDSP documentation, search for "vDSP" at <http://developer.apple.com>
     or search for one of the routine names below.
@@ -258,7 +258,7 @@ extern "C" {
     vDSP_Version0 is a major version number.
     vDSP_Version1 is a minor version number.
 */
-#define vDSP_Version0   1068
+#define vDSP_Version0   1120
 #define vDSP_Version1   0
 
 

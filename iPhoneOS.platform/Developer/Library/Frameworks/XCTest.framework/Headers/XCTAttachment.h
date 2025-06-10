@@ -186,13 +186,11 @@ typedef NS_ENUM(NSInteger, XCTImageQuality) {
  */
 + (instancetype)attachmentWithContentsOfFileAtURL:(NSURL *)url uniformTypeIdentifier:(NSString *)identifier;
 
-#if TARGET_OS_OSX || TARGET_OS_MACCATALYST
 /*!
  * @method -attachmentWithCompressedContentsOfDirectoryAtURL:
  * Creates an attachment with an existing directory on disk. Automatically zips the directory, the content type is "public.zip-archive".
  */
 + (instancetype)attachmentWithCompressedContentsOfDirectoryAtURL:(NSURL *)url;
-#endif
 
 /*!
  * @method +attachmentWithImage:

@@ -127,8 +127,8 @@ CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferAlphaChannelMode_Premultipl
 
 // Used to attach processing metadata to buffers transferred between video decoders and RAW processors.
 // Sequence metadata is expected to be invariant over the entire movie, while frame metadata can vary with each frame.
-CV_EXPORT const CFStringRef kCVImageBufferPostDecodeProcessingSequenceMetadataKey API_AVAILABLE(macos(15.0)) API_UNAVAILABLE(ios, watchos, tvos, visionos);	// CFDictionary
-CV_EXPORT const CFStringRef kCVImageBufferPostDecodeProcessingFrameMetadataKey API_AVAILABLE(macos(15.0)) API_UNAVAILABLE(ios, watchos, tvos, visionos);	// CFDictionary
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferPostDecodeProcessingSequenceMetadataKey API_AVAILABLE(macos(15.0)) API_UNAVAILABLE(ios, watchos, tvos, visionos);	// CFDictionary
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferPostDecodeProcessingFrameMetadataKey API_AVAILABLE(macos(15.0)) API_UNAVAILABLE(ios, watchos, tvos, visionos);	// CFDictionary
 
 
 // Returns the standard integer code point corresponding to a given CoreVideo YCbCrMatrix constant string (in the kCVImageBufferYCbCrMatrix_... family).  Returns 2 (the code point for "unknown") if the string is NULL or not recognized.
@@ -195,7 +195,7 @@ CV_EXPORT CGRect CVImageBufferGetCleanRect( CVImageBufferRef CV_NONNULL imageBuf
 CV_EXPORT Boolean CVImageBufferIsFlipped( CVImageBufferRef CV_NONNULL imageBuffer ) __OSX_AVAILABLE_STARTING(__MAC_10_4,__IPHONE_4_0);
 
 
-#if COREVIDEO_SUPPORTS_COLORSPACE
+#if __has_include(<CoreGraphics/CGColorSpace.h>)
 /*!
     @function   CVImageBufferGetColorSpace
     @abstract   Returns the color space of a CVImageBuffer.
@@ -204,10 +204,7 @@ CV_EXPORT Boolean CVImageBufferIsFlipped( CVImageBufferRef CV_NONNULL imageBuffe
 		Returns NULL if called with a non-CVImageBufferRef type or NULL.
 */
 CV_EXPORT CGColorSpaceRef CV_NULLABLE CVImageBufferGetColorSpace( CVImageBufferRef CV_NONNULL imageBuffer ) __OSX_AVAILABLE_STARTING(__MAC_10_4,__IPHONE_4_0);
-	
-#endif
 
-#if ! 0
 /*!
    @function   CVImageBufferCreateColorSpaceFromAttachments
    @abstract   Attempts to synthesize a CGColorSpace from an image buffer's attachments.
@@ -222,7 +219,8 @@ CV_EXPORT CGColorSpaceRef CV_NULLABLE CVImageBufferGetColorSpace( CVImageBufferR
 		
 */
 CV_EXPORT CGColorSpaceRef CV_NULLABLE CVImageBufferCreateColorSpaceFromAttachments( CFDictionaryRef CV_NONNULL attachments ) __OSX_AVAILABLE_STARTING(__MAC_10_8,__IPHONE_10_0);
-#endif
+
+#endif // __has_include(<CoreGraphics/CGColorSpace.h>)
 
 // CFData (24 bytes) containing big-endian data matching payload of ISO/IEC 23008-2:2015(E), D.2.28 Mastering display colour volume SEI message
 CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferMasteringDisplayColorVolumeKey __OSX_AVAILABLE_STARTING(__MAC_10_13,__IPHONE_11_0);
@@ -260,6 +258,111 @@ CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferLogTransferFunctionKey API_
 
 CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferLogTransferFunction_AppleLog API_AVAILABLE(macosx(14.2), ios(17.2), tvos(17.2), watchos(10.2), visionos(1.1));
 
+
+/*!
+    @constant    kCVImageBufferDisplayMaskRectangleKey
+    @abstract
+        Specifies the rectangular display area within the image. The left, width, top and height are specified relative to a reference raster width and height that should be scaled to the image buffer dimensions.
+    @discussion
+        Value is a dictionary containing these keys for the raster rectangle:
+            kCVImageBufferDisplayMaskRectangle_ReferenceRasterWidthKey
+            kCVImageBufferDisplayMaskRectangle_ReferenceRasterHeightKey
+            kCVImageBufferDisplayMaskRectangle_RectangleLeftKey
+            kCVImageBufferDisplayMaskRectangle_RectangleWidthKey
+            kCVImageBufferDisplayMaskRectangle_RectangleTopKey
+            kCVImageBufferDisplayMaskRectangle_RectangleHeightKey
+*/
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferDisplayMaskRectangleKey API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0)); // CFDictionary
+
+/*!
+    @constant    kCVImageBufferDisplayMaskRectangle_ReferenceRasterWidthKey
+    @abstract
+        Specifies the width in pixels of the 2D coordinate system to define the rectangle. 0,0 origin is the top-left. The raster width value is a CFNumber of unsigned 16-bit integer. Usually matches the width of the video or the output device.
+ */
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferDisplayMaskRectangle_ReferenceRasterWidthKey API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0)); // CFNumber(uint16_t)
+
+/*!
+    @constant    kCVImageBufferDisplayMaskRectangle_ReferenceRasterHeightKey
+    @abstract
+        Specifies the height in pixels of the 2D coordinate system to define the rectangle. 0,0 origin is the top-left. The raster height value is a CFNumber of unsigned 16-bit integer. Usually matches the height of the video or the output device.
+ */
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferDisplayMaskRectangle_ReferenceRasterHeightKey API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0)); // CFNumber(uint16_t)
+
+/*!
+    @constant    kCVImageBufferDisplayMaskRectangle_RectangleLeftKey
+    @abstract
+        Specifies the horizontal pixel offset of the rectangle from the left of the bounding raster. The left offset value is a CFNumber of unsigned 16-bit integer that is less than the reference raster width value.
+ */
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferDisplayMaskRectangle_RectangleLeftKey API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0)); // CFNumber(uint16_t)
+
+/*!
+    @constant    kCVImageBufferDisplayMaskRectangle_RectangleWidthKey
+    @abstract
+        Specifies the width of the rectangle starting at rectangle's left offset toward the rectangle's right edge. The width value is a CFNumber of unsigned 16-bit integer.
+ */
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferDisplayMaskRectangle_RectangleWidthKey API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0)); // CFNumber(uint16_t)
+
+/*!
+    @constant    kCVImageBufferDisplayMaskRectangle_RectangleTopKey
+    @abstract
+        Specifies the vertical pixel offset of the rectangle from the top of the bounding raster. The top offset value is a CFNumber of unsigned 16-bit integer that is less than the reference raster height value.
+ */
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferDisplayMaskRectangle_RectangleTopKey API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0)); // CFNumber(uint16_t)
+
+/*!
+    @constant    kCVImageBufferDisplayMaskRectangle_RectangleHeightKey
+    @abstract
+        Specifies the height of the rectangle starting at rectangle's top offset toward the rectangle's bottom edge. The height value is a CFNumber of unsigned 16-bit integer.
+ */
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferDisplayMaskRectangle_RectangleHeightKey API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0)); // CFNumber(uint16_t)
+
+/*!
+    @constant    kCVImageBufferDisplayMaskRectangleStereoLeftKey
+    @abstract
+        Specifies the rectangular display area within the left eye view of stereo images, using the same keys as with kCVImageBufferDisplayMaskRectangleKey. To address window violations in stereo video, points insetting the left and right edges of the rectangle are supported through additional keys, allowing the description of the "extended raster rectangle".
+    @discussion
+        Value is a dictionary containing these keys for the extended raster rectangle:
+            kCVImageBufferDisplayMaskRectangle_ReferenceRasterWidthKey
+            kCVImageBufferDisplayMaskRectangle_ReferenceRasterHeightKey
+            kCVImageBufferDisplayMaskRectangle_RectangleLeftKey
+            kCVImageBufferDisplayMaskRectangle_RectangleWidthKey
+            kCVImageBufferDisplayMaskRectangle_RectangleTopKey
+            kCVImageBufferDisplayMaskRectangle_RectangleHeightKey
+            kCVImageBufferDisplayMaskRectangle_LeftEdgePointsKey
+            kCVImageBufferDisplayMaskRectangle_RightEdgePointsKey
+*/
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferDisplayMaskRectangleStereoLeftKey API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0)); // CFDictionary
+
+/*!
+    @constant    kCVImageBufferDisplayMaskRectangleStereoRightKey
+    @abstract
+        Specifies the rectangular display area within the right eye view of stereo images, using the same keys as with kCVImageBufferDisplayMaskRectangleKey. To address window violations in stereo video, points insetting the left and right edges of the rectangle are supported through additional keys, allowing the description of the "extended raster rectangle".
+    @discussion
+        Value is a dictionary containing these keys for the extended raster rectangle:
+            kCVImageBufferDisplayMaskRectangle_ReferenceRasterWidthKey
+            kCVImageBufferDisplayMaskRectangle_ReferenceRasterHeightKey
+            kCVImageBufferDisplayMaskRectangle_RectangleLeftKey
+            kCVImageBufferDisplayMaskRectangle_RectangleWidthKey
+            kCVImageBufferDisplayMaskRectangle_RectangleTopKey
+            kCVImageBufferDisplayMaskRectangle_RectangleHeightKey
+            kCVImageBufferDisplayMaskRectangle_LeftEdgePointsKey
+            kCVImageBufferDisplayMaskRectangle_RightEdgePointsKey
+*/
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferDisplayMaskRectangleStereoRightKey API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0)); // CFDictionary
+
+/*!
+    @constant    kCVImageBufferDisplayMaskRectangle_LeftEdgePointsKey
+    @abstract
+        Specifies inset points on the left vertical edge of the rectangle. The points are CFArray of unsigned 16-bit integer CFNumber pairs alternating between inset X and inset Y. Inset X is an unsigned offset from left edge (0) towards the right edge (width). Inset Y is an unsigned offset from top edge (0) towards the bottom edge (height)
+ */
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferDisplayMaskRectangle_LeftEdgePointsKey API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0)); // CFArray( CFNumber(uint16_t) pairs)
+
+/*!
+    @constant    kCVImageBufferDisplayMaskRectangle_RightEdgePointsKey
+    @abstract
+        Specifies inset points on the right vertical edge of the rectangle. The points are CFArray of unsigned 16-bit integer CFNumber pairs alternating between inset X and inset Y. Inset X is an unsigned offset from right edge (0) towards the left edge (width). Inset Y is an unsigned offset from top edge (0) towards the bottom edge (height)
+ */
+CV_EXPORT const CFStringRef CV_NONNULL kCVImageBufferDisplayMaskRectangle_RightEdgePointsKey API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0)); // CFArray(  CFNumber(uint16_t) pairs)
 
 #if defined(__cplusplus)
 }

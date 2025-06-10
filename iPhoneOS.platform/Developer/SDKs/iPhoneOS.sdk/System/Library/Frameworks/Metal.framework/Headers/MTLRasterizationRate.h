@@ -240,7 +240,7 @@ MTL_EXPORT API_AVAILABLE(macos(10.15.4), ios(13.0), macCatalyst(13.4))
  Because a smaller area of the framebuffer is populated, less fragment shader invocations are required to render content, and less bandwidth is consumed to store the shaded values.
  Use a rasterization rate map to reduce rendering quality in less-important or less-sampled regions of the framebuffer, such as the periphery of a VR/AR display or a far-away cascade of a shadow map.
  */
-API_AVAILABLE(macos(10.15.4), ios(13.0), macCatalyst(13.4))
+API_AVAILABLE(macos(10.15.4), ios(13.0), macCatalyst(13.4)) NS_SWIFT_SENDABLE
 @protocol MTLRasterizationRateMap <NSObject>
 
 /*!

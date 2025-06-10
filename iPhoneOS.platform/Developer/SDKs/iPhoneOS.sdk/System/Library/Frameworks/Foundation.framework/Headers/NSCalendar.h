@@ -38,7 +38,17 @@ FOUNDATION_EXPORT NSCalendarIdentifier const NSCalendarIdentifierRepublicOfChina
 FOUNDATION_EXPORT NSCalendarIdentifier const NSCalendarIdentifierIslamicTabular      API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
 // The Islamic Umm al-Qura calendar used in Saudi Arabia. This is based on astronomical calculation, instead of tabular behavior.
 FOUNDATION_EXPORT NSCalendarIdentifier const NSCalendarIdentifierIslamicUmmAlQura    API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0));
-
+FOUNDATION_EXPORT NSCalendarIdentifier const NSCalendarIdentifierBangla              API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+FOUNDATION_EXPORT NSCalendarIdentifier const NSCalendarIdentifierGujarati            API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+FOUNDATION_EXPORT NSCalendarIdentifier const NSCalendarIdentifierKannada             API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+FOUNDATION_EXPORT NSCalendarIdentifier const NSCalendarIdentifierMalayalam           API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+FOUNDATION_EXPORT NSCalendarIdentifier const NSCalendarIdentifierMarathi             API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+FOUNDATION_EXPORT NSCalendarIdentifier const NSCalendarIdentifierOdia                API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+FOUNDATION_EXPORT NSCalendarIdentifier const NSCalendarIdentifierTamil               API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+FOUNDATION_EXPORT NSCalendarIdentifier const NSCalendarIdentifierTelugu              API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+FOUNDATION_EXPORT NSCalendarIdentifier const NSCalendarIdentifierVikram              API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+FOUNDATION_EXPORT NSCalendarIdentifier const NSCalendarIdentifierDangi               API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+FOUNDATION_EXPORT NSCalendarIdentifier const NSCalendarIdentifierVietnamese          API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
 
 typedef NS_OPTIONS(NSUInteger, NSCalendarUnit) {
         NSCalendarUnitEra                = kCFCalendarUnitEra,
@@ -107,7 +117,7 @@ enum {
 */
 + (nullable NSCalendar *)calendarWithIdentifier:(NSCalendarIdentifier)calendarIdentifierConstant API_AVAILABLE(macos(10.9), ios(8.0), watchos(2.0), tvos(9.0));
 
-- (instancetype)init API_UNAVAILABLE(macos, ios, watchos, tvos);
+- (instancetype)init NS_UNAVAILABLE;
 
 - (nullable id)initWithCalendarIdentifier:(NSCalendarIdentifier)ident NS_DESIGNATED_INITIALIZER;
 

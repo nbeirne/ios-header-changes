@@ -13,7 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// A user interface for an eraser tool item in PKToolPicker.
-API_AVAILABLE(ios(18.0), visionos(2.0))
+API_AVAILABLE(ios(18.0), visionos(2.0), macos(26.0))
 @interface PKToolPickerEraserItem : PKToolPickerItem
 
 /// Create a new eraser tool item.

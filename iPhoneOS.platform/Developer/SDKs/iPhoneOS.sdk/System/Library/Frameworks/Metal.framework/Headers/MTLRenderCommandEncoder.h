@@ -278,7 +278,6 @@ API_AVAILABLE(macos(14.0), ios(17.0));
  */
 - (void)setViewport:(MTLViewport)viewport;
 
-
 /*!
  @method setViewports:
  @brief Specifies an array of viewports, which are used to transform vertices from normalized device coordinates to window coordinates based on [[ viewport_array_index ]] value specified in the vertex shader.
@@ -317,6 +316,7 @@ API_AVAILABLE(macos(14.0), ios(17.0));
  @brief Depth Bias.
  */
 - (void)setDepthBias:(float)depthBias slopeScale:(float)slopeScale clamp:(float)clamp;
+
 
 /*!
  @method setScissorRect:

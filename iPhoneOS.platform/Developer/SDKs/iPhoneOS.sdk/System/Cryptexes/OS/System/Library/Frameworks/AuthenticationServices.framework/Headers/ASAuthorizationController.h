@@ -14,6 +14,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 @class ASAuthorization;
 @class ASAuthorizationRequest;
 @class ASAuthorizationController;
+@class ASCPublicKeyAccountRegistrationOptions;
 
 NS_SWIFT_UI_ACTOR
 AS_EXTERN API_AVAILABLE(ios(13.0), macos(10.15), tvos(13.0), watchos(6.0))

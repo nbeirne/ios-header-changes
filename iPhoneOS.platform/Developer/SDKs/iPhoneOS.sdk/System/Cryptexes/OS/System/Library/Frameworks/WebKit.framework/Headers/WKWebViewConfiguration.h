@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class WKPreferences;
 @class WKProcessPool;
 @class WKUserContentController;
+@class WKWebExtensionController;
 @class WKWebpagePreferences;
 @class WKWebsiteDataStore;
 
@@ -116,6 +117,10 @@ WK_EXTERN API_AVAILABLE(macos(10.10), ios(8.0))
 */
 @property (nonatomic, strong) WKUserContentController *userContentController;
 
+/*! @abstract The web extension controller to associate with the web view.
+*/
+@property (nullable, nonatomic, strong) WKWebExtensionController *webExtensionController API_AVAILABLE(macos(NA), ios(18.4), visionos(NA));
+
 /*! @abstract The website data store to be used by the web view.
  */
 @property (nonatomic, strong) WKWebsiteDataStore *websiteDataStore API_AVAILABLE(macos(10.11), ios(9.0));
@@ -134,6 +139,11 @@ WK_EXTERN API_AVAILABLE(macos(10.10), ios(8.0))
  @discussion The default value is YES.
  */
 @property (nonatomic) BOOL allowsAirPlayForMediaPlayback API_AVAILABLE(macos(10.11), ios(9.0));
+
+/*! @abstract A Boolean value indicating whether the System Screen Time blocking view should be shown.
+ @discussion The default value is YES.
+ */
+@property (nonatomic) BOOL showsSystemScreenTimeBlockingView API_AVAILABLE(macos(NA), ios(18.4));
 
 /*! @abstract A Boolean value indicating whether HTTP requests to servers known to support HTTPS should be automatically upgraded to HTTPS requests.
  @discussion The default value is YES.
@@ -225,18 +235,18 @@ on the system setting.
     @discussion The default value is `NO`. If `NO`, adaptive image glyphs are inserted as regular
     images. If `YES`, they are inserted with the full adaptive sizing behavior.
     */
-@property (nonatomic) BOOL supportsAdaptiveImageGlyph API_AVAILABLE(macos(NA), ios(18.0), visionos(NA));
+@property (nonatomic) BOOL supportsAdaptiveImageGlyph API_AVAILABLE(macos(15.0), ios(18.0), visionos(2.0));
 
-#if (TARGET_OS_IOS && !TARGET_OS_VISION) && __IPHONE_OS_VERSION_MIN_REQUIRED >= 180000
+#if (TARGET_OS_IOS && __IPHONE_OS_VERSION_MAX_ALLOWED >= 180000) || (defined(TARGET_OS_VISION) && TARGET_OS_VISION && __VISION_OS_VERSION_MIN_REQUIRED >= 20400)
 /*! @abstract The preferred behavior of Writing Tools.
     @discussion The default behavior is equivalent to `UIWritingToolsBehaviorLimited`.
     */
-@property (nonatomic) UIWritingToolsBehavior writingToolsBehavior API_AVAILABLE(ios(18.0));
+@property (nonatomic) UIWritingToolsBehavior writingToolsBehavior API_AVAILABLE(ios(18.0), visionos(2.4));
 #elif TARGET_OS_OSX && __MAC_OS_X_VERSION_MIN_REQUIRED >= 150000
 /*! @abstract The preferred behavior of Writing Tools.
     @discussion The default behavior is equivalent to `NSWritingToolsBehaviorLimited`.
     */
-@property (nonatomic) NSWritingToolsBehavior writingToolsBehavior API_AVAILABLE(macos(NA));
+@property (nonatomic) NSWritingToolsBehavior writingToolsBehavior API_AVAILABLE(macos(15.0));
 #endif
 
 @end

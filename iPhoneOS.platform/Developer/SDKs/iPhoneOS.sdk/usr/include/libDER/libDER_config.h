@@ -63,14 +63,18 @@ __BEGIN_DECLS
 typedef uint8_t DERByte;
 typedef uint16_t DERShort;
 typedef uint32_t DERInt;
+typedef int32_t DERSignedInt;
 typedef uint64_t DERLong;
+typedef int64_t DERSignedLong;
 typedef size_t DERSize;
 typedef bool DERBool;
 #else
 typedef UINT8 DERByte;
 typedef UINT16 DERShort;
 typedef UINT32 DERInt;
+typedef INT32 DERSignedInt;
 typedef UINT64 DERLong;
+typedef INT64 DERSignedLong;
 typedef size_t DERSize;
 typedef BOOLEAN DERBool;
 #endif
